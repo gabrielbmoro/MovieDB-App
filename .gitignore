@@ -1,0 +1,5 @@
+src/.gradle/
+src/.idea/
+src/local.properties
+src/app/build/
+src/build
