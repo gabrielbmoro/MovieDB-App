@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">ProgrammingChallenge</string>
+    <string name="token_value">755e0c67ac2fa886e775fb9057f0a32f</string>
+    <string name="top_rated_movies_title">Top Rated</string>
+    <string name="popular_movies_title">Popular</string>
+    <string name="favorite_movies_title">Favorite</string>
+    <string name="release_date">Release Date:</string>
+    <string name="expand">Expand</string>
+    <string name="hide">Hide</string>
+    <string name="favorite_movies_screen_title">Favorite Movies</string>
+    <string name="offline_now">You are offline now.</string>
+    <string name="grande_dragao_branco">O Grande Dragão Branco</string>
+    <string name="release_date_example">10/02/2019</string>
+    <string name="star">star</string>
+    <string name="description_example">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas, purus sit amet placerat congue, arcu augue aliquet enim, a aliquam quam velit eu odio. Curabitur lectus risus, interdum quis diam a, pulvinar finibus dolor. Nulla nec nibh et nulla lobortis dignissim vel in risus. Vivamus ligula elit, efficitur at sollicitudin in, gravida quis dolor. Etiam finibus mollis lacinia. Quisque suscipit ornare enim bibendum fringilla. Nullam rhoncus ut sem non consequat. Vivamus non dui dolor. Aliquam et viverra justo. Sed dictum nisi vitae justo blandit varius. Ut placerat euismod pharetra. Integer interdum, arcu gravida pulvinar fringilla, lectus lectus viverra libero, et tristique magna orci sed augue. Cras et erat condimentum, suscipit orci ac, semper augue. Ut ac ornare nunc. Nam pharetra elementum est, eu malesuada mauris dignissim in. Nullam pretium tellus mi, congue tincidunt dolor varius et.</string>
+    <string name="overview">Overview</string>
+    <string name="language">Language</string>
+    <string name="original_title">Original Title</string>
+    <string name="popularity">Popularity</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="favorite_option">Favorite option</string>
+    <string name="favorite">Favorite</string>
+    <string name="transition_name">movie card</string>
+    <string name="unfavorite">Unfavorite</string>
+    <string name="error_message">Alguma coisa deu errado</string>
+    <string name="poster">Poster</string>
+    <string name="background">Background</string>
+    <string name="home_title">Movie DB API</string>
+    <string name="settings">Settings</string>
+
+    <!-- preferences -->
+    <string name="pref_nigh_mode_key">nigh_mode</string>
+    <string name="pref_nigh_mode_summary">Set your theme.</string>
+    <string name="pref_nigh_mode_title">Nigh mode</string>
+    <string name="dialog_theme_automatic_option">Automatic</string>
+    <string name="dialog_theme_night_option">Night</string>
+    <string name="dialog_theme_day_option">Day</string>
+    <array name="pref_themes">
+        <item>Automatic</item>
+        <item>Night</item>
+        <item>Day</item>
+    </array>
+    <!-- endregion -->
+
+    <!-- alternative_texts -->
+    <string name="alt_votes_average">The vote average to this movie is %1$.2f</string>
+    <string name="alt_is_favorite">It is Favorite</string>
+    <string name="alt_is_not_favorite">It is not favorite</string>
+    <!-- endregion -->
+</resources>

@@ -1,0 +1,124 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        applicationId "com.gabrielbmoro.programmingchallenge"
+        minSdkVersion 22
+        targetSdkVersion 30
+        versionCode 17
+        versionName "1.0.11"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary true
+    }
+
+    /*
+    * When I add the CustomPreference I needed to put this block to avoid the error:
+    * - Invoke-customs are only supported starting with Android O (--min-api 26.
+    * - Reference: https://stackoverflow.com/questions/49891730/invoke-customs-are-only-supported-starting-with-android-0-min-api-26
+    */
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+    def appcompat = '1.2.0'
+    implementation "androidx.appcompat:appcompat:$appcompat"
+
+    def constraintLayout = '2.0.4'
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+
+    def swipeRefresh = '1.2.0-alpha01'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefresh"
+
+    def recyclerView = '1.2.0'
+    implementation "androidx.recyclerview:recyclerview:$recyclerView"
+
+    def cardView = '1.0.0'
+    implementation "androidx.cardview:cardview:$cardView"
+
+    def room = '2.3.0'
+    kapt "androidx.room:room-compiler:$room"
+    implementation "androidx.room:room-ktx:$room"
+    implementation "androidx.room:room-runtime:$room"
+
+    def lifecycle = '2.3.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle"
+
+    def lifecycle_extensions = '2.2.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
+
+    def preference = '1.1.1'
+    implementation "androidx.preference:preference-ktx:$preference"
+
+    def paging = '2.1.2'
+    implementation "androidx.paging:paging-runtime-ktx:$paging"
+
+    def material = '1.3.0'
+    implementation "com.google.android.material:material:$material"
+
+    def timber = '4.7.1'
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    def retrofit = '2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    def glide = '4.11.0'
+    implementation "com.github.bumptech.glide:glide:$glide"
+
+    def koin = '2.1.5'
+    implementation "org.koin:koin-androidx-scope:$koin"
+    implementation "org.koin:koin-androidx-viewmodel:$koin"
+    implementation "org.koin:koin-androidx-ext:$koin"
+    testImplementation "org.koin:koin-test:$koin"
+
+    def junit = '4.13.1'
+    testImplementation "junit:junit:$junit"
+
+    def androidTest = '1.1.2'
+    androidTestImplementation "androidx.test.ext:junit:$androidTest"
+
+    def truth = '1.1'
+    androidTestImplementation "com.google.truth:truth:$truth"
+    testImplementation "com.google.truth:truth:$truth"
+
+    def testCore = '1.3.0'
+    testImplementation "androidx.test:core:$testCore"
+
+    def mockK = '1.10.0'
+    testImplementation "io.mockk:mockk:$mockK"
+
+    def coroutines = '1.3.8'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
+
+    def espresso = '3.3.0'
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+
+    def testRules = '1.3.0'
+    androidTestImplementation "androidx.test:rules:$testRules"
+}

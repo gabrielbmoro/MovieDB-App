@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gabrielbmoro.programmingchallenge.presentation.components.OptionsComponent xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_theme_selection_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:options="@array/pref_themes" />

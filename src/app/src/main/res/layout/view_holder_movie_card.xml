@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_view_height"
+    android:layout_margin="12dp"
+    android:background="@android:color/darker_gray"
+    android:clickable="true"
+    android:elevation="2dp"
+    android:focusable="true"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp">
+
+    <ImageView
+        android:id="@+id/view_holder_movie_card_poster"
+        android:layout_width="@dimen/poster_card_width"
+        android:layout_height="280dp"
+        android:layout_gravity="top|start"
+        android:contentDescription="@string/poster"
+        android:scaleType="fitStart"
+        android:transitionName="@string/transition_name"
+        tools:src="@drawable/jean_claude_van_damme" />
+
+    <TextView
+        android:id="@+id/view_holder_movie_card_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="@dimen/poster_card_width"
+        android:maxHeight="@dimen/card_title_max_height"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        tools:text="@string/grande_dragao_branco" />
+
+    <TextView
+        android:id="@+id/view_holder_movie_card_release_date"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="@dimen/poster_card_width"
+        android:layout_marginTop="@dimen/card_title_max_height"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        tools:text="@string/release_date_example" />
+
+
+    <com.gabrielbmoro.programmingchallenge.presentation.components.FiveStarsComponent
+        android:id="@+id/view_holder_movie_card_five_stars_component"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="@dimen/poster_card_width"
+        android:layout_marginTop="180dp"
+        android:orientation="horizontal" />
+
+</androidx.cardview.widget.CardView>

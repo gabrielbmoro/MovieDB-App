@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.gabrielbmoro.programmingchallenge.presentation.settings.DialogPreferenceImpl
+        android:key="@string/pref_nigh_mode_key"
+        android:summary="@string/pref_nigh_mode_summary"
+        android:title="@string/pref_nigh_mode_title" />
+
+</PreferenceScreen>
