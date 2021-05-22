@@ -6,16 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.DialogThemeSelectionBinding
 
 class ThemeSelectionDialog(private val currentTheme: Int) : DialogFragment() {
 
-    private lateinit var binding : DialogThemeSelectionBinding
+    private lateinit var binding: DialogThemeSelectionBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DialogThemeSelectionBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -26,7 +29,7 @@ class ThemeSelectionDialog(private val currentTheme: Int) : DialogFragment() {
         val preferencesOptions = resources.getTextArray(R.array.pref_themes)
         if (preferencesOptions.size >= 3) {
             val optionValue = when (currentTheme) {
-                AppCompatDelegate.MODE_NIGHT_AUTO -> preferencesOptions[0]
+                0 -> preferencesOptions[0]
                 AppCompatDelegate.MODE_NIGHT_YES -> preferencesOptions[1]
                 AppCompatDelegate.MODE_NIGHT_NO -> preferencesOptions[2]
                 else -> ""
@@ -34,15 +37,17 @@ class ThemeSelectionDialog(private val currentTheme: Int) : DialogFragment() {
             binding.dialogThemeSelectionGroup.setCheckTo(optionValue)
 
             binding.dialogThemeSelectionGroup.setupCallback { selectedItem ->
-                targetFragment?.onActivityResult(
-                        REQUEST_CODE,
-                        when (selectedItem) {
-                            preferencesOptions[0] -> AppCompatDelegate.MODE_NIGHT_AUTO
-                            preferencesOptions[1] -> AppCompatDelegate.MODE_NIGHT_YES
-                            preferencesOptions[2] -> AppCompatDelegate.MODE_NIGHT_NO
-                            else -> AppCompatDelegate.MODE_NIGHT_NO
-                        },
-                        null
+                val selectedTheme = when (selectedItem) {
+                    preferencesOptions[0] -> 0
+                    preferencesOptions[1] -> AppCompatDelegate.MODE_NIGHT_YES
+                    preferencesOptions[2] -> AppCompatDelegate.MODE_NIGHT_NO
+                    else -> AppCompatDelegate.MODE_NIGHT_NO
+                }
+                parentFragmentManager.setFragmentResult(
+                    SELECTED_THEME_REQUEST_KEY,
+                    Bundle().apply {
+                        putInt(THEME_BUNDLE_KEY, selectedTheme)
+                    }
                 )
                 dismiss()
             }
@@ -53,11 +58,8 @@ class ThemeSelectionDialog(private val currentTheme: Int) : DialogFragment() {
         super.show(fragmentManager, ThemeSelectionDialog::javaClass.name)
     }
 
-    fun setTargetFragment(fragment: Fragment) {
-        super.setTargetFragment(fragment, REQUEST_CODE)
-    }
-
     companion object {
-        const val REQUEST_CODE = 1231
+        const val SELECTED_THEME_REQUEST_KEY = "selectTheme"
+        const val THEME_BUNDLE_KEY = "ThemeSelectionDialog:themeKey"
     }
 }
