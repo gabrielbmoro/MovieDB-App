@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.gabrielbmoro.programmingchallenge.core
 
 import android.app.Application

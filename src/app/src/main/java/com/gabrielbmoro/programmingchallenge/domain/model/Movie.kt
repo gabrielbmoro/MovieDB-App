@@ -45,8 +45,7 @@ open class Movie(
                 parcel.readByte() != 0.toByte(),
                 parcel.readString() ?: "",
                 parcel.readString() ?: "",
-                parcel.readByte() != 0.toByte()) {
-        }
+                parcel.readByte() != 0.toByte())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
                 parcel.writeValue(id)

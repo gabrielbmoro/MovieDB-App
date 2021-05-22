@@ -5,8 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMainBinding
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
@@ -26,9 +26,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val fragmentsList = listOf<Fragment>(
-            MovieListFragment.newInstance(MovieListType.TopRated),
-            MovieListFragment.newInstance(MovieListType.Popular),
-            FavoriteMovieListFragment()
+        MovieListFragment.newInstance(MovieListType.TopRated),
+        MovieListFragment.newInstance(MovieListType.Popular),
+        FavoriteMovieListFragment()
     )
     private lateinit var binding: ActivityMainBinding
     private val viewModel by viewModel<MainViewModel>()
@@ -38,29 +38,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.activityMainPagerComponent.adapter = object : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            override fun getCount(): Int {
+        binding.activityMainPagerComponent.adapter = object : FragmentStateAdapter(
+            supportFragmentManager, lifecycle
+        ) {
+            override fun getItemCount(): Int {
                 return fragmentsList.size
             }
 
-            override fun getItem(position: Int): Fragment {
+            override fun createFragment(position: Int): Fragment {
                 return fragmentsList[position]
             }
         }
 
         binding.activityMainPagerComponent.currentItem = viewModel.getPage()
-        binding.activityMainPagerComponent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    MainViewModel.TOP_RATED_PAGE -> binding.activityMainBottomMenu.selectedItemId = R.id.menuTopRatedMovies
-                    MainViewModel.POPULAR_PAGE -> binding.activityMainBottomMenu.selectedItemId = R.id.menuPopularMovies
-                    MainViewModel.FAVORITE_PAGE -> binding.activityMainBottomMenu.selectedItemId = R.id.menuFavoriteMovies
+        binding.activityMainPagerComponent.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+
+                    when (position) {
+                        MainViewModel.TOP_RATED_PAGE -> binding.activityMainBottomMenu.selectedItemId =
+                            R.id.menuTopRatedMovies
+                        MainViewModel.POPULAR_PAGE -> binding.activityMainBottomMenu.selectedItemId =
+                            R.id.menuPopularMovies
+                        MainViewModel.FAVORITE_PAGE -> binding.activityMainBottomMenu.selectedItemId =
+                            R.id.menuFavoriteMovies
+                    }
+                    viewModel.setPage(pageIndex = position)
                 }
-                viewModel.setPage(pageIndex = position)
             }
-        })
+        )
 
         binding.activityMainBottomMenu.setOnNavigationItemSelectedListener {
             if (binding.activityMainBottomMenu.selectedItemId == it.itemId) {
@@ -68,9 +75,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             when (it.itemId) {
-                R.id.menuTopRatedMovies -> binding.activityMainPagerComponent.setCurrentItem(0, false)
-                R.id.menuPopularMovies -> binding.activityMainPagerComponent.setCurrentItem(1, false)
-                R.id.menuFavoriteMovies -> binding.activityMainPagerComponent.setCurrentItem(2, false)
+                R.id.menuTopRatedMovies -> binding.activityMainPagerComponent.setCurrentItem(
+                    0,
+                    false
+                )
+                R.id.menuPopularMovies -> binding.activityMainPagerComponent.setCurrentItem(
+                    1,
+                    false
+                )
+                R.id.menuFavoriteMovies -> binding.activityMainPagerComponent.setCurrentItem(
+                    2,
+                    false
+                )
             }
             true
         }

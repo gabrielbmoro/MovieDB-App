@@ -1,6 +1,5 @@
 package com.gabrielbmoro.programmingchallenge.presentation.movieList
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +10,7 @@ import com.gabrielbmoro.programmingchallenge.presentation.ViewModelResult.Loadin
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetTopRatedMoviesUseCase
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 
 class MovieListViewModel(
@@ -67,7 +67,7 @@ class MovieListViewModel(
                         }
                     }
                 } catch (exception: Exception) {
-                    Log.e("ERROR", exception.message ?: "--")
+                    Timber.e(exception.message)
                     onMoviesListReceived.postValue(ViewModelResult.Error)
                 }
             }
