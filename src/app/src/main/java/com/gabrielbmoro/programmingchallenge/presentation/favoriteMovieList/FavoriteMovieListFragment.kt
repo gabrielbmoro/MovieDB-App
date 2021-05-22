@@ -15,7 +15,7 @@ class FavoriteMovieListFragment : Fragment(), ScrollableFragment {
     private val viewModel: FavoriteMoviesViewModel by viewModel()
     private val adapter = FavoriteMoviesListAdapter()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFavoriteMoviesListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -29,9 +29,9 @@ class FavoriteMovieListFragment : Fragment(), ScrollableFragment {
         super.onResume()
         viewModel.setup()?.observe(
                 viewLifecycleOwner,
-                Observer {
-                    adapter.submitList(it)
-                }
+            {
+                adapter.submitList(it)
+            }
         )
     }
 

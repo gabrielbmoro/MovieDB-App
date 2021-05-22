@@ -49,7 +49,7 @@ class MovieListFragment : Fragment(), ScrollableFragment {
         binding.fragmentMoviesListTvError.show(false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         return binding.root
     }
