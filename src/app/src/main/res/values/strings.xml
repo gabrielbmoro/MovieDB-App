@@ -42,9 +42,12 @@
     </array>
     <!-- endregion -->
 
+    <string name="empty_view_title">No movie here</string>
+
     <!-- alternative_texts -->
     <string name="alt_votes_average">The vote average to this movie is %1$.2f</string>
     <string name="alt_is_favorite">It is Favorite</string>
     <string name="alt_is_not_favorite">It is not favorite</string>
+    <string name="alt_sad_emoji">Sad emoji</string>
     <!-- endregion -->
 </resources>
