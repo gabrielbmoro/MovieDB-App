@@ -10,7 +10,10 @@ import com.gabrielbmoro.programmingchallenge.presentation.components.adapter.Mov
 
 class FavoriteMoviesListAdapter : PagedListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie_card, parent, false))
+        return MovieViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_holder_movie_card, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -22,7 +25,8 @@ class FavoriteMoviesListAdapter : PagedListAdapter<Movie, MovieViewHolder>(DIFF_
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
             // The ID property identifies when items are the same.
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie) = (oldItem.id == newItem.id)
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie) =
+                (oldItem.id == newItem.id)
 
             // If you use the "==" operator, make sure that the object implements
             // .equals(). Alternatively, write custom data comparison logic here.
