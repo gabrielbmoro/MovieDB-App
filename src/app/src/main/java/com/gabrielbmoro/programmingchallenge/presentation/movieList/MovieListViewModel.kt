@@ -42,15 +42,14 @@ class MovieListViewModel(
     //endregion
 
     init {
-        requestMore()
+        load()
     }
 
     private fun hasMorePages(pageMovies: PageMovies): Boolean {
         return currentPage < pageMovies.totalPages
     }
 
-    fun requestMore() {
-        var hasMorePages = false
+    fun load() {
         if (!lock.isLocked) {
             lock.lock()
 

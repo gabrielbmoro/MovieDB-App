@@ -64,7 +64,7 @@ class MovieListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.fragmentMoviesListRvList.paginationSupport {
-            viewModel.requestMore()
+            viewModel.load()
         }
         binding.fragmentMoviesListSwRefresh.setOnRefreshListener {
             viewModel.reload()
