@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.domain.usecase
+package com.gabrielbmoro.programmingchallenge.usecase
 
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository

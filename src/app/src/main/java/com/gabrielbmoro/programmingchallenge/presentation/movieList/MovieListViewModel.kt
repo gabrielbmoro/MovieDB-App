@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
-import com.gabrielbmoro.programmingchallenge.domain.usecase.GetFavoriteMoviesUseCase
-import com.gabrielbmoro.programmingchallenge.domain.usecase.GetPopularMoviesUseCase
-import com.gabrielbmoro.programmingchallenge.domain.usecase.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.programmingchallenge.usecase.GetFavoriteMoviesUseCase
+import com.gabrielbmoro.programmingchallenge.usecase.GetPopularMoviesUseCase
+import com.gabrielbmoro.programmingchallenge.usecase.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
 import kotlinx.coroutines.launch

@@ -2,7 +2,7 @@ package com.gabrielbmoro.programmingchallenge.core
 
 import androidx.room.Room
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
-import com.gabrielbmoro.programmingchallenge.domain.usecase.*
+import com.gabrielbmoro.programmingchallenge.usecase.*
 import com.gabrielbmoro.programmingchallenge.presentation.MainViewModel
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedViewModel
 import com.gabrielbmoro.programmingchallenge.presentation.movieList.MovieListViewModel
