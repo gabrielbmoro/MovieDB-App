@@ -8,9 +8,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/fragment_movies_list_sw_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:visibility="visible"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <com.gabrielbmoro.programmingchallenge.presentation.components.moviesList.MoviesRecyclerViewComponent
             android:id="@+id/fragment_movies_list_rv_list"

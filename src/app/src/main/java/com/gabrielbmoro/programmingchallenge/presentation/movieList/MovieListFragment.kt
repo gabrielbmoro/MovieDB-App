@@ -45,16 +45,13 @@ class MovieListFragment : Fragment() {
                 binding.fragmentMoviesListProgressBar.start()
             } else {
                 binding.fragmentMoviesListProgressBar.stop()
+                binding.fragmentMoviesListSwRefresh.isRefreshing = false
             }
         })
 
         viewModel.moviesLiveData.observe(viewLifecycleOwner, { movies ->
-            binding.fragmentMoviesListSwRefresh.show(true)
             binding.fragmentMoviesListRvList.update(movies)
-        })
-
-        viewModel.emptyStateLiveData.observe(viewLifecycleOwner, {
-            binding.fragmentMoviesListEmptyState.show(true)
+            binding.fragmentMoviesListEmptyState.show(movies.isEmpty())
         })
 
         viewModel.errorStateLiveData.observe(viewLifecycleOwner, {

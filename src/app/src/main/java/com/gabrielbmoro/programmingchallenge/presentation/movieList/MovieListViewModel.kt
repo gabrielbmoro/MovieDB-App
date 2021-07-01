@@ -21,9 +21,6 @@ class MovieListViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    private val emptyStateMutableLiveData = MutableLiveData<Unit>()
-    val emptyStateLiveData: LiveData<Unit> = emptyStateMutableLiveData
-
     private val errorStateMutableLiveData = MutableLiveData<Unit>()
     val errorStateLiveData: LiveData<Unit> = errorStateMutableLiveData
 
@@ -61,8 +58,6 @@ class MovieListViewModel(
                         MovieListType.TopRated, MovieListType.Popular -> loadTopRatedOrPopularMovies()
                         MovieListType.Favorite -> loadFavoriteMovies()
                     }
-
-                    checkEmptyState()
                 } catch (exception: Exception) {
                     Timber.e(exception)
                     errorStateMutableLiveData.postValue(Unit)
@@ -71,12 +66,6 @@ class MovieListViewModel(
                 }
             }
             lock.unlock()
-        }
-    }
-
-    private fun checkEmptyState() {
-        if (moviesMutableLiveData.value?.isNullOrEmpty() == true) {
-            emptyStateMutableLiveData.postValue(Unit)
         }
     }
 
@@ -98,9 +87,10 @@ class MovieListViewModel(
                 null
             }
         }?.let { page ->
-            if (hasMorePages(page))
+            if (hasMorePages(page)) {
                 currentPage++
-            previousSize = moviesMutableLiveData.value?.size ?: 0
+                previousSize = moviesMutableLiveData.value?.size ?: 0
+            }
 
             if (moviesMutableLiveData.value == null) {
                 moviesMutableLiveData.postValue(page.results ?: emptyList())
@@ -117,6 +107,8 @@ class MovieListViewModel(
     fun reload() {
         currentPage = FIRST_PAGE
         moviesMutableLiveData.value = emptyList()
+
+        load()
     }
 
     companion object {
