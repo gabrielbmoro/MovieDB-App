@@ -4,16 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
-import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
+import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
+import com.gabrielbmoro.programmingchallenge.domain.usecase.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 
 class MovieListViewModel(
     val type: MovieListType,
+    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
@@ -42,6 +45,10 @@ class MovieListViewModel(
         requestMore()
     }
 
+    private fun hasMorePages(pageMovies: PageMovies): Boolean{
+        return currentPage < pageMovies.totalPages
+    }
+
     fun requestMore() {
         var hasMorePages = false
         if (!lock.isLocked) {
@@ -53,14 +60,14 @@ class MovieListViewModel(
 
                     when (type) {
                         MovieListType.TopRated -> {
-                            getTopRatedMoviesUseCase.execute(currentPage)?.also {
-                                hasMorePages = it.hasMorePages
-                            }?.movies
+                            getTopRatedMoviesUseCase.execute(currentPage).also {
+                                hasMorePages = hasMorePages(it)
+                            }.results
                         }
                         MovieListType.Popular -> {
-                            getPopularMoviesUseCase.execute(currentPage)?.also {
-                                hasMorePages = it.hasMorePages
-                            }?.movies
+                            getPopularMoviesUseCase.execute(currentPage).also {
+                                hasMorePages = hasMorePages(it)
+                            }.results
                         }
                         else -> null
                     }?.let { movies ->

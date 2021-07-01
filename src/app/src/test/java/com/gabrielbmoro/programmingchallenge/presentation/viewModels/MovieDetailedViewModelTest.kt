@@ -1,7 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.presentation.viewModels
 
 import com.gabrielbmoro.programmingchallenge.KoinUnitTest
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.repository.entities.FavoriteMovie
 import com.gabrielbmoro.programmingchallenge.domain.usecase.CheckMovieIsFavoriteUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.UnFavoriteMovieUseCase
@@ -20,8 +20,8 @@ class MovieDetailedViewModelTest : KoinUnitTest() {
     private val unFavoriteMovieUseCase by inject<UnFavoriteMovieUseCase>()
     private val checkMovieIsFavoriteUseCase by inject<CheckMovieIsFavoriteUseCase>()
 
-    private fun emptyMovieObj(): Movie {
-        return Movie(
+    private fun emptyMovieObj(): FavoriteMovie {
+        return FavoriteMovie(
                 id = null,
                 votes = 0,
                 isVideo = false,
@@ -106,7 +106,7 @@ class MovieDetailedViewModelTest : KoinUnitTest() {
                 "sunt in culpa qui officia deserunt mollit anim id est laborum."
         val releaseDate = "02-02-2012"
         val isFavorite = true
-        val movie = Movie(
+        val movie = FavoriteMovie(
                 id = movieId,
                 votes = votes,
                 isVideo = isVideo,

@@ -1,19 +1,17 @@
 package com.gabrielbmoro.programmingchallenge.core
 
 import androidx.room.Room
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
-import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
+import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.domain.usecase.*
 import com.gabrielbmoro.programmingchallenge.presentation.MainViewModel
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedViewModel
-import com.gabrielbmoro.programmingchallenge.presentation.favoriteMovieList.FavoriteMoviesViewModel
 import com.gabrielbmoro.programmingchallenge.presentation.movieList.MovieListViewModel
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
-import com.gabrielbmoro.programmingchallenge.repository.api.ApiRepository
-import com.gabrielbmoro.programmingchallenge.repository.api.ApiRepositoryImpl
-import com.gabrielbmoro.programmingchallenge.repository.api.LoggedInterceptor
-import com.gabrielbmoro.programmingchallenge.repository.dataBase.DataBaseFactory
-import com.gabrielbmoro.programmingchallenge.repository.dataBase.DataBaseRepositoryImpl
+import com.gabrielbmoro.programmingchallenge.repository.MoviesRepositoryImpl
+import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.LoggedInterceptor
+import com.gabrielbmoro.programmingchallenge.repository.room.DataBaseFactory
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -26,8 +24,8 @@ import java.util.concurrent.TimeUnit
 
 val repositoryModule = module {
     single {
-        ApiRepositoryImpl(
-            Retrofit.Builder()
+        MoviesRepositoryImpl(
+            api = Retrofit.Builder()
                 .baseUrl(ConfigVariables.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(
@@ -38,13 +36,8 @@ val repositoryModule = module {
                         .build()
                 )
                 .build()
-                .create(ApiRepository::class.java)
-        )
-    } bind MoviesRepository::class
-
-    single {
-        DataBaseRepositoryImpl(
-            Room.databaseBuilder(
+                .create(ApiRepository::class.java),
+            favoriteMoviesDAO = Room.databaseBuilder(
                 androidContext(),
                 DataBaseFactory::class.java,
                 ConfigVariables.DATABASE_NAME
@@ -54,17 +47,16 @@ val repositoryModule = module {
 }
 
 val usecaseModule = module {
-    single { GetTopRatedMoviesUseCase(get<ApiRepositoryImpl>()) }
-    single { GetPopularMoviesUseCase(get<ApiRepositoryImpl>()) }
-    single { GetFavoriteMoviesUseCase(get<DataBaseRepositoryImpl>()) }
-    single { FavoriteMovieUseCase(get<DataBaseRepositoryImpl>()) }
-    single { UnFavoriteMovieUseCase(get<DataBaseRepositoryImpl>()) }
-    single { CheckMovieIsFavoriteUseCase(get<DataBaseRepositoryImpl>()) }
+    single { GetTopRatedMoviesUseCase(get()) }
+    single { GetPopularMoviesUseCase(get()) }
+    single { GetFavoriteMoviesUseCase(get()) }
+    single { FavoriteMovieUseCase(get()) }
+    single { UnFavoriteMovieUseCase(get()) }
+    single { CheckMovieIsFavoriteUseCase(get()) }
 }
 
 val viewModelModules = module {
-    viewModel { (type: MovieListType) -> MovieListViewModel(type, get(), get()) }
-    viewModel { FavoriteMoviesViewModel(get()) }
+    viewModel { (type: MovieListType) -> MovieListViewModel(type, get(), get(), get()) }
     viewModel { (movie: Movie) ->
         MovieDetailedViewModel(movie, get(), get(), get())
     }

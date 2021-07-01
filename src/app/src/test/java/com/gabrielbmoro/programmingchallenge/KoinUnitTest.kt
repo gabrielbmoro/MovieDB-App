@@ -3,8 +3,8 @@ package com.gabrielbmoro.programmingchallenge
 import android.content.Context
 import com.gabrielbmoro.programmingchallenge.core.usecaseModule
 import com.gabrielbmoro.programmingchallenge.presentation.viewModels.CoroutinesTestRule
-import com.gabrielbmoro.programmingchallenge.repository.api.ApiRepositoryImpl
-import com.gabrielbmoro.programmingchallenge.repository.dataBase.DataBaseRepositoryImpl
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepositoryImpl
+import com.gabrielbmoro.programmingchallenge.repository.room.DataBaseRepositoryImpl
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule

@@ -9,9 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMainBinding
-import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
-import com.gabrielbmoro.programmingchallenge.presentation.favoriteMovieList.ScrollableFragment
-import com.gabrielbmoro.programmingchallenge.presentation.favoriteMovieList.FavoriteMovieListFragment
+import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.movieList.MovieListFragment
 import com.gabrielbmoro.programmingchallenge.presentation.settings.SettingsActivity
 import com.gabrielbmoro.programmingchallenge.presentation.util.setThemeAccordingToThePreferences
@@ -25,10 +23,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class MainActivity : AppCompatActivity() {
 
-    private val fragmentsList = listOf<Fragment>(
+    private val fragmentsList = listOf(
         MovieListFragment.newInstance(MovieListType.TopRated),
         MovieListFragment.newInstance(MovieListType.Popular),
-        FavoriteMovieListFragment()
+        MovieListFragment.newInstance(MovieListType.Favorite),
     )
     private lateinit var binding: ActivityMainBinding
     private val viewModel by viewModel<MainViewModel>()
@@ -71,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.activityMainBottomMenu.setOnNavigationItemSelectedListener {
             if (binding.activityMainBottomMenu.selectedItemId == it.itemId) {
-                (fragmentsList[binding.activityMainPagerComponent.currentItem] as? ScrollableFragment)?.scrollToTop()
+                fragmentsList[binding.activityMainPagerComponent.currentItem].scrollToTop()
             }
 
             when (it.itemId) {

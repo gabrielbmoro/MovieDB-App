@@ -1,7 +1,8 @@
 package com.gabrielbmoro.programmingchallenge.presentation.viewModels
 
 import com.gabrielbmoro.programmingchallenge.KoinUnitTest
-import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
+import com.gabrielbmoro.programmingchallenge.domain.usecase.GetFavoriteMoviesUseCase
+import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.presentation.movieList.MovieListViewModel
@@ -12,15 +13,17 @@ import org.koin.test.inject
 class MovieListViewModelTest : KoinUnitTest() {
 
     private val topRatedUseCase by inject<GetTopRatedMoviesUseCase>()
+    private val favoriteUseCase by inject<GetFavoriteMoviesUseCase>()
     private val popularMoviesUseCase by inject<GetPopularMoviesUseCase>()
 
     @Test
     fun `the list of movies can be reloaded`() {
         val viewModel = MovieListViewModel(
-                getTopRatedMoviesUseCase = topRatedUseCase,
-                getPopularMoviesUseCase = popularMoviesUseCase
+            MovieListType.TopRated,
+            getTopRatedMoviesUseCase = topRatedUseCase,
+            getPopularMoviesUseCase = popularMoviesUseCase,
+            getFavoriteMoviesUseCase = favoriteUseCase
         )
-        viewModel.setup(MovieListType.TopRated)
 
         viewModel.reload()
 
