@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.domain.model
+package com.gabrielbmoro.programmingchallenge.repository.entities
 
 sealed class MovieListType(val value: Int) {
     object TopRated : MovieListType(TOP_RATED_MOVIES_VALUE)

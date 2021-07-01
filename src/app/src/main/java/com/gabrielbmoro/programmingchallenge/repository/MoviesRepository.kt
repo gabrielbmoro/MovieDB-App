@@ -1,16 +1,14 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
-import androidx.paging.DataSource
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
-import com.gabrielbmoro.programmingchallenge.repository.api.response.PageResponse
+import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
 
 interface MoviesRepository {
+    suspend fun getFavoriteMovies(): List<Movie>
 
-    fun getFavoriteMovies(): DataSource.Factory<Int, Movie>?
+    suspend fun getPopularMovies(pageNumber: Int): PageMovies
 
-    suspend fun getPopularMovies(pageNumber: Int): PageResponse?
-
-    suspend fun getTopRatedMovies(pageNumber: Int): PageResponse?
+    suspend fun getTopRatedMovies(pageNumber: Int): PageMovies
 
     suspend fun doAsFavorite(movie: Movie): Boolean
 

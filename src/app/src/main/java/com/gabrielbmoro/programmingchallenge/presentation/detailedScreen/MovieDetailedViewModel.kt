@@ -3,18 +3,17 @@ package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.domain.usecase.CheckMovieIsFavoriteUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.UnFavoriteMovieUseCase
-import com.gabrielbmoro.programmingchallenge.presentation.ViewModelResult
 import kotlinx.coroutines.launch
 
 class MovieDetailedViewModel(
-        val movie: Movie,
-        private val favoriteMovieUseCase: FavoriteMovieUseCase,
-        private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
-        private val checkMovieIsFavoriteUseCase: CheckMovieIsFavoriteUseCase
+    val movie: Movie,
+    private val favoriteMovieUseCase: FavoriteMovieUseCase,
+    private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
+    private val checkMovieIsFavoriteUseCase: CheckMovieIsFavoriteUseCase
 ) : ViewModel() {
 
     val onFavoriteMovieEvent = MutableLiveData<ViewModelResult>()
@@ -47,5 +46,10 @@ class MovieDetailedViewModel(
                 onFavoriteMovieEvent.postValue(ViewModelResult.Error)
             }
         }
+    }
+
+    sealed class ViewModelResult {
+        object Success : ViewModelResult()
+        object Error : ViewModelResult()
     }
 }

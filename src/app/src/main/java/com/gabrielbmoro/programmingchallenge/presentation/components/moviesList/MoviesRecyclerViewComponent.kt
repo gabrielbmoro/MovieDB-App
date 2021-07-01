@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.components.adapter.MoviesListAdapter
 
 class MoviesRecyclerViewComponent @JvmOverloads constructor(
@@ -19,9 +20,11 @@ class MoviesRecyclerViewComponent @JvmOverloads constructor(
         addOnScrollListener(EndOfScrollCallback(callback))
     }
 
-    fun scrollToTop() = smoothScrollToPosition(FIRST_POSITION)
+    fun update(movies: List<Movie>) {
+        (adapter as MoviesListAdapter).refresh(movies)
+    }
 
-    fun adapterImplementation() = adapter as? MoviesListAdapter
+    fun scrollToTop() = smoothScrollToPosition(FIRST_POSITION)
 
     private fun lastAdapterIndex(): Int {
         return adapter?.itemCount?.let {

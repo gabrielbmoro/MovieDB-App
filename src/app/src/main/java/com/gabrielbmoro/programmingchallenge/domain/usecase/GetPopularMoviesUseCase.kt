@@ -1,14 +1,11 @@
 package com.gabrielbmoro.programmingchallenge.domain.usecase
 
-import com.gabrielbmoro.programmingchallenge.domain.model.Page
-import com.gabrielbmoro.programmingchallenge.domain.usecase.mapper.MoviesMapper
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
+import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
 
 class GetPopularMoviesUseCase(val repository: MoviesRepository) {
 
-    suspend fun execute(pageNumber: Int): Page? {
-        return MoviesMapper.mapToPage(
-                repository.getPopularMovies(pageNumber)
-        )
+    suspend fun execute(pageNumber: Int): PageMovies {
+        return repository.getPopularMovies(pageNumber)
     }
 }

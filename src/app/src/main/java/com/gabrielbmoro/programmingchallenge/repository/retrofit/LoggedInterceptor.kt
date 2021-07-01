@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.repository.api
+package com.gabrielbmoro.programmingchallenge.repository.retrofit
 
 import okhttp3.Interceptor
 import okhttp3.Response
