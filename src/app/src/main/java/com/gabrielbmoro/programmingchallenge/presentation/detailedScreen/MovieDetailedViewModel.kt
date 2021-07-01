@@ -7,7 +7,6 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.domain.usecase.CheckMovieIsFavoriteUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.UnFavoriteMovieUseCase
-import com.gabrielbmoro.programmingchallenge.presentation.ViewModelResult
 import kotlinx.coroutines.launch
 
 class MovieDetailedViewModel(
@@ -47,5 +46,10 @@ class MovieDetailedViewModel(
                 onFavoriteMovieEvent.postValue(ViewModelResult.Error)
             }
         }
+    }
+
+    sealed class ViewModelResult {
+        object Success : ViewModelResult()
+        object Error : ViewModelResult()
     }
 }
