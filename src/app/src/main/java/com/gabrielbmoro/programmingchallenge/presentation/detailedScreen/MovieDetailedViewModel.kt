@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.usecase.CheckMovieIsFavoriteUseCase
-import com.gabrielbmoro.programmingchallenge.usecase.FavoriteMovieUseCase
-import com.gabrielbmoro.programmingchallenge.usecase.UnFavoriteMovieUseCase
+import com.gabrielbmoro.programmingchallenge.usecases.CheckMovieIsFavoriteUseCase
+import com.gabrielbmoro.programmingchallenge.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.programmingchallenge.usecases.UnFavoriteMovieUseCase
 import kotlinx.coroutines.launch
 
 class MovieDetailedViewModel(
