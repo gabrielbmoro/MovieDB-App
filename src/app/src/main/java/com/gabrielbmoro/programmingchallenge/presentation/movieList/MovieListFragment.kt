@@ -13,11 +13,19 @@ import com.gabrielbmoro.programmingchallenge.domain.model.convertToMovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.favoriteMovieList.ScrollableFragment
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MovieListFragment : Fragment(), ScrollableFragment {
 
     private lateinit var binding: FragmentMoviesListBinding
-    private val viewModel: MovieListViewModel by viewModel()
+    private val viewModel: MovieListViewModel by viewModel {
+        parametersOf(
+            arguments?.getInt(MOVIE_TYPE_VALUE)?.convertToMovieListType()
+                ?: IllegalArgumentException(
+                    "$MOVIE_TYPE_VALUE is a required argument"
+                )
+        )
+    }
 
     private val observer = Observer<ViewModelResult> { result ->
         binding.fragmentMoviesListSwRefresh.isRefreshing = false
@@ -37,7 +45,8 @@ class MovieListFragment : Fragment(), ScrollableFragment {
                 showTheRefreshLayout()
             }
             is ViewModelResult.Updated -> {
-                binding.fragmentMoviesListRvList.adapterImplementation()?.update(viewModel.newPart())
+                binding.fragmentMoviesListRvList.adapterImplementation()
+                    ?.update(viewModel.newPart())
                 showTheRefreshLayout()
             }
         }
@@ -49,27 +58,23 @@ class MovieListFragment : Fragment(), ScrollableFragment {
         binding.fragmentMoviesListTvError.show(false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentMoviesListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        getMovieTypeFromIntent()?.let { type ->
-            setupViewModel(type)
-            setupRecyclerView(type)
-        }
+        setupViewModel()
+        setupRecyclerView(viewModel.type)
     }
 
-    private fun getMovieTypeFromIntent(): MovieListType? {
-        return arguments?.getInt(MOVIE_TYPE_VALUE)?.convertToMovieListType()
-    }
-
-    private fun setupViewModel(type: MovieListType) {
+    private fun setupViewModel() {
         viewModel.onMoviesListReceived.observe(viewLifecycleOwner, observer)
-        viewModel.setup(type)
     }
 
     private fun setupRecyclerView(type: MovieListType) {
@@ -98,6 +103,5 @@ class MovieListFragment : Fragment(), ScrollableFragment {
                 }
             }
         }
-
     }
 }

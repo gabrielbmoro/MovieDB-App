@@ -14,13 +14,12 @@ import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
 
 class MovieListViewModel(
-        private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-        private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+    val type: MovieListType,
+    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
     private val moviesList = ArrayList<Movie>()
-    lateinit var type: MovieListType
-        private set
     val onMoviesListReceived = MutableLiveData<ViewModelResult>()
 
     //region pagination
@@ -31,8 +30,7 @@ class MovieListViewModel(
     private val lock = ReentrantLock()
     //endregion
 
-    fun setup(type: MovieListType) {
-        this@MovieListViewModel.type = type
+    init {
         onMoviesListReceived.postValue(Loading)
         requestMore()
     }
@@ -76,11 +74,8 @@ class MovieListViewModel(
     }
 
     fun reload() {
-        if (::type.isInitialized) {
-            currentPage = FIRST_PAGE
-            moviesList.clear()
-            setup(type)
-        }
+        currentPage = FIRST_PAGE
+        moviesList.clear()
     }
 
     fun movies() = moviesList.toList()
