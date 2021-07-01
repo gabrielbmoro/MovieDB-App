@@ -45,7 +45,7 @@ class MovieListViewModel(
         requestMore()
     }
 
-    private fun hasMorePages(pageMovies: PageMovies): Boolean{
+    private fun hasMorePages(pageMovies: PageMovies): Boolean {
         return currentPage < pageMovies.totalPages
     }
 
@@ -59,36 +59,11 @@ class MovieListViewModel(
                     isLoadingMutableLiveData.postValue(true)
 
                     when (type) {
-                        MovieListType.TopRated -> {
-                            getTopRatedMoviesUseCase.execute(currentPage).also {
-                                hasMorePages = hasMorePages(it)
-                            }.results
-                        }
-                        MovieListType.Popular -> {
-                            getPopularMoviesUseCase.execute(currentPage).also {
-                                hasMorePages = hasMorePages(it)
-                            }.results
-                        }
-                        else -> null
-                    }?.let { movies ->
-                        if (hasMorePages)
-                            currentPage++
-                        previousSize = moviesMutableLiveData.value?.size ?: 0
-
-                        if (moviesMutableLiveData.value == null) {
-                            moviesMutableLiveData.postValue(movies)
-                        } else {
-                            moviesMutableLiveData.postValue(
-                                moviesMutableLiveData.value?.toMutableList()?.apply {
-                                    addAll(movies)
-                                }?.toList() ?: emptyList()
-                            )
-                        }
-
-                        if(moviesMutableLiveData.value?.isNullOrEmpty() == true) {
-                            emptyStateMutableLiveData.postValue(Unit)
-                        }
+                        MovieListType.TopRated, MovieListType.Popular -> loadTopRatedOrPopularMovies()
+                        MovieListType.Favorite -> loadFavoriteMovies()
                     }
+
+                    checkEmptyState()
                 } catch (exception: Exception) {
                     Timber.e(exception)
                     errorStateMutableLiveData.postValue(Unit)
@@ -97,6 +72,46 @@ class MovieListViewModel(
                 }
             }
             lock.unlock()
+        }
+    }
+
+    private fun checkEmptyState() {
+        if (moviesMutableLiveData.value?.isNullOrEmpty() == true) {
+            emptyStateMutableLiveData.postValue(Unit)
+        }
+    }
+
+    private suspend fun loadFavoriteMovies() {
+        val movies = getFavoriteMoviesUseCase.execute()
+        moviesMutableLiveData.postValue(movies)
+    }
+
+    private suspend fun loadTopRatedOrPopularMovies() {
+        when (type) {
+            MovieListType.TopRated -> {
+                getTopRatedMoviesUseCase.execute(currentPage)
+            }
+            MovieListType.Popular -> {
+                getPopularMoviesUseCase.execute(currentPage)
+            }
+            else -> {
+                Timber.d("Nothing to do - It is not top rated or popular movie")
+                null
+            }
+        }?.let { page ->
+            if (hasMorePages(page))
+                currentPage++
+            previousSize = moviesMutableLiveData.value?.size ?: 0
+
+            if (moviesMutableLiveData.value == null) {
+                moviesMutableLiveData.postValue(page.results ?: emptyList())
+            } else {
+                moviesMutableLiveData.postValue(
+                    moviesMutableLiveData.value?.toMutableList()?.apply {
+                        addAll(page.results ?: emptyList())
+                    }?.toList() ?: emptyList()
+                )
+            }
         }
     }
 
