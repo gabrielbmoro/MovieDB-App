@@ -34,7 +34,7 @@ Total: _44%_
 | UI Tests             | Espresso, Truth         |
 | Network calls        | Retrofit                |
 | Json converter       | Retrofit - Gson         |
-| Persistence          | Room and Paging 2       |
+| Persistence          | Room                    |
 
 ## Teaser
 
