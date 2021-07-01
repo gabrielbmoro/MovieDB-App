@@ -2,16 +2,24 @@ package com.gabrielbmoro.programmingchallenge.presentation.components.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 
-class MoviesListAdapter : RecyclerView.Adapter<MovieViewHolder>() {
+class MoviesListAdapter : ListAdapter<Movie, MovieViewHolder>(DiffCallback()) {
 
-    private val elements = ArrayList<Movie>()
+    private var elements: List<Movie> = emptyList()
+        set(value) {
+            field = value
+            submitList(field)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_holder_movie_card, parent, false))
+        return MovieViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_holder_movie_card, parent, false)
+        )
     }
 
     override fun getItemCount() = elements.size
@@ -30,18 +38,21 @@ class MoviesListAdapter : RecyclerView.Adapter<MovieViewHolder>() {
         return VIEW_TYPE
     }
 
-    fun setup(movieDataList: List<Movie>) {
-        elements.clear()
-        elements.addAll(movieDataList)
-        notifyDataSetChanged()
+    fun refresh(movies: List<Movie>) {
+        elements = movies
     }
 
-    fun update(newElements: List<Movie>) {
-        val previousSize = elements.size
-        elements.addAll(
-                newElements
-        )
-        notifyItemRangeInserted(previousSize, newElements.size)
+    private class DiffCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie) = (oldItem.id == newItem.id)
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie) = (
+                oldItem.id == newItem.id
+                        && oldItem.backdropPath == newItem.backdropPath
+                        && oldItem.originalLanguage == newItem.originalLanguage
+                        && oldItem.originalTitle == newItem.originalTitle
+                        && oldItem.overview == newItem.overview
+                        && oldItem.title == newItem.title
+                )
     }
 
     companion object {

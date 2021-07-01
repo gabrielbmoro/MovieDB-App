@@ -1,12 +1,11 @@
 package com.gabrielbmoro.programmingchallenge.presentation.movieList
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
-import com.gabrielbmoro.programmingchallenge.presentation.ViewModelResult
-import com.gabrielbmoro.programmingchallenge.presentation.ViewModelResult.Loading
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecase.GetTopRatedMoviesUseCase
 import kotlinx.coroutines.launch
@@ -19,19 +18,27 @@ class MovieListViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    private val moviesList = ArrayList<Movie>()
-    val onMoviesListReceived = MutableLiveData<ViewModelResult>()
+    private val emptyStateMutableLiveData = MutableLiveData<Unit>()
+    val emptyStateLiveData: LiveData<Unit> = emptyStateMutableLiveData
+
+    private val errorStateMutableLiveData = MutableLiveData<Unit>()
+    val errorStateLiveData: LiveData<Unit> = errorStateMutableLiveData
+
+    private val moviesMutableLiveData = MutableLiveData<List<Movie>>()
+    val moviesLiveData: LiveData<List<Movie>> = moviesMutableLiveData
+
+    private val isLoadingMutableLiveData = MutableLiveData<Boolean>()
+    val isLoadingLiveData: LiveData<Boolean> = isLoadingMutableLiveData
 
     //region pagination
     var currentPage = FIRST_PAGE
         private set
-    var previousSize = moviesList.size
+    var previousSize = moviesMutableLiveData.value?.size ?: 0
         private set
     private val lock = ReentrantLock()
     //endregion
 
     init {
-        onMoviesListReceived.postValue(Loading)
         requestMore()
     }
 
@@ -39,8 +46,11 @@ class MovieListViewModel(
         var hasMorePages = false
         if (!lock.isLocked) {
             lock.lock()
+
             viewModelScope.launch {
                 try {
+                    isLoadingMutableLiveData.postValue(true)
+
                     when (type) {
                         MovieListType.TopRated -> {
                             getTopRatedMoviesUseCase.execute(currentPage)?.also {
@@ -56,17 +66,27 @@ class MovieListViewModel(
                     }?.let { movies ->
                         if (hasMorePages)
                             currentPage++
-                        previousSize = moviesList.size
-                        moviesList.addAll(movies)
-                        if (previousSize == 0) {
-                            onMoviesListReceived.postValue(ViewModelResult.Success)
+                        previousSize = moviesMutableLiveData.value?.size ?: 0
+
+                        if (moviesMutableLiveData.value == null) {
+                            moviesMutableLiveData.postValue(movies)
                         } else {
-                            onMoviesListReceived.postValue(ViewModelResult.Updated)
+                            moviesMutableLiveData.postValue(
+                                moviesMutableLiveData.value?.toMutableList()?.apply {
+                                    addAll(movies)
+                                }?.toList() ?: emptyList()
+                            )
+                        }
+
+                        if(moviesMutableLiveData.value?.isNullOrEmpty() == true) {
+                            emptyStateMutableLiveData.postValue(Unit)
                         }
                     }
                 } catch (exception: Exception) {
-                    Timber.e(exception.message)
-                    onMoviesListReceived.postValue(ViewModelResult.Error)
+                    Timber.e(exception)
+                    errorStateMutableLiveData.postValue(Unit)
+                } finally {
+                    isLoadingMutableLiveData.postValue(false)
                 }
             }
             lock.unlock()
@@ -75,15 +95,10 @@ class MovieListViewModel(
 
     fun reload() {
         currentPage = FIRST_PAGE
-        moviesList.clear()
+        moviesMutableLiveData.value = emptyList()
     }
-
-    fun movies() = moviesList.toList()
-
-    fun newPart() = moviesList.subList(previousSize, moviesList.lastIndex).toList()
 
     companion object {
         const val FIRST_PAGE = 1
     }
-
 }

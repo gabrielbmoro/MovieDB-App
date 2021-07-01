@@ -8,7 +8,9 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/fragment_movies_list_sw_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:visibility="visible"
+        android:visibility="gone">
 
         <com.gabrielbmoro.programmingchallenge.presentation.components.moviesList.MoviesRecyclerViewComponent
             android:id="@+id/fragment_movies_list_rv_list"
@@ -18,12 +20,20 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <com.gabrielbmoro.programmingchallenge.presentation.components.EmptyStateComponent
+        android:id="@+id/fragment_movies_list_empty_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/fragment_movies_list_tv_error"
         style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/error_message" />
+        android:text="@string/error_message"
+        android:visibility="gone" />
 
     <com.gabrielbmoro.programmingchallenge.presentation.components.loader.BubbleLoader
         android:id="@+id/fragment_movies_list_progress_bar"
@@ -31,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true"
+        android:visibility="gone"
         app:amountOfDots="3"
         app:dotSize="15dp"
         app:dotsColor="@color/colorAccent" />

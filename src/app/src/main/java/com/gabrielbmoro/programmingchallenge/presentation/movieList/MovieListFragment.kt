@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
-import com.gabrielbmoro.programmingchallenge.presentation.ViewModelResult
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.domain.model.convertToMovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.favoriteMovieList.ScrollableFragment
@@ -27,37 +25,6 @@ class MovieListFragment : Fragment(), ScrollableFragment {
         )
     }
 
-    private val observer = Observer<ViewModelResult> { result ->
-        binding.fragmentMoviesListSwRefresh.isRefreshing = false
-        when (result) {
-            is ViewModelResult.Error -> {
-                binding.fragmentMoviesListTvError.show(true)
-                binding.fragmentMoviesListProgressBar.stop()
-                binding.fragmentMoviesListSwRefresh.show(false)
-            }
-            is ViewModelResult.Loading -> {
-                binding.fragmentMoviesListTvError.show(false)
-                binding.fragmentMoviesListProgressBar.start()
-                binding.fragmentMoviesListSwRefresh.show(false)
-            }
-            is ViewModelResult.Success -> {
-                binding.fragmentMoviesListRvList.adapterImplementation()?.setup(viewModel.movies())
-                showTheRefreshLayout()
-            }
-            is ViewModelResult.Updated -> {
-                binding.fragmentMoviesListRvList.adapterImplementation()
-                    ?.update(viewModel.newPart())
-                showTheRefreshLayout()
-            }
-        }
-    }
-
-    private fun showTheRefreshLayout() {
-        binding.fragmentMoviesListSwRefresh.show(true)
-        binding.fragmentMoviesListProgressBar.stop()
-        binding.fragmentMoviesListTvError.show(false)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,19 +36,36 @@ class MovieListFragment : Fragment(), ScrollableFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewModel()
-        setupRecyclerView(viewModel.type)
+        setupRecyclerView()
+        setupObservers()
     }
 
-    private fun setupViewModel() {
-        viewModel.onMoviesListReceived.observe(viewLifecycleOwner, observer)
-    }
-
-    private fun setupRecyclerView(type: MovieListType) {
-        if (type == MovieListType.TopRated || type == MovieListType.Popular) {
-            binding.fragmentMoviesListRvList.paginationSupport {
-                viewModel.requestMore()
+    private fun setupObservers() {
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner, { isLoading ->
+            if (isLoading) {
+                binding.fragmentMoviesListProgressBar.start()
+            } else {
+                binding.fragmentMoviesListProgressBar.stop()
             }
+        })
+
+        viewModel.moviesLiveData.observe(viewLifecycleOwner, { movies ->
+            binding.fragmentMoviesListSwRefresh.show(true)
+            binding.fragmentMoviesListRvList.update(movies)
+        })
+
+        viewModel.emptyStateLiveData.observe(viewLifecycleOwner, {
+            binding.fragmentMoviesListEmptyState.show(true)
+        })
+
+        viewModel.errorStateLiveData.observe(viewLifecycleOwner, {
+            binding.fragmentMoviesListTvError.show(true)
+        })
+    }
+
+    private fun setupRecyclerView() {
+        binding.fragmentMoviesListRvList.paginationSupport {
+            viewModel.requestMore()
         }
         binding.fragmentMoviesListSwRefresh.setOnRefreshListener {
             viewModel.reload()
@@ -94,7 +78,7 @@ class MovieListFragment : Fragment(), ScrollableFragment {
 
     companion object {
 
-        private const val MOVIE_TYPE_VALUE = "aspd"
+        private const val MOVIE_TYPE_VALUE = "bundle:movie_type"
 
         fun newInstance(type: MovieListType): MovieListFragment {
             return MovieListFragment().apply {
