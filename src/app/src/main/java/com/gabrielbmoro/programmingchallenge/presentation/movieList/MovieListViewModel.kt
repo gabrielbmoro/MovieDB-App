@@ -10,12 +10,14 @@ import com.gabrielbmoro.programmingchallenge.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
+import javax.inject.Inject
 
-class MovieListViewModel(
-    val type: MovieListType,
+@HiltViewModel
+class MovieListViewModel @Inject constructor(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
@@ -38,7 +40,10 @@ class MovieListViewModel(
     private val lock = ReentrantLock()
     //endregion
 
-    init {
+    lateinit var type: MovieListType
+
+    fun setup(type: MovieListType) {
+        this.type = type
         load()
     }
 

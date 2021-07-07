@@ -2,23 +2,29 @@ package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.usecases.CheckMovieIsFavoriteUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.UnFavoriteMovieUseCase
+import dagger.assisted.AssistedFactory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieDetailedViewModel(
-    val movie: Movie,
+@HiltViewModel
+class MovieDetailedViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
-    private val checkMovieIsFavoriteUseCase: CheckMovieIsFavoriteUseCase
+    private val checkMovieIsFavoriteUseCase: CheckMovieIsFavoriteUseCase,
 ) : ViewModel() {
 
+    lateinit var movie: Movie
     val onFavoriteMovieEvent = MutableLiveData<ViewModelResult>()
 
-    init {
+    fun setup(movie: Movie) {
+        this.movie = movie
         checkIfIsFavorite()
     }
 

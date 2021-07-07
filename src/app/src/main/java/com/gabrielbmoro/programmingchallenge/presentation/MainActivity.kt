@@ -3,6 +3,7 @@ package com.gabrielbmoro.programmingchallenge.presentation
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -13,14 +14,9 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.movieList.MovieListFragment
 import com.gabrielbmoro.programmingchallenge.presentation.settings.SettingsActivity
 import com.gabrielbmoro.programmingchallenge.presentation.util.setThemeAccordingToThePreferences
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * This is a view that represents the three pages: top rated movies,
- * popular movies, and favorite movies.
- * @author Gabriel Moro
- * @since 2018-08-30
- */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val fragmentsList = listOf(
@@ -29,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         MovieListFragment.newInstance(MovieListType.Favorite),
     )
     private lateinit var binding: ActivityMainBinding
-    private val viewModel by viewModel<MainViewModel>()
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

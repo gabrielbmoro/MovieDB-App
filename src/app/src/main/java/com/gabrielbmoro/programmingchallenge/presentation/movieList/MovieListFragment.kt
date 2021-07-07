@@ -5,24 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
-import com.gabrielbmoro.programmingchallenge.repository.entities.convertToMovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import com.gabrielbmoro.programmingchallenge.repository.entities.convertToMovieListType
+import timber.log.Timber
 
 class MovieListFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesListBinding
-    private val viewModel: MovieListViewModel by viewModel {
-        parametersOf(
-            arguments?.getInt(MOVIE_TYPE_VALUE)?.convertToMovieListType()
-                ?: IllegalArgumentException(
-                    "$MOVIE_TYPE_VALUE is a required argument"
-                )
-        )
-    }
+    private val viewModel: MovieListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +28,17 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        try {
+            val type = arguments?.getInt(MOVIE_TYPE_VALUE)?.convertToMovieListType()
+                ?: throw IllegalArgumentException(
+                    "$MOVIE_TYPE_VALUE is a required argument"
+                )
+            viewModel.setup(type)
+        } catch (illegalArgumentException: IllegalArgumentException) {
+            Timber.e(illegalArgumentException)
+        }
+
         setupRecyclerView()
         setupObservers()
     }

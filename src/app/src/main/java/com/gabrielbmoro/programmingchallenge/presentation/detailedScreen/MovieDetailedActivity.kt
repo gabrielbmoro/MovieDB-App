@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import com.gabrielbmoro.programmingchallenge.R
@@ -12,26 +13,32 @@ import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBi
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.lang.IllegalArgumentException
 
+@AndroidEntryPoint
 class MovieDetailedActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailedBinding
-    private val viewModel: MovieDetailedViewModel by viewModel {
-        parametersOf(
-            intent.getParcelableExtra(MOVIE_INTENT_KEY) as? Movie
-                ?: throw IllegalArgumentException(
-                    "${MovieDetailedActivity::class.java.simpleName} requires arg $MOVIE_INTENT_KEY"
-                )
-        )
-    }
+    private val viewModel: MovieDetailedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailedBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        try {
+            val movie = intent.getParcelableExtra(MOVIE_INTENT_KEY) as? Movie
+                ?: throw IllegalArgumentException(
+                    "${MovieDetailedActivity::class.java.simpleName} requires arg $MOVIE_INTENT_KEY"
+                )
+            viewModel.setup(movie)
+        } catch(illegalArgumentException: IllegalArgumentException) {
+            Timber.e(illegalArgumentException)
+            finish()
+        }
 
         setView(viewModel.movie)
 

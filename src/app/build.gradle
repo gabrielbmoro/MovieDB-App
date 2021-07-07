@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 30
@@ -94,11 +95,9 @@ dependencies {
     def glide = '4.12.0'
     implementation "com.github.bumptech.glide:glide:$glide"
 
-    def koin = '2.1.5'
-    implementation "org.koin:koin-androidx-scope:$koin"
-    implementation "org.koin:koin-androidx-viewmodel:$koin"
-    implementation "org.koin:koin-androidx-ext:$koin"
-    testImplementation "org.koin:koin-test:$koin"
+    // Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
     def junit = '4.13.2'
     testImplementation "junit:junit:$junit"
