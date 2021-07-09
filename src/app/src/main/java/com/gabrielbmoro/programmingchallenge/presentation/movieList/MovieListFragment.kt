@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
 import com.gabrielbmoro.programmingchallenge.repository.entities.convertToMovieListType
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesListBinding
-    private val viewModel: MovieListViewModel by activityViewModels()
+    private val viewModel: MovieListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
