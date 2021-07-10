@@ -3,6 +3,7 @@ package com.gabrielbmoro.programmingchallenge.presentation.viewModels
 import com.gabrielbmoro.programmingchallenge.presentation.MainViewModel
 import org.junit.Test
 import com.google.common.truth.Truth.assertThat
+import io.mockk.mockk
 import org.junit.Before
 
 class MainViewModelTest {
@@ -11,7 +12,7 @@ class MainViewModelTest {
 
     @Before
     fun init() {
-        viewModel = MainViewModel()
+        viewModel = MainViewModel(mockk())
     }
 
     @Test
