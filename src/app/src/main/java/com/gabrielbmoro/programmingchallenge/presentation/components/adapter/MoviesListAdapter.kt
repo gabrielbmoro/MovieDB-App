@@ -1,13 +1,16 @@
 package com.gabrielbmoro.programmingchallenge.presentation.components.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 
-class MoviesListAdapter : ListAdapter<Movie, MovieViewHolder>(DiffCallback()) {
+class MoviesListAdapter(
+    private val selectedMovieCallback: ((Movie, View) ->Unit)
+) : ListAdapter<Movie, MovieViewHolder>(DiffCallback()) {
 
     private var elements: List<Movie> = emptyList()
         set(value) {
@@ -30,7 +33,7 @@ class MoviesListAdapter : ListAdapter<Movie, MovieViewHolder>(DiffCallback()) {
         } catch (indexOutOfBounds: IndexOutOfBoundsException) {
             null
         }?.let { data ->
-            holder.bind(data)
+            holder.bind(data, selectedMovieCallback)
         }
     }
 

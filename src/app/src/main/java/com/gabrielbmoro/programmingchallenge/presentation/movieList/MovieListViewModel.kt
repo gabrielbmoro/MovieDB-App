@@ -1,25 +1,26 @@
 package com.gabrielbmoro.programmingchallenge.presentation.movieList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock
+import javax.inject.Inject
 
-class MovieListViewModel(
-    val type: MovieListType,
+@HiltViewModel
+class MovieListViewModel @Inject constructor(
+    application: Application,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val errorStateMutableLiveData = MutableLiveData<Unit>()
     val errorStateLiveData: LiveData<Unit> = errorStateMutableLiveData
@@ -38,7 +39,10 @@ class MovieListViewModel(
     private val lock = ReentrantLock()
     //endregion
 
-    init {
+    lateinit var type: MovieListType
+
+    fun setup(type: MovieListType) {
+        this.type = type
         load()
     }
 

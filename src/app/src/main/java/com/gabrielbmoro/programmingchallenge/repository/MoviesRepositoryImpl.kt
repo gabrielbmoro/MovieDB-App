@@ -1,6 +1,6 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
-import com.gabrielbmoro.programmingchallenge.core.ConfigVariables
+import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies

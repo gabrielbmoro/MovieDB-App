@@ -2,6 +2,7 @@ package com.gabrielbmoro.programmingchallenge.presentation.components.moviesList
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
@@ -13,7 +14,10 @@ class MoviesRecyclerViewComponent @JvmOverloads constructor(
 
     init {
         layoutManager = LinearLayoutManager(context)
-        adapter = MoviesListAdapter()
+    }
+
+    fun setup(selectedMovieCallback: ((Movie, View) -> Unit)) {
+        adapter = MoviesListAdapter(selectedMovieCallback)
     }
 
     fun paginationSupport(callback: EndOfScrollCallbackAction) {

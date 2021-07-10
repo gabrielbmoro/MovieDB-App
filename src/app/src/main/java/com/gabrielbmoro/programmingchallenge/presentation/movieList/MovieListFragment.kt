@@ -5,24 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
+import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
-import com.gabrielbmoro.programmingchallenge.repository.entities.convertToMovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import com.gabrielbmoro.programmingchallenge.repository.entities.convertToMovieListType
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+@AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesListBinding
-    private val viewModel: MovieListViewModel by viewModel {
-        parametersOf(
-            arguments?.getInt(MOVIE_TYPE_VALUE)?.convertToMovieListType()
-                ?: IllegalArgumentException(
-                    "$MOVIE_TYPE_VALUE is a required argument"
-                )
-        )
-    }
+    private val viewModel: MovieListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +29,19 @@ class MovieListFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+
+        try {
+            val type = arguments?.getInt(MOVIE_TYPE_VALUE)?.convertToMovieListType()
+                ?: throw IllegalArgumentException(
+                    "$MOVIE_TYPE_VALUE is a required argument"
+                )
+            viewModel.setup(type)
+        } catch (illegalArgumentException: IllegalArgumentException) {
+            Timber.e(illegalArgumentException)
+        }
+
         setupRecyclerView()
         setupObservers()
     }
@@ -60,6 +67,13 @@ class MovieListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        binding.fragmentMoviesListRvList.setup { movie, view ->
+            MovieDetailedActivity.startActivity(
+                requireActivity(),
+                movie,
+                view
+            )
+        }
         binding.fragmentMoviesListRvList.paginationSupport {
             viewModel.load()
         }
