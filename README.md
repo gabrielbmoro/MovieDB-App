@@ -26,7 +26,7 @@ Total: _44%_
 | Type                 | Current Implementation  |
 |----------------------|:-----------------------:|
 | Architecture         | MVVM                    |
-| Dependency Injection | Koin                    |
+| Dependency Injection | Hilt                    |
 | Load Images          | Glide                   |
 | View Binding         | ViewBinding             |
 | Handler to IO calls  | Coroutines              |

@@ -76,9 +76,6 @@ dependencies {
     def preference = '1.1.1'
     implementation "androidx.preference:preference-ktx:$preference"
 
-    def paging = '3.0.0'
-    implementation "androidx.paging:paging-runtime-ktx:$paging"
-
     def material = '1.3.0'
     implementation "com.google.android.material:material:$material"
 
