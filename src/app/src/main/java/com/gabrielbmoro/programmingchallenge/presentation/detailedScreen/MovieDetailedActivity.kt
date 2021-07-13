@@ -7,9 +7,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.MaterialTheme
 import androidx.core.app.ActivityOptionsCompat
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBinding
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
@@ -25,29 +27,36 @@ class MovieDetailedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMovieDetailedBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-
+        val movie: Movie
         try {
-            val movie = intent.getParcelableExtra(MOVIE_INTENT_KEY) as? Movie
+            movie = intent.getParcelableExtra(MOVIE_INTENT_KEY) as? Movie
                 ?: throw IllegalArgumentException(
                     "${MovieDetailedActivity::class.java.simpleName} requires arg $MOVIE_INTENT_KEY"
                 )
             viewModel.setup(movie)
+
+            binding = ActivityMovieDetailedBinding.inflate(layoutInflater).apply {
+                composeView.setContent {
+                    MaterialTheme {
+                        MovieDetailDescription(movie)
+                    }
+                }
+            }
+
+            setContentView(binding.root)
+
+            setView(viewModel.movie)
+
+            viewModel.onFavoriteMovieEvent.observe(
+                this@MovieDetailedActivity
+            ) {
+                changeFavoriteViewsState(viewModel.movie.isFavorite)
+            }
         } catch(illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
             finish()
         }
-
-        setView(viewModel.movie)
-
-        viewModel.onFavoriteMovieEvent.observe(
-            this@MovieDetailedActivity,
-            {
-                changeFavoriteViewsState(viewModel.movie.isFavorite)
-            }
-        )
     }
 
     private fun setView(movie: Movie) {
@@ -56,11 +65,6 @@ class MovieDetailedActivity : AppCompatActivity() {
         movie.posterPath?.let { imagePath ->
             binding.activityMovieDetailedBackdrop.setImagePath(imagePath)
         }
-
-        binding.activityMovieDetailedTvOriginalTitle.text = movie.originalTitle
-        binding.activityMovieDetailedOverview.text = movie.overview
-        binding.activityMovieDetailedLanguageTitle.text = movie.originalLanguage
-        binding.activityMovieDetailedTvPopularity.text = movie.popularity.toString()
 
         val votesAvg = movie.votesAverage ?: 0f
         binding.activityMovieDetailedFiveStarsComponent.setVotesAvg(votesAvg)
