@@ -1,5 +1,6 @@
 package com.gabrielbmoro.programmingchallenge.presentation.components.compose
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,17 +10,22 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 
-
 @Composable
 private fun SectionTitle(title: String) {
+    val style = if(isSystemInDarkTheme()) {
+        MaterialTheme.typography.h4.copy(color = Color.White)
+    } else {
+        MaterialTheme.typography.h4.copy(color = Color.Black)
+    }
     Text(
         text = title,
-        style = MaterialTheme.typography.h4,
+        style = style,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 8.dp)
@@ -29,9 +35,15 @@ private fun SectionTitle(title: String) {
 
 @Composable
 private fun SectionDescription(description: String) {
+    val style = if(isSystemInDarkTheme()) {
+        MaterialTheme.typography.body1.copy(color = Color.White)
+    } else {
+        MaterialTheme.typography.body1.copy(color = Color.Black)
+    }
+
     Text(
         text = description,
-        style = MaterialTheme.typography.body1,
+        style = style,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 4.dp)

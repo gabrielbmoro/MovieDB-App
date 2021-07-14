@@ -47,23 +47,23 @@ class MovieListFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner, { isLoading ->
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 binding.fragmentMoviesListProgressBar.start()
             } else {
                 binding.fragmentMoviesListProgressBar.stop()
                 binding.fragmentMoviesListSwRefresh.isRefreshing = false
             }
-        })
+        }
 
-        viewModel.moviesLiveData.observe(viewLifecycleOwner, { movies ->
+        viewModel.moviesLiveData.observe(viewLifecycleOwner) { movies ->
             binding.fragmentMoviesListRvList.update(movies)
             binding.fragmentMoviesListEmptyState.show(movies.isEmpty())
-        })
+        }
 
-        viewModel.errorStateLiveData.observe(viewLifecycleOwner, {
+        viewModel.errorStateLiveData.observe(viewLifecycleOwner) {
             binding.fragmentMoviesListTvError.show(true)
-        })
+        }
     }
 
     private fun setupRecyclerView() {
@@ -83,7 +83,9 @@ class MovieListFragment : Fragment() {
     }
 
     fun scrollToTop() {
-        binding.fragmentMoviesListRvList.scrollToTop()
+        if(::binding.isInitialized) {
+            binding.fragmentMoviesListRvList.scrollToTop()
+        }
     }
 
     companion object {
