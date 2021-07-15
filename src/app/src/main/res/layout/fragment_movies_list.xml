@@ -18,8 +18,8 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.gabrielbmoro.programmingchallenge.presentation.components.EmptyStateComponent
-        android:id="@+id/fragment_movies_list_empty_state"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

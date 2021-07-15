@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.EmptyState
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
@@ -25,7 +26,11 @@ class MovieListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+        binding = FragmentMoviesListBinding.inflate(inflater, container, false).apply {
+            composeEmptyState.setContent {
+                EmptyState()
+            }
+        }
         return binding.root
     }
 
@@ -58,7 +63,7 @@ class MovieListFragment : Fragment() {
 
         viewModel.moviesLiveData.observe(viewLifecycleOwner) { movies ->
             binding.fragmentMoviesListRvList.update(movies)
-            binding.fragmentMoviesListEmptyState.show(movies.isEmpty())
+            binding.composeEmptyState.show(movies.isEmpty())
         }
 
         viewModel.errorStateLiveData.observe(viewLifecycleOwner) {
@@ -83,7 +88,7 @@ class MovieListFragment : Fragment() {
     }
 
     fun scrollToTop() {
-        if(::binding.isInitialized) {
+        if (::binding.isInitialized) {
             binding.fragmentMoviesListRvList.scrollToTop()
         }
     }
