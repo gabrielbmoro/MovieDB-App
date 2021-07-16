@@ -21,28 +21,14 @@
         android:transitionName="@string/transition_name"
         tools:src="@drawable/jean_claude_van_damme" />
 
-    <TextView
-        android:id="@+id/view_holder_movie_card_title"
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_movie_detailed_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|start"
         android:layout_marginStart="@dimen/poster_card_width"
-        android:maxHeight="@dimen/card_title_max_height"
-        android:padding="4dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        tools:text="@string/grande_dragao_branco" />
-
-    <TextView
-        android:id="@+id/view_holder_movie_card_release_date"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="top|start"
-        android:layout_marginStart="@dimen/poster_card_width"
-        android:layout_marginTop="@dimen/card_title_max_height"
-        android:padding="4dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        tools:text="@string/release_date_example" />
-
+        android:orientation="horizontal" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/compose_five_stars"
