@@ -44,8 +44,8 @@
         tools:text="@string/release_date_example" />
 
 
-    <com.gabrielbmoro.programmingchallenge.presentation.components.FiveStarsComponent
-        android:id="@+id/view_holder_movie_card_five_stars_component"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_five_stars"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="top|start"

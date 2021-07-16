@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.core.app.ActivityOptionsCompat
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBinding
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
@@ -37,7 +38,7 @@ class MovieDetailedActivity : AppCompatActivity() {
             viewModel.setup(movie)
 
             binding = ActivityMovieDetailedBinding.inflate(layoutInflater).apply {
-                composeView.setContent {
+                composeMovieDetailed.setContent {
                     MaterialTheme {
                         MovieDetailDescription(movie)
                     }
@@ -67,7 +68,9 @@ class MovieDetailedActivity : AppCompatActivity() {
         }
 
         val votesAvg = movie.votesAverage ?: 0f
-        binding.activityMovieDetailedFiveStarsComponent.setVotesAvg(votesAvg)
+        binding.composeFiveStars.setContent {
+            FiveStars(votes = votesAvg)
+        }
 
         changeFavoriteViewsState(movie.isFavorite)
 

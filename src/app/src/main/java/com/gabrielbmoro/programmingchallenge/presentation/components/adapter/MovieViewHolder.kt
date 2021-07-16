@@ -3,6 +3,7 @@ package com.gabrielbmoro.programmingchallenge.presentation.components.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.gabrielbmoro.programmingchallenge.databinding.ViewHolderMovieCardBinding
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
 
@@ -18,10 +19,12 @@ class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         binding.viewHolderMovieCardReleaseDate.text = movie.releaseDate
 
         val votesAvg = movie.votesAverage ?: 0f
-        binding.viewHolderMovieCardFiveStarsComponent.setVotesAvg(votesAvg)
+        binding.composeFiveStars.setContent {
+            FiveStars(votes = votesAvg)
+        }
 
         view.setOnClickListener {
-           selectedMovieCallback.invoke(movie, binding.viewHolderMovieCardPoster)
+            selectedMovieCallback.invoke(movie, binding.viewHolderMovieCardPoster)
         }
     }
 }
