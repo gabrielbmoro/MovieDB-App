@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gabrielbmoro.programmingchallenge.databinding.ViewHolderMovieCardBinding
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieCardInformation
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
 
@@ -23,7 +24,12 @@ class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         }
 
         binding.composeMovieDetailedCard.setContent {
-            MovieCardInformation(movie = movie)
+            MovieDBAppTheme {
+                MovieCardInformation(
+                    title = movie.title ?: "",
+                    releaseDate = movie.releaseDate ?: ""
+                )
+            }
         }
 
         view.setOnClickListener {

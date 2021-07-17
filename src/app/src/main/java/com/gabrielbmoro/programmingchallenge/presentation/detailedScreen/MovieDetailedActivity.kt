@@ -13,6 +13,7 @@ import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBinding
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
@@ -39,8 +40,13 @@ class MovieDetailedActivity : AppCompatActivity() {
 
             binding = ActivityMovieDetailedBinding.inflate(layoutInflater).apply {
                 composeMovieDetailed.setContent {
-                    MaterialTheme {
-                        MovieDetailDescription(movie)
+                    MovieDBAppTheme() {
+                        MovieDetailDescription(
+                            overview = movie.overview ?: "",
+                            originalLanguage = movie.originalLanguage ?: "",
+                            popularity = movie.popularity ?: 0f,
+                            title = movie.title ?: ""
+                        )
                     }
                 }
             }
@@ -54,7 +60,7 @@ class MovieDetailedActivity : AppCompatActivity() {
             ) {
                 changeFavoriteViewsState(viewModel.movie.isFavorite)
             }
-        } catch(illegalArgumentException: IllegalArgumentException) {
+        } catch (illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
             finish()
         }

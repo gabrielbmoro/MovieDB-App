@@ -28,9 +28,8 @@ fun EmptyState() {
         )
         Text(
             text = stringResource(R.string.empty_view_title),
-            style = if (isSystemInDarkTheme())
-                MaterialTheme.typography.h4.copy(color = Color.White)
-            else MaterialTheme.typography.h4.copy(color = Color.Black),
+            style = MaterialTheme.typography.h4,
+            color = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 4.dp)

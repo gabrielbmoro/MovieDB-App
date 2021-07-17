@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.EmptyState
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
@@ -28,7 +29,9 @@ class MovieListFragment : Fragment() {
     ): View {
         binding = FragmentMoviesListBinding.inflate(inflater, container, false).apply {
             composeEmptyState.setContent {
-                EmptyState()
+                MovieDBAppTheme() {
+                    EmptyState()
+                }
             }
         }
         return binding.root
