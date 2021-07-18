@@ -21,7 +21,8 @@ fun MovieCardInformation(title: String, releaseDate: String) {
                 .fillMaxWidth()
                 .padding(vertical = 12.dp)
                 .wrapContentWidth(Alignment.Start),
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colors.onSurface,
+            maxLines = 4
         )
         Text(
             text = releaseDate,
