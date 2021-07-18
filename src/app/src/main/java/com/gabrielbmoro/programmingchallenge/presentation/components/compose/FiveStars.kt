@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.gabrielbmoro.programmingchallenge.R
 import kotlin.math.roundToInt
@@ -27,10 +28,10 @@ private fun getDrawableAccordingToStarPosition(votes: Float, position: Int): Int
 }
 
 @Composable
-fun FiveStars(votes: Float) {
+fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
     val numberOfStars = (votes / AVERAGE_TOTAL) * STARS_AVAILABLE
     if (votes != INVALID_NUMBER) {
-        Row {
+        Row(modifier = modifier) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(

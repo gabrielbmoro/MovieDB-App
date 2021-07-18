@@ -2,15 +2,15 @@ package com.gabrielbmoro.programmingchallenge.presentation.components.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.gabrielbmoro.programmingchallenge.R
 
 @Composable
-fun Favorite(isFavorite: Boolean, action: (()->Unit)) {
-    val heartPair = if (!isFavorite) Pair(
+fun Favorite(isFavorite: State<Boolean>, modifier: Modifier = Modifier, action: (() -> Unit)) {
+    val heartPair = if (!isFavorite.value) Pair(
         R.drawable.ic_heart_border,
         stringResource(id = R.string.alt_is_not_favorite)
     )
@@ -22,7 +22,7 @@ fun Favorite(isFavorite: Boolean, action: (()->Unit)) {
     Image(
         painter = painterResource(id = heartPair.first),
         contentDescription = heartPair.second,
-        modifier = Modifier.clickable(
+        modifier = (modifier).clickable(
             enabled = true,
             onClick = {
                 action.invoke()

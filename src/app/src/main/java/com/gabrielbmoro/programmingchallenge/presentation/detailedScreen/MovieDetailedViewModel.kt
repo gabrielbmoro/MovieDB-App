@@ -19,22 +19,12 @@ class MovieDetailedViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     lateinit var movie: Movie
-    val onFavoriteMovieEvent = MutableLiveData<ViewModelResult>()
+
+    private val onFavoriteEventMutableLiveData = MutableLiveData<Boolean>()
+    val onFavoriteEvent : LiveData<Boolean> = onFavoriteEventMutableLiveData
 
     fun setup(movie: Movie) {
         this.movie = movie
-        checkIfIsFavorite()
-    }
-
-    private fun checkIfIsFavorite() {
-        viewModelScope.launch {
-            try {
-                movie.isFavorite = checkMovieIsFavoriteUseCase.execute(movie)
-                onFavoriteMovieEvent.postValue(ViewModelResult.Success)
-            } catch (exception: Exception) {
-                onFavoriteMovieEvent.postValue(ViewModelResult.Error)
-            }
-        }
     }
 
     fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
@@ -45,15 +35,8 @@ class MovieDetailedViewModel @Inject constructor(
                 else
                     unFavoriteMovieUseCase.execute(movie)
                 movie.isFavorite = isToFavorite
-                onFavoriteMovieEvent.postValue(ViewModelResult.Success)
-            } catch (exception: Exception) {
-                onFavoriteMovieEvent.postValue(ViewModelResult.Error)
-            }
+                onFavoriteEventMutableLiveData.postValue(movie.isFavorite)
+            } catch (exception: Exception) { }
         }
-    }
-
-    sealed class ViewModelResult {
-        object Success : ViewModelResult()
-        object Error : ViewModelResult()
     }
 }

@@ -5,19 +5,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Surface
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import com.gabrielbmoro.programmingchallenge.R
-import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBinding
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
+
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.IllegalArgumentException
@@ -25,7 +34,6 @@ import java.lang.IllegalArgumentException
 @AndroidEntryPoint
 class MovieDetailedActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMovieDetailedBinding
     private val viewModel: MovieDetailedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +47,39 @@ class MovieDetailedActivity : AppCompatActivity() {
                 )
             viewModel.setup(movie)
 
-            binding = ActivityMovieDetailedBinding.inflate(layoutInflater).apply {
-                composeMovieDetailed.setContent {
-                    MovieDBAppTheme() {
+            setContent {
+                val scrollState = rememberScrollState()
+                val favoriteState = viewModel.onFavoriteEvent.observeAsState(movie.isFavorite)
+
+                MovieDBAppTheme() {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState)
+                            .padding(0.dp)
+                    ) {
+                        TopAppBar {
+                            title = movie.title ?: ""
+                        }
+
+                        Box(Modifier.height(320.dp)) {
+                            Surface {
+                                MovieImage(
+                                    imageUrl = movie.posterPath,
+                                    ContentScale.FillWidth
+                                )
+                            }
+                            Favorite(
+                                isFavorite = favoriteState,
+                                modifier = Modifier.align(Alignment.BottomStart),
+                            ) {
+                                viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite)
+                            }
+                            FiveStars(
+                                votes = movie.votesAverage ?: 0f,
+                                modifier = Modifier.align(Alignment.BottomEnd)
+                            )
+                        }
                         MovieDetailDescription(
                             overview = movie.overview ?: "",
                             originalLanguage = movie.originalLanguage ?: "",
@@ -51,44 +89,9 @@ class MovieDetailedActivity : AppCompatActivity() {
                     }
                 }
             }
-
-            setContentView(binding.root)
-
-            setView(viewModel.movie)
-
-            viewModel.onFavoriteMovieEvent.observe(
-                this@MovieDetailedActivity
-            ) {
-                setFavoriteView(viewModel.movie)
-            }
         } catch (illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
             finish()
-        }
-    }
-
-    private fun setView(movie: Movie) {
-        supportActionBar?.title = movie.title
-
-        movie.posterPath?.let { imagePath ->
-            binding.composeBackdrop.setContent {
-                MovieImage(imageUrl = imagePath, ContentScale.FillWidth)
-            }
-        }
-
-        val votesAvg = movie.votesAverage ?: 0f
-        binding.composeFiveStars.setContent {
-            FiveStars(votes = votesAvg)
-        }
-
-        setFavoriteView(movie)
-    }
-
-    private fun setFavoriteView(movie: Movie) {
-        binding.composeFavoriteButton.setContent {
-            Favorite(isFavorite = movie.isFavorite) {
-                viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite)
-            }
         }
     }
 
