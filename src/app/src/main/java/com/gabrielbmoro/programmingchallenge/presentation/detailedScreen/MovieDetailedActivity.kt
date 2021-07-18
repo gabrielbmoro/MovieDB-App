@@ -13,6 +13,7 @@ import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBi
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
@@ -69,7 +70,9 @@ class MovieDetailedActivity : AppCompatActivity() {
         supportActionBar?.title = movie.title
 
         movie.posterPath?.let { imagePath ->
-            binding.activityMovieDetailedBackdrop.setImagePath(imagePath)
+            binding.composeBackdrop.setContent {
+                MovieImage(imageUrl = imagePath)
+            }
         }
 
         val votesAvg = movie.votesAverage ?: 0f

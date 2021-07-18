@@ -120,4 +120,5 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$rootProject.composeVersion"
     implementation "androidx.compose.ui:ui-tooling:$rootProject.composeVersion"
     implementation "com.google.android.material:compose-theme-adapter:$rootProject.composeVersion"
+    implementation "io.coil-kt:coil-compose:$rootProject.coilVersion"
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_movie_detailed_base_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -37,16 +36,11 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <ImageView
-                android:id="@+id/activity_movie_detailed_backdrop"
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/compose_backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/app_bar_layout_height"
-                android:contentDescription="@string/poster"
-                android:fitsSystemWindows="true"
-                android:scaleType="fitXY"
-                android:transitionName="@string/transition_name"
-                app:layout_collapseMode="parallax"
-                tools:src="@drawable/jean_claude_van_damme" />
+                app:layout_collapseMode="parallax" />
 
             <ImageView
                 android:id="@+id/activity_movie_detailed_background"
