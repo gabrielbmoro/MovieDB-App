@@ -7,16 +7,15 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
 import androidx.core.app.ActivityOptionsCompat
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBinding
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
-import com.gabrielbmoro.programmingchallenge.presentation.util.show
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.IllegalArgumentException
@@ -58,7 +57,7 @@ class MovieDetailedActivity : AppCompatActivity() {
             viewModel.onFavoriteMovieEvent.observe(
                 this@MovieDetailedActivity
             ) {
-                changeFavoriteViewsState(viewModel.movie.isFavorite)
+                setFavoriteView(viewModel.movie)
             }
         } catch (illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
@@ -78,23 +77,15 @@ class MovieDetailedActivity : AppCompatActivity() {
             FiveStars(votes = votesAvg)
         }
 
-        changeFavoriteViewsState(movie.isFavorite)
-
-        binding.activityMovieDetailedFavoriteIcon.setOnClickListener {
-            viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite)
-        }
+        setFavoriteView(movie)
     }
 
-    private fun changeFavoriteViewsState(isFavorite: Boolean) {
-        binding.activityMovieDetailedFavoriteIcon.show(true)
-        val accessibleContent = if (isFavorite) {
-            Pair(R.drawable.ic_heart_filled, getString(R.string.alt_is_favorite))
-        } else {
-            Pair(R.drawable.ic_heart_border, getString(R.string.alt_is_not_favorite))
+    private fun setFavoriteView(movie: Movie) {
+        binding.composeFavoriteButton.setContent {
+            Favorite(isFavorite = movie.isFavorite) {
+                viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite)
+            }
         }
-
-        binding.activityMovieDetailedFavoriteIcon.setImageResource(accessibleContent.first)
-        binding.activityMovieDetailedFavoriteIcon.contentDescription = accessibleContent.second
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
