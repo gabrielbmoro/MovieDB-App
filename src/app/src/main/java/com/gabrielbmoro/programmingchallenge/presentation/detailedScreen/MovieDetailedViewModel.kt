@@ -3,7 +3,6 @@ package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 import android.app.Application
 import androidx.lifecycle.*
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.usecases.CheckMovieIsFavoriteUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.UnFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +14,6 @@ class MovieDetailedViewModel @Inject constructor(
     application: Application,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
-    private val checkMovieIsFavoriteUseCase: CheckMovieIsFavoriteUseCase,
 ) : AndroidViewModel(application) {
 
     lateinit var movie: Movie
