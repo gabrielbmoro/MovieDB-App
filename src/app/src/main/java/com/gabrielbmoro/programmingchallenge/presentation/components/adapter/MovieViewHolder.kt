@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gabrielbmoro.programmingchallenge.databinding.ViewHolderMovieCardBinding
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieCardInformation
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.presentation.util.setImagePath
 
 class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -15,7 +15,9 @@ class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(movie: Movie, selectedMovieCallback: ((Movie, View) -> Unit)) {
         movie.posterPath?.let { imagePath ->
-            binding.viewHolderMovieCardPoster.setImagePath(imagePath)
+            binding.composeMovieCardPoster.setContent {
+                MovieImage(imageUrl = imagePath)
+            }
         }
 
         val votesAvg = movie.votesAverage ?: 0f
@@ -33,7 +35,7 @@ class MovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         }
 
         view.setOnClickListener {
-            selectedMovieCallback.invoke(movie, binding.viewHolderMovieCardPoster)
+            selectedMovieCallback.invoke(movie, binding.composeMovieCardPoster)
         }
     }
 }

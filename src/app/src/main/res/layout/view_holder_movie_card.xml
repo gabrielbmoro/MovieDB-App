@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_view_height"
     android:layout_margin="12dp"
@@ -11,15 +10,12 @@
     android:orientation="vertical"
     app:cardCornerRadius="10dp">
 
-    <ImageView
-        android:id="@+id/view_holder_movie_card_poster"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_movie_card_poster"
         android:layout_width="@dimen/poster_card_width"
         android:layout_height="280dp"
         android:layout_gravity="top|start"
-        android:contentDescription="@string/poster"
-        android:scaleType="fitStart"
-        android:transitionName="@string/transition_name"
-        tools:src="@drawable/jean_claude_van_damme" />
+        android:transitionName="@string/transition_name" />
 
 
     <androidx.compose.ui.platform.ComposeView
