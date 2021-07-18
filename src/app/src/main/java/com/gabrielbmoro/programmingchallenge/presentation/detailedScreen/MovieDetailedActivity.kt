@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,50 +50,59 @@ class MovieDetailedActivity : AppCompatActivity() {
             viewModel.setup(movie)
 
             setContent {
-                val scrollState = rememberScrollState()
-                val favoriteState = viewModel.onFavoriteEvent.observeAsState(movie.isFavorite)
-
                 MovieDBAppTheme() {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(scrollState)
-                            .padding(0.dp)
-                    ) {
-                        TopAppBar {
-                            title = movie.title ?: ""
-                        }
-
-                        Box(Modifier.height(320.dp)) {
-                            Surface {
-                                MovieImage(
-                                    imageUrl = movie.posterPath,
-                                    ContentScale.FillWidth
-                                )
+                    Scaffold(
+                        topBar = {
+                            TopAppBar(modifier = Modifier.height(0.dp)) {
+                                title = movie.title ?: ""
                             }
-                            Favorite(
-                                isFavorite = favoriteState,
-                                modifier = Modifier.align(Alignment.BottomStart),
-                            ) {
-                                viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite)
-                            }
-                            FiveStars(
-                                votes = movie.votesAverage ?: 0f,
-                                modifier = Modifier.align(Alignment.BottomEnd)
-                            )
+                        },
+                        content = {
+                            MovieDetailedContent()
                         }
-                        MovieDetailDescription(
-                            overview = movie.overview ?: "",
-                            originalLanguage = movie.originalLanguage ?: "",
-                            popularity = movie.popularity ?: 0f,
-                            title = movie.title ?: ""
-                        )
-                    }
+                    )
                 }
             }
         } catch (illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
             finish()
+        }
+    }
+
+    @Composable
+    fun MovieDetailedContent() {
+        val scrollState = rememberScrollState()
+        val favoriteState = viewModel.onFavoriteEvent.observeAsState(viewModel.movie.isFavorite)
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            Box(Modifier.height(320.dp)) {
+                Surface {
+                    MovieImage(
+                        imageUrl = viewModel.movie.posterPath,
+                        ContentScale.FillWidth
+                    )
+                }
+                Favorite(
+                    isFavorite = favoriteState,
+                    modifier = Modifier.align(Alignment.BottomStart),
+                ) {
+                    viewModel.isToFavoriteOrUnFavorite(!viewModel.movie.isFavorite)
+                }
+                FiveStars(
+                    votes = viewModel.movie.votesAverage ?: 0f,
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                )
+            }
+            MovieDetailDescription(
+                overview = viewModel.movie.overview ?: "",
+                originalLanguage = viewModel.movie.originalLanguage ?: "",
+                popularity = viewModel.movie.popularity ?: 0f,
+                title = viewModel.movie.title ?: ""
+            )
         }
     }
 
