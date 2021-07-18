@@ -79,22 +79,31 @@ class MovieDetailedActivity : AppCompatActivity() {
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-            Box(Modifier.height(320.dp)) {
+            Box(
+                modifier = Modifier.height(
+                    320.dp
+                )
+            ) {
                 Surface {
                     MovieImage(
                         imageUrl = viewModel.movie.posterPath,
                         ContentScale.FillWidth
                     )
                 }
+
                 Favorite(
                     isFavorite = favoriteState,
-                    modifier = Modifier.align(Alignment.BottomStart),
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 16.dp, bottom = 16.dp)
                 ) {
                     viewModel.isToFavoriteOrUnFavorite(!viewModel.movie.isFavorite)
                 }
                 FiveStars(
                     votes = viewModel.movie.votesAverage ?: 0f,
-                    modifier = Modifier.align(Alignment.BottomEnd)
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 16.dp, bottom = 16.dp)
                 )
             }
             MovieDetailDescription(
