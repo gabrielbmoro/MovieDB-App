@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MovieCardInformation(title: String, releaseDate: String) {
-    Column {
+fun MovieCardInformation(title: String, releaseDate: String, modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         Text(
             text = title,
             style = MaterialTheme.typography.h6,

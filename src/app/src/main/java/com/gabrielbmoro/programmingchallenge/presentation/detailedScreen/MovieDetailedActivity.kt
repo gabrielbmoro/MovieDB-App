@@ -87,7 +87,7 @@ class MovieDetailedActivity : AppCompatActivity() {
                 Surface {
                     MovieImage(
                         imageUrl = viewModel.movie.posterPath,
-                        ContentScale.FillWidth
+                        contentScale = ContentScale.FillWidth,
                     )
                 }
 
