@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.layout.ContentScale
 import androidx.core.app.ActivityOptionsCompat
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.databinding.ActivityMovieDetailedBinding
@@ -71,7 +72,7 @@ class MovieDetailedActivity : AppCompatActivity() {
 
         movie.posterPath?.let { imagePath ->
             binding.composeBackdrop.setContent {
-                MovieImage(imageUrl = imagePath)
+                MovieImage(imageUrl = imagePath, ContentScale.FillWidth)
             }
         }
 

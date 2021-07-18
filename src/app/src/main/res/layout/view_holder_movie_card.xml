@@ -1,38 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.compose.ui.platform.ComposeView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/compose_base"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_view_height"
     android:layout_margin="12dp"
     android:clickable="true"
-    android:elevation="2dp"
     android:focusable="true"
-    android:orientation="vertical"
-    app:cardCornerRadius="10dp">
-
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/compose_movie_card_poster"
-        android:layout_width="@dimen/poster_card_width"
-        android:layout_height="280dp"
-        android:layout_gravity="top|start"
-        android:transitionName="@string/transition_name" />
-
-
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/compose_movie_detailed_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
-        android:layout_marginStart="@dimen/poster_card_width"
-        android:orientation="horizontal" />
-
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/compose_five_stars"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="top|start"
-        android:layout_marginStart="@dimen/poster_card_width"
-        android:layout_marginTop="180dp"
-        android:orientation="horizontal" />
-
-</androidx.cardview.widget.CardView>
+    app:cardCornerRadius="10dp" />

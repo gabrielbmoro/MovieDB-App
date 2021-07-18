@@ -7,12 +7,13 @@ import coil.compose.rememberImagePainter
 import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 
 @Composable
-fun MovieImage(imageUrl: String) {
+fun MovieImage(imageUrl: String?, contentScale: ContentScale) {
+    imageUrl ?: return
     Image(
         painter = rememberImagePainter(
             "${ConfigVariables.BASE_IMAGE_ADDRESS}$imageUrl"
         ),
-        contentScale = ContentScale.FillWidth,
+        contentScale = contentScale,
         contentDescription = null,
     )
 }
