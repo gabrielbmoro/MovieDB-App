@@ -20,7 +20,7 @@ fun MovieCard(
     onClick: (() -> Unit)
 ) {
     Card(
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
     ) {
         Row(
             Modifier.clickable {

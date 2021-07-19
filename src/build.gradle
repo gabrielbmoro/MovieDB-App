@@ -26,7 +26,6 @@ buildscript {
         timberVersion = '4.7.1'
         gsonVersion = '2.8.7'
         retrofitVersion = '2.9.0'
-        glideVersion = '4.12.0'
         junitVersion = '4.13.2'
         androidTestVersion = '1.1.2'
         truthVersion = '1.1.2'
