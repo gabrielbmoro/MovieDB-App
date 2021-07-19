@@ -42,14 +42,11 @@ private fun SectionDescription(description: String) {
 
 @Composable
 fun MovieDetailDescription(
-    title: String,
     overview: String,
     popularity: Float,
     originalLanguage: String
 ) {
     Column() {
-        SectionTitle(title = title)
-
         SectionTitle(title = stringResource(id = R.string.overview))
         SectionDescription(description = overview)
 

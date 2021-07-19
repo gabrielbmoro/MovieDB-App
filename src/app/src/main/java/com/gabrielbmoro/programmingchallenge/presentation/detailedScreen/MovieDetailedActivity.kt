@@ -110,7 +110,6 @@ class MovieDetailedActivity : AppCompatActivity() {
                 overview = viewModel.movie.overview ?: "",
                 originalLanguage = viewModel.movie.originalLanguage ?: "",
                 popularity = viewModel.movie.popularity ?: 0f,
-                title = viewModel.movie.title ?: ""
             )
         }
     }
