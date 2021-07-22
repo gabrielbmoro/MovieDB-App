@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.gabrielbmoro.programmingchallenge.R
 
 fun Activity.setDefaultNightModeAccordingToTheValue(value: Int): Boolean {
-    val availableThemes = listOf(AppCompatDelegate.MODE_NIGHT_YES, AppCompatDelegate.MODE_NIGHT_NO, AppCompatDelegate.MODE_NIGHT_AUTO)
+    val availableThemes = listOf(AppCompatDelegate.MODE_NIGHT_YES, AppCompatDelegate.MODE_NIGHT_NO, AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
     return if (availableThemes.contains(value)) {
         AppCompatDelegate.setDefaultNightMode(value)
         this.recreate()
