@@ -95,6 +95,7 @@ class MovieDetailedActivity : AppCompatActivity() {
                     isFavorite = favoriteState,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
+                        .size(56.dp)
                         .padding(start = 16.dp, bottom = 16.dp)
                 ) {
                     viewModel.isToFavoriteOrUnFavorite(!viewModel.movie.isFavorite)
