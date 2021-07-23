@@ -3,7 +3,6 @@ package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 import android.app.Application
 import androidx.lifecycle.*
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.usecases.CheckMovieIsFavoriteUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.UnFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,26 +14,15 @@ class MovieDetailedViewModel @Inject constructor(
     application: Application,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
-    private val checkMovieIsFavoriteUseCase: CheckMovieIsFavoriteUseCase,
 ) : AndroidViewModel(application) {
 
     lateinit var movie: Movie
-    val onFavoriteMovieEvent = MutableLiveData<ViewModelResult>()
+
+    private val onFavoriteEventMutableLiveData = MutableLiveData<Boolean>()
+    val onFavoriteEvent : LiveData<Boolean> = onFavoriteEventMutableLiveData
 
     fun setup(movie: Movie) {
         this.movie = movie
-        checkIfIsFavorite()
-    }
-
-    private fun checkIfIsFavorite() {
-        viewModelScope.launch {
-            try {
-                movie.isFavorite = checkMovieIsFavoriteUseCase.execute(movie)
-                onFavoriteMovieEvent.postValue(ViewModelResult.Success)
-            } catch (exception: Exception) {
-                onFavoriteMovieEvent.postValue(ViewModelResult.Error)
-            }
-        }
     }
 
     fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
@@ -45,15 +33,8 @@ class MovieDetailedViewModel @Inject constructor(
                 else
                     unFavoriteMovieUseCase.execute(movie)
                 movie.isFavorite = isToFavorite
-                onFavoriteMovieEvent.postValue(ViewModelResult.Success)
-            } catch (exception: Exception) {
-                onFavoriteMovieEvent.postValue(ViewModelResult.Error)
-            }
+                onFavoriteEventMutableLiveData.postValue(movie.isFavorite)
+            } catch (exception: Exception) { }
         }
-    }
-
-    sealed class ViewModelResult {
-        object Success : ViewModelResult()
-        object Error : ViewModelResult()
     }
 }

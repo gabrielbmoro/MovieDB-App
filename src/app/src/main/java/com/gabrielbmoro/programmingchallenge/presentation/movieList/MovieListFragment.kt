@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gabrielbmoro.programmingchallenge.databinding.FragmentMoviesListBinding
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.EmptyState
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.presentation.util.show
@@ -25,7 +27,13 @@ class MovieListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+        binding = FragmentMoviesListBinding.inflate(inflater, container, false).apply {
+            composeEmptyState.setContent {
+                MovieDBAppTheme() {
+                    EmptyState()
+                }
+            }
+        }
         return binding.root
     }
 
@@ -47,23 +55,23 @@ class MovieListFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.isLoadingLiveData.observe(viewLifecycleOwner, { isLoading ->
+        viewModel.isLoadingLiveData.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 binding.fragmentMoviesListProgressBar.start()
             } else {
                 binding.fragmentMoviesListProgressBar.stop()
                 binding.fragmentMoviesListSwRefresh.isRefreshing = false
             }
-        })
+        }
 
-        viewModel.moviesLiveData.observe(viewLifecycleOwner, { movies ->
+        viewModel.moviesLiveData.observe(viewLifecycleOwner) { movies ->
             binding.fragmentMoviesListRvList.update(movies)
-            binding.fragmentMoviesListEmptyState.show(movies.isEmpty())
-        })
+            binding.composeEmptyState.show(movies.isEmpty())
+        }
 
-        viewModel.errorStateLiveData.observe(viewLifecycleOwner, {
+        viewModel.errorStateLiveData.observe(viewLifecycleOwner) {
             binding.fragmentMoviesListTvError.show(true)
-        })
+        }
     }
 
     private fun setupRecyclerView() {
@@ -83,7 +91,9 @@ class MovieListFragment : Fragment() {
     }
 
     fun scrollToTop() {
-        binding.fragmentMoviesListRvList.scrollToTop()
+        if (::binding.isInitialized) {
+            binding.fragmentMoviesListRvList.scrollToTop()
+        }
     }
 
     companion object {
