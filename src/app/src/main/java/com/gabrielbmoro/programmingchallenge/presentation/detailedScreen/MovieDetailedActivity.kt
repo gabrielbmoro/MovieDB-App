@@ -8,16 +8,17 @@ import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
@@ -84,12 +85,19 @@ class MovieDetailedActivity : AppCompatActivity() {
                     320.dp
                 )
             ) {
-                Surface {
-                    MovieImage(
-                        imageUrl = viewModel.movie.posterPath,
-                        contentScale = ContentScale.FillWidth,
-                    )
-                }
+                MovieImage(
+                    imageUrl = viewModel.movie.posterPath,
+                    contentScale = ContentScale.FillWidth,
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(320.dp)
+                        .background(
+                            Color.Black.copy(alpha = 0.5f)
+                        )
+                )
 
                 Favorite(
                     isFavorite = favoriteState,
