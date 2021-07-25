@@ -29,9 +29,15 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     Navigation(
                         navController = navController,
-                        topRatedMoviesState = viewModel.topRatedMovies.observeAsState(),
-                        popularMoviesState = viewModel.popularMovies.observeAsState(),
-                        favoriteMoviesState = viewModel.favoriteMovies.observeAsState()
+                        topRatedMoviesArgs = Pair(
+                            viewModel.topRatedMovies.observeAsState()
+                        ) { viewModel.requestMoreTopRatedMoviesCallback() },
+                        popularMoviesArgs = Pair(
+                            viewModel.popularMovies.observeAsState(),
+                        ) { viewModel.requestMorePopularMoviesCallback() },
+                        favoriteMoviesArgs = Pair(
+                            viewModel.favoriteMovies.observeAsState()
+                        ) { viewModel.requestMoreFavoriteMoviesCallback() }
                     )
                 }
             }

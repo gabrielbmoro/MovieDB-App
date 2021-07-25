@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -18,7 +17,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 
 sealed class NavigationItem(
     @DrawableRes val icon: Int,
@@ -47,19 +45,22 @@ sealed class NavigationItem(
 @Composable
 fun Navigation(
     navController: NavHostController,
-    topRatedMoviesState: State<List<Movie>?>,
-    popularMoviesState: State<List<Movie>?>,
-    favoriteMoviesState: State<List<Movie>?>
+    topRatedMoviesArgs: Pair<State<List<Movie>?>, (()->Unit)>,
+    popularMoviesArgs: Pair<State<List<Movie>?>, (()->Unit)>,
+    favoriteMoviesArgs: Pair<State<List<Movie>?>, (()->Unit)>
 ) {
     NavHost(navController = navController, startDestination = NavigationItem.TopRatedMovies.route) {
         composable(NavigationItem.TopRatedMovies.route) {
-            MovieListScreen(topRatedMoviesState)
+            val (topRatedMoviesState, requestMore) = topRatedMoviesArgs
+            MovieListScreen(topRatedMoviesState, requestMore)
         }
         composable(NavigationItem.PopularMovies.route) {
-            MovieListScreen(popularMoviesState)
+            val (popularMoviesState, requestMore) = popularMoviesArgs
+            MovieListScreen(popularMoviesState, requestMore)
         }
         composable(NavigationItem.FavoriteMovies.route) {
-            MovieListScreen(favoriteMoviesState)
+            val (favoriteMoviesState, requestMore) = favoriteMoviesArgs
+            MovieListScreen(favoriteMoviesState, requestMore)
         }
     }
 }
