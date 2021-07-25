@@ -7,6 +7,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -16,6 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 
 sealed class NavigationItem(
     @DrawableRes val icon: Int,
@@ -42,16 +45,21 @@ sealed class NavigationItem(
 }
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(
+    navController: NavHostController,
+    topRatedMoviesState: State<List<Movie>?>,
+    popularMoviesState: State<List<Movie>?>,
+    favoriteMoviesState: State<List<Movie>?>
+) {
     NavHost(navController = navController, startDestination = NavigationItem.TopRatedMovies.route) {
         composable(NavigationItem.TopRatedMovies.route) {
-            Text("TopRated")
+            MovieListScreen(topRatedMoviesState)
         }
         composable(NavigationItem.PopularMovies.route) {
-            Text("Popular")
+            MovieListScreen(popularMoviesState)
         }
         composable(NavigationItem.FavoriteMovies.route) {
-            Text("Favorite")
+            MovieListScreen(favoriteMoviesState)
         }
     }
 }
