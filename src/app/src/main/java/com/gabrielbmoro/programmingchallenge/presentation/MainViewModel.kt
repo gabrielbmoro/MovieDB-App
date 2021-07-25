@@ -74,6 +74,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun refreshFavoriteMovies() {
+        fetchFavoriteMovies()
+    }
+
     fun requestMoreTopRatedMoviesCallback() {
         topRatedMoviesPaginationController.requestMore()
     }
