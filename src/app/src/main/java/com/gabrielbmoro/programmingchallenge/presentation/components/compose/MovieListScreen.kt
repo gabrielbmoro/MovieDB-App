@@ -5,11 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.State
+import androidx.compose.ui.platform.LocalContext
+import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 
 @Composable
 fun MovieListScreen(moviesState: State<List<Movie>?>, requestMoreElementsCallback: (() -> Unit)) {
     val movies = moviesState.value
+
+    val context = LocalContext.current
 
     if (movies.isNullOrEmpty()) {
         EmptyState()
@@ -28,7 +32,9 @@ fun MovieListScreen(moviesState: State<List<Movie>?>, requestMoreElementsCallbac
                     releaseDate = movie.releaseDate ?: "",
                     votes = movie.votesAverage ?: 0f
                 ) {
-
+                    context.startActivity(
+                        MovieDetailedActivity.newIntent(context, movie)
+                    )
                 }
             }
         }

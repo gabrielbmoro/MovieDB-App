@@ -1,6 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -21,8 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityOptionsCompat
-import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
@@ -131,24 +130,12 @@ class MovieDetailedActivity : AppCompatActivity() {
     }
 
     companion object {
-
         private const val MOVIE_INTENT_KEY = "movie key"
 
-        /**
-         * About animation
-         * Reference: https://guides.codepath.com/android/shared-element-activity-transition
-         */
-        fun startActivity(context: Activity, movie: Movie, ivImageShared: View) {
-            context.startActivity(
-                Intent(context, MovieDetailedActivity::class.java).apply {
-                    putExtra(MOVIE_INTENT_KEY, movie)
-                },
-                ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    context,
-                    ivImageShared,
-                    context.resources.getString(R.string.transition_name)
-                ).toBundle()
-            )
+        fun newIntent(context: Context, movie: Movie) : Intent {
+            return Intent(context, MovieDetailedActivity::class.java).apply {
+                putExtra(MOVIE_INTENT_KEY, movie)
+            }
         }
     }
 }
