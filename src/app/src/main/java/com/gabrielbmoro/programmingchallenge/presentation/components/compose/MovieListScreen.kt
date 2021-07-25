@@ -1,11 +1,14 @@
 package com.gabrielbmoro.programmingchallenge.presentation.components.compose
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.State
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 
@@ -16,7 +19,7 @@ fun MovieListScreen(moviesState: State<List<Movie>?>, requestMoreElementsCallbac
     val context = LocalContext.current
 
     if (movies.isNullOrEmpty()) {
-        EmptyState()
+        EmptyState(modifier = Modifier.padding(22.dp))
     } else {
         val listState = rememberLazyListState()
 
