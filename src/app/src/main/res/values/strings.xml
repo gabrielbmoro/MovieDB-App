@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProgrammingChallenge</string>
+    <string name="app_name">MovieDB App</string>
     <string name="token_value">755e0c67ac2fa886e775fb9057f0a32f</string>
     <string name="top_rated_movies_title">Top Rated</string>
     <string name="popular_movies_title">Popular</string>

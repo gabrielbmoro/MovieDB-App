@@ -5,7 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.BottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Navigation
@@ -23,23 +25,7 @@ class MainActivity : AppCompatActivity() {
             val navController = rememberNavController()
 
             MovieDBAppTheme() {
-                Scaffold(
-                    topBar = { },
-                    bottomBar = { BottomNavigationBar(navController) },
-                ) {
-                    Navigation(
-                        navController = navController,
-                        topRatedMoviesArgs = Pair(
-                            viewModel.topRatedMovies.observeAsState()
-                        ) { viewModel.requestMoreTopRatedMoviesCallback() },
-                        popularMoviesArgs = Pair(
-                            viewModel.popularMovies.observeAsState(),
-                        ) { viewModel.requestMorePopularMoviesCallback() },
-                        favoriteMoviesArgs = Pair(
-                            viewModel.favoriteMovies.observeAsState()
-                        ) { viewModel.requestMoreFavoriteMoviesCallback() }
-                    )
-                }
+                MainScreen(navController)
             }
         }
     }
@@ -48,5 +34,26 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         viewModel.refreshFavoriteMovies()
+    }
+
+    @Composable
+    private fun MainScreen(navController: NavHostController) {
+        Scaffold(
+            topBar = { },
+            bottomBar = { BottomNavigationBar(navController) },
+        ) {
+            Navigation(
+                navController = navController,
+                topRatedMoviesArgs = Pair(
+                    viewModel.topRatedMovies.observeAsState()
+                ) { viewModel.requestMoreTopRatedMoviesCallback() },
+                popularMoviesArgs = Pair(
+                    viewModel.popularMovies.observeAsState(),
+                ) { viewModel.requestMorePopularMoviesCallback() },
+                favoriteMoviesArgs = Pair(
+                    viewModel.favoriteMovies.observeAsState()
+                ) { viewModel.requestMoreFavoriteMoviesCallback() }
+            )
+        }
     }
 }
