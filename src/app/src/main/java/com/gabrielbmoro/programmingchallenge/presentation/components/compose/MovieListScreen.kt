@@ -1,13 +1,12 @@
 package com.gabrielbmoro.programmingchallenge.presentation.components.compose
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.ui.Alignment
@@ -29,8 +28,14 @@ private fun MoviesList(
         navArg.requestMore.invoke()
     }
 
-    LazyColumn(state = listState) {
-        items(movies) { movie ->
+    LazyColumn(
+        state = listState,
+    ) {
+        itemsIndexed(movies) { index, movie ->
+            if (index > 0) {
+                Box(modifier = Modifier.height(16.dp))
+            }
+
             MovieCard(
                 imageUrl = movie.posterPath,
                 title = movie.title ?: "",
