@@ -6,21 +6,10 @@
 
 ![Architecture](img/architecture.jpg)
 
-## Coverage 
+## Libraries
 
-> _Last update 12/08/20_
+- Dagger Hilt;
 
-| Layer                | Coverage (% classes)      |
-|----------------------|:-------------------------:|
-| core                 | _58%_                     |
-| domain               | _93%_                     |
-| presentation         | _15%_                     |
-| repository           | _64%_                     |
+- Compose;
 
-Total: _44%_
-
-## Teaser
-
-![Light mode](img/teaser.gif)
-
-- [Night mode](img/dark-theme-support.gif)
+- Room.

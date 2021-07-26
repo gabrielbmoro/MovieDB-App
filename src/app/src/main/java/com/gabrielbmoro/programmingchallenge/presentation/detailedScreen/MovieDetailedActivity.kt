@@ -1,6 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,20 +9,19 @@ import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityOptionsCompat
-import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
@@ -84,17 +84,25 @@ class MovieDetailedActivity : AppCompatActivity() {
                     320.dp
                 )
             ) {
-                Surface {
-                    MovieImage(
-                        imageUrl = viewModel.movie.posterPath,
-                        contentScale = ContentScale.FillWidth,
-                    )
-                }
+                MovieImage(
+                    imageUrl = viewModel.movie.posterPath,
+                    contentScale = ContentScale.FillWidth,
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(320.dp)
+                        .background(
+                            Color.Black.copy(alpha = 0.5f)
+                        )
+                )
 
                 Favorite(
                     isFavorite = favoriteState,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
+                        .size(56.dp)
                         .padding(start = 16.dp, bottom = 16.dp)
                 ) {
                     viewModel.isToFavoriteOrUnFavorite(!viewModel.movie.isFavorite)
@@ -122,24 +130,12 @@ class MovieDetailedActivity : AppCompatActivity() {
     }
 
     companion object {
-
         private const val MOVIE_INTENT_KEY = "movie key"
 
-        /**
-         * About animation
-         * Reference: https://guides.codepath.com/android/shared-element-activity-transition
-         */
-        fun startActivity(context: Activity, movie: Movie, ivImageShared: View) {
-            context.startActivity(
-                Intent(context, MovieDetailedActivity::class.java).apply {
-                    putExtra(MOVIE_INTENT_KEY, movie)
-                },
-                ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    context,
-                    ivImageShared,
-                    context.resources.getString(R.string.transition_name)
-                ).toBundle()
-            )
+        fun newIntent(context: Context, movie: Movie) : Intent {
+            return Intent(context, MovieDetailedActivity::class.java).apply {
+                putExtra(MOVIE_INTENT_KEY, movie)
+            }
         }
     }
 }

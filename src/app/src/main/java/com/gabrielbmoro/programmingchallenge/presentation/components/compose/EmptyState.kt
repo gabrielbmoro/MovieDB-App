@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
 
 @Composable
-fun EmptyState() {
-    Column {
+fun EmptyState(modifier: Modifier = Modifier) {
+    Column(modifier) {
         Image(
             painter = painterResource(R.mipmap.ic_sad_emoji),
             contentDescription = stringResource(id = R.string.alt_sad_emoji),
