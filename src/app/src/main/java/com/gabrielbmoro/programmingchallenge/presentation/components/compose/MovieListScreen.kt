@@ -1,11 +1,9 @@
 package com.gabrielbmoro.programmingchallenge.presentation.components.compose
 
 import android.content.Context
-import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
@@ -20,7 +18,8 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 private fun MoviesList(
     movies: List<Movie>,
     navArg: NavigationArgument,
-    context: Context
+    context: Context,
+    modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
 
@@ -30,6 +29,7 @@ private fun MoviesList(
 
     LazyColumn(
         state = listState,
+        modifier = modifier
     ) {
         itemsIndexed(movies) { index, movie ->
             if (index > 0) {
@@ -60,12 +60,18 @@ fun MovieListScreen(navArg: NavigationArgument) {
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .padding(16.dp)
     ) {
         if (movies.isNullOrEmpty()) {
-            EmptyState()
+            EmptyState(modifier = Modifier.align(Alignment.Center))
         } else {
-            MoviesList(movies, navArg, context)
+            MoviesList(
+                movies = movies,
+                navArg = navArg,
+                context = context,
+                modifier = Modifier.padding(
+                    horizontal = 16.dp
+                )
+            )
         }
 
         if (navArg.loadingState.value == true) {
