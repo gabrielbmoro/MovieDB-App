@@ -1,6 +1,8 @@
 package com.gabrielbmoro.programmingchallenge.presentation
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.BottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Navigation
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.NavigationArgument
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
+import com.gabrielbmoro.programmingchallenge.presentation.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +39,19 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         viewModel.refreshFavoriteMovies()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_activity_menu, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.menu_settings) {
+            SettingsActivity.startActivity(this)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     @Composable
