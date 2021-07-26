@@ -51,22 +51,27 @@ class MovieDetailedActivity : AppCompatActivity() {
 
             setContent {
                 MovieDBAppTheme() {
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(modifier = Modifier.height(0.dp)) {
-                                title = movie.title ?: ""
-                            }
-                        },
-                        content = {
-                            MovieDetailedContent()
-                        }
-                    )
+                    MovieDetailedScreen(movie)
                 }
             }
         } catch (illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
             finish()
         }
+    }
+
+    @Composable
+    private fun MovieDetailedScreen(movie: Movie) {
+        Scaffold(
+            topBar = {
+                TopAppBar(modifier = Modifier.height(0.dp)) {
+                    title = movie.title ?: ""
+                }
+            },
+            content = {
+                MovieDetailedContent()
+            }
+        )
     }
 
     @Composable
@@ -118,6 +123,7 @@ class MovieDetailedActivity : AppCompatActivity() {
                 overview = viewModel.movie.overview ?: "",
                 originalLanguage = viewModel.movie.originalLanguage ?: "",
                 popularity = viewModel.movie.popularity ?: 0f,
+                modifier = Modifier.padding(bottom = 24.dp)
             )
         }
     }
