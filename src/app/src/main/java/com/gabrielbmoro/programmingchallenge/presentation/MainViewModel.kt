@@ -35,6 +35,9 @@ class MainViewModel @Inject constructor(
     private val favoriteMoviesLiveData = MutableLiveData<List<Movie>?>()
     val favoriteMovies: LiveData<List<Movie>?> = favoriteMoviesLiveData
 
+    private val loadingLiveData = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = loadingLiveData
+
     init {
         topRatedMoviesPaginationController.requestMore()
         popularMoviesPaginationController.requestMore()
@@ -42,6 +45,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun fetchTopRatedMovies(pageNumber: Int) {
+        loadingLiveData.value = true
         viewModelScope.launch {
             val newMovies = getTopRatedMoviesUseCase.execute(pageNumber).results ?: emptyList()
             val existingMovies = topRatedMoviesLiveData.value ?: emptyList()
@@ -51,10 +55,12 @@ class MainViewModel @Inject constructor(
                 .toList()
             topRatedMoviesLiveData.postValue(updatedList)
             topRatedMoviesPaginationController.resultReceived()
+            loadingLiveData.postValue(false)
         }
     }
 
     private fun fetchPopularMovies(pageNumber: Int) {
+        loadingLiveData.value = true
         viewModelScope.launch {
             val newMovies = getPopularMoviesUseCase.execute(pageNumber).results ?: emptyList()
             val existingMovies = popularMoviesLiveData.value ?: emptyList()
@@ -64,13 +70,16 @@ class MainViewModel @Inject constructor(
                 .toList()
             popularMoviesLiveData.postValue(updatedList)
             popularMoviesPaginationController.resultReceived()
+            loadingLiveData.postValue(false)
         }
     }
 
     private fun fetchFavoriteMovies() {
+        loadingLiveData.value = true
         viewModelScope.launch {
             val favoriteMovies = getFavoriteMoviesUseCase.execute()
             favoriteMoviesLiveData.postValue(favoriteMovies)
+            loadingLiveData.postValue(false)
         }
     }
 

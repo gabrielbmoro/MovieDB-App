@@ -42,25 +42,28 @@ sealed class NavigationItem(
     )
 }
 
+data class NavigationArgument(
+    val moviesState: State<List<Movie>?>,
+    val requestMore: (() -> Unit),
+    val loadingState: State<Boolean?>
+)
+
 @Composable
 fun Navigation(
     navController: NavHostController,
-    topRatedMoviesArgs: Pair<State<List<Movie>?>, (()->Unit)>,
-    popularMoviesArgs: Pair<State<List<Movie>?>, (()->Unit)>,
-    favoriteMoviesArgs: Pair<State<List<Movie>?>, (()->Unit)>
+    topRatedMoviesArgs: NavigationArgument,
+    popularMoviesArgs: NavigationArgument,
+    favoriteMoviesArgs: NavigationArgument
 ) {
     NavHost(navController = navController, startDestination = NavigationItem.TopRatedMovies.route) {
         composable(NavigationItem.TopRatedMovies.route) {
-            val (topRatedMoviesState, requestMore) = topRatedMoviesArgs
-            MovieListScreen(topRatedMoviesState, requestMore)
+            MovieListScreen(topRatedMoviesArgs)
         }
         composable(NavigationItem.PopularMovies.route) {
-            val (popularMoviesState, requestMore) = popularMoviesArgs
-            MovieListScreen(popularMoviesState, requestMore)
+            MovieListScreen(popularMoviesArgs)
         }
         composable(NavigationItem.FavoriteMovies.route) {
-            val (favoriteMoviesState, requestMore) = favoriteMoviesArgs
-            MovieListScreen(favoriteMoviesState, requestMore)
+            MovieListScreen(favoriteMoviesArgs)
         }
     }
 }

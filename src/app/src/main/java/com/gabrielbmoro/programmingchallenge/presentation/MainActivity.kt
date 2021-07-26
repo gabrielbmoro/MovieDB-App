@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.BottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Navigation
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.NavigationArgument
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,15 +45,21 @@ class MainActivity : AppCompatActivity() {
         ) {
             Navigation(
                 navController = navController,
-                topRatedMoviesArgs = Pair(
-                    viewModel.topRatedMovies.observeAsState()
-                ) { viewModel.requestMoreTopRatedMoviesCallback() },
-                popularMoviesArgs = Pair(
-                    viewModel.popularMovies.observeAsState(),
-                ) { viewModel.requestMorePopularMoviesCallback() },
-                favoriteMoviesArgs = Pair(
-                    viewModel.favoriteMovies.observeAsState()
-                ) { viewModel.requestMoreFavoriteMoviesCallback() }
+                topRatedMoviesArgs = NavigationArgument(
+                    moviesState = viewModel.topRatedMovies.observeAsState(),
+                    requestMore = { viewModel.requestMoreTopRatedMoviesCallback() },
+                    loadingState = viewModel.loading.observeAsState()
+                ),
+                popularMoviesArgs = NavigationArgument(
+                    moviesState = viewModel.popularMovies.observeAsState(),
+                    requestMore = { viewModel.requestMorePopularMoviesCallback() },
+                    loadingState = viewModel.loading.observeAsState()
+                ),
+                favoriteMoviesArgs = NavigationArgument(
+                    moviesState = viewModel.favoriteMovies.observeAsState(),
+                    requestMore = { viewModel.requestMoreFavoriteMoviesCallback() },
+                    loadingState = viewModel.loading.observeAsState()
+                )
             )
         }
     }
