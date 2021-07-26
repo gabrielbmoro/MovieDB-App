@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.google.accompanist.swiperefresh.SwipeRefresh
 
 @Composable
 private fun MoviesList(
@@ -64,14 +65,19 @@ fun MovieListScreen(navArg: NavigationArgument) {
         if (movies.isNullOrEmpty()) {
             EmptyState(modifier = Modifier.align(Alignment.Center))
         } else {
-            MoviesList(
-                movies = movies,
-                navArg = navArg,
-                context = context,
-                modifier = Modifier.padding(
-                    horizontal = 16.dp
+            SwipeRefresh(
+                state = navArg.swipeRefreshState,
+                onRefresh = navArg.onRefresh
+            ) {
+                MoviesList(
+                    movies = movies,
+                    navArg = navArg,
+                    context = context,
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp
+                    )
                 )
-            )
+            }
         }
 
         if (navArg.loadingState.value == true) {

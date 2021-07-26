@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_settings) {
+        if (item.itemId == R.id.menu_settings) {
             SettingsActivity.startActivity(this)
         }
         return super.onOptionsItemSelected(item)
@@ -64,18 +64,24 @@ class MainActivity : AppCompatActivity() {
                 navController = navController,
                 topRatedMoviesArgs = NavigationArgument(
                     moviesState = viewModel.topRatedMovies.observeAsState(),
-                    requestMore = { viewModel.requestMoreTopRatedMoviesCallback() },
-                    loadingState = viewModel.loading.observeAsState()
+                    requestMore = { viewModel.requestMoreTopRatedMovies() },
+                    loadingState = viewModel.loading.observeAsState(),
+                    swipeRefreshState = viewModel.swipeRefreshLiveData,
+                    onRefresh = { viewModel.refreshTopRatedMovies() }
                 ),
                 popularMoviesArgs = NavigationArgument(
                     moviesState = viewModel.popularMovies.observeAsState(),
-                    requestMore = { viewModel.requestMorePopularMoviesCallback() },
-                    loadingState = viewModel.loading.observeAsState()
+                    requestMore = { viewModel.requestMorePopularMovies() },
+                    loadingState = viewModel.loading.observeAsState(),
+                    swipeRefreshState = viewModel.swipeRefreshLiveData,
+                    onRefresh = { viewModel.refreshPopularMovies() }
                 ),
                 favoriteMoviesArgs = NavigationArgument(
                     moviesState = viewModel.favoriteMovies.observeAsState(),
-                    requestMore = { viewModel.requestMoreFavoriteMoviesCallback() },
-                    loadingState = viewModel.loading.observeAsState()
+                    requestMore = { viewModel.requestMoreFavoriteMovies() },
+                    loadingState = viewModel.loading.observeAsState(),
+                    swipeRefreshState = viewModel.swipeRefreshLiveData,
+                    onRefresh = { viewModel.refreshFavoriteMovies() }
                 )
             )
         }

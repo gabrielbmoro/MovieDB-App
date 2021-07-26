@@ -33,6 +33,13 @@ class PaginationController {
         }
     }
 
+    fun reset() {
+        pagNumber = 1
+        if (isLock.isLocked) {
+            isLock.unlock()
+        }
+    }
+
     companion object Builder {
         fun build(serverCallback: ((Int) -> Unit)): PaginationController {
             return PaginationController().apply {
