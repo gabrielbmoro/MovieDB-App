@@ -86,18 +86,20 @@ class MovieDetailedActivity : AppCompatActivity() {
         ) {
             Box(
                 modifier = Modifier.height(
-                    320.dp
+                    420.dp
                 )
             ) {
                 MovieImage(
                     imageUrl = viewModel.movie.posterPath,
                     contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxSize()
                 )
 
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(320.dp)
+                        .fillMaxSize()
                         .background(
                             Color.Black.copy(alpha = 0.5f)
                         )
@@ -138,7 +140,7 @@ class MovieDetailedActivity : AppCompatActivity() {
     companion object {
         private const val MOVIE_INTENT_KEY = "movie key"
 
-        fun newIntent(context: Context, movie: Movie) : Intent {
+        fun newIntent(context: Context, movie: Movie): Intent {
             return Intent(context, MovieDetailedActivity::class.java).apply {
                 putExtra(MOVIE_INTENT_KEY, movie)
             }
