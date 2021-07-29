@@ -1,5 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.presentation
 
+import android.os.Build
+import android.os.Build.VERSION.SDK
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -46,9 +48,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_activity_menu, menu)
-
+        inflateMenuIfDarkThemeIsUnavailable(menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun inflateMenuIfDarkThemeIsUnavailable(menu: Menu?) {
+        val isDarkThemeUnavailable = (
+                Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
+                )
+        if (isDarkThemeUnavailable) {
+            menuInflater.inflate(R.menu.main_activity_menu, menu)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
