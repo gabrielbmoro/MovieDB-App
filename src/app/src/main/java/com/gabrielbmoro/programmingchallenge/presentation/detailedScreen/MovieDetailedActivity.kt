@@ -1,11 +1,9 @@
 package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +26,6 @@ import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Mov
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.IllegalArgumentException
@@ -127,6 +124,8 @@ class MovieDetailedActivity : AppCompatActivity() {
                 popularity = viewModel.movie.popularity ?: 0f,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
+
+            Spacer(Modifier.height(32.dp))
         }
     }
 
