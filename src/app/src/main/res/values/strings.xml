@@ -36,7 +36,6 @@
     <string name="dialog_theme_night_option">Night</string>
     <string name="dialog_theme_day_option">Day</string>
     <array name="pref_themes">
-        <item>Automatic</item>
         <item>Night</item>
         <item>Day</item>
     </array>

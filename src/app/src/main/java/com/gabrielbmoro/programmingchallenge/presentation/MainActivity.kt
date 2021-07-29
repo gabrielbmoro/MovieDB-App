@@ -17,6 +17,7 @@ import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Nav
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.NavigationArgument
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.presentation.settings.SettingsActivity
+import com.gabrielbmoro.programmingchallenge.presentation.util.setThemeAccordingToThePreferences
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setThemeAccordingToThePreferences()
+
         setContent {
             val navController = rememberNavController()
 
