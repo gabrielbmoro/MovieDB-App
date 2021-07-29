@@ -1,46 +1,58 @@
-package com.gabrielbmoro.programmingchallenge.domain.model
+package com.gabrielbmoro.programmingchallenge.entities
 
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.repository.entities.convertToMovieListType
+import com.google.common.truth.Truth
 import org.junit.Test
-import com.google.common.truth.Truth.assertThat
 
 class MoviesListTypeTest {
 
     @Test
     fun `top rated movies must be a kind of movie`() {
-        // given
+        // arrange
         val topRatedMovieId = 1
 
-        // when
+        // act
         val type = topRatedMovieId.convertToMovieListType()
 
-        // then
-        assertThat(type).isEqualTo(MovieListType.TopRated)
+        // assert
+        Truth.assertThat(type).isEqualTo(MovieListType.TopRated)
     }
 
     @Test
     fun `favorite movies must be a kind of movie`() {
-        // given
+        // arrange
         val favoriteMovieId = 2
 
-        // when
+        // act
         val type = favoriteMovieId.convertToMovieListType()
 
-        // then
-        assertThat(type).isEqualTo(MovieListType.Favorite)
+        // assert
+        Truth.assertThat(type).isEqualTo(MovieListType.Favorite)
     }
 
     @Test
     fun `popular movies must be a kind of movie`() {
-        // given
+        // arrange
         val popularMovieId = 3
 
-        // when
+        // act
         val type = popularMovieId.convertToMovieListType()
 
-        // then
-        assertThat(type).isEqualTo(MovieListType.Popular)
+        // assert
+        Truth.assertThat(type).isEqualTo(MovieListType.Popular)
+    }
+
+    @Test
+    fun `unknown movie should not be recognized`() {
+        // arrange
+        val popularMovieId = 4
+
+        // act
+        val type = popularMovieId.convertToMovieListType()
+
+        // assert
+        Truth.assertThat(type).isNull()
     }
 
 }
