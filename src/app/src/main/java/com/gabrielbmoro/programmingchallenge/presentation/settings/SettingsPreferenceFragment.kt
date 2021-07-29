@@ -24,23 +24,23 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat() {
             val dialog = ThemeSelectionDialog(currentTheme)
             parentFragmentManager.setFragmentResultListener(
                 ThemeSelectionDialog.SELECTED_THEME_REQUEST_KEY,
-                viewLifecycleOwner,
-                { requestKey, result ->
-                    if (requestKey == ThemeSelectionDialog.SELECTED_THEME_REQUEST_KEY) {
-                        preferenceManager?.sharedPreferences?.edit()?.apply {
-                            val selectedTheme =
-                                result.getInt(ThemeSelectionDialog.THEME_BUNDLE_KEY, 0)
-                            val isModificationApplied =
-                                requireActivity().setDefaultNightModeAccordingToTheValue(
-                                    selectedTheme
-                                )
-                            if (isModificationApplied) {
-                                putInt(getThemePreferenceKey(), selectedTheme)
-                                this.apply()
-                            }
+                viewLifecycleOwner
+            ) { requestKey, result ->
+                if (requestKey == ThemeSelectionDialog.SELECTED_THEME_REQUEST_KEY) {
+                    preferenceManager?.sharedPreferences?.edit()?.apply {
+                        val selectedTheme =
+                            result.getInt(ThemeSelectionDialog.THEME_BUNDLE_KEY, 0)
+                        val isModificationApplied =
+                            requireActivity().setDefaultNightModeAccordingToTheValue(
+                                selectedTheme
+                            )
+                        if (isModificationApplied) {
+                            putInt(getThemePreferenceKey(), selectedTheme)
+                            this.apply()
                         }
                     }
-                })
+                }
+            }
             dialog.show(parentFragmentManager)
         }
     }

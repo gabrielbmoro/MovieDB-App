@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 
 sealed class NavigationItem(
     @DrawableRes val icon: Int,
@@ -45,7 +46,9 @@ sealed class NavigationItem(
 data class NavigationArgument(
     val moviesState: State<List<Movie>?>,
     val requestMore: (() -> Unit),
-    val loadingState: State<Boolean?>
+    val loadingState: State<Boolean?>,
+    val onRefresh : (()->Unit),
+    val swipeRefreshState: SwipeRefreshState
 )
 
 @Composable

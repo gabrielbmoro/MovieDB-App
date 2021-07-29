@@ -44,9 +44,10 @@ private fun SectionDescription(description: String) {
 fun MovieDetailDescription(
     overview: String,
     popularity: Float,
-    originalLanguage: String
+    originalLanguage: String,
+    modifier: Modifier = Modifier
 ) {
-    Column() {
+    Column(modifier = modifier) {
         SectionTitle(title = stringResource(id = R.string.overview))
         SectionDescription(description = overview)
 

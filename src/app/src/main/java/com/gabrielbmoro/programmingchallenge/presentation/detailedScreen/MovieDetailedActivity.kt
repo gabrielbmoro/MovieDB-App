@@ -1,11 +1,9 @@
 package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +26,6 @@ import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Mov
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.lang.IllegalArgumentException
@@ -51,22 +48,27 @@ class MovieDetailedActivity : AppCompatActivity() {
 
             setContent {
                 MovieDBAppTheme() {
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(modifier = Modifier.height(0.dp)) {
-                                title = movie.title ?: ""
-                            }
-                        },
-                        content = {
-                            MovieDetailedContent()
-                        }
-                    )
+                    MovieDetailedScreen(movie)
                 }
             }
         } catch (illegalArgumentException: IllegalArgumentException) {
             Timber.e(illegalArgumentException)
             finish()
         }
+    }
+
+    @Composable
+    private fun MovieDetailedScreen(movie: Movie) {
+        Scaffold(
+            topBar = {
+                TopAppBar(modifier = Modifier.height(0.dp)) {
+                    title = movie.title ?: ""
+                }
+            },
+            content = {
+                MovieDetailedContent()
+            }
+        )
     }
 
     @Composable
@@ -81,18 +83,20 @@ class MovieDetailedActivity : AppCompatActivity() {
         ) {
             Box(
                 modifier = Modifier.height(
-                    320.dp
+                    420.dp
                 )
             ) {
                 MovieImage(
                     imageUrl = viewModel.movie.posterPath,
                     contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxSize()
                 )
 
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(320.dp)
+                        .fillMaxSize()
                         .background(
                             Color.Black.copy(alpha = 0.5f)
                         )
@@ -118,7 +122,10 @@ class MovieDetailedActivity : AppCompatActivity() {
                 overview = viewModel.movie.overview ?: "",
                 originalLanguage = viewModel.movie.originalLanguage ?: "",
                 popularity = viewModel.movie.popularity ?: 0f,
+                modifier = Modifier.padding(bottom = 24.dp)
             )
+
+            Spacer(Modifier.height(32.dp))
         }
     }
 
@@ -132,7 +139,7 @@ class MovieDetailedActivity : AppCompatActivity() {
     companion object {
         private const val MOVIE_INTENT_KEY = "movie key"
 
-        fun newIntent(context: Context, movie: Movie) : Intent {
+        fun newIntent(context: Context, movie: Movie): Intent {
             return Intent(context, MovieDetailedActivity::class.java).apply {
                 putExtra(MOVIE_INTENT_KEY, movie)
             }

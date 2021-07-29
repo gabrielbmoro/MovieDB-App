@@ -7,6 +7,7 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetTopRatedMoviesUseCase
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -37,6 +38,8 @@ class MainViewModel @Inject constructor(
 
     private val loadingLiveData = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = loadingLiveData
+
+    val swipeRefreshLiveData = SwipeRefreshState(false)
 
     init {
         topRatedMoviesPaginationController.requestMore()
@@ -87,15 +90,31 @@ class MainViewModel @Inject constructor(
         fetchFavoriteMovies()
     }
 
-    fun requestMoreTopRatedMoviesCallback() {
+    fun requestMoreTopRatedMovies() {
         topRatedMoviesPaginationController.requestMore()
     }
 
-    fun requestMorePopularMoviesCallback() {
+    fun requestMorePopularMovies() {
         popularMoviesPaginationController.requestMore()
     }
 
-    fun requestMoreFavoriteMoviesCallback() {
+    fun refreshTopRatedMovies() {
+        swipeRefreshLiveData.isRefreshing = true
+        topRatedMoviesLiveData.value = emptyList()
+        topRatedMoviesPaginationController.reset()
+        swipeRefreshLiveData.isRefreshing = false
+        requestMoreTopRatedMovies()
+    }
+
+    fun refreshPopularMovies() {
+        swipeRefreshLiveData.isRefreshing = true
+        popularMoviesLiveData.value = emptyList()
+        popularMoviesPaginationController.reset()
+        swipeRefreshLiveData.isRefreshing = false
+        requestMorePopularMovies()
+    }
+
+    fun requestMoreFavoriteMovies() {
         Timber.d("Pagination is not impleted to favorite movies")
     }
 }
