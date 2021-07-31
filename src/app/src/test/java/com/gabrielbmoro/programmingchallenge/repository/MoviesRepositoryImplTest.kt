@@ -2,6 +2,7 @@ package com.gabrielbmoro.programmingchallenge.repository
 
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
 import com.gabrielbmoro.programmingchallenge.usecases.mappers.toFavoriteMovie
 import com.google.common.truth.Truth
@@ -36,12 +37,70 @@ class MoviesRepositoryImplTest {
         releaseDate = "12/02/2002",
     )
 
+    private val fakeToken = "ab8622c4-2129-4824-9dd3-297ef7855942"
+
     private fun getRepository(): MoviesRepositoryImpl {
         return MoviesRepositoryImpl(
             api = apiRepository,
             favoriteMoviesDAO = favoriteMoviesDAO,
-            apiToken = "ab8622c4-2129-4824-9dd3-297ef7855942"
+            apiToken = fakeToken
         )
+    }
+
+    @Test
+    fun `should be able to get top rated movies`() {
+        // arrange
+        val pageTarget = 2
+        val fakePageResponse = PageResponse(
+            totalPages = 42,
+            page = pageTarget,
+            results = emptyList(),
+            totalResults = 120
+        )
+
+        val repositoryTest = getRepository()
+        coEvery {
+            apiRepository.getTopRatedMovies(
+                apiKey = fakeToken,
+                pageNumber = pageTarget
+            )
+        }.answers { fakePageResponse }
+
+        // act
+        testDispatcher.runBlockingTest {
+            repositoryTest.getTopRatedMovies(pageTarget)
+        }
+
+        // assert
+        coVerify { apiRepository.getTopRatedMovies(fakeToken, pageTarget) }
+    }
+
+    @Test
+    fun `should be able to get popular movies`() {
+        // arrange
+        val pageTarget = 2
+        val fakePageResponse = PageResponse(
+            totalPages = 42,
+            page = pageTarget,
+            results = emptyList(),
+            totalResults = 120
+        )
+
+        val repositoryTest = getRepository()
+        coEvery {
+            apiRepository.getPopularMovies(
+                apiKey = fakeToken,
+                pageNumber = pageTarget
+            )
+        }.answers { fakePageResponse }
+
+        // act
+        testDispatcher.runBlockingTest {
+            repositoryTest.getPopularMovies(pageTarget)
+        }
+
+        // assert
+        coVerify { apiRepository.getPopularMovies(fakeToken, pageTarget) }
     }
 
     @Test
