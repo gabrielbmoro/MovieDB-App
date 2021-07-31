@@ -14,6 +14,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.io.IOException
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
@@ -166,5 +167,37 @@ class MoviesRepositoryImplTest {
 
         // assert
         coVerify { favoriteMoviesDAO.allFavoriteMovies() }
+    }
+
+    @Test
+    fun `when occurs an exception to favorite a movie`() {
+        // arrange
+        val repositoryTest = getRepository()
+        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        coEvery { favoriteMoviesDAO.saveFavorite(favoriteMovie) }.throws(IOException("Error simulated"))
+
+        // act
+        testDispatcher.runBlockingTest {
+            val wasOperationSuccess = repositoryTest.doAsFavorite(favoriteMovie)
+
+            // assert
+            Truth.assertThat(wasOperationSuccess).isFalse()
+        }
+    }
+
+    @Test
+    fun `when occurs an exception to remove a movie from the favorite list`() {
+        // arrange
+        val repositoryTest = getRepository()
+        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        coEvery { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }.throws(IOException("Error simulated"))
+
+        // act
+        testDispatcher.runBlockingTest {
+            val wasOperationSuccess = repositoryTest.unFavorite(favoriteMovie.title)
+
+            // assert
+            Truth.assertThat(wasOperationSuccess).isFalse()
+        }
     }
 }
