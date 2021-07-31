@@ -39,7 +39,8 @@ class MoviesRepositoryImplTest {
     private fun getRepository(): MoviesRepositoryImpl {
         return MoviesRepositoryImpl(
             api = apiRepository,
-            favoriteMoviesDAO = favoriteMoviesDAO
+            favoriteMoviesDAO = favoriteMoviesDAO,
+            apiToken = "ab8622c4-2129-4824-9dd3-297ef7855942"
         )
     }
 

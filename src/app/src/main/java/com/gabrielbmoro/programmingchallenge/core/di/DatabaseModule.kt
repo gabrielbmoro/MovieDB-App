@@ -15,11 +15,13 @@ import dagger.hilt.components.SingletonComponent
 object DatabaseModule {
 
     @Provides
-    fun favoriteDao(@ApplicationContext context: Context): FavoriteMoviesDAO {
+    fun favoriteDao(
+        @ApplicationContext context: Context,
+    ): FavoriteMoviesDAO {
         return Room.databaseBuilder(
             context,
             DataBaseFactory::class.java,
-            ConfigVariables.DATABASE_NAME
+            "MovieDBAppDataBase"
         ).build().favoriteMoviesDAO()
     }
 }

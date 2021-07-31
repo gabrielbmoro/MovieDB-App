@@ -20,7 +20,8 @@ object RepositoryModule {
     ): MoviesRepository {
         return MoviesRepositoryImpl(
             api = apiRepository,
-            favoriteMoviesDAO = favoriteMoviesDAO
+            favoriteMoviesDAO = favoriteMoviesDAO,
+            apiToken = "755e0c67ac2fa886e775fb9057f0a32f"
         )
     }
 }

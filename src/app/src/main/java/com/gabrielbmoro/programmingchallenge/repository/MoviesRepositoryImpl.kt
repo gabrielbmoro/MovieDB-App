@@ -1,6 +1,5 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
-import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
@@ -8,7 +7,8 @@ import com.gabrielbmoro.programmingchallenge.repository.room.entities.FavoriteMo
 
 class MoviesRepositoryImpl(
     private val api: ApiRepository,
-    private val favoriteMoviesDAO: FavoriteMoviesDAO
+    private val favoriteMoviesDAO: FavoriteMoviesDAO,
+    private val apiToken: String
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): List<FavoriteMovieDTO> {
@@ -16,18 +16,16 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun getPopularMovies(pageNumber: Int): PageResponse {
-        return api.getMovies(
+        return api.getPopularMovies(
             pageNumber = pageNumber,
-            apiKey = ConfigVariables.TOKEN,
-            sortBy = ConfigVariables.PARAMETER_POPULAR_MOVIES
+            apiKey = apiToken
         )
     }
 
     override suspend fun getTopRatedMovies(pageNumber: Int): PageResponse {
-        return api.getMovies(
+        return api.getTopRatedMovies(
             pageNumber = pageNumber,
-            apiKey = ConfigVariables.TOKEN,
-            sortBy = ConfigVariables.PARAMETER_TOP_RATED_MOVIES
+            apiKey = apiToken
         )
     }
 

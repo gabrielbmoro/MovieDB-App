@@ -11,16 +11,15 @@ import retrofit2.http.Query
  */
 interface ApiRepository {
 
-    /**
-     * This abstract method provides the implementation
-     * model of the target request (Get movies).
-     * @author Gabriel Moro
-     * @since 2018-08-30
-     */
-    @GET("discover/movie")
-    suspend fun getMovies(
-            @Query("api_key") apiKey: String,
-            @Query("sort_by") sortBy: String,
-            @Query("page") pageNumber: Int
-    ): PageResponse
+    @GET("discover/movie?sort_by=popularity.desc")
+    suspend fun getPopularMovies(
+        @Query("api_key") apiKey: String,
+        @Query("page") pageNumber: Int
+    ) : PageResponse
+
+    @GET("discover/movie?sort_by=vote_average.desc")
+    suspend fun getTopRatedMovies(
+        @Query("api_key") apiKey: String,
+        @Query("page") pageNumber: Int
+    ) : PageResponse
 }
