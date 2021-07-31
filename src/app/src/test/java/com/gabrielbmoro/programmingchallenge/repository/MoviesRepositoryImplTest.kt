@@ -62,6 +62,43 @@ class MoviesRepositoryImplTest {
     }
 
     @Test
+    fun `should be able to remove from favorites a movie that is favorite`() {
+        // arrange
+        val repositoryTest = getRepository()
+        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        coEvery { repositoryTest.checkIsAFavoriteMovie(favoriteMovie) }.returns(true)
+        coEvery { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }.answers { }
+
+        // act
+        testDispatcher.runBlockingTest {
+            val result = repositoryTest.unFavorite(favoriteMovie.title)
+
+            // assert
+            Truth.assertThat(result).isTrue()
+        }
+
+        coVerify { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }
+    }
+
+    @Test
+    fun `should not be able to remove from favorites a movie that is not favorite`() {
+        // arrange
+        val repositoryTest = getRepository()
+        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        coEvery { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }.answers { }
+
+        // act
+        testDispatcher.runBlockingTest {
+            val result = repositoryTest.unFavorite(favoriteMovie.title)
+
+            // assert
+            Truth.assertThat(result).isTrue()
+        }
+
+        coVerify { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }
+    }
+
+    @Test
     fun `should not be able to favorite a movie that is already favorite`() {
         // arrange
         val repositoryTest = getRepository()
@@ -95,6 +132,7 @@ class MoviesRepositoryImplTest {
         testDispatcher.runBlockingTest {
             val isFavorite = repositoryTest.checkIsAFavoriteMovie(favoriteMovie)
 
+            // assert
             Truth.assertThat(isFavorite).isTrue()
         }
     }
@@ -110,7 +148,23 @@ class MoviesRepositoryImplTest {
         testDispatcher.runBlockingTest {
             val isFavorite = repositoryTest.checkIsAFavoriteMovie(favoriteMovie)
 
+            // assert
             Truth.assertThat(isFavorite).isFalse()
         }
+    }
+
+    @Test
+    fun `get all favorites movies`() {
+        // arrange
+        val repositoryTest = getRepository()
+        coEvery { favoriteMoviesDAO.allFavoriteMovies() }.returns(emptyList())
+
+        // act
+        testDispatcher.runBlockingTest {
+            repositoryTest.getFavoriteMovies()
+        }
+
+        // assert
+        coVerify { favoriteMoviesDAO.allFavoriteMovies() }
     }
 }
