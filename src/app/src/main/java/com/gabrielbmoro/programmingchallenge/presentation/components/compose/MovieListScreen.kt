@@ -39,10 +39,10 @@ private fun MoviesList(
             }
 
             MovieCard(
-                imageUrl = movie.posterPath,
-                title = movie.title ?: "",
-                releaseDate = movie.releaseDate ?: "",
-                votes = movie.votesAverage ?: 0f
+                imageUrl = movie.imageUrl,
+                title = movie.title,
+                releaseDate = movie.releaseDate,
+                votes = movie.votesAverage
             ) {
                 context.startActivity(
                     MovieDetailedActivity.newIntent(context, movie)

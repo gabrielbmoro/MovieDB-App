@@ -62,7 +62,7 @@ class MovieDetailedActivity : AppCompatActivity() {
         Scaffold(
             topBar = {
                 TopAppBar(modifier = Modifier.height(0.dp)) {
-                    title = movie.title ?: ""
+                    title = movie.title
                 }
             },
             content = {
@@ -87,7 +87,7 @@ class MovieDetailedActivity : AppCompatActivity() {
                 )
             ) {
                 MovieImage(
-                    imageUrl = viewModel.movie.posterPath,
+                    imageUrl = viewModel.movie.imageUrl,
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier
                         .align(Alignment.Center)
@@ -112,16 +112,16 @@ class MovieDetailedActivity : AppCompatActivity() {
                     viewModel.isToFavoriteOrUnFavorite(!viewModel.movie.isFavorite)
                 }
                 FiveStars(
-                    votes = viewModel.movie.votesAverage ?: 0f,
+                    votes = viewModel.movie.votesAverage,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .padding(end = 16.dp, bottom = 16.dp)
                 )
             }
             MovieDetailDescription(
-                overview = viewModel.movie.overview ?: "",
-                originalLanguage = viewModel.movie.originalLanguage ?: "",
-                popularity = viewModel.movie.popularity ?: 0f,
+                overview = viewModel.movie.overview,
+                originalLanguage = viewModel.movie.language,
+                popularity = viewModel.movie.popularity,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 

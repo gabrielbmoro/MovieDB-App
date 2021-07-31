@@ -1,18 +1,18 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
+import com.gabrielbmoro.programmingchallenge.repository.room.entities.FavoriteMovieDTO
 
 interface MoviesRepository {
-    suspend fun getFavoriteMovies(): List<Movie>
+    suspend fun getFavoriteMovies(): List<FavoriteMovieDTO>
 
-    suspend fun getPopularMovies(pageNumber: Int): PageMovies
+    suspend fun getPopularMovies(pageNumber: Int): PageResponse
 
-    suspend fun getTopRatedMovies(pageNumber: Int): PageMovies
+    suspend fun getTopRatedMovies(pageNumber: Int): PageResponse
 
-    suspend fun doAsFavorite(movie: Movie): Boolean
+    suspend fun doAsFavorite(movie: FavoriteMovieDTO): Boolean
 
-    suspend fun unFavorite(movie: Movie): Boolean
+    suspend fun unFavorite(movieTitle: String): Boolean
 
-    suspend fun checkIsAFavoriteMovie(movie: Movie): Boolean
+    suspend fun checkIsAFavoriteMovie(movie: FavoriteMovieDTO): Boolean
 }

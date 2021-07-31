@@ -1,6 +1,6 @@
 package com.gabrielbmoro.programmingchallenge.repository.retrofit
 
-import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -22,5 +22,5 @@ interface ApiRepository {
             @Query("api_key") apiKey: String,
             @Query("sort_by") sortBy: String,
             @Query("page") pageNumber: Int
-    ): PageMovies
+    ): PageResponse
 }

@@ -31,7 +31,7 @@ class MovieDetailedViewModel @Inject constructor(
                 if (isToFavorite)
                     favoriteMovieUseCase.execute(movie)
                 else
-                    unFavoriteMovieUseCase.execute(movie)
+                    unFavoriteMovieUseCase.execute(movie.title)
                 movie.isFavorite = isToFavorite
                 onFavoriteEventMutableLiveData.postValue(movie.isFavorite)
             } catch (exception: Exception) { }

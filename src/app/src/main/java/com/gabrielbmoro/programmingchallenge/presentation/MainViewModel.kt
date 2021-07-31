@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
     private fun fetchTopRatedMovies(pageNumber: Int) {
         loadingLiveData.value = true
         viewModelScope.launch {
-            val newMovies = getTopRatedMoviesUseCase.execute(pageNumber).results ?: emptyList()
+            val newMovies = getTopRatedMoviesUseCase.execute(pageNumber).movies
             val existingMovies = topRatedMoviesLiveData.value ?: emptyList()
             val updatedList = existingMovies
                 .toMutableList()
@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(
     private fun fetchPopularMovies(pageNumber: Int) {
         loadingLiveData.value = true
         viewModelScope.launch {
-            val newMovies = getPopularMoviesUseCase.execute(pageNumber).results ?: emptyList()
+            val newMovies = getPopularMoviesUseCase.execute(pageNumber).movies
             val existingMovies = popularMoviesLiveData.value ?: emptyList()
             val updatedList = existingMovies
                 .toMutableList()
