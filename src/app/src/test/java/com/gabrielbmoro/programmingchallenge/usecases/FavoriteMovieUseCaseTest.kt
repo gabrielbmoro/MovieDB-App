@@ -26,7 +26,7 @@ class FavoriteMovieUseCaseTest {
     private fun getFavoriteUseCase() = FavoriteMovieUseCase(repository, mapper)
 
     @Test
-    fun `Favorite a movie`() {
+    fun `should be able to favorite a movie`() {
         // arrange
         val favoriteUseCaseTest = getFavoriteUseCase()
         val movie = Movie(

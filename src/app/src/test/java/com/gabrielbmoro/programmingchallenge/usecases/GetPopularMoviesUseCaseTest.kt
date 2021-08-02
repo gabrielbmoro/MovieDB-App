@@ -25,7 +25,7 @@ class GetPopularMoviesUseCaseTest {
     private fun getPopularMovieUseCaseTest() = GetPopularMoviesUseCase(repository, mapper)
 
     @Test
-    fun `Get popular movies with more than one page`() {
+    fun `should be able to get popular movies`() {
         // arrange
         val popularUseCaseTest = getPopularMovieUseCaseTest()
         coEvery {

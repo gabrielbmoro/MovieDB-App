@@ -8,7 +8,7 @@ import org.junit.Test
 class MoviesListTypeTest {
 
     @Test
-    fun `top rated movies must be a kind of movie`() {
+    fun `should be able to identify a top rated movie`() {
         // arrange
         val topRatedMovieId = 1
 
@@ -20,7 +20,7 @@ class MoviesListTypeTest {
     }
 
     @Test
-    fun `favorite movies must be a kind of movie`() {
+    fun `should be able to identify a favorite movie`() {
         // arrange
         val favoriteMovieId = 2
 
@@ -32,7 +32,7 @@ class MoviesListTypeTest {
     }
 
     @Test
-    fun `popular movies must be a kind of movie`() {
+    fun `should be able to identify a popular movie`() {
         // arrange
         val popularMovieId = 3
 
@@ -44,7 +44,7 @@ class MoviesListTypeTest {
     }
 
     @Test
-    fun `unknown movie should not be recognized`() {
+    fun `should not be able to identify a unknown movie`() {
         // arrange
         val popularMovieId = 4
 

@@ -22,7 +22,7 @@ class UnFavoriteMovieUseCaseTest {
     private fun getUnFavoriteUseCase() = UnFavoriteMovieUseCase(repository)
 
     @Test
-    fun `Remove a movie from favorite list`() {
+    fun `should be able to remove a movie from favorite list`() {
         // arrange
         val unFavoriteUseCaseTest = getUnFavoriteUseCase()
 

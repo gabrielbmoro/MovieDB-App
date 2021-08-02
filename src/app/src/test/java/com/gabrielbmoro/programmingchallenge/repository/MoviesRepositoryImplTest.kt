@@ -179,7 +179,7 @@ class MoviesRepositoryImplTest {
     }
 
     @Test
-    fun `check if the movie is favorite when there is one`() {
+    fun `should be able to check if the movie is favorite when there is one`() {
         // arrange
         val repositoryTest = getRepository()
         val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
@@ -199,7 +199,7 @@ class MoviesRepositoryImplTest {
     }
 
     @Test
-    fun `check if the movie is favorite when there is no one`() {
+    fun `should be able to check if the movie is favorite when there is no one`() {
         // arrange
         val repositoryTest = getRepository()
         val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
@@ -215,7 +215,7 @@ class MoviesRepositoryImplTest {
     }
 
     @Test
-    fun `get all favorites movies`() {
+    fun `should be able to get all favorites movies`() {
         // arrange
         val repositoryTest = getRepository()
         coEvery { favoriteMoviesDAO.allFavoriteMovies() }.returns(emptyList())
@@ -230,7 +230,7 @@ class MoviesRepositoryImplTest {
     }
 
     @Test
-    fun `when occurs an exception to favorite a movie`() {
+    fun `should be able to handle an exception when there is an attempt to favorite a movie`() {
         // arrange
         val repositoryTest = getRepository()
         val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
@@ -246,7 +246,7 @@ class MoviesRepositoryImplTest {
     }
 
     @Test
-    fun `when occurs an exception to remove a movie from the favorite list`() {
+    fun `should be able to handle an exception when occurs movie remove operation from the favorite list`() {
         // arrange
         val repositoryTest = getRepository()
         val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)

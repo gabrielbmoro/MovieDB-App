@@ -25,7 +25,7 @@ class GetFavoriteMoviesUseCaseTest {
     private fun getFavoriteMovieUseCaseTest() = GetFavoriteMoviesUseCase(repository, mapper)
 
     @Test
-    fun `Get favorite movies with more than one record`() {
+    fun `should be able to get all favorite movies`() {
         // arrange
         val favoriteUseCaseTest = getFavoriteMovieUseCaseTest()
         coEvery {
