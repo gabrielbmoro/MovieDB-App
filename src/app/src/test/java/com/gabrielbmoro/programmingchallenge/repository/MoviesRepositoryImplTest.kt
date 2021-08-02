@@ -4,7 +4,7 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
-import com.gabrielbmoro.programmingchallenge.usecases.mappers.toFavoriteMovie
+import com.gabrielbmoro.programmingchallenge.usecases.mappers.FavoriteMovieMapper
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -107,7 +107,7 @@ class MoviesRepositoryImplTest {
     fun `should be able to favorite a movie that is not favorite`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { repositoryTest.checkIsAFavoriteMovie(favoriteMovie) }.returns(false)
         coEvery { favoriteMoviesDAO.saveFavorite(favoriteMovie) }.answers { }
 
@@ -126,7 +126,7 @@ class MoviesRepositoryImplTest {
     fun `should be able to remove from favorites a movie that is favorite`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { repositoryTest.checkIsAFavoriteMovie(favoriteMovie) }.returns(true)
         coEvery { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }.answers { }
 
@@ -145,7 +145,7 @@ class MoviesRepositoryImplTest {
     fun `should not be able to remove from favorites a movie that is not favorite`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }.answers { }
 
         // act
@@ -163,7 +163,7 @@ class MoviesRepositoryImplTest {
     fun `should not be able to favorite a movie that is already favorite`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { repositoryTest.checkIsAFavoriteMovie(favoriteMovie) }.returns(true)
 
         // act
@@ -182,7 +182,7 @@ class MoviesRepositoryImplTest {
     fun `check if the movie is favorite when there is one`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { favoriteMoviesDAO.isThereAMovie(favoriteMovie.title) }.returns(
             listOf(
                 favoriteMovie
@@ -202,7 +202,7 @@ class MoviesRepositoryImplTest {
     fun `check if the movie is favorite when there is no one`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { favoriteMoviesDAO.isThereAMovie(favoriteMovie.title) }.returns(emptyList())
 
         // act
@@ -233,7 +233,7 @@ class MoviesRepositoryImplTest {
     fun `when occurs an exception to favorite a movie`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { favoriteMoviesDAO.saveFavorite(favoriteMovie) }.throws(IOException("Error simulated"))
 
         // act
@@ -249,7 +249,7 @@ class MoviesRepositoryImplTest {
     fun `when occurs an exception to remove a movie from the favorite list`() {
         // arrange
         val repositoryTest = getRepository()
-        val favoriteMovie = mockedMovie.toFavoriteMovie()
+        val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
         coEvery { favoriteMoviesDAO.removeFavorite(favoriteMovie.title) }.throws(IOException("Error simulated"))
 
         // act

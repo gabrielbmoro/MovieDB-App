@@ -2,12 +2,16 @@ package com.gabrielbmoro.programmingchallenge.usecases
 
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
 import com.gabrielbmoro.programmingchallenge.repository.entities.Page
-import com.gabrielbmoro.programmingchallenge.usecases.mappers.toPage
+import com.gabrielbmoro.programmingchallenge.usecases.mappers.PageMapper
 import javax.inject.Inject
 
-class GetTopRatedMoviesUseCase @Inject constructor(val repository: MoviesRepository) {
+class GetTopRatedMoviesUseCase @Inject constructor(
+    private val repository: MoviesRepository,
+    private val mapper: PageMapper
+) {
 
     suspend fun execute(pageNumber: Int): Page {
-        return repository.getTopRatedMovies(pageNumber).toPage()
+        val pageResponse = repository.getTopRatedMovies(pageNumber)
+        return mapper.map(pageResponse)
     }
 }
