@@ -4,12 +4,23 @@
 
 ## Architecture and Stack Overview
 
-![Architecture](img/architecture.jpg)
+![Architecture](img/architecture.png)
+
+### Repository
+
+<Describe here something>
+
+### Use Cases
+
+#### Mappers
+
+<Describe here something>
+
+### Presentation
+
+### Core
+
+---
 
 ## Libraries
 
-- Dagger Hilt;
-
-- Compose;
-
-- Room.
