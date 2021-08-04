@@ -1,40 +1,37 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
-import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
-import com.gabrielbmoro.programmingchallenge.repository.entities.PageMovies
+import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
+import com.gabrielbmoro.programmingchallenge.repository.room.entities.FavoriteMovieDTO
 
 class MoviesRepositoryImpl(
     private val api: ApiRepository,
-    private val favoriteMoviesDAO: FavoriteMoviesDAO
+    private val favoriteMoviesDAO: FavoriteMoviesDAO,
+    private val apiToken: String
 ) : MoviesRepository {
 
-    override suspend fun getFavoriteMovies(): List<Movie> {
+    override suspend fun getFavoriteMovies(): List<FavoriteMovieDTO> {
         return favoriteMoviesDAO.allFavoriteMovies()
     }
 
-    override suspend fun getPopularMovies(pageNumber: Int): PageMovies {
-        return api.getMovies(
+    override suspend fun getPopularMovies(pageNumber: Int): PageResponse {
+        return api.getPopularMovies(
             pageNumber = pageNumber,
-            apiKey = ConfigVariables.TOKEN,
-            sortBy = ConfigVariables.PARAMETER_POPULAR_MOVIES
+            apiKey = apiToken
         )
     }
 
-    override suspend fun getTopRatedMovies(pageNumber: Int): PageMovies {
-        return api.getMovies(
+    override suspend fun getTopRatedMovies(pageNumber: Int): PageResponse {
+        return api.getTopRatedMovies(
             pageNumber = pageNumber,
-            apiKey = ConfigVariables.TOKEN,
-            sortBy = ConfigVariables.PARAMETER_TOP_RATED_MOVIES
+            apiKey = apiToken
         )
     }
 
-    override suspend fun doAsFavorite(movie: Movie): Boolean {
+    override suspend fun doAsFavorite(movie: FavoriteMovieDTO): Boolean {
         return try {
             if (!checkIsAFavoriteMovie(movie)) {
-                movie.isFavorite = true
                 favoriteMoviesDAO.saveFavorite(movie)
             }
             true
@@ -43,23 +40,18 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun unFavorite(movie: Movie): Boolean {
+    override suspend fun unFavorite(movieTitle: String): Boolean {
         return try {
-            if (checkIsAFavoriteMovie(movie)) {
-                favoriteMoviesDAO.removeFavorite(movie.id)
-                movie.isFavorite = false
-            }
+            favoriteMoviesDAO.removeFavorite(movieTitle)
             true
         } catch (exception: Exception) {
             false
         }
     }
 
-    override suspend fun checkIsAFavoriteMovie(movie: Movie): Boolean {
-        val movieTitle = movie.title ?: return false
-        val movieOriginalTitle = movie.originalTitle ?: return false
+    override suspend fun checkIsAFavoriteMovie(movie: FavoriteMovieDTO): Boolean {
+        val movieTitle = movie.title
         return favoriteMoviesDAO.isThereAMovie(
-            originalTitle = movieOriginalTitle,
             title = movieTitle
         ).any()
     }

@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 
 @Composable
 private fun SectionTitle(title: String) {

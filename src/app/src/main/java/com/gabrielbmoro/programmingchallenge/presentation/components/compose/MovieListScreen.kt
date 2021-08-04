@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,10 +39,10 @@ private fun MoviesList(
             }
 
             MovieCard(
-                imageUrl = movie.posterPath,
-                title = movie.title ?: "",
-                releaseDate = movie.releaseDate ?: "",
-                votes = movie.votesAverage ?: 0f
+                imageUrl = movie.imageUrl,
+                title = movie.title,
+                releaseDate = movie.releaseDate,
+                votes = movie.votesAverage
             ) {
                 context.startActivity(
                     MovieDetailedActivity.newIntent(context, movie)
@@ -67,7 +68,8 @@ fun MovieListScreen(navArg: NavigationArgument) {
         } else {
             SwipeRefresh(
                 state = navArg.swipeRefreshState,
-                onRefresh = navArg.onRefresh
+                onRefresh = navArg.onRefresh,
+                modifier = Modifier.padding(top = 16.dp)
             ) {
                 MoviesList(
                     movies = movies,
@@ -81,7 +83,10 @@ fun MovieListScreen(navArg: NavigationArgument) {
         }
 
         if (navArg.loadingState.value == true) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = MaterialTheme.colors.secondary
+            )
         }
     }
 }

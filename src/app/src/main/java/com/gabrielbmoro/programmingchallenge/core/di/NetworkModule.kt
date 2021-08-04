@@ -28,9 +28,12 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideApiRepository(okHttpClient: OkHttpClient, gsonConverterFactory: GsonConverterFactory): ApiRepository {
+    fun provideApiRepository(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): ApiRepository {
         return Retrofit.Builder()
-            .baseUrl(ConfigVariables.BASE_URL)
+            .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(gsonConverterFactory)
             .client(okHttpClient)
             .build()
