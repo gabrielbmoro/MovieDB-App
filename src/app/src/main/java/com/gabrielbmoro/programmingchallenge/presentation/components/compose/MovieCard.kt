@@ -10,6 +10,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 
 @Composable
 fun MovieCard(
@@ -29,8 +30,8 @@ fun MovieCard(
             }
         ) {
             MovieImage(
-                imageUrl = imageUrl,
-                contentScale = ContentScale.Fit,
+                imageUrl = imageUrl?.let { "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}$imageUrl" },
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .height(

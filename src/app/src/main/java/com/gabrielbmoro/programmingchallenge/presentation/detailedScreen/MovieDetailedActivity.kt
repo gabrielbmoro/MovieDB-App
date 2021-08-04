@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
@@ -87,8 +88,10 @@ class MovieDetailedActivity : AppCompatActivity() {
                 )
             ) {
                 MovieImage(
-                    imageUrl = viewModel.movie.imageUrl,
-                    contentScale = ContentScale.FillWidth,
+                    imageUrl = viewModel.movie.imageUrl.let {
+                        "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}${viewModel.movie.imageUrl}"
+                    },
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .align(Alignment.Center)
                         .fillMaxSize()
