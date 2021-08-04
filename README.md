@@ -6,38 +6,48 @@
 
 ## Teaser
 
+![MovieDB teaser](img/teaser.gif)
+
 ---
 
 ## Architecture and Stack Overview
 
 ![Architecture Overview](img/architecture.png)
 
-### Repository
+### Architecture
+
+*Repository*
 
 This layer provides an interface used as a repository. We also have some entities provided by this repository. The main idea here is to provide a single abstraction to interact with two different Data Sources.
 
-#### API
+*Repository->API*
 
 The APP fetches data from the [Movie DB API](https://www.themoviedb.org). There is a code infrastructure using **Retrofit** where it is possible to keep this communication between the app and the server.
 
-#### Local Data Base
+*Repository -> Local Data Base*
 
 The user can select their favorite movies and store them on a local database. There is a code layer using the **Room** library to keep easy the communication between the app and the Data Base.
 
-### Use Cases
+*Use Cases*
 
-#### Mappers
+This layer is the way used by `ViewModels` to access the repository.
 
-<Describe here something>
+*Use Cases -> Mappers*
 
-### Presentation
+They are used to convert the entities objects from data sources to entities recognized by the domain layer.
 
-### Core
+*Presentation*
+
+Contains `ViewModels`, `Fragments`, `Activities`, and others `Compose` functions.
+
+*Core*
+
+The core layer starts the Dependency injection engine, the network setup, and the database configuration.
 
 ---
 
-## Tech Stack Summary
+### Tech Stack Summary
 
----
+- Compose, Dagger Hilt, Coroutines, Retrofit, Room, Mockk.
 
-## Tests Report
+![MAD Score card](https://madscorecard.withgoogle.com/static/img/summary-arrows-no-app-bundle-aeeb43cbb8.svg)
