@@ -52,4 +52,4 @@
 
 - Compose, Dagger Hilt, Coroutines, Retrofit, Room, Mockk.
 
-- [MAD Score card](https://madscorecard.withgoogle.com/static/img/summary-arrows-no-app-bundle-aeeb43cbb8.svg)
+- More information about the Android Jetpack libraries used here, please access the [MAD Score card](https://madscorecard.withgoogle.com/scorecard/share/3723779503)
