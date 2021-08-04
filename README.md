@@ -16,33 +16,35 @@
 
 ### Architecture
 
-*Repository*
+**Repository**
 
-This layer provides an interface used as a repository. We also have some entities provided by this repository. The main idea here is to provide a single abstraction to interact with two different Data Sources.
+- This layer provides an interface used as a repository. We also have some entities provided by this repository
 
-*Repository->API*
+- The main idea here is to provide a single abstraction to interact with two different Data Sources.
 
-The APP fetches data from the [Movie DB API](https://www.themoviedb.org). There is a code infrastructure using **Retrofit** where it is possible to keep this communication between the app and the server.
+**Repository->API**
 
-*Repository -> Local Data Base*
+- The APP fetches data from the [Movie DB API](https://www.themoviedb.org). There is a code infrastructure using *Retrofit* where it is possible to keep this communication between the app and the server.
 
-The user can select their favorite movies and store them on a local database. There is a code layer using the **Room** library to keep easy the communication between the app and the Data Base.
+**Repository -> Local Data Base**
 
-*Use Cases*
+- The user can select their favorite movies and store them on a local database. There is a code layer using the *Room* library to keep easy the communication between the app and the Data Base.
 
-This layer is the way used by `ViewModels` to access the repository.
+**Use Cases**
 
-*Use Cases -> Mappers*
+- This layer is the way used by `ViewModels` to access the repository.
 
-They are used to convert the entities objects from data sources to entities recognized by the domain layer.
+**Use Cases -> Mappers**
 
-*Presentation*
+- They are used to convert the entities objects from data sources to entities recognized by the domain layer.
 
-Contains `ViewModels`, `Fragments`, `Activities`, and others `Compose` functions.
+**Presentation**
 
-*Core*
+- Contains `ViewModels`, `Fragments`, `Activities`, and others `Compose` functions.
 
-The core layer starts the Dependency injection engine, the network setup, and the database configuration.
+**Core**
+
+- The core layer starts the Dependency injection engine, the network setup, and the database configuration.
 
 ---
 
@@ -50,4 +52,4 @@ The core layer starts the Dependency injection engine, the network setup, and th
 
 - Compose, Dagger Hilt, Coroutines, Retrofit, Room, Mockk.
 
-![MAD Score card](https://madscorecard.withgoogle.com/static/img/summary-arrows-no-app-bundle-aeeb43cbb8.svg)
+- [MAD Score card](https://madscorecard.withgoogle.com/static/img/summary-arrows-no-app-bundle-aeeb43cbb8.svg)
