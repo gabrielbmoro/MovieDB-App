@@ -20,13 +20,13 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 
 ## Teaser
 
-![MovieDB teaser](img/teaser.gif)
+<img src="img/teaser.gif" height="500" />
 
 ---
 
 ## Architecture and Stack Overview
 
-![Architecture Overview](img/architecture.png)
+<img src="img/architecture.png" width="400" />
 
 ### Architecture
 
