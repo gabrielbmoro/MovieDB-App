@@ -4,6 +4,20 @@
 
 ---
 
+## Setup
+
+After create an account at [Movie DB API](https://www.themoviedb.org), you will have a token to access the API. 
+
+You should specify the token in your `gradle.properties` file.
+
+
+```
+MOVIE_DB_API_TOKEN_DEBUG=<token here>
+MOVIE_DB_API_TOKEN_RELEASE=<token here>
+```
+
+---
+
 ## Teaser
 
 ![MovieDB teaser](img/teaser.gif)
