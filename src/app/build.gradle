@@ -96,23 +96,17 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
 
+
     testImplementation "junit:junit:$rootProject.junitVersion"
 
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidTestVersion"
+    testImplementation "androidx.arch.core:core-common:$rootProject.archTestCoreVersion"
+    testImplementation "androidx.arch.core:core-runtime:$rootProject.archTestCoreVersion"
+    testImplementation "androidx.arch.core:core-testing:$rootProject.archTestCoreVersion"
 
-    androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
     testImplementation "com.google.truth:truth:$rootProject.truthVersion"
-
-    testImplementation "androidx.test:core:$testCoreVersion"
-
+    testImplementation "androidx.test:core:$rootProject.testCoreVersion"
     testImplementation "io.mockk:mockk:$rootProject.mockKVersion"
-
-    //noinspection GradleDependency
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesVersion"
-
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
-
-    androidTestImplementation "androidx.test:rules:$rootProject.testRulesVersion"
 
     // Compose
     implementation "androidx.compose.runtime:runtime:$rootProject.composeVersion"
