@@ -6,7 +6,6 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -16,8 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gabrielbmoro.programmingchallenge.R
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.screens.movieList.*
 
 sealed class NavigationItem(
     @DrawableRes val icon: Int,
@@ -43,30 +41,24 @@ sealed class NavigationItem(
     )
 }
 
-data class NavigationArgument(
-    val moviesState: State<List<Movie>?>,
-    val requestMore: (() -> Unit),
-    val loadingState: State<Boolean?>,
-    val onRefresh : (()->Unit),
-    val swipeRefreshState: SwipeRefreshState
-)
-
 @Composable
-fun Navigation(
-    navController: NavHostController,
-    topRatedMoviesArgs: NavigationArgument,
-    popularMoviesArgs: NavigationArgument,
-    favoriteMoviesArgs: NavigationArgument
+fun MovieDBAppNavigation(
+    navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = NavigationItem.TopRatedMovies.route) {
-        composable(NavigationItem.TopRatedMovies.route) {
-            MovieListScreen(topRatedMoviesArgs)
+    NavHost(
+        navController = navController,
+        startDestination = NavigationItem.TopRatedMovies.route,
+    ) {
+        composable(
+            route = NavigationItem.TopRatedMovies.route
+        ) {
+            TopRatedMoviesScreen()
         }
-        composable(NavigationItem.PopularMovies.route) {
-            MovieListScreen(popularMoviesArgs)
+        composable(route = NavigationItem.PopularMovies.route) {
+            PopularMoviesScreen()
         }
-        composable(NavigationItem.FavoriteMovies.route) {
-            MovieListScreen(favoriteMoviesArgs)
+        composable(route = NavigationItem.FavoriteMovies.route) {
+            FavoriteMoviesScreen()
         }
     }
 }

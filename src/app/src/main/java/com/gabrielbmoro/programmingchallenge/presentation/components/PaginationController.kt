@@ -7,7 +7,7 @@ class PaginationController {
 
     private lateinit var serverRequest: ((Int) -> Unit)
 
-    var pagNumber: Int = 1
+    var pagNumber: Int = FIRST_PAGE_TO_REQUEST
         private set
 
     private val isLock = ReentrantLock(false)
@@ -41,6 +41,9 @@ class PaginationController {
     }
 
     companion object Builder {
+
+        private const val FIRST_PAGE_TO_REQUEST = 2
+
         fun build(serverCallback: ((Int) -> Unit)): PaginationController {
             return PaginationController().apply {
                 setup(serverCallback)
