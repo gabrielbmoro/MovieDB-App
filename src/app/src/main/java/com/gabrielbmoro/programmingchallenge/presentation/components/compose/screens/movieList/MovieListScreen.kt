@@ -109,7 +109,9 @@ fun MovieListScreen(
                     requestMoreCallback = { viewModel.requestMore() },
                     context = LocalContext.current,
                     modifier = Modifier.padding(
-                        horizontal = 16.dp
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 70.dp
                     )
                 )
             }
