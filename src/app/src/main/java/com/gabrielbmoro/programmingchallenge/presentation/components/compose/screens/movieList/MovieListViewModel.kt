@@ -10,7 +10,10 @@ import com.gabrielbmoro.programmingchallenge.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetTopRatedMoviesUseCase
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,13 +24,13 @@ class MovieListViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : AndroidViewModel(application) {
 
-    private val moviesLiveData = MutableLiveData<List<Movie>?>()
-    val movies: LiveData<List<Movie>?> = moviesLiveData
+    private val moviesMutableStateFlow = MutableStateFlow<List<Movie>?>(null)
+    val movies: StateFlow<List<Movie>?> = moviesMutableStateFlow
 
-    private var moviesPaginationController : PaginationController? = null
+    private var moviesPaginationController: PaginationController? = null
 
-    private val loadingLiveData = MutableLiveData(false)
-    val loading: LiveData<Boolean> = loadingLiveData
+    private val loadingMutableStateFlow = MutableStateFlow(false)
+    val loading: StateFlow<Boolean> = loadingMutableStateFlow
 
     val swipeRefreshLiveData = SwipeRefreshState(false)
 
@@ -47,21 +50,26 @@ class MovieListViewModel @Inject constructor(
         if (type is MovieListType.Favorite) {
             fetchFavoriteMovies()
         } else {
-            fetchPaginatedMovies(pageNumber = 1)
+            moviesPaginationController?.requestMore()
         }
     }
 
     private fun fetchFavoriteMovies() {
-        loadingLiveData.value = true
+        loadingMutableStateFlow.value = true
         viewModelScope.launch {
-            val favoriteMovies = getFavoriteMoviesUseCase.execute()
-            moviesLiveData.postValue(favoriteMovies)
-            loadingLiveData.postValue(false)
+            try {
+                val favoriteMovies = getFavoriteMoviesUseCase.execute()
+                moviesMutableStateFlow.emit(favoriteMovies)
+            } catch (exception: Exception) {
+                Timber.e(exception)
+            } finally {
+                loadingMutableStateFlow.emit(false)
+            }
         }
     }
 
     private fun fetchPaginatedMovies(pageNumber: Int) {
-        loadingLiveData.value = true
+        loadingMutableStateFlow.value = true
         viewModelScope.launch {
             val newMovies: List<Movie> = when (type) {
                 is MovieListType.TopRated -> {
@@ -75,20 +83,20 @@ class MovieListViewModel @Inject constructor(
                 }
             }
 
-            val existingMovies = moviesLiveData.value ?: emptyList()
+            val existingMovies = moviesMutableStateFlow.value ?: emptyList()
             val updatedList = existingMovies
                 .toMutableList()
                 .apply { addAll(newMovies) }
                 .toList()
 
-            moviesLiveData.postValue(updatedList)
+            moviesMutableStateFlow.emit(updatedList)
             moviesPaginationController?.resultReceived()
-            loadingLiveData.postValue(false)
+            loadingMutableStateFlow.emit(false)
         }
     }
 
     fun refresh() {
-        moviesLiveData.value = null
+        moviesMutableStateFlow.value = null
         moviesPaginationController?.reset()
         fetchMovies()
     }

@@ -42,7 +42,7 @@ class PaginationController {
 
     companion object Builder {
 
-        private const val FIRST_PAGE_TO_REQUEST = 2
+        private const val FIRST_PAGE_TO_REQUEST = 1
 
         fun build(serverCallback: ((Int) -> Unit)): PaginationController {
             return PaginationController().apply {

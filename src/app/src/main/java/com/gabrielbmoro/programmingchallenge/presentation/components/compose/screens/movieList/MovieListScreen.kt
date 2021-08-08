@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -88,8 +88,8 @@ fun FavoriteMoviesScreen(
 fun MovieListScreen(
     viewModel: MovieListViewModel
 ) {
-    val moviesState = viewModel.movies.observeAsState()
-    val loadingState = viewModel.loading.observeAsState()
+    val moviesState = viewModel.movies.collectAsState()
+    val loadingState = viewModel.loading.collectAsState()
 
     Box(
         modifier = Modifier
@@ -115,7 +115,7 @@ fun MovieListScreen(
             }
         }
 
-        if (loadingState.value == true) {
+        if (loadingState.value) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
                 color = MaterialTheme.colors.secondary
