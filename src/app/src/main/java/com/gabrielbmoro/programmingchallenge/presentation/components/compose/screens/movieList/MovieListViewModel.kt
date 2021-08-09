@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.gabrielbmoro.programmingchallenge.presentation.components.PaginationController
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
+import com.gabrielbmoro.programmingchallenge.repository.entities.Page
 import com.gabrielbmoro.programmingchallenge.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.GetTopRatedMoviesUseCase
@@ -71,26 +72,28 @@ class MovieListViewModel @Inject constructor(
     private fun fetchPaginatedMovies(pageNumber: Int) {
         loadingMutableStateFlow.value = true
         viewModelScope.launch {
-            val newMovies: List<Movie> = when (type) {
+            val page : Page? = when (type) {
                 is MovieListType.TopRated -> {
-                    getTopRatedMoviesUseCase.execute(pageNumber).movies
+                    getTopRatedMoviesUseCase.execute(pageNumber)
                 }
                 is MovieListType.Popular -> {
-                    getPopularMoviesUseCase.execute(pageNumber).movies
+                    getPopularMoviesUseCase.execute(pageNumber)
                 }
                 else -> {
-                    emptyList()
+                    null
                 }
             }
 
             val existingMovies = moviesMutableStateFlow.value ?: emptyList()
-            val updatedList = existingMovies
-                .toMutableList()
-                .apply { addAll(newMovies) }
-                .toList()
+            val updatedList = existingMovies.toMutableList().apply {
+                addAll(page?.movies ?: emptyList())
+            }.toList()
 
             moviesMutableStateFlow.emit(updatedList)
-            moviesPaginationController?.resultReceived()
+
+            val hasNextPage = (page != null && page.pageNumber < page.totalPages)
+            moviesPaginationController?.resultReceived(hasNextPage)
+
             loadingMutableStateFlow.emit(false)
         }
     }

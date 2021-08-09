@@ -7,8 +7,9 @@ class PaginationController {
 
     private lateinit var serverRequest: ((Int) -> Unit)
 
-    var pagNumber: Int = FIRST_PAGE_TO_REQUEST
-        private set
+    private var hasNextPage: Boolean = true
+
+    private var pagNumber: Int = FIRST_PAGE_TO_REQUEST
 
     private val isLock = ReentrantLock(false)
 
@@ -17,7 +18,7 @@ class PaginationController {
     }
 
     fun requestMore() {
-        if (!isLock.isLocked) {
+        if (hasNextPage && !isLock.isLocked) {
             isLock.lock()
 
             serverRequest(pagNumber)
@@ -25,9 +26,10 @@ class PaginationController {
         }
     }
 
-    fun resultReceived() {
+    fun resultReceived(hasNextPage: Boolean) {
         try {
             isLock.unlock()
+            this.hasNextPage = hasNextPage
         } catch (illegalMonitorStateException: IllegalMonitorStateException) {
             Timber.e(illegalMonitorStateException)
         }
@@ -35,6 +37,7 @@ class PaginationController {
 
     fun reset() {
         pagNumber = 1
+        hasNextPage = true
         if (isLock.isLocked) {
             isLock.unlock()
         }
