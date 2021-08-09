@@ -4,6 +4,10 @@ sealed class MovieListType(val value: Int) {
     object TopRated : MovieListType(TOP_RATED_MOVIES_VALUE)
     object Favorite : MovieListType(FAVORITE_MOVIES_VALUE)
     object Popular : MovieListType(POPULAR_MOVIES_VALUE)
+
+    companion object {
+        const val TAG = "movieListType"
+    }
 }
 
 const val TOP_RATED_MOVIES_VALUE = 1

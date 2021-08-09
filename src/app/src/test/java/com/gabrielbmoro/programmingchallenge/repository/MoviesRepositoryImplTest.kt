@@ -4,6 +4,7 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
+import com.gabrielbmoro.programmingchallenge.repository.room.entities.FavoriteMovieDTO
 import com.gabrielbmoro.programmingchallenge.usecases.mappers.FavoriteMovieMapper
 import com.google.common.truth.Truth
 import io.mockk.coEvery
@@ -108,7 +109,7 @@ class MoviesRepositoryImplTest {
         // arrange
         val repositoryTest = getRepository()
         val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
-        coEvery { repositoryTest.checkIsAFavoriteMovie(favoriteMovie) }.returns(false)
+        coEvery { favoriteMoviesDAO.isThereAMovie(title = mockedMovie.title) }.returns(emptyList())
         coEvery { favoriteMoviesDAO.saveFavorite(favoriteMovie) }.answers { }
 
         // act
@@ -164,7 +165,20 @@ class MoviesRepositoryImplTest {
         // arrange
         val repositoryTest = getRepository()
         val favoriteMovie = FavoriteMovieMapper().map(movie = mockedMovie)
-        coEvery { repositoryTest.checkIsAFavoriteMovie(favoriteMovie) }.returns(true)
+        coEvery { favoriteMoviesDAO.isThereAMovie(title = mockedMovie.title) }.returns(
+            listOf(
+                FavoriteMovieDTO(
+                    id = null,
+                    language = mockedMovie.language,
+                    votesAverage = mockedMovie.votesAverage,
+                    popularity = mockedMovie.popularity,
+                    imageUrl = mockedMovie.imageUrl,
+                    releaseDate = mockedMovie.releaseDate,
+                    title = mockedMovie.title,
+                    overview = mockedMovie.overview
+                )
+            )
+        )
 
         // act
         testDispatcher.runBlockingTest {

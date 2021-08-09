@@ -11,6 +11,7 @@ buildscript {
         // App dependencies
         kotlinVersion = '1.5.10'
         hiltVersion = '2.37'
+        hiltNavigationCompose = '1.0.0-alpha03'
         composeVersion = '1.0.0-rc02'
         swipeRefreshAccompanistVersion = '0.14.0'
         navVersion = '2.3.5'
@@ -30,14 +31,15 @@ buildscript {
         gsonVersion = '2.8.7'
         retrofitVersion = '2.9.0'
         junitVersion = '4.13.2'
-        androidTestVersion = '1.1.2'
-        truthVersion = '1.1.2'
-        testCoreVersion = '1.3.0'
-        mockKVersion = '1.10.6'
-        coroutinesVersion = '1.3.8'
+        androidTestVersion = '1.1.3'
+        truthVersion = '1.1.3'
+        testCoreVersion = '1.4.0'
+        archTestCoreVersion = '2.1.0'
+        mockKVersion = '1.12.0'
+        coroutinesVersion = '1.5.1-native-mt'
         espressoVersion = '3.3.0'
         testRulesVersion = '1.3.0'
-        gradleVersion = '7.1.0-alpha03'
+        gradleVersion = '7.1.0-alpha06'
     }
 
     repositories {
