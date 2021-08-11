@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gabrielbmoro.programmingchallenge.presentation.components.compose.BubbleLoader
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.EmptyState
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieCard
 import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
@@ -118,7 +118,7 @@ fun MovieListScreen(
         }
 
         if (loadingState.value) {
-            CircularProgressIndicator(
+            BubbleLoader(
                 modifier = Modifier.align(Alignment.Center),
                 color = MaterialTheme.colors.secondary
             )
