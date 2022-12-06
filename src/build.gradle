@@ -5,8 +5,8 @@ buildscript {
     ext {
         // Sdk and tools
         minSdkVersion = 22
-        targetSdkVersion = 30
-        compileSdkVersion = 30
+        targetSdkVersion = 31
+        compileSdkVersion = 31
 
         // App dependencies
         kotlinVersion = '1.5.10'
