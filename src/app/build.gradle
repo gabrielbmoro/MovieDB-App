@@ -40,9 +40,6 @@ android {
             resValue "string", "api_token", "${MOVIE_DB_API_TOKEN_DEBUG}"
         }
     }
-    kotlinOptions {
-        useIR = true
-    }
     buildFeatures {
         viewBinding true
         compose true
@@ -118,7 +115,6 @@ dependencies {
     implementation "androidx.activity:activity-compose:$rootProject.composeVersion"
     implementation "androidx.compose.runtime:runtime-livedata:$rootProject.composeVersion"
     implementation "androidx.compose.ui:ui-tooling:$rootProject.composeVersion"
-    implementation "com.google.android.material:compose-theme-adapter:$rootProject.composeVersion"
 
     // SwipeRefresh
     implementation "com.google.accompanist:accompanist-swiperefresh:$rootProject.swipeRefreshAccompanistVersion"
@@ -127,7 +123,5 @@ dependencies {
     implementation "io.coil-kt:coil-compose:$rootProject.coilVersion"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
     implementation "androidx.navigation:navigation-compose:$rootProject.navComposeIntegrationVersion"
 }
