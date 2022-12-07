@@ -106,7 +106,7 @@ class MovieDetailedActivity : AppCompatActivity() {
                 )
 
                 Favorite(
-                    isFavorite = favoriteState,
+                    isFavorite = favoriteState.value,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .size(56.dp)

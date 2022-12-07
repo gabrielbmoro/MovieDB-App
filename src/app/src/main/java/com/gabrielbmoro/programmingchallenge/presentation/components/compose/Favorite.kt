@@ -9,8 +9,8 @@ import androidx.compose.ui.res.stringResource
 import com.gabrielbmoro.programmingchallenge.R
 
 @Composable
-fun Favorite(isFavorite: State<Boolean>, modifier: Modifier = Modifier, action: (() -> Unit)) {
-    val heartPair = if (!isFavorite.value) Pair(
+fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> Unit)) {
+    val heartPair = if (!isFavorite) Pair(
         R.drawable.ic_heart_border,
         stringResource(id = R.string.alt_is_not_favorite)
     )
