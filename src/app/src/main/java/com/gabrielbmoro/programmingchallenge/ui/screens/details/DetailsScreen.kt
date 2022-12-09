@@ -1,9 +1,11 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.details
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -19,7 +21,9 @@ import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Fiv
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailsScreen(
     navController: NavController,
@@ -29,57 +33,65 @@ fun DetailsScreen(
     val scrollState = rememberScrollState()
     val favoriteState = viewModel.onFavoriteEvent.observeAsState(movie.isFavorite)
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-    ) {
-        Box(
-            modifier = Modifier.height(
-                420.dp
-            )
-        ) {
-            MovieImage(
-                imageUrl = movie.imageUrl.let {
-                    "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}${movie.imageUrl}"
-                },
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxSize()
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Color.Black.copy(alpha = 0.5f)
-                    )
-            )
-
-            Favorite(
-                isFavorite = favoriteState.value,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .size(56.dp)
-                    .padding(start = 16.dp, bottom = 16.dp)
-            ) {
-                viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite, movie)
+    Scaffold(
+        topBar = {
+            AppToolbar(title = movie.title) {
+                navController.navigateUp()
             }
-            FiveStars(
-                votes = movie.votesAverage,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(end = 16.dp, bottom = 16.dp)
-            )
         }
-        MovieDetailDescription(
-            overview = movie.overview,
-            originalLanguage = movie.language,
-            popularity = movie.popularity,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+        ) {
+            Box(
+                modifier = Modifier.height(
+                    420.dp
+                )
+            ) {
+                MovieImage(
+                    imageUrl = movie.imageUrl.let {
+                        "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}${movie.imageUrl}"
+                    },
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxSize()
+                )
 
-        Spacer(Modifier.height(32.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Color.Black.copy(alpha = 0.5f)
+                        )
+                )
+
+                Favorite(
+                    isFavorite = favoriteState.value,
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .size(56.dp)
+                        .padding(start = 16.dp, bottom = 16.dp)
+                ) {
+                    viewModel.isToFavoriteOrUnFavorite(!movie.isFavorite, movie)
+                }
+                FiveStars(
+                    votes = movie.votesAverage,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 16.dp, bottom = 16.dp)
+                )
+            }
+            MovieDetailDescription(
+                overview = movie.overview,
+                originalLanguage = movie.language,
+                popularity = movie.popularity,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+
+            Spacer(Modifier.height(32.dp))
+        }
     }
 }
