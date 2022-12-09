@@ -6,15 +6,15 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 
 @Composable
 fun TopRatedMoviesTab(navController: NavController) {
-    MovieListScreen(navController, movieType = MovieListType.TopRated)
+    HomeScreen(navController, movieType = MovieListType.TopRated)
 }
 
 @Composable
 fun PopularMoviesTab(navController: NavController) {
-    MovieListScreen(navController, movieType = MovieListType.Popular)
+    HomeScreen(navController, movieType = MovieListType.Popular)
 }
 
 @Composable
 fun FavoriteMoviesTab(navController: NavController) {
-    MovieListScreen(navController, movieType = MovieListType.Favorite)
+    HomeScreen(navController, movieType = MovieListType.Favorite)
 }

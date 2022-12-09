@@ -12,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -22,6 +23,7 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieBottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 import com.google.accompanist.swiperefresh.SwipeRefresh
 
 @Composable
@@ -60,7 +62,7 @@ private fun MoviesList(
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MovieListScreen(
+fun HomeScreen(
     navController: NavController,
     viewModel: MovieListViewModel = hiltViewModel(),
     movieType: MovieListType
@@ -69,7 +71,12 @@ fun MovieListScreen(
     val loadingState = viewModel.loading.collectAsState()
 
     Scaffold(
-        topBar = { },
+        topBar = {
+            AppToolbar(
+                title = stringResource(id = com.gabrielbmoro.programmingchallenge.R.string.app_name),
+                backEvent = null
+            )
+        },
         bottomBar = { MovieBottomNavigationBar(navController) },
         content = {
             Box(
