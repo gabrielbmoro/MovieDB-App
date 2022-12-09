@@ -2,7 +2,7 @@ package com.gabrielbmoro.programmingchallenge.presentation.compose.screens.movie
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.screens.movieList.MovieListViewModel
+import com.gabrielbmoro.programmingchallenge.ui.screens.home.MovieListViewModel
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.repository.entities.Page
 import com.gabrielbmoro.programmingchallenge.usecases.GetFavoriteMoviesUseCase
