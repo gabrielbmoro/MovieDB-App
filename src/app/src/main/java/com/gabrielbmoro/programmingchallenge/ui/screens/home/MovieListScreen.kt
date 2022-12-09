@@ -20,7 +20,7 @@ import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Emp
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieCard
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
-import com.gabrielbmoro.programmingchallenge.ui.common.navigation.BottomNavigationBar
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieBottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 
@@ -70,7 +70,7 @@ fun MovieListScreen(
 
     Scaffold(
         topBar = { },
-        bottomBar = { BottomNavigationBar(navController) },
+        bottomBar = { MovieBottomNavigationBar(navController) },
         content = {
             Box(
                 modifier = Modifier
