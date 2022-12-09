@@ -5,19 +5,16 @@ import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 
 @Composable
-fun TopRatedMoviesTab(navController: NavController, viewModel: MovieListViewModel) {
-    viewModel.setup(MovieListType.TopRated)
-    MovieListScreen(navController, viewModel)
+fun TopRatedMoviesTab(navController: NavController) {
+    MovieListScreen(navController, movieType = MovieListType.TopRated)
 }
 
 @Composable
-fun PopularMoviesTab(navController: NavController, viewModel: MovieListViewModel) {
-    viewModel.setup(MovieListType.Popular)
-    MovieListScreen(navController, viewModel)
+fun PopularMoviesTab(navController: NavController) {
+    MovieListScreen(navController, movieType = MovieListType.Popular)
 }
 
 @Composable
-fun FavoriteMoviesTab(navController: NavController, viewModel: MovieListViewModel) {
-    viewModel.setup(MovieListType.Favorite)
-    MovieListScreen(navController, viewModel)
+fun FavoriteMoviesTab(navController: NavController) {
+    MovieListScreen(navController, movieType = MovieListType.Favorite)
 }

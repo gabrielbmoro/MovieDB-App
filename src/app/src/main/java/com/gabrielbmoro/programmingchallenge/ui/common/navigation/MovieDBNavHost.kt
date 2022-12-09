@@ -8,7 +8,6 @@ import androidx.navigation.navArgument
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.FavoriteMoviesTab
-import com.gabrielbmoro.programmingchallenge.ui.screens.home.MovieListViewModel
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.PopularMoviesTab
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.TopRatedMoviesTab
 import com.gabrielbmoro.programmingchallenge.ui.screens.settings.SettingsScreen
@@ -16,7 +15,6 @@ import com.gabrielbmoro.programmingchallenge.ui.screens.settings.SettingsScreen
 @Composable
 fun MovieDBNavHost(
     navController: NavHostController,
-    moviesListViewModel: MovieListViewModel
 ) {
     NavHost(
         navController = navController,
@@ -26,13 +24,13 @@ fun MovieDBNavHost(
         composable(
             route = NavigationItem.TopRatedMovies.route
         ) {
-            TopRatedMoviesTab(navController, moviesListViewModel)
+            TopRatedMoviesTab(navController)
         }
         composable(route = NavigationItem.PopularMovies.route) {
-            PopularMoviesTab(navController, moviesListViewModel)
+            PopularMoviesTab(navController)
         }
         composable(route = NavigationItem.FavoriteMovies.route) {
-            FavoriteMoviesTab(navController, moviesListViewModel)
+            FavoriteMoviesTab(navController)
         }
         composable(
             route = "${ScreenRoutesBuilder.DETAILED_MOVIE_ROUTE}/{${ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY}}",
