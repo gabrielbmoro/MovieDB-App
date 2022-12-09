@@ -17,7 +17,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".ui.screens.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -30,7 +30,7 @@
             android:name="com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presentation.MainActivity" />
+                android:value=".ui.screens.MainActivity" />
         </activity>
 
         <activity android:name=".presentation.settings.SettingsActivity" />

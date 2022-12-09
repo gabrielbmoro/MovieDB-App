@@ -1,6 +1,5 @@
-package com.gabrielbmoro.programmingchallenge.presentation.components.compose.screens.movieList
+package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
-import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -12,20 +11,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.BubbleLoader
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.EmptyState
 import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieCard
-import com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
+import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
+import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.google.accompanist.swiperefresh.SwipeRefresh
 
 @Composable
 private fun MoviesList(
     movies: List<Movie>,
     requestMoreCallback: (() -> Unit),
-    context: Context,
+    onSelectMovie: ((Movie) -> Unit),
     modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
@@ -47,45 +46,17 @@ private fun MoviesList(
                 imageUrl = movie.imageUrl,
                 title = movie.title,
                 releaseDate = movie.releaseDate,
-                votes = movie.votesAverage
-            ) {
-                context.startActivity(
-                    MovieDetailedActivity.newIntent(context, movie)
-                )
-            }
+                votes = movie.votesAverage,
+                onClick = { onSelectMovie(movie) }
+            )
         }
     }
 }
 
-@Composable
-fun TopRatedMoviesScreen(
-    viewModel: MovieListViewModel = hiltViewModel<MovieListViewModel>().apply {
-        setup(MovieListType.TopRated)
-    }
-) {
-    MovieListScreen(viewModel)
-}
-
-@Composable
-fun PopularMoviesScreen(
-    viewModel: MovieListViewModel = hiltViewModel<MovieListViewModel>().apply {
-        setup(MovieListType.Popular)
-    }
-) {
-    MovieListScreen(viewModel)
-}
-
-@Composable
-fun FavoriteMoviesScreen(
-    viewModel: MovieListViewModel = hiltViewModel<MovieListViewModel>().apply {
-        setup(MovieListType.Favorite)
-    }
-) {
-    MovieListScreen(viewModel)
-}
 
 @Composable
 fun MovieListScreen(
+    navController: NavController,
     viewModel: MovieListViewModel
 ) {
     val moviesState = viewModel.movies.collectAsState()
@@ -107,12 +78,16 @@ fun MovieListScreen(
                 MoviesList(
                     movies = moviesState.value ?: emptyList(),
                     requestMoreCallback = { viewModel.requestMore() },
-                    context = LocalContext.current,
+                    onSelectMovie = { movie ->
+                        navController.navigate(
+                            NavigationItem.DetailsScreen(movie).route
+                        )
+                    },
                     modifier = Modifier.padding(
                         start = 16.dp,
                         end = 16.dp,
                         bottom = 70.dp
-                    )
+                    ),
                 )
             }
         }

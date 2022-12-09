@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.presentation.components.compose.screens.movieList
+package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.app.Application
 import androidx.lifecycle.*
