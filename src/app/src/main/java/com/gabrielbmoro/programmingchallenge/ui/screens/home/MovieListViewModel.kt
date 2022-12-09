@@ -2,7 +2,7 @@ package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.gabrielbmoro.programmingchallenge.presentation.components.PaginationController
+import com.gabrielbmoro.programmingchallenge.ui.common.PaginationController
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.repository.entities.Page

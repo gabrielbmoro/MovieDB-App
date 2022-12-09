@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.presentation.util
+package com.gabrielbmoro.programmingchallenge.core.ext
 
 import android.app.Activity
 import android.content.Context
