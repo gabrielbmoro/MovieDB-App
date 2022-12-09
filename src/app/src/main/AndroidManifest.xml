@@ -25,16 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.gabrielbmoro.programmingchallenge.presentation.detailedScreen.MovieDetailedActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.screens.MainActivity" />
-        </activity>
-
-        <activity android:name=".presentation.settings.SettingsActivity" />
-
     </application>
 
 </manifest>
