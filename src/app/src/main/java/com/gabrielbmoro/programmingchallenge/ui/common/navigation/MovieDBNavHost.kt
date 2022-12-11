@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.FavoriteMoviesTab
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.PopularMoviesTab

@@ -1,7 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.repository.room
 
 import androidx.room.*
-import com.gabrielbmoro.programmingchallenge.repository.room.entities.FavoriteMovieDTO
+import com.gabrielbmoro.programmingchallenge.repository.room.dto.FavoriteMovieDTO
 
 @Dao
 interface FavoriteMoviesDAO {

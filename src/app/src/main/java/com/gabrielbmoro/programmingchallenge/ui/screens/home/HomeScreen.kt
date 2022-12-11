@@ -16,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.BubbleLoader
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.EmptyState
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieCard
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.BubbleLoader
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.EmptyState
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.MovieCard
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieBottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
@@ -65,7 +65,7 @@ private fun MoviesList(
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: MovieListViewModel = hiltViewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     movieType: MovieListType
 ) {
     val moviesState = viewModel.movies.collectAsState()

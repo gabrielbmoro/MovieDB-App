@@ -2,7 +2,7 @@ package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
+import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 
 @Composable
 fun TopRatedMoviesTab(navController: NavController) {

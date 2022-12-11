@@ -1,7 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.navigation
 
 import android.net.Uri
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.google.gson.Gson
 
 object ScreenRoutesBuilder {

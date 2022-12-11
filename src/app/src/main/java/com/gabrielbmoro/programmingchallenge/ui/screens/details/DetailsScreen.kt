@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.Favorite
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.FiveStars
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.MovieDetailDescription
+import com.gabrielbmoro.programmingchallenge.ui.components.compose.MovieImage
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

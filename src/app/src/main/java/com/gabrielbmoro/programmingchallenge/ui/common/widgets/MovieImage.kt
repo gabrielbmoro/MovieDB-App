@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.presentation.components.compose
+package com.gabrielbmoro.programmingchallenge.ui.components.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.gabrielbmoro.programmingchallenge.R
 
 private const val DEFAULT_IMAGE =

@@ -3,7 +3,7 @@ package com.gabrielbmoro.programmingchallenge.ui.common.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.gabrielbmoro.programmingchallenge.R
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 
 sealed class NavigationItem(
     open val route: String

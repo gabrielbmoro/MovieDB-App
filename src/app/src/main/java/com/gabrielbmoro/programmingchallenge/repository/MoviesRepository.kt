@@ -1,18 +1,20 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
-import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.PageResponse
-import com.gabrielbmoro.programmingchallenge.repository.room.entities.FavoriteMovieDTO
+import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.Page
+import com.gabrielbmoro.programmingchallenge.repository.room.dto.FavoriteMovieDTO
 
 interface MoviesRepository {
-    suspend fun getFavoriteMovies(): List<FavoriteMovieDTO>
+    suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception>
 
-    suspend fun getPopularMovies(pageNumber: Int): PageResponse
+    suspend fun getPopularMovies(pageNumber: Int): DataOrException<Page, Exception>
 
-    suspend fun getTopRatedMovies(pageNumber: Int): PageResponse
+    suspend fun getTopRatedMovies(pageNumber: Int): DataOrException<Page, Exception>
 
-    suspend fun doAsFavorite(movie: FavoriteMovieDTO): Boolean
+    suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception>
 
-    suspend fun unFavorite(movieTitle: String): Boolean
+    suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception>
 
-    suspend fun checkIsAFavoriteMovie(movie: FavoriteMovieDTO): Boolean
+    suspend fun checkIsAFavoriteMovie(movie: FavoriteMovieDTO): DataOrException<Boolean, Exception>
 }

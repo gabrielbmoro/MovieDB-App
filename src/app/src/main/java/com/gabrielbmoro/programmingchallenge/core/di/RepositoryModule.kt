@@ -4,6 +4,9 @@ import android.content.Context
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepositoryImpl
+import com.gabrielbmoro.programmingchallenge.repository.mappers.FavoriteMovieMapper
+import com.gabrielbmoro.programmingchallenge.repository.mappers.MovieMapper
+import com.gabrielbmoro.programmingchallenge.repository.mappers.PageMapper
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
 import dagger.Module
@@ -20,12 +23,18 @@ object RepositoryModule {
     fun provideRepositoryInstance(
         apiRepository: ApiRepository,
         favoriteMoviesDAO: FavoriteMoviesDAO,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        favoriteMoviesMapper: FavoriteMovieMapper,
+        pageMapper: PageMapper,
+        movieMapper: MovieMapper
     ): MoviesRepository {
         return MoviesRepositoryImpl(
             api = apiRepository,
+            apiToken = context.getString(R.string.api_token),
             favoriteMoviesDAO = favoriteMoviesDAO,
-            apiToken = context.getString(R.string.api_token)
+            favoriteMoviesMapper = favoriteMoviesMapper,
+            pageMapper = pageMapper,
+            movieMapper = movieMapper
         )
     }
 }
