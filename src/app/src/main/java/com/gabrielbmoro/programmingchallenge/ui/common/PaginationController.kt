@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.presentation.components
+package com.gabrielbmoro.programmingchallenge.ui.common
 
 import timber.log.Timber
 import java.util.concurrent.locks.ReentrantLock

@@ -6,6 +6,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.gabrielbmoro.programmingchallenge.R
 
@@ -16,7 +17,7 @@ private const val DEFAULT_IMAGE =
 fun MovieImage(imageUrl: String?, modifier: Modifier = Modifier, contentScale: ContentScale) {
     val url = imageUrl ?: DEFAULT_IMAGE
     Image(
-        painter = rememberImagePainter(url),
+        painter = rememberAsyncImagePainter(url),
         contentScale = contentScale,
         alignment = Alignment.Center,
         contentDescription = stringResource(id = R.string.poster),

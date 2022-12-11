@@ -1,7 +1,9 @@
-package com.gabrielbmoro.programmingchallenge.presentation.detailedScreen
+package com.gabrielbmoro.programmingchallenge.ui.screens.details
 
-import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.usecases.UnFavoriteMovieUseCase
@@ -10,22 +12,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailedViewModel @Inject constructor(
-    application: Application,
+class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
-) : AndroidViewModel(application) {
-
-    lateinit var movie: Movie
-
+) : ViewModel() {
     private val onFavoriteEventMutableLiveData = MutableLiveData<Boolean>()
     val onFavoriteEvent : LiveData<Boolean> = onFavoriteEventMutableLiveData
 
-    fun setup(movie: Movie) {
-        this.movie = movie
-    }
 
-    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
+    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean, movie: Movie) {
         viewModelScope.launch {
             try {
                 if (isToFavorite)

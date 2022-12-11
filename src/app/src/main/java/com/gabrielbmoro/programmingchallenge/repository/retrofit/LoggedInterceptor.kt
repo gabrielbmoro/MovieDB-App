@@ -6,7 +6,7 @@ import timber.log.Timber
 
 class LoggedInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        Timber.d("${chain.request().method()}:${chain.request().url()}<--")
+        Timber.d("${chain.request().method}:${chain.request().url}<--")
         val response = chain.proceed(chain.request())
         Timber.d("-->$response")
         return response

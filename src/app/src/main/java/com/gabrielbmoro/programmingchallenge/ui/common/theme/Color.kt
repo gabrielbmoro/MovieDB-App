@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.presentation.components.compose.theme
+package com.gabrielbmoro.programmingchallenge.ui.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
