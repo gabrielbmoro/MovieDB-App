@@ -23,6 +23,7 @@ import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
 import com.gabrielbmoro.programmingchallenge.repository.entities.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieBottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
+import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 import com.google.accompanist.swiperefresh.SwipeRefresh
 
@@ -75,7 +76,9 @@ fun HomeScreen(
             AppToolbar(
                 title = stringResource(id = com.gabrielbmoro.programmingchallenge.R.string.app_name),
                 backEvent = null,
-                settingsEvent = {}
+                settingsEvent = {
+                    navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
+                }
             )
         },
         bottomBar = { MovieBottomNavigationBar(navController) },

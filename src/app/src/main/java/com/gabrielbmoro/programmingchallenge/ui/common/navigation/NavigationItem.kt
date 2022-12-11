@@ -17,24 +17,28 @@ sealed class NavigationItem(
     object TopRatedMovies : NavigationItemTab(
         icon = R.drawable.ic_photo_album,
         title = R.string.top_rated_movies_title,
-        route = "topRatedMovies"
+        route = ScreenRoutesBuilder.TOP_RATED_MOVIES_ROUTE
     )
 
     object PopularMovies : NavigationItemTab(
         icon = R.drawable.ic_theaters,
         title = R.string.popular_movies_title,
-        route = "popularMovies"
+        route = ScreenRoutesBuilder.POPULAR_MOVIES_ROUTE
     )
 
     object FavoriteMovies : NavigationItemTab(
         icon = R.drawable.ic_stars,
         title = R.string.favorite_movies_title,
-        route = "favoriteMovies"
+        route = ScreenRoutesBuilder.FAVORITE_MOVIES_ROUTE
     )
 
     data class DetailsScreen(
         private val movie: Movie
-    ) : NavigationItem(ScreenRoutesBuilder.detailedMovieRoute(movie))
+    ) : NavigationItem(
+        ScreenRoutesBuilder.detailedMovieRoute(movie)
+    )
 
-    object SettingsScreen : NavigationItem("settingsScreen")
+    object SettingsScreen : NavigationItem(
+        ScreenRoutesBuilder.SETTINGS_ROUTE
+    )
 }
