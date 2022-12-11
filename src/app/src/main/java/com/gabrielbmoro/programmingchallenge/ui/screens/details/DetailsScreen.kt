@@ -35,9 +35,13 @@ fun DetailsScreen(
 
     Scaffold(
         topBar = {
-            AppToolbar(title = movie.title) {
-                navController.navigateUp()
-            }
+            AppToolbar(
+                title = movie.title,
+                backEvent = {
+                    navController.navigateUp()
+                },
+                settingsEvent = null
+            )
         }
     ) {
         Column(

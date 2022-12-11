@@ -7,6 +7,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gabrielbmoro.programmingchallenge.R
@@ -14,7 +15,11 @@ import com.gabrielbmoro.programmingchallenge.ui.common.theme.MovieDBAppTheme
 
 
 @Composable
-fun AppToolbar(title: String, backEvent: (() -> Unit)?) {
+fun AppToolbar(
+    title: String,
+    backEvent: (() -> Unit)?,
+    settingsEvent: (() -> Unit)?
+) {
     val navigationIcon: @Composable (() -> Unit)? = backEvent?.let {
         {
             IconButton(onClick = backEvent) {
@@ -30,7 +35,17 @@ fun AppToolbar(title: String, backEvent: (() -> Unit)?) {
         title = {
             Text(title)
         },
-        navigationIcon = navigationIcon
+        navigationIcon = navigationIcon,
+        actions = {
+            settingsEvent?.let {
+                IconButton(onClick = it) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_gear),
+                        contentDescription = stringResource(id = R.string.settings)
+                    )
+                }
+            }
+        }
     )
 }
 
@@ -38,6 +53,6 @@ fun AppToolbar(title: String, backEvent: (() -> Unit)?) {
 @Composable
 fun AppToolbarPreview() {
     MovieDBAppTheme {
-        AppToolbar("Jumangi", null)
+        AppToolbar("Jumangi", null, null)
     }
 }

@@ -74,7 +74,8 @@ fun HomeScreen(
         topBar = {
             AppToolbar(
                 title = stringResource(id = com.gabrielbmoro.programmingchallenge.R.string.app_name),
-                backEvent = null
+                backEvent = null,
+                settingsEvent = {}
             )
         },
         bottomBar = { MovieBottomNavigationBar(navController) },
