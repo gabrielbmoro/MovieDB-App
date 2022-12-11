@@ -15,27 +15,23 @@ import com.gabrielbmoro.programmingchallenge.ui.common.theme.MovieDBAppTheme
 
 @Composable
 fun AppToolbar(title: String, backEvent: (() -> Unit)?) {
-    if (backEvent == null) {
-        TopAppBar(
-            title = {
-                Text(title)
-            },
-        )
-    } else {
-        TopAppBar(
-            title = {
-                Text(title)
-            },
-            navigationIcon = {
-                IconButton(onClick = backEvent) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(id = R.string.back)
-                    )
-                }
+    val navigationIcon: @Composable (() -> Unit)? = backEvent?.let {
+        {
+            IconButton(onClick = backEvent) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(id = R.string.back)
+                )
             }
-        )
+        }
     }
+
+    TopAppBar(
+        title = {
+            Text(title)
+        },
+        navigationIcon = navigationIcon
+    )
 }
 
 @Preview
