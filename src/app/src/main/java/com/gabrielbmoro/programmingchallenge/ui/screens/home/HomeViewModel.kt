@@ -1,6 +1,5 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.ui.common.PaginationController
@@ -19,11 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    application: Application,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val moviesMutableStateFlow = MutableStateFlow<List<Movie>?>(null)
     val movies: StateFlow<List<Movie>?> = moviesMutableStateFlow
