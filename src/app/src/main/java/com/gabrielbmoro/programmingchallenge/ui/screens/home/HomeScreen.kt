@@ -8,8 +8,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -68,8 +67,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     movieType: MovieListType
 ) {
-    val moviesState = viewModel.movies.collectAsState()
-    val loadingState = viewModel.loading.collectAsState()
+    val uiState by remember { viewModel.uiState }
 
     Scaffold(
         topBar = {
@@ -88,16 +86,16 @@ fun HomeScreen(
                     .fillMaxHeight()
                     .fillMaxWidth()
             ) {
-                if (moviesState.value?.isEmpty() == true) {
+                if (uiState.movies?.isEmpty() == true) {
                     EmptyState(modifier = Modifier.align(Alignment.Center))
-                } else if (moviesState.value?.isNotEmpty() == true) {
+                } else if (uiState.movies?.isNotEmpty() == true) {
                     SwipeRefresh(
                         state = viewModel.swipeRefreshLiveData,
                         onRefresh = { viewModel.refresh() },
                         modifier = Modifier.padding(top = 16.dp)
                     ) {
                         MoviesList(
-                            movies = moviesState.value ?: emptyList(),
+                            movies = uiState.movies ?: emptyList(),
                             requestMoreCallback = { viewModel.requestMore() },
                             onSelectMovie = { movie ->
                                 navController.navigate(
@@ -113,7 +111,7 @@ fun HomeScreen(
                     }
                 }
 
-                if (loadingState.value) {
+                if (uiState.isLoading) {
                     BubbleLoader(
                         modifier = Modifier.align(Alignment.Center),
                         color = MaterialTheme.colors.secondary
