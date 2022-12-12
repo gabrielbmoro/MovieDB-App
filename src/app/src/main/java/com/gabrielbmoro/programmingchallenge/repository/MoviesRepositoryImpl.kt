@@ -3,9 +3,11 @@ package com.gabrielbmoro.programmingchallenge.repository
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.Page
+import com.gabrielbmoro.programmingchallenge.domain.model.ThemeType
 import com.gabrielbmoro.programmingchallenge.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.programmingchallenge.repository.mappers.MovieMapper
 import com.gabrielbmoro.programmingchallenge.repository.mappers.PageMapper
+import com.gabrielbmoro.programmingchallenge.repository.prefs.SharedPreferencesHelper
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
 
@@ -15,7 +17,8 @@ class MoviesRepositoryImpl(
     private val apiToken: String,
     private val favoriteMoviesMapper: FavoriteMovieMapper,
     private val pageMapper: PageMapper,
-    private val movieMapper: MovieMapper
+    private val movieMapper: MovieMapper,
+    private val sharedPreferencesHelper: SharedPreferencesHelper
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {
@@ -90,5 +93,14 @@ class MoviesRepositoryImpl(
         } catch (exception: Exception) {
             DataOrException(data = null, exception = exception)
         }
+    }
+
+    override fun selectTheme(themeType: ThemeType) {
+        sharedPreferencesHelper.putThemeBaseCode(themeType.baseCode)
+    }
+
+    override fun getCurrentTheme(): ThemeType? {
+        val baseCode = sharedPreferencesHelper.getThemeBaseCode()
+        return ThemeType.values().firstOrNull { it.baseCode == baseCode }
     }
 }

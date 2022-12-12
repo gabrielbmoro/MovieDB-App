@@ -15,15 +15,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.gabrielbmoro.programmingchallenge.ui.common.widgets.BubbleLoader
-import com.gabrielbmoro.programmingchallenge.ui.common.widgets.EmptyState
-import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieCard
+import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
-import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieBottomNavigationBar
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
-import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 
 @Composable
@@ -74,9 +71,13 @@ fun HomeScreen(
             AppToolbar(
                 title = stringResource(id = com.gabrielbmoro.programmingchallenge.R.string.app_name),
                 backEvent = null,
-                settingsEvent = {
-                    navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
-                }
+                extraEvent = ExtraEvent(
+                    icon = R.drawable.ic_gear,
+                    action = {
+                        navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
+                    },
+                    contentDescription = stringResource(id = R.string.settings)
+                )
             )
         },
         bottomBar = { MovieBottomNavigationBar(navController) },

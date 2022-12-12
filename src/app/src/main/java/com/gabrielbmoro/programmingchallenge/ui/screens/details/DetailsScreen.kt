@@ -39,7 +39,7 @@ fun DetailsScreen(
                 backEvent = {
                     navController.navigateUp()
                 },
-                settingsEvent = null
+                extraEvent = null
             )
         }
     ) {

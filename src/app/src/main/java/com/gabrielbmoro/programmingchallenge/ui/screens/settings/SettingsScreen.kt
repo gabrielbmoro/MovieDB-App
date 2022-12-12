@@ -6,6 +6,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -16,8 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.Alert
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.CommonDropDown
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.ExtraEvent
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -62,6 +65,17 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
                         }
                     )
                 }
+
+                uiState.value.alertMessage?.let { alertMessage ->
+                    Alert(
+                        title = stringResource(id = R.string.alert),
+                        message = alertMessage,
+                        positiveText = stringResource(id = android.R.string.ok),
+                        positiveAct = { viewModel.agreeWithAlertMessage() },
+                        onDismissRequest = { viewModel.agreeWithAlertMessage() }
+                    )
+                }
+
                 Text(
                     text = viewModel.appVersion,
                     modifier = Modifier
@@ -73,8 +87,21 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
             AppToolbar(
                 title = stringResource(id = R.string.settings),
                 backEvent = { navController.navigateUp() },
-                settingsEvent = null
+                extraEvent = ExtraEvent(
+                    icon = R.drawable.ic_floppy,
+                    action = {
+                        viewModel.saveNewChanges()
+                    },
+                    contentDescription = stringResource(id = R.string.save)
+                )
             )
+        }
+    )
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = {
+            viewModel.syncSelectedTheme()
         }
     )
 }

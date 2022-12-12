@@ -26,7 +26,7 @@ private val DarkThemeColors = darkColors(
 
 @Composable
 fun MovieDBAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean,
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
