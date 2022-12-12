@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.ui.components.compose
+package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
