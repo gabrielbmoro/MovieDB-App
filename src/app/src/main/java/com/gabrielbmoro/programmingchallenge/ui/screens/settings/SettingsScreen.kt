@@ -43,7 +43,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel = 
                         modifier = Modifier
                             .align(CenterVertically),
                         text = stringResource(id = R.string.theme),
-                        style = MaterialTheme.typography.h6
+                        style = MaterialTheme.typography.subtitle1
                     )
 
                     Spacer(

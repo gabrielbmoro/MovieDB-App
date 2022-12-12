@@ -4,16 +4,20 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.gabrielbmoro.programmingchallenge.BuildConfig
+import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.DropDownValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor() : ViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val resourcesProvider: ResourcesProvider,
+) : ViewModel() {
     private val _uiState = mutableStateOf(
         SettingsUIState(
             themeSelection = DropDownValue(
-                currentOption = "Test",
+                currentOption = resourcesProvider.getString(R.string.automatic_theme_option),
                 expanded = false
             )
         )
@@ -28,10 +32,6 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
     }
 
     fun availableThemes(): List<String> {
-        return listOf(
-            "Dark",
-            "Ligth",
-            "Automatic"
-        )
+        return resourcesProvider.getArray(R.array.themes).toList()
     }
 }
