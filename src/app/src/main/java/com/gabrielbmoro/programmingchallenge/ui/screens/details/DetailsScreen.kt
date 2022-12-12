@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +30,7 @@ fun DetailsScreen(
     viewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    val favoriteState = viewModel.onFavoriteEvent.observeAsState(movie.isFavorite)
+    val uiState = remember { viewModel.uiState }
 
     Scaffold(
         topBar = {
@@ -73,7 +72,7 @@ fun DetailsScreen(
                 )
 
                 Favorite(
-                    isFavorite = favoriteState.value,
+                    isFavorite = uiState.value.isFavorite,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .size(56.dp)
@@ -98,4 +97,9 @@ fun DetailsScreen(
             Spacer(Modifier.height(32.dp))
         }
     }
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = { viewModel.checkIfMovieIsFavorite(movie.title) }
+    )
 }

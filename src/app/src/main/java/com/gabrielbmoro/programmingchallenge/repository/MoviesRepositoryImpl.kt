@@ -8,7 +8,6 @@ import com.gabrielbmoro.programmingchallenge.repository.mappers.MovieMapper
 import com.gabrielbmoro.programmingchallenge.repository.mappers.PageMapper
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
-import com.gabrielbmoro.programmingchallenge.repository.room.dto.FavoriteMovieDTO
 
 class MoviesRepositoryImpl(
     private val api: ApiRepository,
@@ -61,7 +60,7 @@ class MoviesRepositoryImpl(
             val movieDTO = favoriteMoviesMapper.map(
                 movie = movie
             )
-            val isFavorite = checkIsAFavoriteMovie(movieDTO)
+            val isFavorite = checkIsAFavoriteMovie(movieDTO.title)
             if (isFavorite.data != null && isFavorite.data == false) {
                 favoriteMoviesDAO.saveFavorite(movieDTO)
                 DataOrException(data = true, exception = null)
@@ -82,8 +81,7 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun checkIsAFavoriteMovie(movie: FavoriteMovieDTO): DataOrException<Boolean, Exception> {
-        val movieTitle = movie.title
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception> {
         return try {
             val isFavorite = favoriteMoviesDAO.isThereAMovie(
                 title = movieTitle

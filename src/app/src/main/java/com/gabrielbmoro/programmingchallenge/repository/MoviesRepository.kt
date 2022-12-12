@@ -16,5 +16,5 @@ interface MoviesRepository {
 
     suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception>
 
-    suspend fun checkIsAFavoriteMovie(movie: FavoriteMovieDTO): DataOrException<Boolean, Exception>
+    suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception>
 }
