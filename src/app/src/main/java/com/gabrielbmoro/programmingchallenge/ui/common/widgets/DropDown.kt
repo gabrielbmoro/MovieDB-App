@@ -1,5 +1,6 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -26,10 +27,17 @@ fun <T> CommonDropDown(
             modifier = modifier
                 .align(alignment = Alignment.CenterStart)
                 .padding(vertical = 12.dp),
+            border = BorderStroke(
+                2.dp,
+                MaterialTheme.colors.onSurface
+            ),
             onClick = { onValueChanged(currentValue.copy(expanded = true)) }) {
             Text(
                 text = currentValue.currentOption.toString(),
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                style = MaterialTheme.typography.caption.copy(
+                    color = MaterialTheme.colors.onSurface
+                )
             )
         }
 
