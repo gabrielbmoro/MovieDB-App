@@ -15,9 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.gabrielbmoro.programmingchallenge.ui.components.compose.BubbleLoader
-import com.gabrielbmoro.programmingchallenge.ui.components.compose.EmptyState
-import com.gabrielbmoro.programmingchallenge.ui.components.compose.MovieCard
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.BubbleLoader
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.EmptyState
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieCard
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieBottomNavigationBar
