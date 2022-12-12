@@ -30,15 +30,14 @@ fun MovieBottomNavigationBar(navController: NavController) {
 
     BottomNavigation(
         modifier = Modifier.height(56.dp),
-        backgroundColor = backgroundColor,
-        contentColor = contentColor
+        backgroundColor = MaterialTheme.colors.surface,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { item ->
             BottomNavigationItem(
-                selectedContentColor = MaterialTheme.colors.primary,
+                selectedContentColor = MaterialTheme.colors.onSurface,
                 unselectedContentColor = Color.Gray,
                 icon = {
                     Icon(
