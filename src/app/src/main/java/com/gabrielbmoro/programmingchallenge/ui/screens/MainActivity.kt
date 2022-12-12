@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.programmingchallenge.ui.common.theme.MovieDBAppTheme
-import com.gabrielbmoro.programmingchallenge.core.ext.setThemeAccordingToThePreferences
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.MovieDBNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setThemeAccordingToThePreferences()
 
         setContent {
             val navController = rememberNavController()

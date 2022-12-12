@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UnFavoriteMovieUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
-    suspend fun execute(movieTitle: String): DataOrException<Boolean, Exception> {
+    suspend operator fun invoke(movieTitle: String): DataOrException<Boolean, Exception> {
         return withContext(Dispatchers.IO) {
             repository.unFavorite(movieTitle)
         }

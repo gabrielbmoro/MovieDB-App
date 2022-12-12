@@ -11,7 +11,7 @@ class GetPopularMoviesUseCase @Inject constructor(
     private val repository: MoviesRepository,
 ) {
 
-    suspend fun execute(pageNumber: Int): DataOrException<Page, Exception> {
+    suspend operator fun invoke(pageNumber: Int): DataOrException<Page, Exception> {
         return withContext(Dispatchers.IO) {
             repository.getPopularMovies(pageNumber)
         }

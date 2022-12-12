@@ -11,7 +11,7 @@ open class FavoriteMovieUseCase @Inject constructor(
     private val repository: MoviesRepository,
 ) {
 
-    suspend fun execute(movie: Movie): DataOrException<Boolean,Exception> {
+    suspend operator fun invoke(movie: Movie): DataOrException<Boolean,Exception> {
         return withContext(Dispatchers.IO) {
             repository.doAsFavorite(movie)
         }

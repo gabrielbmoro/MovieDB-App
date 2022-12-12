@@ -28,19 +28,10 @@
     <string name="background">Background</string>
     <string name="home_title">Movie DB API</string>
     <string name="settings">Settings</string>
-
-    <!-- preferences -->
-    <string name="pref_nigh_mode_key">nigh_mode</string>
-    <string name="pref_nigh_mode_summary">Set your theme.</string>
-    <string name="pref_nigh_mode_title">Nigh mode</string>
-    <string name="dialog_theme_automatic_option">Automatic</string>
-    <string name="dialog_theme_night_option">Night</string>
-    <string name="dialog_theme_day_option">Day</string>
-    <array name="pref_themes">
-        <item>Night</item>
-        <item>Day</item>
-    </array>
-    <!-- endregion -->
+    <string name="theme">Theme</string>
+    <string name="automatic_theme_option">Automatic</string>
+    <string name="night_theme_option">Night</string>
+    <string name="day_theme_option">Day</string>
 
     <string name="empty_view_title">No movie here</string>
 

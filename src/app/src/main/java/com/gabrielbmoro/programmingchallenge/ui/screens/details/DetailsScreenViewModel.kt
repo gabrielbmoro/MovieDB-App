@@ -23,9 +23,9 @@ class DetailsScreenViewModel @Inject constructor(
     fun isToFavoriteOrUnFavorite(isToFavorite: Boolean, movie: Movie) {
         viewModelScope.launch {
             val response = if (isToFavorite)
-                favoriteMovieUseCase.execute(movie)
+                favoriteMovieUseCase(movie)
             else
-                unFavoriteMovieUseCase.execute(movie.title)
+                unFavoriteMovieUseCase(movie.title)
 
             if (response.data != null) {
                 movie.isFavorite = isToFavorite

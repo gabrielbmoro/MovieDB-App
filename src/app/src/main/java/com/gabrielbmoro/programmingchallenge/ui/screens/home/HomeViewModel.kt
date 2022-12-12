@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            val favoriteMovies = getFavoriteMoviesUseCase.execute()
+            val favoriteMovies = getFavoriteMoviesUseCase()
             if (favoriteMovies.data != null) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
@@ -81,10 +81,10 @@ class HomeViewModel @Inject constructor(
             val page: DataOrException<Page, Exception>? =
                 when (_uiState.value.selectedMovieListType) {
                     is MovieListType.TopRated -> {
-                        getTopRatedMoviesUseCase.execute(pageNumber)
+                        getTopRatedMoviesUseCase(pageNumber)
                     }
                     is MovieListType.Popular -> {
-                        getPopularMoviesUseCase.execute(pageNumber)
+                        getPopularMoviesUseCase(pageNumber)
                     }
                     else -> {
                         null
