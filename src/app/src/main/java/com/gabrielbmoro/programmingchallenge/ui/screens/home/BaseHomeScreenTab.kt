@@ -2,10 +2,7 @@ package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
@@ -16,50 +13,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
 
-@Composable
-private fun MoviesList(
-    movies: List<Movie>,
-    requestMoreCallback: (() -> Unit),
-    onSelectMovie: ((Movie) -> Unit),
-    modifier: Modifier = Modifier
-) {
-    val listState = rememberLazyListState()
-
-    if (listState.firstVisibleItemIndex == movies.lastIndex - 2) {
-        requestMoreCallback.invoke()
-    }
-
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-    ) {
-        itemsIndexed(movies) { index, movie ->
-            if (index > 0) {
-                Box(modifier = Modifier.height(16.dp))
-            }
-
-            MovieCard(
-                imageUrl = movie.imageUrl,
-                title = movie.title,
-                releaseDate = movie.releaseDate,
-                votes = movie.votesAverage,
-                onClick = { onSelectMovie(movie) }
-            )
-        }
-    }
-}
-
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(
+fun BaseHomeScreenTab(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
     movieType: MovieListType
@@ -69,7 +31,7 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             AppToolbar(
-                title = stringResource(id = com.gabrielbmoro.programmingchallenge.R.string.app_name),
+                title = stringResource(id = R.string.app_name),
                 backEvent = null,
                 extraEvent = ExtraEvent(
                     icon = R.drawable.ic_gear,
@@ -108,6 +70,7 @@ fun HomeScreen(
                                 end = 16.dp,
                                 bottom = 70.dp
                             ),
+                            lazyListState = uiState.lazyListState
                         )
                     }
                 }
