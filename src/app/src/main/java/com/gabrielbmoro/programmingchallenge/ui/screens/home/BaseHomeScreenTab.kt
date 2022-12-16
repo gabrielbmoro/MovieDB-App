@@ -42,7 +42,14 @@ fun BaseHomeScreenTab(
                 )
             )
         },
-        bottomBar = { MovieBottomNavigationBar(navController) },
+        bottomBar = {
+            MovieBottomNavigationBar(
+                navController,
+                scrollToTop = {
+                    viewModel.resetListState()
+                }
+            )
+        },
         content = {
             Box(
                 modifier = Modifier
