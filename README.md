@@ -32,9 +32,11 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 
 **Repository**
 
-- This layer provides an interface used as a repository. We also have some entities provided by this repository
+- This layer provides an interface used as a repository. It provides a single abstraction to interact with differents Data Sources.
 
-- The main idea here is to provide a single abstraction to interact with two different Data Sources.
+**Repository -> Mappers**
+
+- They are used to convert the data objects to entity objects recognized by the domain layer.
 
 **Repository->API**
 
@@ -44,17 +46,27 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 
 - The user can select their favorite movies and store them on a local database. There is a code layer using the *Room* library to keep easy the communication between the app and the Data Base.
 
+**Repository -> Local preferences**
+
+- The user can also define which is the application theme. Currently, the app supports night mode, light mode, and automatic (defined by Android OS).
+
 **Use Cases**
 
 - This layer is the way used by `ViewModels` to access the repository.
 
-**Use Cases -> Mappers**
+**UI**
 
-- They are used to convert the entities objects from data sources to entities recognized by the domain layer.
+- Contains all elements required to build the user interface.
 
-**Presentation**
+**UI -> screens**
 
-- Contains `ViewModels`, `Fragments`, `Activities`, and others `Compose` functions.
+- Each package inside of screens represents a screen.
+
+- A screen is defined by a `Composable` function that represents the screen itself, a `ViewModel` related, and a data holder object which represents the UI state for that screen.
+
+**UI -> common**
+
+- `Composable` widgets, navigation graph definition, and others.
 
 **Core**
 
@@ -65,5 +77,3 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 ### Tech Stack Summary
 
 - Compose, Dagger Hilt, Coroutines, Retrofit, Room, Mockk.
-
-- More information about the Android Jetpack libraries used here, please access the [MAD Score card](https://madscorecard.withgoogle.com/scorecard/share/3723779503)

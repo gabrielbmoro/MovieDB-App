@@ -1,12 +1,12 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
-import com.gabrielbmoro.programmingchallenge.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.programmingchallenge.usecases.UnFavoriteMovieUseCase
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.domain.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.programmingchallenge.domain.usecases.IsFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,22 +14,31 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
-    private val unFavoriteMovieUseCase: UnFavoriteMovieUseCase,
+    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
 ) : ViewModel() {
-    private val onFavoriteEventMutableLiveData = MutableLiveData<Boolean>()
-    val onFavoriteEvent : LiveData<Boolean> = onFavoriteEventMutableLiveData
 
+    private val _uiState = mutableStateOf(
+        DetailsUIState(false)
+    )
+    val uiState: State<DetailsUIState> = _uiState
+
+    suspend fun checkIfMovieIsFavorite(movieTitle: String) {
+        val data = isFavoriteMovieUseCase.invoke(movieTitle)
+        if (data.data != null) {
+            _uiState.value = _uiState.value.copy(
+                isFavorite = data.data
+            )
+        }
+    }
 
     fun isToFavoriteOrUnFavorite(isToFavorite: Boolean, movie: Movie) {
         viewModelScope.launch {
-            try {
-                if (isToFavorite)
-                    favoriteMovieUseCase.execute(movie)
-                else
-                    unFavoriteMovieUseCase.execute(movie.title)
+            val response = favoriteMovieUseCase(movie, isToFavorite)
+
+            if (response.data != null) {
                 movie.isFavorite = isToFavorite
-                onFavoriteEventMutableLiveData.postValue(movie.isFavorite)
-            } catch (exception: Exception) { }
+                _uiState.value = _uiState.value.copy(isFavorite = movie.isFavorite)
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.presentation.components.compose
+package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.animation.core.*
 import androidx.compose.runtime.Composable

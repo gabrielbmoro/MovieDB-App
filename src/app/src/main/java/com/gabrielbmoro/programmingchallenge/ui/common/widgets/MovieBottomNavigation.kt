@@ -19,7 +19,7 @@ import com.gabrielbmoro.programmingchallenge.ui.common.theme.BottomBackgroundAnd
 
 
 @Composable
-fun MovieBottomNavigationBar(navController: NavController) {
+fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> Unit)) {
     val items = listOf(
         NavigationItem.TopRatedMovies,
         NavigationItem.PopularMovies,
@@ -30,15 +30,14 @@ fun MovieBottomNavigationBar(navController: NavController) {
 
     BottomNavigation(
         modifier = Modifier.height(56.dp),
-        backgroundColor = backgroundColor,
-        contentColor = contentColor
+        backgroundColor = MaterialTheme.colors.surface,
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { item ->
             BottomNavigationItem(
-                selectedContentColor = MaterialTheme.colors.primary,
+                selectedContentColor = MaterialTheme.colors.onSurface,
                 unselectedContentColor = Color.Gray,
                 icon = {
                     Icon(
@@ -49,15 +48,19 @@ fun MovieBottomNavigationBar(navController: NavController) {
                 },
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
+                    if (item.route == currentRoute) {
+                        scrollToTop()
+                    } else {
+                        navController.navigate(item.route) {
+                            navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route) {
+                                    saveState = true
+                                }
+
+                                launchSingleTop = true
+
+                                restoreState = true
                             }
-
-                            launchSingleTop = true
-
-                            restoreState = true
                         }
                     }
                 }

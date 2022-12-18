@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,11 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.Favorite
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.FiveStars
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieDetailDescription
-import com.gabrielbmoro.programmingchallenge.presentation.components.compose.MovieImage
-import com.gabrielbmoro.programmingchallenge.repository.entities.Movie
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.Favorite
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.FiveStars
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieDetailDescription
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieImage
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -31,13 +30,17 @@ fun DetailsScreen(
     viewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    val favoriteState = viewModel.onFavoriteEvent.observeAsState(movie.isFavorite)
+    val uiState = remember { viewModel.uiState }
 
     Scaffold(
         topBar = {
-            AppToolbar(title = movie.title) {
-                navController.navigateUp()
-            }
+            AppToolbar(
+                title = movie.title,
+                backEvent = {
+                    navController.navigateUp()
+                },
+                extraEvent = null
+            )
         }
     ) {
         Column(
@@ -69,7 +72,7 @@ fun DetailsScreen(
                 )
 
                 Favorite(
-                    isFavorite = favoriteState.value,
+                    isFavorite = uiState.value.isFavorite,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .size(56.dp)
@@ -94,4 +97,9 @@ fun DetailsScreen(
             Spacer(Modifier.height(32.dp))
         }
     }
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = { viewModel.checkIfMovieIsFavorite(movie.title) }
+    )
 }

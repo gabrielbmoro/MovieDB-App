@@ -28,21 +28,20 @@
     <string name="background">Background</string>
     <string name="home_title">Movie DB API</string>
     <string name="settings">Settings</string>
-
-    <!-- preferences -->
-    <string name="pref_nigh_mode_key">nigh_mode</string>
-    <string name="pref_nigh_mode_summary">Set your theme.</string>
-    <string name="pref_nigh_mode_title">Nigh mode</string>
-    <string name="dialog_theme_automatic_option">Automatic</string>
-    <string name="dialog_theme_night_option">Night</string>
-    <string name="dialog_theme_day_option">Day</string>
-    <array name="pref_themes">
-        <item>Night</item>
-        <item>Day</item>
-    </array>
-    <!-- endregion -->
+    <string name="save">Save</string>
+    <string name="theme">Theme:</string>
+    <string name="automatic_theme_option">Automatic</string>
+    <string name="night_theme_option">Night</string>
+    <string name="day_theme_option">Day</string>
+    <string-array name="themes">
+        <item>@string/automatic_theme_option</item>
+        <item>@string/night_theme_option</item>
+        <item>@string/day_theme_option</item>
+    </string-array>
 
     <string name="empty_view_title">No movie here</string>
+    <string name="set_theme_message">The theme will be applied after you restart the app.</string>
+    <string name="alert">Alert</string>
 
     <!-- alternative_texts -->
     <string name="alt_votes_average">The vote average to this movie is %1$.2f</string>
@@ -50,4 +49,6 @@
     <string name="alt_is_not_favorite">It is not favorite</string>
     <string name="alt_sad_emoji">Sad emoji</string>
     <!-- endregion -->
+
+    <string name="preferences_id">movieDB-preferences-file</string>
 </resources>
