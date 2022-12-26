@@ -1,7 +1,5 @@
 package com.gabrielbmoro.programmingchallenge.domain.model
 
-import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
-import com.gabrielbmoro.programmingchallenge.domain.model.convertToMovieListType
 import com.google.common.truth.Truth
 import org.junit.Test
 
