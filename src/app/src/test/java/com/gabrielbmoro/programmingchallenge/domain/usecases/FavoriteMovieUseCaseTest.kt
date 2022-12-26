@@ -15,8 +15,8 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class FavoriteMovieUseCaseTest {
 
-    lateinit var repository: MoviesRepository
-    lateinit var useCase: FavoriteMovieUseCase
+    private lateinit var repository: MoviesRepository
+    private lateinit var useCase: FavoriteMovieUseCase
 
     @Before
     fun before() {
@@ -41,12 +41,12 @@ class FavoriteMovieUseCaseTest {
         coEvery { repository.doAsFavorite(movie) }.returns(DataOrException(true))
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(false))
 
-        runTest{
+        runTest {
             // act
             val result = useCase.invoke(movie, true)
 
             // assert
-            assertThat(result.data).isTrue()
+            coVerify(exactly = 1) { repository.doAsFavorite(movie) }
         }
     }
 
@@ -67,12 +67,12 @@ class FavoriteMovieUseCaseTest {
         coEvery { repository.unFavorite(movie.title) }.returns(DataOrException(true))
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(true))
 
-        runTest{
+        runTest {
             // act
-            val result = useCase.invoke(movie, false)
+            useCase.invoke(movie, false)
 
             // assert
-            assertThat(result.data).isTrue()
+            coVerify(exactly = 1) { repository.unFavorite(movie.title) }
         }
     }
 
@@ -93,12 +93,12 @@ class FavoriteMovieUseCaseTest {
         coEvery { repository.doAsFavorite(movie) }.returns(DataOrException(true))
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(true))
 
-        runTest{
+        runTest {
             // act
             val result = useCase.invoke(movie, true)
 
             // assert
-            coVerify(exactly = 0){ repository.doAsFavorite(movie) }
+            coVerify(exactly = 0) { repository.doAsFavorite(movie) }
             assertThat(result.exception).isInstanceOf(IllegalStateException::class.java)
         }
     }

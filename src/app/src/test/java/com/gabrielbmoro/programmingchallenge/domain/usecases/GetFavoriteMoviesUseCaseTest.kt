@@ -3,7 +3,6 @@ package com.gabrielbmoro.programmingchallenge.domain.usecases
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
-import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,8 +17,8 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class GetFavoriteMoviesUseCaseTest {
 
-    lateinit var repository: MoviesRepository
-    lateinit var useCase: GetFavoriteMoviesUseCase
+    private lateinit var repository: MoviesRepository
+    private lateinit var useCase: GetFavoriteMoviesUseCase
 
     @Before
     fun before() {
@@ -47,10 +46,9 @@ class GetFavoriteMoviesUseCaseTest {
 
         runTest {
             // act
-            val result = useCase()
+            useCase()
 
             // assert
-            assertThat(result.data).isEqualTo(favoriteMovies)
             coVerify(exactly = 1) { repository.getFavoriteMovies() }
         }
     }

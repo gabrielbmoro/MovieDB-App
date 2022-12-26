@@ -8,7 +8,7 @@ class IsFavoriteMovieUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
 
-    suspend fun invoke(movieTitle: String): DataOrException<Boolean, Exception> {
+    suspend operator fun invoke(movieTitle: String): DataOrException<Boolean, Exception> {
         return repository.checkIsAFavoriteMovie(movieTitle)
     }
 }
