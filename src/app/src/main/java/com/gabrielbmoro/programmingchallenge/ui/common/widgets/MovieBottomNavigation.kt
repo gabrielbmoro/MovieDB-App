@@ -15,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
-import com.gabrielbmoro.programmingchallenge.ui.common.theme.BottomBackgroundAndContentColors
-
 
 @Composable
 fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> Unit)) {
@@ -25,8 +23,6 @@ fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> U
         NavigationItem.PopularMovies,
         NavigationItem.FavoriteMovies
     )
-
-    val (backgroundColor, contentColor) = BottomBackgroundAndContentColors()
 
     BottomNavigation(
         modifier = Modifier.height(56.dp),

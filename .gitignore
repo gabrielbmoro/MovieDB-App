@@ -4,3 +4,5 @@ src/local.properties
 src/app/build/
 src/build
 src/gradle.properties
+
+*.hprof

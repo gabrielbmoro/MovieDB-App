@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.gabrielbmoro.programmingchallenge.core.parcelableOf
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
@@ -39,9 +40,10 @@ fun MovieDBNavHost(
                 }
             ),
         ) {
-            val movie =
-                it.arguments?.getParcelable<Movie>(ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY)
-                    ?: throw IllegalArgumentException("Type should be movie")
+            val movie = it.arguments?.parcelableOf(
+                ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY,
+                Movie::class.java
+            ) ?: throw IllegalArgumentException("Type should be movie")
 
             DetailsScreen(navController, movie)
         }

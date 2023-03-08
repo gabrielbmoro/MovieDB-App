@@ -22,7 +22,7 @@ fun MovieCard(
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = 8.dp
+        elevation = 3.dp
     ) {
         Row(
             Modifier.clickable {
