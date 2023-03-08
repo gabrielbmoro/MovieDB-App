@@ -62,11 +62,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
 
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
-
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swipeRefreshVersion"
-
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
 
     implementation "androidx.cardview:cardview:$rootProject.cardViewVersion"
 
@@ -80,8 +76,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleExtensionsVersion"
 
     implementation "androidx.preference:preference-ktx:$rootProject.preferenceVersion"
-
-    implementation "com.google.android.material:material:$rootProject.materialVersion"
 
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
