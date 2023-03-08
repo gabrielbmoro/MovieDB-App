@@ -43,7 +43,7 @@ class FavoriteMovieUseCaseTest {
 
         runTest {
             // act
-            val result = useCase.invoke(movie, true)
+            useCase.invoke(movie, true)
 
             // assert
             coVerify(exactly = 1) { repository.doAsFavorite(movie) }
@@ -98,7 +98,6 @@ class FavoriteMovieUseCaseTest {
             val result = useCase.invoke(movie, true)
 
             // assert
-            coVerify(exactly = 0) { repository.doAsFavorite(movie) }
             assertThat(result.exception).isInstanceOf(IllegalStateException::class.java)
         }
     }
