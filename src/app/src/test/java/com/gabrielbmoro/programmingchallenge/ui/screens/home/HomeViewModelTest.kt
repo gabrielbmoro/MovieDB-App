@@ -101,4 +101,47 @@ class HomeViewModelTest {
             job.await()
         }
     }
+
+    @Test
+    fun `should be able to fetch my favorite movies, calling getFavoritesUseCase - not empty list`() {
+        val expected: DataOrException<List<Movie>, Exception> = DataOrException(
+            listOf(
+                mockedMovie()
+            ), null
+        )
+        coEvery() { getFavoriteMoviesUseCase.invoke() }.returns(expected)
+
+        // arrange
+        val viewModel = HomeViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getPopularMoviesUseCase = getPopularMoviesUseCase,
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+        )
+
+        // act
+        viewModel.setup(MovieListType.Favorite)
+
+        // assert
+        runTest {
+            val job = async {
+                Truth.assertThat(
+                    viewModel.uiState.value.movies
+                ).contains(
+                    mockedMovie()
+                )
+            }
+            job.await()
+        }
+    }
+
+    private fun mockedMovie() = Movie(
+        votesAverage = 2f,
+        title = "Chuck Norris vs Vandamme",
+        imageUrl = "",
+        overview = "test",
+        releaseDate = "03-02-2023",
+        isFavorite = false,
+        language = "pt-br",
+        popularity = 1f
+    )
 }
