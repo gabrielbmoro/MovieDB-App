@@ -1,5 +1,6 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gabrielbmoro.programmingchallenge.MainDispatcherRule
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
@@ -11,11 +12,12 @@ import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import timber.log.Timber
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
@@ -27,6 +29,9 @@ class HomeViewModelTest {
     @ExperimentalCoroutinesApi
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
+
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun before() {
@@ -77,7 +82,7 @@ class HomeViewModelTest {
     @Test
     fun `should be able to fetch my favorite movies, calling getFavoritesUseCase - empty list`() {
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
-        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
+        coEvery() { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
         // arrange
         val viewModel = HomeViewModel(
@@ -91,7 +96,11 @@ class HomeViewModelTest {
 
         // assert
         runTest {
-            Truth.assertThat(getFavoriteMoviesUseCase.invoke()).isEqualTo(expected)
+            val job = async {
+                Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data)
+                Timber.d("TEST")
+            }
+            job.await()
         }
     }
 }
