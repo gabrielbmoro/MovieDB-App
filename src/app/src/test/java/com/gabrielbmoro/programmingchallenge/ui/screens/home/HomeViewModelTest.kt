@@ -17,7 +17,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import timber.log.Timber
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
@@ -98,7 +97,6 @@ class HomeViewModelTest {
         runTest {
             val job = async {
                 Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data)
-                Timber.d("TEST")
             }
             job.await()
         }
