@@ -18,7 +18,7 @@ fun MovieImage(imageUrl: String?, modifier: Modifier = Modifier, contentScale: C
     Image(
         painter = rememberAsyncImagePainter(url),
         contentScale = contentScale,
-        alignment = Alignment.Center,
+        alignment = Alignment.TopCenter,
         contentDescription = stringResource(id = R.string.poster),
         modifier = modifier
     )

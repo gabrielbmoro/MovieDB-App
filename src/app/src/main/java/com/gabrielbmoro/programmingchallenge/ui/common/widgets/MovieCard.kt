@@ -5,7 +5,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -27,24 +26,22 @@ fun MovieCard(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Box(
-            modifier = Modifier.height(
-                dimensionResource(R.dimen.card_view_height)
+        Column(
+            modifier = Modifier.heightIn(
+                max = dimensionResource(R.dimen.card_view_height)
             )
         ) {
             MovieImage(
                 imageUrl = imageUrl?.let { "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}$imageUrl" },
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxSize()
+                    .fillMaxWidth()
             )
             MovieCardInformation(
                 title = title,
                 votes = votes,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
             )
         }
     }
