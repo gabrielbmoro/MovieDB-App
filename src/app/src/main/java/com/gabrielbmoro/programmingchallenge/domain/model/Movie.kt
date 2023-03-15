@@ -12,5 +12,8 @@ data class Movie(
     val releaseDate: String,
     var isFavorite: Boolean,
     val language: String,
-    val popularity : Float
-) : Parcelable
+    val popularity: Float
+) : Parcelable {
+    val isValid: Boolean
+        get() = title.isNotEmpty() && imageUrl.isNotEmpty() && overview.isNotEmpty()
+}
