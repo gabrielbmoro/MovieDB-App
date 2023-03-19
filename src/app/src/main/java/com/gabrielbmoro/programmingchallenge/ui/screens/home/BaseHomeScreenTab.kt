@@ -61,7 +61,7 @@ fun BaseHomeScreenTab(
                 } else if (uiState.movies?.isNotEmpty() == true) {
                     SwipeRefresh(
                         state = viewModel.swipeRefreshLiveData,
-                        onRefresh = { viewModel.refresh() },
+                        onRefresh = {  },
                         modifier = Modifier.padding(top = 16.dp)
                     ) {
                         MoviesList(
