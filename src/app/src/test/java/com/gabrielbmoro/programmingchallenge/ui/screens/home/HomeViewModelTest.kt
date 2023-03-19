@@ -5,12 +5,12 @@ import com.gabrielbmoro.programmingchallenge.MainDispatcherRule
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
+import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
 import com.google.common.truth.Truth
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runTest
@@ -39,12 +39,8 @@ class HomeViewModelTest {
         getPopularMoviesUseCase = mockk()
     }
 
-
     @Test
-    fun `should be able to fetch my favorite movies, not calling getPopularUseCase`() {
-        val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
-        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
-
+    fun `should be able to select favorite movies`() {
         // arrange
         val viewModel = HomeViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
@@ -57,15 +53,13 @@ class HomeViewModelTest {
             viewModel.setup(MovieListType.FAVORITE)
 
             // assert
-            coVerify(exactly = 0) { getPopularMoviesUseCase.invoke(1) }
+            Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
+                .isEqualTo(MovieListType.FAVORITE)
         }
     }
 
     @Test
-    fun `should be able to fetch my favorite movies, not calling getTopRatedUseCase`() {
-        val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
-        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
-
+    fun `should be able to select top rated movies`() {
         // arrange
         val viewModel = HomeViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
@@ -75,15 +69,35 @@ class HomeViewModelTest {
 
         runTest {
             // act
-            viewModel.setup(MovieListType.FAVORITE)
+            viewModel.setup(MovieListType.TOP_RATED)
 
             // assert
-            coVerify(exactly = 0) { getTopRatedMoviesUseCase.invoke(1) }
+            Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
+                .isEqualTo(MovieListType.TOP_RATED)
         }
     }
 
     @Test
-    fun `should be able to fetch my favorite movies, calling getFavoritesUseCase - empty list`() {
+    fun `should be able to select popular movies`() {
+        // arrange
+        val viewModel = HomeViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getPopularMoviesUseCase = getPopularMoviesUseCase,
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+        )
+
+        runTest {
+            // act
+            viewModel.setup(MovieListType.POPULAR)
+
+            // assert
+            Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
+                .isEqualTo(MovieListType.POPULAR)
+        }
+    }
+
+    @Test
+    fun `should be able to fetch my favorite movies - empty list`() {
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
         coEvery() { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
@@ -106,7 +120,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `should be able to fetch my favorite movies, calling getFavoritesUseCase - not empty list`() {
+    fun `should be able to fetch my favorite movies - not empty list`() {
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(
             listOf(
                 mockedMovie()
@@ -124,6 +138,122 @@ class HomeViewModelTest {
         runTest {
             // act
             viewModel.setup(MovieListType.FAVORITE)
+
+            // assert
+            val job = async {
+                Truth.assertThat(
+                    viewModel.uiState.value.movies
+                ).contains(
+                    mockedMovie()
+                )
+            }
+            job.await()
+        }
+    }
+
+    @Test
+    fun `should be able to fetch top rated movies - empty list`() {
+        val expected: DataOrException<Page, Exception> =
+            DataOrException(Page(emptyList(), 1, 1), null)
+        coEvery { getTopRatedMoviesUseCase.invoke(1) }.returns(expected)
+
+        // arrange
+        val viewModel = HomeViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getPopularMoviesUseCase = getPopularMoviesUseCase,
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+        )
+
+        runTest {
+            // act
+            viewModel.setup(MovieListType.TOP_RATED)
+            // assert
+            val job = async {
+                Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
+            }
+            job.await()
+        }
+    }
+
+    @Test
+    fun `should be able to fetch top rated movies - not empty list`() {
+        val expected: DataOrException<Page, Exception> = DataOrException(
+            Page(
+                listOf(
+                    mockedMovie()
+                ), 1, 1
+            ), null
+        )
+        coEvery { getTopRatedMoviesUseCase.invoke(1) }.returns(expected)
+
+        // arrange
+        val viewModel = HomeViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getPopularMoviesUseCase = getPopularMoviesUseCase,
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+        )
+
+        runTest {
+            // act
+            viewModel.setup(MovieListType.TOP_RATED)
+
+            // assert
+            val job = async {
+                Truth.assertThat(
+                    viewModel.uiState.value.movies
+                ).contains(
+                    mockedMovie()
+                )
+            }
+            job.await()
+        }
+    }
+
+    @Test
+    fun `should be able to fetch popular movies - empty list`() {
+        val expected: DataOrException<Page, Exception> =
+            DataOrException(Page(emptyList(), 1, 1), null)
+        coEvery { getPopularMoviesUseCase.invoke(1) }.returns(expected)
+
+        // arrange
+        val viewModel = HomeViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getPopularMoviesUseCase = getPopularMoviesUseCase,
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+        )
+
+        runTest {
+            // act
+            viewModel.setup(MovieListType.POPULAR)
+            // assert
+            val job = async {
+                Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
+            }
+            job.await()
+        }
+    }
+
+    @Test
+    fun `should be able to fetch popular movies - not empty list`() {
+        val expected: DataOrException<Page, Exception> = DataOrException(
+            Page(
+                listOf(
+                    mockedMovie()
+                ), 1, 1
+            ), null
+        )
+        coEvery { getPopularMoviesUseCase.invoke(1) }.returns(expected)
+
+        // arrange
+        val viewModel = HomeViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getPopularMoviesUseCase = getPopularMoviesUseCase,
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+        )
+
+        runTest {
+            // act
+            viewModel.setup(MovieListType.POPULAR)
 
             // assert
             val job = async {
