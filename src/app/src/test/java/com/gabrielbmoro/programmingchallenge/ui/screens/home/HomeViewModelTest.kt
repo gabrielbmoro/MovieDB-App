@@ -52,11 +52,13 @@ class HomeViewModelTest {
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        // act
-        viewModel.setup(MovieListType.Favorite)
+        runTest {
+            // act
+            viewModel.setup(MovieListType.FAVORITE)
 
-        // assert
-        coVerify(exactly = 0) { getPopularMoviesUseCase.invoke(1) }
+            // assert
+            coVerify(exactly = 0) { getPopularMoviesUseCase.invoke(1) }
+        }
     }
 
     @Test
@@ -71,11 +73,13 @@ class HomeViewModelTest {
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        // act
-        viewModel.setup(MovieListType.Favorite)
+        runTest {
+            // act
+            viewModel.setup(MovieListType.FAVORITE)
 
-        // assert
-        coVerify(exactly = 0) { getTopRatedMoviesUseCase.invoke(1) }
+            // assert
+            coVerify(exactly = 0) { getTopRatedMoviesUseCase.invoke(1) }
+        }
     }
 
     @Test
@@ -90,11 +94,10 @@ class HomeViewModelTest {
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        // act
-        viewModel.setup(MovieListType.Favorite)
-
-        // assert
         runTest {
+            // act
+            viewModel.setup(MovieListType.FAVORITE)
+            // assert
             val job = async {
                 Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data)
             }
@@ -118,11 +121,11 @@ class HomeViewModelTest {
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        // act
-        viewModel.setup(MovieListType.Favorite)
-
-        // assert
         runTest {
+            // act
+            viewModel.setup(MovieListType.FAVORITE)
+
+            // assert
             val job = async {
                 Truth.assertThat(
                     viewModel.uiState.value.movies

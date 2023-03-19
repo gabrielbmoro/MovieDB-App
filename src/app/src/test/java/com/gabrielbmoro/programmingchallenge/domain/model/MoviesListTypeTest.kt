@@ -14,7 +14,7 @@ class MoviesListTypeTest {
         val type = topRatedMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.TopRated)
+        Truth.assertThat(type).isEqualTo(MovieListType.TOP_RATED)
     }
 
     @Test
@@ -26,7 +26,7 @@ class MoviesListTypeTest {
         val type = favoriteMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.Favorite)
+        Truth.assertThat(type).isEqualTo(MovieListType.FAVORITE)
     }
 
     @Test
@@ -38,7 +38,7 @@ class MoviesListTypeTest {
         val type = popularMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.Popular)
+        Truth.assertThat(type).isEqualTo(MovieListType.POPULAR)
     }
 
     @Test

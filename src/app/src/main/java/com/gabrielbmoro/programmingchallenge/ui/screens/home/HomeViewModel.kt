@@ -97,7 +97,6 @@ class HomeViewModel @Inject constructor(
 
             val hasNextPage = (page.data.pageNumber < page.data.totalPages)
             moviesPaginationController?.resultReceived(hasNextPage)
-
             updatedList
         } else {
             null
@@ -120,6 +119,14 @@ class HomeViewModel @Inject constructor(
         this._uiState.value = this._uiState.value.copy(
             movies = movies
         )
+    }
+
+    suspend fun refresh() {
+        moviesPaginationController = null
+        _uiState.value = _uiState.value.copy(
+            movies = null,
+        )
+        setup(movieListType = _uiState.value.selectedMovieListType)
     }
 
     fun requestMore() {

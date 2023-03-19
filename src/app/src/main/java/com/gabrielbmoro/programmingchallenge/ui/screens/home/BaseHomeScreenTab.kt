@@ -18,6 +18,7 @@ import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -27,6 +28,7 @@ fun BaseHomeScreenTab(
     movieType: MovieListType
 ) {
     val uiState by remember { viewModel.uiState }
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -61,7 +63,11 @@ fun BaseHomeScreenTab(
                 } else if (uiState.movies?.isNotEmpty() == true) {
                     SwipeRefresh(
                         state = viewModel.swipeRefreshLiveData,
-                        onRefresh = {  },
+                        onRefresh = {
+                            coroutineScope.launch {
+                                viewModel.refresh()
+                            }
+                        },
                         modifier = Modifier.padding(top = 16.dp)
                     ) {
                         MoviesList(
@@ -89,9 +95,10 @@ fun BaseHomeScreenTab(
                     )
                 }
             }
-            LaunchedEffect(key1 = Unit, block = {
-                viewModel.setup(movieType)
-            })
         }
     )
+
+    LaunchedEffect(key1 = Unit, block = {
+        viewModel.setup(movieType)
+    })
 }
