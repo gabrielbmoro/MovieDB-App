@@ -18,17 +18,18 @@ fun MovieCard(
     imageUrl: String?,
     title: String,
     votes: Float,
+    modifier: Modifier = Modifier,
     onClick: (() -> Unit)
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = 3.dp,
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.heightIn(
-                max = dimensionResource(R.dimen.card_view_height)
+                min = dimensionResource(R.dimen.card_view_height)
             )
         ) {
             MovieImage(
@@ -36,6 +37,7 @@ fun MovieCard(
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(dimensionResource(id = R.dimen.card_view_image_height))
             )
             MovieCardInformation(
                 title = title,
