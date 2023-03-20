@@ -105,7 +105,7 @@ fun DetailsScreen(
                 overview = movie.overview,
                 originalLanguage = movie.language,
                 popularity = movie.popularity,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 24.dp).heightIn(min = 500.dp)
             )
         }
     }
