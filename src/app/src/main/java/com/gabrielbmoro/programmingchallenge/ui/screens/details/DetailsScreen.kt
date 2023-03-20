@@ -1,6 +1,9 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.details
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -32,15 +35,23 @@ fun DetailsScreen(
     val scrollState = rememberScrollState()
     val uiState = remember { viewModel.uiState }
 
+    val atTop = scrollState.value == 0
+
     Scaffold(
         topBar = {
-            AppToolbar(
-                title = movie.title,
-                backEvent = {
-                    navController.navigateUp()
-                },
-                extraEvent = null
-            )
+            AnimatedVisibility(
+                visible = atTop,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                AppToolbar(
+                    title = movie.title,
+                    backEvent = {
+                        navController.navigateUp()
+                    },
+                    extraEvent = null
+                )
+            }
         }
     ) {
         Column(
