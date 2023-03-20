@@ -1,10 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -35,11 +32,13 @@ fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> U
             BottomNavigationItem(
                 selectedContentColor = MaterialTheme.colors.onSurface,
                 unselectedContentColor = Color.Gray,
+                label = {
+                    Text(stringResource(id = item.title))
+                },
                 icon = {
                     Icon(
-                        painterResource(id = item.icon), contentDescription = stringResource(
-                            id = item.title
-                        )
+                        painterResource(id = item.icon),
+                        contentDescription = null
                     )
                 },
                 selected = currentRoute == item.route,

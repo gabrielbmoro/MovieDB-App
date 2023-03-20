@@ -32,10 +32,10 @@ fun MoviesList(
             }
 
             MovieCard(
-                imageUrl = movie.imageUrl,
+                imageUrl = movie.posterImageUrl,
                 title = movie.title,
-                releaseDate = movie.releaseDate,
                 votes = movie.votesAverage,
+                description = movie.overview,
                 onClick = { onSelectMovie(movie) }
             )
         }

@@ -24,13 +24,13 @@ fun MovieDBNavHost(
         composable(
             route = NavigationItem.TopRatedMovies.route
         ) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.TopRated)
+            BaseHomeScreenTab(navController, movieType = MovieListType.TOP_RATED)
         }
         composable(route = NavigationItem.PopularMovies.route) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.Popular)
+            BaseHomeScreenTab(navController, movieType = MovieListType.POPULAR)
         }
         composable(route = NavigationItem.FavoriteMovies.route) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.Favorite)
+            BaseHomeScreenTab(navController, movieType = MovieListType.FAVORITE)
         }
         composable(
             route = "${ScreenRoutesBuilder.DETAILED_MOVIE_ROUTE}/{${ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY}}",

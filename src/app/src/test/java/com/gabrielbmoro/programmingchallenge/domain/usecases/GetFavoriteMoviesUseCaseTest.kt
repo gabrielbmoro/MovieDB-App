@@ -34,6 +34,7 @@ class GetFavoriteMoviesUseCaseTest {
                 2f,
                 "Dragão branco",
                 "https://dragaobranco.png",
+                "https://dragaobranco.png",
                 "Movie where Vandame shows how a good Karate fighter fights",
                 "2002-02-21",
                 language = "pt-br",

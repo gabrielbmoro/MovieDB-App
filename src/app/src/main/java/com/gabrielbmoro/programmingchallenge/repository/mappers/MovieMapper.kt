@@ -13,7 +13,8 @@ class MovieMapper @Inject constructor() {
         return Movie(
             votesAverage = movieResponse.votesAverage ?: 0f,
             title = movieResponse.title ?: "",
-            imageUrl = movieResponse.backdropPath ?: "",
+            posterImageUrl = movieResponse.posterPath ?: "",
+            backdropImageUrl = movieResponse.backdropPath ?: "",
             overview = movieResponse.overview ?: "",
             releaseDate = movieResponse.releaseDate ?: "",
             popularity = movieResponse.popularity ?: 0f,
@@ -28,7 +29,8 @@ class MovieMapper @Inject constructor() {
             isFavorite = true,
             language = favoriteMovie.language,
             popularity = favoriteMovie.popularity,
-            imageUrl = favoriteMovie.imageUrl,
+            posterImageUrl = favoriteMovie.posterImageUrl,
+            backdropImageUrl = favoriteMovie.backdropImageUrl,
             overview = favoriteMovie.overview,
             title = favoriteMovie.title,
             votesAverage = favoriteMovie.votesAverage

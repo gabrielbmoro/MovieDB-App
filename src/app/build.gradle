@@ -14,8 +14,8 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
 
-        versionCode 17
-        versionName '1.0.100'
+        versionCode 18
+        versionName '1.1.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
@@ -109,9 +109,6 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview"
     implementation 'androidx.activity:activity-compose'
     debugImplementation "androidx.compose.ui:ui-tooling"
-
-    // SwipeRefresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:$rootProject.swipeRefreshAccompanistVersion"
 
     // Coil
     implementation "io.coil-kt:coil-compose:$rootProject.coilVersion"

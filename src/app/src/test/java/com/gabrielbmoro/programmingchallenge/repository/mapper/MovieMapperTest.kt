@@ -20,7 +20,8 @@ class MovieMapperTest {
             overview = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various v",
             title = "Why do we use it?",
             releaseDate = "02-03-2020",
-            imageUrl = "https://image/bucket/s3/ga.png",
+            backdropImageUrl = "https://image/bucket/s3/ga.png",
+            posterImageUrl = "https://image/bucket/s3/ga.png",
             popularity = 10f,
             votesAverage = 5f,
             language = "en-US"
@@ -30,7 +31,8 @@ class MovieMapperTest {
         val result = MovieMapper().mapFavorite(favoriteMovieDTO)
 
         // assert
-        Truth.assertThat(result.imageUrl).isEqualTo(favoriteMovieDTO.imageUrl)
+        Truth.assertThat(result.backdropImageUrl).isEqualTo(favoriteMovieDTO.backdropImageUrl)
+        Truth.assertThat(result.posterImageUrl).isEqualTo(favoriteMovieDTO.posterImageUrl)
         Truth.assertThat(result.language).isEqualTo(favoriteMovieDTO.language)
         Truth.assertThat(result.title).isEqualTo(favoriteMovieDTO.title)
         Truth.assertThat(result.overview).isEqualTo(favoriteMovieDTO.overview)
@@ -61,7 +63,8 @@ class MovieMapperTest {
         val result = MovieMapper().mapResponse(movieResponse)
 
         // assert
-        Truth.assertThat(result.imageUrl).isEqualTo(movieResponse.backdropPath)
+        Truth.assertThat(result.backdropImageUrl).isEqualTo(movieResponse.backdropPath)
+        Truth.assertThat(result.posterImageUrl).isEqualTo(movieResponse.posterPath)
         Truth.assertThat(result.language).isEqualTo(movieResponse.originalLanguage)
         Truth.assertThat(result.title).isEqualTo(movieResponse.title)
         Truth.assertThat(result.overview).isEqualTo(movieResponse.overview)

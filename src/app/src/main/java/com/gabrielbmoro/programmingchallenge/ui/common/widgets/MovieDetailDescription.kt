@@ -47,13 +47,19 @@ fun MovieDetailDescription(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        SectionTitle(title = stringResource(id = R.string.overview))
-        SectionDescription(description = overview)
+        if (overview.isNotEmpty()) {
+            SectionTitle(title = stringResource(id = R.string.overview))
+            SectionDescription(description = overview)
+        }
 
-        SectionTitle(title = stringResource(id = R.string.popularity))
-        SectionDescription(description = popularity.toString())
+        if (popularity.toString().isNotEmpty()) {
+            SectionTitle(title = stringResource(id = R.string.popularity))
+            SectionDescription(description = popularity.toString())
+        }
 
-        SectionTitle(title = stringResource(id = R.string.language))
-        SectionDescription(description = originalLanguage)
+        if (originalLanguage.isNotEmpty()) {
+            SectionTitle(title = stringResource(id = R.string.language))
+            SectionDescription(description = originalLanguage)
+        }
     }
 }
