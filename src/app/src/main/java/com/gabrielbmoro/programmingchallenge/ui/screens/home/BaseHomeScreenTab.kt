@@ -2,6 +2,7 @@ package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -18,6 +19,7 @@ import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -29,6 +31,7 @@ fun BaseHomeScreenTab(
 ) {
     val uiState by remember { viewModel.uiState }
     val coroutineScope = rememberCoroutineScope()
+    val lazyColumnState = rememberLazyListState()
 
     Scaffold(
         topBar = {
@@ -48,7 +51,9 @@ fun BaseHomeScreenTab(
             MovieBottomNavigationBar(
                 navController,
                 scrollToTop = {
-                    viewModel.resetListState()
+                    coroutineScope.launch {
+                        lazyColumnState.scrollToItem(0, 0)
+                    }
                 }
             )
         },
@@ -62,7 +67,7 @@ fun BaseHomeScreenTab(
                     EmptyState(modifier = Modifier.align(Alignment.Center))
                 } else if (uiState.movies?.isNotEmpty() == true) {
                     SwipeRefresh(
-                        state = viewModel.swipeRefreshLiveData,
+                        state = SwipeRefreshState(false),
                         onRefresh = {
                             coroutineScope.launch {
                                 viewModel.refresh()
@@ -83,7 +88,7 @@ fun BaseHomeScreenTab(
                                 end = 16.dp,
                                 bottom = 70.dp
                             ),
-                            lazyListState = uiState.lazyListState
+                            lazyListState = lazyColumnState
                         )
                     }
                 }

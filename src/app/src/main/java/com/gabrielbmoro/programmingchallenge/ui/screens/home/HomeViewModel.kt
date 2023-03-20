@@ -1,6 +1,5 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +12,6 @@ import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,8 +29,6 @@ class HomeViewModel @Inject constructor(
     val uiState: State<HomeUIState> = _uiState
 
     private var moviesPaginationController: PaginationController? = null
-
-    val swipeRefreshLiveData = SwipeRefreshState(false)
 
     suspend fun setup(movieListType: MovieListType) {
         this._uiState.value = _uiState.value.copy(
@@ -131,11 +127,5 @@ class HomeViewModel @Inject constructor(
 
     fun requestMore() {
         moviesPaginationController?.requestMore()
-    }
-
-    fun resetListState() {
-        _uiState.value = _uiState.value.copy(
-            lazyListState = LazyListState(0, 0)
-        )
     }
 }
