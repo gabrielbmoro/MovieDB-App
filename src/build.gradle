@@ -14,7 +14,6 @@ buildscript {
         hiltNavigationCompose = '1.0.0'
         composeBomVersion = '2022.10.00'
         composeCompilerVersion = '1.4.3'
-        swipeRefreshAccompanistVersion = '0.28.0'
         navComposeIntegrationVersion = '2.6.0-alpha06'
         coilVersion = '2.2.2'
         appcompatVersion = '1.6.1'

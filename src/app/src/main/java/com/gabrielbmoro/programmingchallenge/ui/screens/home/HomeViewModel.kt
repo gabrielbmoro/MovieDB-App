@@ -117,14 +117,6 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    suspend fun refresh() {
-        moviesPaginationController = null
-        _uiState.value = _uiState.value.copy(
-            movies = null,
-        )
-        setup(movieListType = _uiState.value.selectedMovieListType)
-    }
-
     fun requestMore() {
         moviesPaginationController?.requestMore()
     }

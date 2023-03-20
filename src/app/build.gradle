@@ -110,9 +110,6 @@ dependencies {
     implementation 'androidx.activity:activity-compose'
     debugImplementation "androidx.compose.ui:ui-tooling"
 
-    // SwipeRefresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:$rootProject.swipeRefreshAccompanistVersion"
-
     // Coil
     implementation "io.coil-kt:coil-compose:$rootProject.coilVersion"
 

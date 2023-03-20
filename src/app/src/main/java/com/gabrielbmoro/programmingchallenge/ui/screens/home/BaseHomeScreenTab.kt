@@ -1,10 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -22,8 +19,6 @@ import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -37,27 +32,19 @@ fun BaseHomeScreenTab(
     val coroutineScope = rememberCoroutineScope()
     val lazyColumnState = rememberLazyListState()
 
-    val isNotScrolling = lazyColumnState.isScrollInProgress.not()
-
     Scaffold(
         topBar = {
-            AnimatedVisibility(
-                visible = isNotScrolling,
-                enter = fadeIn(animationSpec = tween(2000, easing = LinearOutSlowInEasing)),
-                exit = fadeOut(animationSpec = tween(0))
-            ) {
-                AppToolbar(
-                    title = stringResource(id = R.string.app_name),
-                    backEvent = null,
-                    extraEvent = ExtraEvent(
-                        icon = R.drawable.ic_gear,
-                        action = {
-                            navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
-                        },
-                        contentDescription = stringResource(id = R.string.settings)
-                    )
+            AppToolbar(
+                title = stringResource(id = R.string.app_name),
+                backEvent = null,
+                extraEvent = ExtraEvent(
+                    icon = R.drawable.ic_gear,
+                    action = {
+                        navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
+                    },
+                    contentDescription = stringResource(id = R.string.settings)
                 )
-            }
+            )
         },
         bottomBar = {
             MovieBottomNavigationBar(
@@ -78,31 +65,23 @@ fun BaseHomeScreenTab(
                 if (uiState.movies?.isEmpty() == true) {
                     EmptyState(modifier = Modifier.align(Alignment.Center))
                 } else if (uiState.movies?.isNotEmpty() == true) {
-                    SwipeRefresh(
-                        state = SwipeRefreshState(false),
-                        onRefresh = {
-                            coroutineScope.launch {
-                                viewModel.refresh()
-                            }
+                    MoviesList(
+                        movies = uiState.movies ?: emptyList(),
+                        requestMoreCallback = { viewModel.requestMore() },
+                        onSelectMovie = { movie ->
+                            navController.navigate(
+                                NavigationItem.DetailsScreen(movie).route
+                            )
                         },
-                        modifier = Modifier.padding(top = 16.dp)
-                    ) {
-                        MoviesList(
-                            movies = uiState.movies ?: emptyList(),
-                            requestMoreCallback = { viewModel.requestMore() },
-                            onSelectMovie = { movie ->
-                                navController.navigate(
-                                    NavigationItem.DetailsScreen(movie).route
-                                )
-                            },
-                            modifier = Modifier.padding(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
                                 start = 16.dp,
                                 end = 16.dp,
                                 bottom = 70.dp
                             ),
-                            lazyListState = lazyColumnState
-                        )
-                    }
+                        lazyListState = lazyColumnState
+                    )
                 }
 
                 if (uiState.isLoading) {
