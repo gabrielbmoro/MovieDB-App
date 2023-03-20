@@ -15,7 +15,8 @@ class FavoriteMovieMapper @Inject constructor() {
             title = movie.title,
             language = movie.language,
             overview = movie.overview,
-            imageUrl = movie.imageUrl,
+            posterImageUrl = movie.posterImageUrl,
+            backdropImageUrl = movie.backdropImageUrl,
             popularity = movie.popularity,
             releaseDate = movie.releaseDate
         )

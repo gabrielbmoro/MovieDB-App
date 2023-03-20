@@ -60,12 +60,12 @@ fun DetailsScreen(
                 .verticalScroll(scrollState)
         ) {
             MovieImage(
-                imageUrl = movie.imageUrl.let {
-                    "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}${movie.imageUrl}"
+                imageUrl = movie.backdropImageUrl.let {
+                    "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}${movie.backdropImageUrl}"
                 },
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
-                    .heightIn(max = 420.dp)
+                    .height(250.dp)
                     .fillMaxWidth()
             )
 

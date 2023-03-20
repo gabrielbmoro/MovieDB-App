@@ -13,9 +13,8 @@ class PageMapper @Inject constructor(
         return Page(
             totalPages = pageResponse.totalPages,
             pageNumber = pageResponse.page,
-            movies = pageResponse.results?.mapNotNull {
-                val targetMovie = movieMapper.mapResponse(it)
-                if (targetMovie.isValid) targetMovie else null
+            movies = pageResponse.results?.map {
+                movieMapper.mapResponse(it)
             } ?: emptyList()
         )
     }

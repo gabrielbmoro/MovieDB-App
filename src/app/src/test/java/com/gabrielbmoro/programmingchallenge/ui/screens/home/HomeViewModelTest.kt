@@ -270,7 +270,8 @@ class HomeViewModelTest {
     private fun mockedMovie() = Movie(
         votesAverage = 2f,
         title = "Chuck Norris vs Vandamme",
-        imageUrl = "",
+        backdropImageUrl = "",
+        posterImageUrl = "",
         overview = "test",
         releaseDate = "03-02-2023",
         isFavorite = false,

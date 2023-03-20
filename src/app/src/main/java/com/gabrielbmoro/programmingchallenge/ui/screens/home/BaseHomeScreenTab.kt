@@ -62,26 +62,26 @@ fun BaseHomeScreenTab(
                     .fillMaxHeight()
                     .fillMaxWidth()
             ) {
+                MoviesList(
+                    movies = uiState.movies ?: emptyList(),
+                    requestMoreCallback = { viewModel.requestMore() },
+                    onSelectMovie = { movie ->
+                        navController.navigate(
+                            NavigationItem.DetailsScreen(movie).route
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 70.dp
+                        ),
+                    lazyListState = lazyColumnState
+                )
+
                 if (uiState.movies?.isEmpty() == true) {
                     EmptyState(modifier = Modifier.align(Alignment.Center))
-                } else if (uiState.movies?.isNotEmpty() == true) {
-                    MoviesList(
-                        movies = uiState.movies ?: emptyList(),
-                        requestMoreCallback = { viewModel.requestMore() },
-                        onSelectMovie = { movie ->
-                            navController.navigate(
-                                NavigationItem.DetailsScreen(movie).route
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 70.dp
-                            ),
-                        lazyListState = lazyColumnState
-                    )
                 }
 
                 if (uiState.isLoading) {
