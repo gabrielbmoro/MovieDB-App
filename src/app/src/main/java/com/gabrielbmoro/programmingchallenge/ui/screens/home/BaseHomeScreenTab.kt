@@ -1,6 +1,10 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -33,19 +37,27 @@ fun BaseHomeScreenTab(
     val coroutineScope = rememberCoroutineScope()
     val lazyColumnState = rememberLazyListState()
 
+    val isNotScrolling = lazyColumnState.isScrollInProgress.not()
+
     Scaffold(
         topBar = {
-            AppToolbar(
-                title = stringResource(id = R.string.app_name),
-                backEvent = null,
-                extraEvent = ExtraEvent(
-                    icon = R.drawable.ic_gear,
-                    action = {
-                        navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
-                    },
-                    contentDescription = stringResource(id = R.string.settings)
+            AnimatedVisibility(
+                visible = isNotScrolling,
+                enter = fadeIn(animationSpec = tween(2000, easing = LinearOutSlowInEasing)),
+                exit = fadeOut(animationSpec = tween(0))
+            ) {
+                AppToolbar(
+                    title = stringResource(id = R.string.app_name),
+                    backEvent = null,
+                    extraEvent = ExtraEvent(
+                        icon = R.drawable.ic_gear,
+                        action = {
+                            navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
+                        },
+                        contentDescription = stringResource(id = R.string.settings)
+                    )
                 )
-            )
+            }
         },
         bottomBar = {
             MovieBottomNavigationBar(
