@@ -11,6 +11,7 @@ class MovieMapper @Inject constructor() {
 
     fun mapResponse(movieResponse: MovieResponse): Movie {
         return Movie(
+            id = movieResponse.id,
             votesAverage = movieResponse.votesAverage ?: 0f,
             title = movieResponse.title ?: "",
             posterImageUrl = movieResponse.posterPath ?: "",
@@ -25,6 +26,7 @@ class MovieMapper @Inject constructor() {
 
     fun mapFavorite(favoriteMovie: FavoriteMovieDTO): Movie {
         return Movie(
+            id = favoriteMovie.id?.toLong() ?: System.currentTimeMillis(),
             releaseDate = favoriteMovie.releaseDate,
             isFavorite = true,
             language = favoriteMovie.language,

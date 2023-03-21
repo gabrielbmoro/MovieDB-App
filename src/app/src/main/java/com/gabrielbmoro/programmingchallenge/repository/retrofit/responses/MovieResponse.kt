@@ -3,6 +3,7 @@ package com.gabrielbmoro.programmingchallenge.repository.retrofit.responses
 import com.google.gson.annotations.SerializedName
 
 data class MovieResponse(
+    @SerializedName("id") val id: Long,
     @SerializedName("vote_count") val votes: Int?,
     @SerializedName("video") val isVideo: Boolean?,
     @SerializedName("vote_average") val votesAverage: Float?,
