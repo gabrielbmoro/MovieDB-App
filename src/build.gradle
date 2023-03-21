@@ -20,7 +20,7 @@ buildscript {
         swipeRefreshVersion = '1.2.0-alpha01'
         cardViewVersion = '1.0.0'
         roomVersion = '2.5.0'
-        lifecycleVersion = '2.5.1'
+        lifecycleVersion = '2.6.0'
         lifecycleExtensionsVersion = '2.2.0'
         preferenceVersion = '1.2.0'
         timberVersion = '5.0.1'
