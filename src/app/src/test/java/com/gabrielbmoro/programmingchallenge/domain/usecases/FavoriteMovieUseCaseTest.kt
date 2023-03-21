@@ -28,6 +28,7 @@ class FavoriteMovieUseCaseTest {
     fun `should be able to favorite a movie`() {
         // arrange
         val movie = Movie(
+            id = 12L,
             2f,
             "Dragão branco",
             "https://dragaobranco.png",
@@ -55,6 +56,7 @@ class FavoriteMovieUseCaseTest {
     fun `should be able to remove a movie from favorite list`() {
         // arrange
         val movie = Movie(
+            id = 12L,
             2f,
             "Dragão branco",
             "https://dragaobranco.png",
@@ -82,6 +84,7 @@ class FavoriteMovieUseCaseTest {
     fun `should be able to avoid two favorite operations if movie is already a favorite one`() {
         // arrange
         val movie = Movie(
+            id = 12L,
             2f,
             "Dragão branco",
             "https://dragaobranco.png",

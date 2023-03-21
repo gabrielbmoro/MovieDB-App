@@ -33,7 +33,7 @@ fun MoviesList(
     ) {
         items(
             key = {
-                movies[it].title
+                movies[it].id
             },
             itemContent = {
                 val movie = movies[it]

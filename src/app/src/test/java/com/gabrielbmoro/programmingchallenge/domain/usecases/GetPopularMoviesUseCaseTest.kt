@@ -33,6 +33,7 @@ class GetPopularMoviesUseCaseTest {
         val popularMovies = Page(
             listOf(
                 Movie(
+                    id = 12L,
                     2f,
                     "Dragão branco",
                     "https://dragaobranco.png",
