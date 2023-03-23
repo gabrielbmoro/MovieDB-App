@@ -48,8 +48,7 @@ fun DetailsScreen(
                     title = movie.title,
                     backEvent = {
                         navController.navigateUp()
-                    },
-                    extraEvent = null
+                    }
                 )
             }
         }

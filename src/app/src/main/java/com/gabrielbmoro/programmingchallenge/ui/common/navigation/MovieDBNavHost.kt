@@ -10,7 +10,6 @@ import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.BaseHomeScreenTab
-import com.gabrielbmoro.programmingchallenge.ui.screens.settings.SettingsScreen
 
 @Composable
 fun MovieDBNavHost(
@@ -46,9 +45,6 @@ fun MovieDBNavHost(
             ) ?: throw IllegalArgumentException("Type should be movie")
 
             DetailsScreen(navController, movie)
-        }
-        composable(route = NavigationItem.SettingsScreen.route) {
-            SettingsScreen(navController)
         }
     }
 }

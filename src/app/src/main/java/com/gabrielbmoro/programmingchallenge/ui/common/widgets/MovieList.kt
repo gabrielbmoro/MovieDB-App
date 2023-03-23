@@ -1,9 +1,11 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.*
@@ -29,7 +31,7 @@ fun MoviesList(
 
     LazyColumn(
         state = lazyListState,
-        modifier = modifier
+        modifier = modifier.background(MaterialTheme.colorScheme.background)
     ) {
         items(
             key = {

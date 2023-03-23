@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,11 +18,11 @@ import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
-import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseHomeScreenTab(
     navController: NavController,
@@ -36,14 +37,7 @@ fun BaseHomeScreenTab(
         topBar = {
             AppToolbar(
                 title = stringResource(id = R.string.app_name),
-                backEvent = null,
-                extraEvent = ExtraEvent(
-                    icon = R.drawable.ic_gear,
-                    action = {
-                        navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
-                    },
-                    contentDescription = stringResource(id = R.string.settings)
-                )
+                backEvent = null
             )
         },
         bottomBar = {
@@ -87,7 +81,7 @@ fun BaseHomeScreenTab(
                 if (uiState.isLoading) {
                     BubbleLoader(
                         modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colors.secondary
+                        color = MaterialTheme.colorScheme.secondary
                     )
                 }
             }

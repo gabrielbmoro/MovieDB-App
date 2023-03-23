@@ -3,7 +3,6 @@ package com.gabrielbmoro.programmingchallenge.repository
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.Page
-import com.gabrielbmoro.programmingchallenge.domain.model.ThemeType
 
 interface MoviesRepository {
     suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception>
@@ -17,8 +16,4 @@ interface MoviesRepository {
     suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception>
 
     suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception>
-
-    fun selectTheme(themeType: ThemeType)
-
-    fun getCurrentTheme() : ThemeType?
 }

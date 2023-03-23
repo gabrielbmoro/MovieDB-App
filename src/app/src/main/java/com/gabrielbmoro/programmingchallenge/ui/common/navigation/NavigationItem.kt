@@ -37,8 +37,4 @@ sealed class NavigationItem(
     ) : NavigationItem(
         ScreenRoutesBuilder.detailedMovieRoute(movie)
     )
-
-    object SettingsScreen : NavigationItem(
-        ScreenRoutesBuilder.SETTINGS_ROUTE
-    )
 }
