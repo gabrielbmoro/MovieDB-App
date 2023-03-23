@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.gabrielbmoro.programmingchallenge.core.parcelableOf
+import com.gabrielbmoro.programmingchallenge.ui.common.parcelableOf
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen

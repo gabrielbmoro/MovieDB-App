@@ -1,14 +1,10 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
@@ -21,27 +17,25 @@ fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> U
         NavigationItem.FavoriteMovies
     )
 
-    BottomNavigation(
-        modifier = Modifier.height(56.dp),
-        backgroundColor = MaterialTheme.colors.surface,
-    ) {
+    NavigationBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
         items.forEach { item ->
-            BottomNavigationItem(
-                selectedContentColor = MaterialTheme.colors.onSurface,
-                unselectedContentColor = Color.Gray,
-                label = {
-                    Text(stringResource(id = item.title))
-                },
+            val isSelected = currentRoute == item.route
+
+            NavigationBarItem(
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
                         contentDescription = null
                     )
                 },
-                selected = currentRoute == item.route,
+                alwaysShowLabel = true,
+                label = {
+                    Text(stringResource(id = item.title))
+                },
+                selected = isSelected,
                 onClick = {
                     if (item.route == currentRoute) {
                         scrollToTop()
