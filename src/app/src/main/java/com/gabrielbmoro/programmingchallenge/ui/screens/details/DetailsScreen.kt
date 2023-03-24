@@ -59,6 +59,7 @@ fun DetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
+                .padding(top = it.calculateTopPadding())
         ) {
             MovieImage(
                 imageUrl = movie.backdropImageUrl.let {
