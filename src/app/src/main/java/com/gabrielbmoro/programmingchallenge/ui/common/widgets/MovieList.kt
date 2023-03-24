@@ -34,9 +34,6 @@ fun MoviesList(
         modifier = modifier.background(MaterialTheme.colorScheme.background)
     ) {
         items(
-            key = {
-                movies[it].id
-            },
             itemContent = {
                 val movie = movies[it]
 
