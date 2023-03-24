@@ -1,11 +1,15 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.gabrielbmoro.programmingchallenge.R
@@ -23,11 +27,15 @@ fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> 
 
     Card(
         shape = CircleShape,
-        modifier = modifier.clickable(onClick = action)
+        modifier = modifier.clickable(onClick = action),
     ) {
-        Icon(
-            painter = painterResource(id = heartPair.first),
-            contentDescription = heartPair.second
-        )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Icon(
+                painter = painterResource(id = heartPair.first),
+                contentDescription = heartPair.second,
+                modifier = Modifier.align(Center),
+                tint = Color.Red
+            )
+        }
     }
 }
