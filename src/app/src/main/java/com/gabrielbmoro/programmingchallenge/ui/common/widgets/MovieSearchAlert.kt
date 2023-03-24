@@ -1,8 +1,10 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -22,15 +24,15 @@ private fun SearchOption(
     onClick: (() -> Unit),
     modifier: Modifier = Modifier
 ) {
-    Row(modifier) {
-        Text(
-            modifier = Modifier.align(CenterVertically),
-            text = title,
-        )
+    Row(modifier.clickable(onClick = onClick)) {
         RadioButton(
             modifier = Modifier.align(CenterVertically),
             selected = isChecked,
             onClick = onClick
+        )
+        Text(
+            modifier = Modifier.align(CenterVertically),
+            text = title,
         )
     }
 }
@@ -39,7 +41,8 @@ private fun SearchOption(
 fun MovieSearchAlert(
     onDismissAlert: (() -> Unit),
     searchType: SearchType,
-    onSearch: ((SearchType) -> Unit)
+    onSearch: ((SearchType) -> Unit),
+    modifier: Modifier = Modifier,
 ) {
 
     var currentSearchSelected by remember {
@@ -47,6 +50,7 @@ fun MovieSearchAlert(
     }
 
     AlertDialog(
+        modifier = modifier.fillMaxWidth(),
         onDismissRequest = {
             onDismissAlert()
         },
@@ -67,7 +71,8 @@ fun MovieSearchAlert(
                     title = stringResource(id = SearchType.TOP_RATED.descriptionRes),
                     onClick = {
                         currentSearchSelected = SearchType.TOP_RATED
-                    }
+                    },
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 SearchOption(
@@ -75,7 +80,8 @@ fun MovieSearchAlert(
                     title = stringResource(id = SearchType.POPULAR.descriptionRes),
                     onClick = {
                         currentSearchSelected = SearchType.POPULAR
-                    }
+                    },
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         },
