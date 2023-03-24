@@ -17,16 +17,13 @@ fun MovieDBNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.TopRatedMovies.route,
+        startDestination = NavigationItem.Movies.route,
     ) {
 
         composable(
-            route = NavigationItem.TopRatedMovies.route
+            route = NavigationItem.Movies.route
         ) {
             BaseHomeScreenTab(navController, movieType = MovieListType.TOP_RATED)
-        }
-        composable(route = NavigationItem.PopularMovies.route) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.POPULAR)
         }
         composable(route = NavigationItem.FavoriteMovies.route) {
             BaseHomeScreenTab(navController, movieType = MovieListType.FAVORITE)

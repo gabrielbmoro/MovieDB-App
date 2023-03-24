@@ -12,8 +12,7 @@ import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 @Composable
 fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> Unit)) {
     val items = listOf(
-        NavigationItem.TopRatedMovies,
-        NavigationItem.PopularMovies,
+        NavigationItem.Movies,
         NavigationItem.FavoriteMovies
     )
 

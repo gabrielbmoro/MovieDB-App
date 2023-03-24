@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,11 +31,18 @@ fun BaseHomeScreenTab(
     val coroutineScope = rememberCoroutineScope()
     val lazyColumnState = rememberLazyListState()
 
+    var showSearchAlert by remember {
+        mutableStateOf(false)
+    }
+
     Scaffold(
         topBar = {
             AppToolbar(
                 title = stringResource(id = R.string.app_name),
-                backEvent = null
+                backEvent = null,
+                searchEvent = {
+                    showSearchAlert = !showSearchAlert
+                }
             )
         },
         bottomBar = {
@@ -53,8 +58,8 @@ fun BaseHomeScreenTab(
         content = {
             Box(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
+                    .padding(top = it.calculateTopPadding())
+                    .fillMaxSize()
             ) {
                 MoviesList(
                     movies = uiState.movies ?: emptyList(),
@@ -83,6 +88,20 @@ fun BaseHomeScreenTab(
                         modifier = Modifier.align(Alignment.Center),
                         color = MaterialTheme.colorScheme.secondary
                     )
+                }
+
+                if (showSearchAlert) {
+                    viewModel.currentSearchType()?.let { searchType ->
+                        MovieSearchAlert(
+                            onDismissAlert = {
+                                showSearchAlert = false
+                            },
+                            onSearch = { searchBy ->
+                                viewModel.onSearchBy(searchBy)
+                            },
+                            searchType = searchType
+                        )
+                    }
                 }
             }
         }
