@@ -46,8 +46,12 @@ fun BaseHomeScreenTab(
             AppToolbar(
                 title = stringResource(id = R.string.app_name),
                 backEvent = null,
-                searchEvent = {
-                    showSearchAlert = !showSearchAlert
+                searchEvent = if (uiState.selectedMovieListType == MovieListType.FAVORITE)
+                    null
+                else {
+                    {
+                        showSearchAlert = !showSearchAlert
+                    }
                 }
             )
         },
@@ -67,7 +71,7 @@ fun BaseHomeScreenTab(
                     .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
             ) {
-                if(movies != null) {
+                if (movies != null) {
                     MoviesList(
                         movies = movies!!,
                         requestMoreCallback = { viewModel.requestMore() },
