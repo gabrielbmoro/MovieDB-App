@@ -30,6 +30,12 @@ fun BaseHomeScreenTab(
     val uiState by remember { viewModel.uiState }
     val coroutineScope = rememberCoroutineScope()
     val lazyColumnState = rememberLazyListState()
+    val movies by remember {
+        derivedStateOf { uiState.movies }
+    }
+    val isLoading by remember {
+        derivedStateOf { uiState.isLoading }
+    }
 
     var showSearchAlert by remember {
         mutableStateOf(false)
@@ -61,29 +67,31 @@ fun BaseHomeScreenTab(
                     .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
             ) {
-                MoviesList(
-                    movies = uiState.movies ?: emptyList(),
-                    requestMoreCallback = { viewModel.requestMore() },
-                    onSelectMovie = { movie ->
-                        navController.navigate(
-                            NavigationItem.DetailsScreen(movie).route
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 70.dp
-                        ),
-                    lazyListState = lazyColumnState
-                )
+                if(movies != null) {
+                    MoviesList(
+                        movies = movies!!,
+                        requestMoreCallback = { viewModel.requestMore() },
+                        onSelectMovie = { movie ->
+                            navController.navigate(
+                                NavigationItem.DetailsScreen(movie).route
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 70.dp
+                            ),
+                        lazyListState = lazyColumnState
+                    )
 
-                if (uiState.movies?.isEmpty() == true) {
-                    EmptyState(modifier = Modifier.align(Alignment.Center))
+                    if (movies!!.isEmpty()) {
+                        EmptyState(modifier = Modifier.align(Alignment.Center))
+                    }
                 }
 
-                if (uiState.isLoading) {
+                if (isLoading) {
                     BubbleLoader(
                         modifier = Modifier.align(Alignment.Center),
                         color = MaterialTheme.colorScheme.secondary
