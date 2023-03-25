@@ -1,12 +1,8 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
-import androidx.annotation.DrawableRes
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -15,19 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.ui.common.theme.MovieDBAppTheme
 
-data class ExtraEvent(
-    @DrawableRes val icon: Int,
-    val action: (() -> Unit),
-    val contentDescription: String,
-)
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppToolbar(
     title: String,
-    backEvent: (() -> Unit)?,
-    extraEvent: ExtraEvent? = null
+    backEvent: (() -> Unit)? = null,
+    searchEvent: (() -> Unit)? = null,
 ) {
-    val navigationIcon: @Composable (() -> Unit)? = backEvent?.let {
+    val navigationIcon: @Composable (() -> Unit) = backEvent?.let {
         {
             IconButton(onClick = backEvent) {
                 Icon(
@@ -36,7 +27,7 @@ fun AppToolbar(
                 )
             }
         }
-    }
+    } ?: { }
 
     TopAppBar(
         title = {
@@ -48,11 +39,11 @@ fun AppToolbar(
         },
         navigationIcon = navigationIcon,
         actions = {
-            extraEvent?.let {
-                IconButton(onClick = extraEvent.action) {
+            searchEvent?.let {
+                IconButton(onClick = searchEvent) {
                     Icon(
-                        painter = painterResource(id = extraEvent.icon),
-                        contentDescription = extraEvent.contentDescription
+                        painterResource(id = R.drawable.ic_search),
+                        contentDescription = stringResource(id = R.string.search)
                     )
                 }
             }
@@ -63,7 +54,7 @@ fun AppToolbar(
 @Preview
 @Composable
 fun AppToolbarPreview() {
-    MovieDBAppTheme(false) {
-        AppToolbar("Jumangi", null, null)
+    MovieDBAppTheme {
+        AppToolbar("Jumangi")
     }
 }

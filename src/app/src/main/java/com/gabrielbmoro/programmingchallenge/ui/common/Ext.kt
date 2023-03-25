@@ -1,4 +1,4 @@
-package com.gabrielbmoro.programmingchallenge.core
+package com.gabrielbmoro.programmingchallenge.ui.common
 
 import android.os.Build
 import android.os.Bundle

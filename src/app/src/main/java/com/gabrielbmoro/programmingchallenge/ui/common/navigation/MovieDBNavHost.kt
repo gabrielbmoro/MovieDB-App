@@ -5,12 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.gabrielbmoro.programmingchallenge.core.parcelableOf
+import com.gabrielbmoro.programmingchallenge.ui.common.parcelableOf
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.BaseHomeScreenTab
-import com.gabrielbmoro.programmingchallenge.ui.screens.settings.SettingsScreen
 
 @Composable
 fun MovieDBNavHost(
@@ -18,16 +17,13 @@ fun MovieDBNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.TopRatedMovies.route,
+        startDestination = NavigationItem.Movies.route,
     ) {
 
         composable(
-            route = NavigationItem.TopRatedMovies.route
+            route = NavigationItem.Movies.route
         ) {
             BaseHomeScreenTab(navController, movieType = MovieListType.TOP_RATED)
-        }
-        composable(route = NavigationItem.PopularMovies.route) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.POPULAR)
         }
         composable(route = NavigationItem.FavoriteMovies.route) {
             BaseHomeScreenTab(navController, movieType = MovieListType.FAVORITE)
@@ -46,9 +42,6 @@ fun MovieDBNavHost(
             ) ?: throw IllegalArgumentException("Type should be movie")
 
             DetailsScreen(navController, movie)
-        }
-        composable(route = NavigationItem.SettingsScreen.route) {
-            SettingsScreen(navController)
         }
     }
 }

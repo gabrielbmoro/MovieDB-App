@@ -14,8 +14,8 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
 
-        versionCode 19
-        versionName '1.2.0'
+        versionCode 20
+        versionName '1.3.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
@@ -105,10 +105,10 @@ dependencies {
     // Compose
     implementation platform("androidx.compose:compose-bom:$rootProject.composeBomVersion")
     implementation "androidx.compose.ui:ui"
-    implementation "androidx.compose.material:material"
     implementation "androidx.compose.ui:ui-tooling-preview"
     implementation 'androidx.activity:activity-compose'
     debugImplementation "androidx.compose.ui:ui-tooling"
+    implementation "androidx.compose.material3:material3:$rootProject.composeMaterial3Version"
 
     // Coil
     implementation "io.coil-kt:coil-compose:$rootProject.coilVersion"

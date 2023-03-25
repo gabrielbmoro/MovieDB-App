@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">MovieDB App</string>
     <string name="back">Back</string>
+    <string name="search">Search</string>
+    <string name="filter_by">Filter by</string>
     <string name="token_value">755e0c67ac2fa886e775fb9057f0a32f</string>
     <string name="top_rated_movies_title">Top Rated</string>
     <string name="popular_movies_title">Popular</string>
+    <string name="movies_title">Movies</string>
     <string name="favorite_movies_title">Favorite</string>
     <string name="release_date">Release Date:</string>
     <string name="expand">Expand</string>
@@ -27,7 +30,6 @@
     <string name="poster">Poster</string>
     <string name="background">Background</string>
     <string name="home_title">Movie DB API</string>
-    <string name="settings">Settings</string>
     <string name="save">Save</string>
     <string name="theme">Theme:</string>
     <string name="automatic_theme_option">Automatic</string>

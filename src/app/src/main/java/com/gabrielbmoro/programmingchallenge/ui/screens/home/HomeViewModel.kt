@@ -12,7 +12,9 @@ import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.programmingchallenge.ui.common.widgets.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +26,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState: MutableState<HomeUIState> = mutableStateOf(
-        HomeUIState(selectedMovieListType = MovieListType.TOP_RATED)
+        HomeUIState(
+            selectedMovieListType = MovieListType.TOP_RATED,
+        )
     )
     val uiState: State<HomeUIState> = _uiState
 
@@ -119,5 +123,28 @@ class HomeViewModel @Inject constructor(
 
     fun requestMore() {
         moviesPaginationController?.requestMore()
+    }
+
+    fun onSearchBy(searchType: SearchType) {
+        _uiState.value = _uiState.value.copy(
+            isLoading = true,
+            movies = null
+        )
+        moviesPaginationController = null
+
+        viewModelScope.launch {
+            setup(
+                movieListType = when (searchType) {
+                    SearchType.TOP_RATED -> MovieListType.TOP_RATED
+                    SearchType.POPULAR -> MovieListType.POPULAR
+                }
+            )
+        }
+    }
+
+    fun currentSearchType() = when(_uiState.value.selectedMovieListType) {
+        MovieListType.TOP_RATED -> SearchType.TOP_RATED
+        MovieListType.POPULAR -> SearchType.POPULAR
+        else -> null
     }
 }

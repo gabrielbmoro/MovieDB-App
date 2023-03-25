@@ -2,7 +2,7 @@ package com.gabrielbmoro.programmingchallenge.ui.common.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.gabrielbmoro.programmingchallenge.core.parcelableOf
+import com.gabrielbmoro.programmingchallenge.ui.common.parcelableOf
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.google.gson.Gson
 

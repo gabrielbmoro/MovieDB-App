@@ -4,9 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,11 +16,11 @@ import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
-import com.gabrielbmoro.programmingchallenge.ui.common.navigation.ScreenRoutesBuilder
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseHomeScreenTab(
     navController: NavController,
@@ -31,19 +30,29 @@ fun BaseHomeScreenTab(
     val uiState by remember { viewModel.uiState }
     val coroutineScope = rememberCoroutineScope()
     val lazyColumnState = rememberLazyListState()
+    val movies by remember {
+        derivedStateOf { uiState.movies }
+    }
+    val isLoading by remember {
+        derivedStateOf { uiState.isLoading }
+    }
+
+    var showSearchAlert by remember {
+        mutableStateOf(false)
+    }
 
     Scaffold(
         topBar = {
             AppToolbar(
                 title = stringResource(id = R.string.app_name),
                 backEvent = null,
-                extraEvent = ExtraEvent(
-                    icon = R.drawable.ic_gear,
-                    action = {
-                        navController.navigate(ScreenRoutesBuilder.SETTINGS_ROUTE)
-                    },
-                    contentDescription = stringResource(id = R.string.settings)
-                )
+                searchEvent = if (uiState.selectedMovieListType == MovieListType.FAVORITE)
+                    null
+                else {
+                    {
+                        showSearchAlert = !showSearchAlert
+                    }
+                }
             )
         },
         bottomBar = {
@@ -59,36 +68,52 @@ fun BaseHomeScreenTab(
         content = {
             Box(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
+                    .padding(top = it.calculateTopPadding())
+                    .fillMaxSize()
             ) {
-                MoviesList(
-                    movies = uiState.movies ?: emptyList(),
-                    requestMoreCallback = { viewModel.requestMore() },
-                    onSelectMovie = { movie ->
-                        navController.navigate(
-                            NavigationItem.DetailsScreen(movie).route
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 70.dp
-                        ),
-                    lazyListState = lazyColumnState
-                )
+                if (movies != null) {
+                    MoviesList(
+                        movies = movies!!,
+                        requestMoreCallback = { viewModel.requestMore() },
+                        onSelectMovie = { movie ->
+                            navController.navigate(
+                                NavigationItem.DetailsScreen(movie).route
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 70.dp
+                            ),
+                        lazyListState = lazyColumnState
+                    )
 
-                if (uiState.movies?.isEmpty() == true) {
-                    EmptyState(modifier = Modifier.align(Alignment.Center))
+                    if (movies!!.isEmpty()) {
+                        EmptyState(modifier = Modifier.align(Alignment.Center))
+                    }
                 }
 
-                if (uiState.isLoading) {
+                if (isLoading) {
                     BubbleLoader(
                         modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colors.secondary
+                        color = MaterialTheme.colorScheme.secondary
                     )
+                }
+
+                if (showSearchAlert) {
+                    viewModel.currentSearchType()?.let { searchType ->
+                        MovieSearchAlert(
+                            onDismissAlert = {
+                                showSearchAlert = false
+                            },
+                            onSearch = { searchBy ->
+                                viewModel.onSearchBy(searchBy)
+                            },
+                            searchType = searchType
+                        )
+                    }
                 }
             }
         }

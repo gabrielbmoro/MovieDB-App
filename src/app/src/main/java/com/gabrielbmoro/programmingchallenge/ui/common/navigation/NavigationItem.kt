@@ -14,16 +14,10 @@ sealed class NavigationItem(
         override val route: String
     ) : NavigationItem(route = route)
 
-    object TopRatedMovies : NavigationItemTab(
-        icon = R.drawable.ic_photo_album,
-        title = R.string.top_rated_movies_title,
-        route = ScreenRoutesBuilder.TOP_RATED_MOVIES_ROUTE
-    )
-
-    object PopularMovies : NavigationItemTab(
+    object Movies : NavigationItemTab(
         icon = R.drawable.ic_theaters,
-        title = R.string.popular_movies_title,
-        route = ScreenRoutesBuilder.POPULAR_MOVIES_ROUTE
+        title = R.string.movies_title,
+        route = ScreenRoutesBuilder.MOVIES_ROUTE
     )
 
     object FavoriteMovies : NavigationItemTab(
@@ -36,9 +30,5 @@ sealed class NavigationItem(
         private val movie: Movie
     ) : NavigationItem(
         ScreenRoutesBuilder.detailedMovieRoute(movie)
-    )
-
-    object SettingsScreen : NavigationItem(
-        ScreenRoutesBuilder.SETTINGS_ROUTE
     )
 }

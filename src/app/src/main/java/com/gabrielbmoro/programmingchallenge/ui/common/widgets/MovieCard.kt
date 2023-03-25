@@ -1,21 +1,17 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieCard(
     imageUrl: String?,
@@ -27,11 +23,9 @@ fun MovieCard(
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = 3.dp,
-        onClick = onClick,
-        backgroundColor = MaterialTheme.colors.background,
         modifier = modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .height(dimensionResource(id = R.dimen.card_view_image_height))
     ) {
         Row() {

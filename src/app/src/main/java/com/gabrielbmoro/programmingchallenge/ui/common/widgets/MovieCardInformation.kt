@@ -1,8 +1,8 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,13 +24,12 @@ fun MovieCardInformation(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.caption.copy(
+            style = MaterialTheme.typography.titleSmall.copy(
                 fontWeight = FontWeight.Bold
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.Start),
-            color = MaterialTheme.colors.onSurface,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis
         )
@@ -48,14 +47,13 @@ fun MovieCardInformation(
 
         Text(
             text = description,
-            style = MaterialTheme.typography.body1.copy(
+            style = MaterialTheme.typography.bodySmall.copy(
                 fontStyle = FontStyle.Italic,
                 fontSize = 12.sp
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.Start),
-            color = MaterialTheme.colors.onSurface,
             maxLines = 6,
             overflow = TextOverflow.Ellipsis
         )
