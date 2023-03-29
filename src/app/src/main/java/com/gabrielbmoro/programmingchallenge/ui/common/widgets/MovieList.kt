@@ -25,7 +25,7 @@ fun MoviesList(
         derivedStateOf { lazyListState.firstVisibleItemIndex }
     }
 
-    if (firstVisibleItemIndex == movies.lastIndex - 2) {
+    if (firstVisibleItemIndex == movies.lastIndex - 4) {
         requestMoreCallback.invoke()
     }
 
@@ -45,7 +45,7 @@ fun MoviesList(
                     onClick = { onSelectMovie(movie) }
                 )
 
-                Box(modifier = Modifier.height(16.dp))
+                Box(modifier = Modifier.height(if(it == movies.lastIndex) 120.dp else 16.dp))
             },
             count = movies.size
         )
