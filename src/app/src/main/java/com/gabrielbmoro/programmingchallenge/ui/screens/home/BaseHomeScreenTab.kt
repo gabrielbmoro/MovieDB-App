@@ -1,6 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -41,29 +42,49 @@ fun BaseHomeScreenTab(
         mutableStateOf(false)
     }
 
+    val isNotScrolling by remember {
+        derivedStateOf { lazyColumnState.isScrollInProgress.not() }
+    }
+
     Scaffold(
         topBar = {
-            AppToolbar(
-                title = stringResource(id = R.string.app_name),
-                backEvent = null,
-                searchEvent = if (uiState.selectedMovieListType == MovieListType.FAVORITE)
-                    null
-                else {
-                    {
-                        showSearchAlert = !showSearchAlert
+            AnimatedVisibility(
+                visible = isNotScrolling,
+                enter = expandVertically(
+                    tween(delayMillis = 200, durationMillis = 500)
+                ),
+                exit = shrinkVertically()
+            ) {
+                AppToolbar(
+                    title = stringResource(id = R.string.app_name),
+                    backEvent = null,
+                    searchEvent = if (uiState.selectedMovieListType == MovieListType.FAVORITE)
+                        null
+                    else {
+                        {
+                            showSearchAlert = !showSearchAlert
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         bottomBar = {
-            MovieBottomNavigationBar(
-                navController,
-                scrollToTop = {
-                    coroutineScope.launch {
-                        lazyColumnState.scrollToItem(0, 0)
+            AnimatedVisibility(
+                visible = isNotScrolling,
+                enter = fadeIn(
+                    tween(delayMillis = 200, durationMillis = 500)
+                ),
+                exit = fadeOut()
+            ) {
+                MovieBottomNavigationBar(
+                    navController,
+                    scrollToTop = {
+                        coroutineScope.launch {
+                            lazyColumnState.scrollToItem(0, 0)
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         content = {
             Box(
@@ -85,7 +106,6 @@ fun BaseHomeScreenTab(
                             .padding(
                                 start = 16.dp,
                                 end = 16.dp,
-                                bottom = 70.dp
                             ),
                         lazyListState = lazyColumnState
                     )
@@ -109,7 +129,11 @@ fun BaseHomeScreenTab(
                                 showSearchAlert = false
                             },
                             onSearch = { searchBy ->
-                                viewModel.onSearchBy(searchBy)
+                                coroutineScope.launch {
+                                    viewModel.onSearchBy(searchBy)
+
+                                    lazyColumnState.scrollToItem(0, 0)
+                                }
                             },
                             searchType = searchType
                         )
