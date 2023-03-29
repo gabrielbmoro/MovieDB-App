@@ -42,14 +42,14 @@ fun BaseHomeScreenTab(
         mutableStateOf(false)
     }
 
-    val showHeader by remember {
+    val isNotScrolling by remember {
         derivedStateOf { lazyColumnState.isScrollInProgress.not() }
     }
 
     Scaffold(
         topBar = {
             AnimatedVisibility(
-                visible = showHeader,
+                visible = isNotScrolling,
                 enter = expandVertically(
                     tween(delayMillis = 200, durationMillis = 500)
                 ),
@@ -69,14 +69,22 @@ fun BaseHomeScreenTab(
             }
         },
         bottomBar = {
-            MovieBottomNavigationBar(
-                navController,
-                scrollToTop = {
-                    coroutineScope.launch {
-                        lazyColumnState.scrollToItem(0, 0)
+            AnimatedVisibility(
+                visible = isNotScrolling,
+                enter = fadeIn(
+                    tween(delayMillis = 200, durationMillis = 500)
+                ),
+                exit = fadeOut()
+            ) {
+                MovieBottomNavigationBar(
+                    navController,
+                    scrollToTop = {
+                        coroutineScope.launch {
+                            lazyColumnState.scrollToItem(0, 0)
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         content = {
             Box(
@@ -98,7 +106,6 @@ fun BaseHomeScreenTab(
                             .padding(
                                 start = 16.dp,
                                 end = 16.dp,
-                                bottom = 70.dp
                             ),
                         lazyListState = lazyColumnState
                     )
