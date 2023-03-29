@@ -129,7 +129,11 @@ fun BaseHomeScreenTab(
                                 showSearchAlert = false
                             },
                             onSearch = { searchBy ->
-                                viewModel.onSearchBy(searchBy)
+                                coroutineScope.launch {
+                                    viewModel.onSearchBy(searchBy)
+
+                                    lazyColumnState.scrollToItem(0, 0)
+                                }
                             },
                             searchType = searchType
                         )
