@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,8 +27,9 @@ fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> 
     )
 
     Card(
-        shape = CircleShape,
-        modifier = modifier.clickable(onClick = action),
+        modifier = modifier
+            .clip(CircleShape)
+            .clickable(onClick = action),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(
