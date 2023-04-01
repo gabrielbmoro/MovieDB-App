@@ -29,20 +29,7 @@ class GetFavoriteMoviesUseCaseTest {
     @Test
     fun `should be able to get all favorite movies`() {
         // arrange
-        val favoriteMovies = listOf(
-            Movie(
-                id = 12L,
-                2f,
-                "Dragão branco",
-                "https://dragaobranco.png",
-                "https://dragaobranco.png",
-                "Movie where Vandame shows how a good Karate fighter fights",
-                "2002-02-21",
-                language = "pt-br",
-                popularity = 2f,
-                isFavorite = false
-            )
-        )
+        val favoriteMovies = listOf(Movie.mockWhiteDragonNotFavorite())
 
         coEvery { repository.getFavoriteMovies() }.returns(DataOrException(favoriteMovies))
 

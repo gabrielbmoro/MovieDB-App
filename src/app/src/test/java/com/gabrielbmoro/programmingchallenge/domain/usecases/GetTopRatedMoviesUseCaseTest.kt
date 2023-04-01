@@ -1,7 +1,6 @@
 package com.gabrielbmoro.programmingchallenge.domain.usecases
 
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
 import io.mockk.coEvery
@@ -30,24 +29,7 @@ class GetTopRatedMoviesUseCaseTest {
     @Test
     fun `should be able to get all top rated movies`() {
         // arrange
-        val topRatedMovies = Page(
-            listOf(
-                Movie(
-                    id = 12L,
-                    2f,
-                    "Dragão branco",
-                    "https://dragaobranco.png",
-                    "https://dragaobranco.png",
-                    "Movie where Vandame shows how a good Karate fighter fights",
-                    "2002-02-21",
-                    language = "pt-br",
-                    popularity = 2f,
-                    isFavorite = false
-                )
-            ),
-            1,
-            1
-        )
+        val topRatedMovies = Page.mockPageWithWhiteDragonMovieOnly()
 
         coEvery { repository.getTopRatedMovies(1) }.returns(
             DataOrException(topRatedMovies)

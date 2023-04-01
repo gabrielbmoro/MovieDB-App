@@ -123,7 +123,7 @@ class HomeViewModelTest {
     fun `should be able to fetch my favorite movies - not empty list`() {
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(
             listOf(
-                mockedMovie()
+                Movie.mockChuckNorrisVsVandammeMovie()
             ), null
         )
         coEvery() { getFavoriteMoviesUseCase.invoke() }.returns(expected)
@@ -144,7 +144,7 @@ class HomeViewModelTest {
                 Truth.assertThat(
                     viewModel.uiState.value.movies
                 ).contains(
-                    mockedMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie()
                 )
             }
             job.await()
@@ -180,7 +180,7 @@ class HomeViewModelTest {
         val expected: DataOrException<Page, Exception> = DataOrException(
             Page(
                 listOf(
-                    mockedMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie()
                 ), 1, 1
             ), null
         )
@@ -202,7 +202,7 @@ class HomeViewModelTest {
                 Truth.assertThat(
                     viewModel.uiState.value.movies
                 ).contains(
-                    mockedMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie()
                 )
             }
             job.await()
@@ -238,7 +238,7 @@ class HomeViewModelTest {
         val expected: DataOrException<Page, Exception> = DataOrException(
             Page(
                 listOf(
-                    mockedMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie()
                 ), 1, 1
             ), null
         )
@@ -260,23 +260,10 @@ class HomeViewModelTest {
                 Truth.assertThat(
                     viewModel.uiState.value.movies
                 ).contains(
-                    mockedMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie()
                 )
             }
             job.await()
         }
     }
-
-    private fun mockedMovie() = Movie(
-        id = 12L,
-        votesAverage = 2f,
-        title = "Chuck Norris vs Vandamme",
-        backdropImageUrl = "",
-        posterImageUrl = "",
-        overview = "test",
-        releaseDate = "03-02-2023",
-        isFavorite = false,
-        language = "pt-br",
-        popularity = 1f
-    )
 }
