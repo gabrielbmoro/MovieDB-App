@@ -27,18 +27,7 @@ class FavoriteMovieUseCaseTest {
     @Test
     fun `should be able to favorite a movie`() {
         // arrange
-        val movie = Movie(
-            id = 12L,
-            2f,
-            "Dragão branco",
-            "https://dragaobranco.png",
-            "https://dragaobranco.png",
-            "Movie where Vandame shows how a good Karate fighter fights",
-            "2002-02-21",
-            language = "pt-br",
-            popularity = 2f,
-            isFavorite = false
-        )
+        val movie = Movie.mockWhiteDragonNotFavorite()
 
         coEvery { repository.doAsFavorite(movie) }.returns(DataOrException(true))
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(false))
@@ -55,18 +44,7 @@ class FavoriteMovieUseCaseTest {
     @Test
     fun `should be able to remove a movie from favorite list`() {
         // arrange
-        val movie = Movie(
-            id = 12L,
-            2f,
-            "Dragão branco",
-            "https://dragaobranco.png",
-            "https://dragaobranco.png",
-            "Movie where Vandame shows how a good Karate fighter fights",
-            "2002-02-21",
-            language = "pt-br",
-            popularity = 2f,
-            isFavorite = false
-        )
+        val movie = Movie.mockWhiteDragonNotFavorite()
 
         coEvery { repository.unFavorite(movie.title) }.returns(DataOrException(true))
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(true))
@@ -83,18 +61,7 @@ class FavoriteMovieUseCaseTest {
     @Test
     fun `should be able to avoid two favorite operations if movie is already a favorite one`() {
         // arrange
-        val movie = Movie(
-            id = 12L,
-            2f,
-            "Dragão branco",
-            "https://dragaobranco.png",
-            "https://dragaobranco.png",
-            "Movie where Vandame shows how a good Karate fighter fights",
-            "2002-02-21",
-            language = "pt-br",
-            popularity = 2f,
-            isFavorite = false
-        )
+        val movie = Movie.mockWhiteDragonNotFavorite()
 
         coEvery { repository.doAsFavorite(movie) }.returns(DataOrException(true))
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(true))
