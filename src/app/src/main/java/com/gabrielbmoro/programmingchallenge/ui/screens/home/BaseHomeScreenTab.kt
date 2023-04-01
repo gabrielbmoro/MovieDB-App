@@ -10,6 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,14 +46,14 @@ fun BaseHomeScreenTab(
         mutableStateOf(false)
     }
 
-    val isNotScrolling by remember {
-        derivedStateOf { lazyColumnState.isScrollInProgress.not() }
+    var areBarsVisible by remember {
+        mutableStateOf(true)
     }
 
     Scaffold(
         topBar = {
             AnimatedVisibility(
-                visible = isNotScrolling,
+                visible = areBarsVisible,
                 enter = expandVertically(
                     tween(delayMillis = 200, durationMillis = 500)
                 ),
@@ -70,7 +74,7 @@ fun BaseHomeScreenTab(
         },
         bottomBar = {
             AnimatedVisibility(
-                visible = isNotScrolling,
+                visible = areBarsVisible,
                 enter = fadeIn(
                     tween(delayMillis = 200, durationMillis = 500)
                 ),
@@ -91,6 +95,17 @@ fun BaseHomeScreenTab(
                 modifier = Modifier
                     .padding(top = it.calculateTopPadding())
                     .fillMaxSize()
+                    .nestedScroll(
+                        object : NestedScrollConnection {
+                            override fun onPreScroll(
+                                available: Offset,
+                                source: NestedScrollSource
+                            ): Offset {
+                                areBarsVisible = available.y > 0
+                                return super.onPreScroll(available, source)
+                            }
+                        },
+                    )
             ) {
                 if (movies != null) {
                     MoviesList(
