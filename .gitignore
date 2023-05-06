@@ -6,3 +6,6 @@ src/build
 src/gradle.properties
 
 *.hprof
+
+src/buildSrc/.gradle/
+src/buildSrc/build/
