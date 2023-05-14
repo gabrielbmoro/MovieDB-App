@@ -3,10 +3,13 @@ package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.ui.common.theme.ThemePreviews
 import kotlin.math.roundToInt
 
 private const val STARS_AVAILABLE = 5
@@ -31,7 +34,7 @@ private fun getDrawableAccordingToStarPosition(votes: Float, position: Int): Int
 fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
     val numberOfStars = (votes / AVERAGE_TOTAL) * STARS_AVAILABLE
     if (votes != INVALID_NUMBER) {
-        Row(modifier = modifier) {
+        Row(modifier = modifier.heightIn(max = 56.dp)) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(
@@ -74,4 +77,10 @@ fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+@ThemePreviews
+@Composable
+fun FiveStarsPreview() {
+    FiveStars(votes = 5f)
 }

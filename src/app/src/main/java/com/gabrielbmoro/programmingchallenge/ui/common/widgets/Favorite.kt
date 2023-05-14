@@ -3,6 +3,7 @@ package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -13,7 +14,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.ui.common.theme.ThemePreviews
 
 @Composable
 fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> Unit)) {
@@ -28,6 +31,7 @@ fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> 
 
     Card(
         modifier = modifier
+            .size(56.dp)
             .clip(CircleShape)
             .clickable(onClick = action),
     ) {
@@ -40,4 +44,10 @@ fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> 
             )
         }
     }
+}
+
+@ThemePreviews
+@Composable
+fun FavoritePreview() {
+    Favorite(isFavorite = false) { }
 }

@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.ui.common.theme.MovieDBAppTheme
+import com.gabrielbmoro.programmingchallenge.ui.common.theme.ThemePreviews
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +51,7 @@ fun AppToolbar(
     )
 }
 
-@Preview
+@ThemePreviews
 @Composable
 fun AppToolbarPreview() {
     MovieDBAppTheme {
