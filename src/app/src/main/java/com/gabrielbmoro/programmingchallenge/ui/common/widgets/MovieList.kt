@@ -1,7 +1,9 @@
 package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -31,7 +33,9 @@ fun MoviesList(
 
     LazyColumn(
         state = lazyListState,
-        modifier = modifier.background(MaterialTheme.colorScheme.background)
+        modifier = modifier.background(MaterialTheme.colorScheme.background),
+        contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(
             itemContent = {
@@ -44,8 +48,6 @@ fun MoviesList(
                     description = movie.overview,
                     onClick = { onSelectMovie(movie) }
                 )
-
-                Box(modifier = Modifier.height(if(it == movies.lastIndex) 120.dp else 16.dp))
             },
             count = movies.size
         )
