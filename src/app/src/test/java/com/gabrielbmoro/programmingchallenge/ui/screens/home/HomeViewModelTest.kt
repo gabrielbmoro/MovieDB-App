@@ -99,7 +99,7 @@ class HomeViewModelTest {
     @Test
     fun `should be able to fetch my favorite movies - empty list`() {
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
-        coEvery() { getFavoriteMoviesUseCase.invoke() }.returns(expected)
+        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
         // arrange
         val viewModel = HomeViewModel(
@@ -126,7 +126,7 @@ class HomeViewModelTest {
                 Movie.mockChuckNorrisVsVandammeMovie()
             ), null
         )
-        coEvery() { getFavoriteMoviesUseCase.invoke() }.returns(expected)
+        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
         // arrange
         val viewModel = HomeViewModel(

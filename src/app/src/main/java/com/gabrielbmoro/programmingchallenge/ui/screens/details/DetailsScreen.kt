@@ -27,7 +27,6 @@ import com.gabrielbmoro.programmingchallenge.ui.common.theme.ThemePreviews
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieDetailIndicator
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DetailsScreenMain(
     atTop: Boolean,

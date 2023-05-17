@@ -28,7 +28,7 @@ fun MovieCard(
             .clickable(onClick = onClick)
             .height(dimensionResource(id = R.dimen.card_view_image_height))
     ) {
-        Row() {
+        Row {
             MovieImage(
                 imageUrl = imageUrl?.let { "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}$imageUrl" },
                 contentScale = ContentScale.FillHeight,

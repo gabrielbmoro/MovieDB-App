@@ -16,11 +16,3 @@ import androidx.compose.ui.tooling.preview.Preview
 )
 annotation class ThemePreviews
 
-@Composable
-fun ThemePreview(
-    content: @Composable () -> Unit
-) {
-    MovieDBAppTheme {
-        content()
-    }
-}

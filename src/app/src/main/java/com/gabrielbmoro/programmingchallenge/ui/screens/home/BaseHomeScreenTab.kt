@@ -25,7 +25,6 @@ import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseHomeScreenTab(
     navController: NavController,
