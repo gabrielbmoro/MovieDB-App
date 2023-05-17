@@ -1,5 +1,5 @@
 @file:Suppress("UnstableApiUsage")
-
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -9,15 +9,15 @@ plugins {
 }
 
 android {
-    compileSdk = ConfigData.compileSdkVersion
+    compileSdk = 33
 
     defaultConfig {
-        applicationId = ConfigData.applicationId
-        minSdk = ConfigData.minSdkVersion
-        targetSdk = ConfigData.targetSdkVersion
+        applicationId = "com.gabrielbmoro.programmingchallenge"
+        minSdk = 22
+        targetSdk = 33
 
-        versionCode = ConfigData.versionCode
-        versionName = ConfigData.versionName
+        versionCode = 23
+        versionName = "1.5.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -48,7 +48,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
     testOptions {
@@ -60,61 +60,61 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlinVersion}")
+    implementation(libs.kotlin)
 
-    implementation("androidx.appcompat:appcompat:${Versions.appcompatVersion}")
+    implementation(libs.appcompat)
 
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshVersion}")
+    implementation(libs.swipe.refresh.layout)
 
-    implementation("androidx.cardview:cardview:${Versions.cardViewVersion}")
+    implementation(libs.cardview)
 
-    kapt("androidx.room:room-compiler:${Versions.roomVersion}")
-    implementation("androidx.room:room-ktx:${Versions.roomVersion}")
-    implementation("androidx.room:room-runtime:${Versions.roomVersion}")
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}")
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
 
-    implementation("androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtensionsVersion}")
+    implementation(libs.lifecycle.extensions)
 
-    implementation("androidx.preference:preference-ktx:${Versions.preferenceVersion}")
+    implementation(libs.preferences.ktx)
 
-    implementation("com.jakewharton.timber:timber:${Versions.timberVersion}")
+    implementation(libs.timber)
 
-    implementation("com.google.code.gson:gson:${Versions.gsonVersion}")
+    implementation(libs.gson)
 
-    implementation("com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}")
-    implementation("com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.json)
 
     // Dagger - Hilt
-    implementation("com.google.dagger:hilt-android:${Versions.hiltVersion}")
-    kapt("com.google.dagger:hilt-compiler:${Versions.hiltVersion}")
-    kapt("com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}")
-    implementation("androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.navigation.compose)
 
 
-    testImplementation("junit:junit:${Versions.junitVersion}")
+    testImplementation(libs.junit)
 
-    testImplementation("androidx.arch.core:core-common:${Versions.archTestCoreVersion}")
-    testImplementation("androidx.arch.core:core-runtime:${Versions.archTestCoreVersion}")
-    testImplementation("androidx.arch.core:core-testing:${Versions.archTestCoreVersion}")
+    testImplementation(libs.arc.core.common)
+    testImplementation(libs.arc.core.runtime)
+    testImplementation(libs.arc.core.testing)
 
-    testImplementation("com.google.truth:truth:${Versions.truthVersion}")
-    testImplementation("androidx.test:core:${Versions.testCoreVersion}")
-    testImplementation("io.mockk:mockk:${Versions.mockKVersion}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesVersion}")
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:${Versions.composeBomVersion}"))
+    implementation(platform(libs.compose.bom))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.activity:activity-compose")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    implementation("androidx.compose.material3:material3:${Versions.composeMaterial3Version}")
+    implementation(libs.compose.material.get3())
+    implementation(libs.navigation.compose)
 
     // Coil
-    implementation("io.coil-kt:coil-compose:${Versions.coilVersion}")
+    implementation(libs.coil)
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:${Versions.navComposeIntegrationVersion}")
+    implementation(libs.navigation.compose)
 }
