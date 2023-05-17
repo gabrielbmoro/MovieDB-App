@@ -64,5 +64,13 @@ test_core = { group= "androidx.test", name= "core", version.ref = "test_core" }
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle"}
 kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
+[bundles]
+room = ["room_ktx", "room_runtime"]
+hilt = ["hilt_android", "hilt_navigation_compose"]
+lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmodel_ktx"]
+test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
+compose_extras = ["compose_material_3", "navigation_compose"]
+retrofit = ["retrofit", "retrofit_converter_json", "gson"]
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
