@@ -3,7 +3,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
 }
@@ -68,7 +68,7 @@ dependencies {
 
     implementation(libs.cardview)
 
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
     implementation(libs.bundles.room)
 
     implementation(libs.bundles.lifecycle)
@@ -80,8 +80,8 @@ dependencies {
     implementation(libs.bundles.retrofit)
 
     // Dagger - Hilt
-    kapt(libs.hilt.compiler)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.bundles.hilt)
 
 
