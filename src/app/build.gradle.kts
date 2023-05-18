@@ -3,7 +3,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
 }
@@ -17,7 +17,7 @@ android {
         targetSdk = 33
 
         versionCode = 23
-        versionName = "1.5.1"
+        versionName = "1.5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -29,8 +29,8 @@ android {
     * - Reference: https://stackoverflow.com/questions/49891730/invoke-customs-are-only-supported-starting-with-android-0-min-api-26
     */
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildTypes {
@@ -68,40 +68,24 @@ dependencies {
 
     implementation(libs.cardview)
 
-    kapt(libs.room.compiler)
-    implementation(libs.room.ktx)
-    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.bundles.room)
 
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.lifecycle.livedata.ktx)
-
-    implementation(libs.lifecycle.extensions)
+    implementation(libs.bundles.lifecycle)
 
     implementation(libs.preferences.ktx)
 
     implementation(libs.timber)
 
-    implementation(libs.gson)
-
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.json)
+    implementation(libs.bundles.retrofit)
 
     // Dagger - Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    kapt(libs.hilt.android.compiler)
-    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.bundles.hilt)
 
 
-    testImplementation(libs.junit)
-
-    testImplementation(libs.arc.core.common)
-    testImplementation(libs.arc.core.runtime)
-    testImplementation(libs.arc.core.testing)
-
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.bundles.test)
 
     // Compose
     implementation(platform(libs.compose.bom))
@@ -109,8 +93,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.activity:activity-compose")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    implementation(libs.compose.material.get3())
-    implementation(libs.navigation.compose)
+    implementation(libs.bundles.compose.extras)
 
     // Coil
     implementation(libs.coil)
