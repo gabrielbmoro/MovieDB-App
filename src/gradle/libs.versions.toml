@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.8.10"
-hilt = "2.44"
+hilt = "2.46.1"
 hilt_navigation_compose = "1.0.0"
 compose_bom = "2023.05.01"
 compose_compiler = "1.4.3"
