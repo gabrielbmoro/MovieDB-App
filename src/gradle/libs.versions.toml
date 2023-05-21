@@ -38,6 +38,7 @@ room_ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 lifecycle_viewmodel_ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle_livedata_ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+lifecycle_compose_runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle"}
 lifecycle_extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycle_extensions" }
 preferences_ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
@@ -67,7 +68,7 @@ kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 [bundles]
 room = ["room_ktx", "room_runtime"]
 hilt = ["hilt_android", "hilt_navigation_compose"]
-lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmodel_ktx"]
+lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose"]
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
