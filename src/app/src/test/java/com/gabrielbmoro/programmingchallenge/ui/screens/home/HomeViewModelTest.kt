@@ -52,6 +52,8 @@ class HomeViewModelTest {
             // act
             viewModel.setup(MovieListType.FAVORITE)
 
+            delay(500L)
+
             // assert
             Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
                 .isEqualTo(MovieListType.FAVORITE)
@@ -90,6 +92,8 @@ class HomeViewModelTest {
             // act
             viewModel.setup(MovieListType.POPULAR)
 
+            delay(500L)
+
             // assert
             Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
                 .isEqualTo(MovieListType.POPULAR)
@@ -111,11 +115,11 @@ class HomeViewModelTest {
         runTest {
             // act
             viewModel.setup(MovieListType.FAVORITE)
+
+            delay(500L)
+
             // assert
-            val job = async {
-                Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data)
-            }
-            job.await()
+            Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data)
         }
     }
 
@@ -139,15 +143,14 @@ class HomeViewModelTest {
             // act
             viewModel.setup(MovieListType.FAVORITE)
 
+            delay(500L)
+
             // assert
-            val job = async {
-                Truth.assertThat(
-                    viewModel.uiState.value.movies
-                ).contains(
-                    Movie.mockChuckNorrisVsVandammeMovie()
-                )
-            }
-            job.await()
+            Truth.assertThat(
+                viewModel.uiState.value.movies
+            ).contains(
+                Movie.mockChuckNorrisVsVandammeMovie()
+            )
         }
     }
 
@@ -167,11 +170,11 @@ class HomeViewModelTest {
         runTest {
             // act
             viewModel.setup(MovieListType.TOP_RATED)
+
+            delay(500L)
+
             // assert
-            val job = async {
-                Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
-            }
-            job.await()
+            Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
         }
     }
 
@@ -197,15 +200,14 @@ class HomeViewModelTest {
             // act
             viewModel.setup(MovieListType.TOP_RATED)
 
+            delay(500L)
+
             // assert
-            val job = async {
-                Truth.assertThat(
-                    viewModel.uiState.value.movies
-                ).contains(
-                    Movie.mockChuckNorrisVsVandammeMovie()
-                )
-            }
-            job.await()
+            Truth.assertThat(
+                viewModel.uiState.value.movies
+            ).contains(
+                Movie.mockChuckNorrisVsVandammeMovie()
+            )
         }
     }
 
@@ -225,11 +227,11 @@ class HomeViewModelTest {
         runTest {
             // act
             viewModel.setup(MovieListType.POPULAR)
+
+            delay(500L)
+
             // assert
-            val job = async {
-                Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
-            }
-            job.await()
+            Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
         }
     }
 
@@ -255,15 +257,14 @@ class HomeViewModelTest {
             // act
             viewModel.setup(MovieListType.POPULAR)
 
+            delay(500L)
+
             // assert
-            val job = async {
-                Truth.assertThat(
-                    viewModel.uiState.value.movies
-                ).contains(
-                    Movie.mockChuckNorrisVsVandammeMovie()
-                )
-            }
-            job.await()
+            Truth.assertThat(
+                viewModel.uiState.value.movies
+            ).contains(
+                Movie.mockChuckNorrisVsVandammeMovie()
+            )
         }
     }
 }
