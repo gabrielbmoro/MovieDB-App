@@ -1,8 +1,5 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
@@ -14,6 +11,10 @@ import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUse
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,19 +25,25 @@ class HomeViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    private val _uiState: MutableState<HomeUIState> = mutableStateOf(
+    private val _uiState = MutableStateFlow(
         HomeUIState(
             selectedMovieListType = MovieListType.TOP_RATED,
         )
     )
-    val uiState: State<HomeUIState> = _uiState
+    val uiState = _uiState.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        _uiState.value
+    )
 
     private var moviesPaginationController: PaginationController? = null
 
     suspend fun setup(movieListType: MovieListType) {
-        this._uiState.value = _uiState.value.copy(
-            selectedMovieListType = movieListType
-        )
+        this._uiState.update {
+            it.copy(
+                selectedMovieListType = movieListType
+            )
+        }
 
         when (movieListType) {
             MovieListType.FAVORITE -> {
@@ -47,6 +54,7 @@ class HomeViewModel @Inject constructor(
                     }
                 )
             }
+
             else -> {
                 moviesPaginationController = PaginationController.build { pageNumber ->
                     runServerCall(
@@ -66,7 +74,7 @@ class HomeViewModel @Inject constructor(
             onLoading()
             serverCall()
         }.invokeOnCompletion {
-            onLoaded()
+            loaded()
         }
     }
 
@@ -80,9 +88,11 @@ class HomeViewModel @Inject constructor(
                 MovieListType.TOP_RATED -> {
                     getTopRatedMoviesUseCase(pageNumber)
                 }
+
                 MovieListType.POPULAR -> {
                     getPopularMoviesUseCase(pageNumber)
                 }
+
                 else -> {
                     null
                 }
@@ -103,21 +113,27 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onLoading() {
-        _uiState.value = _uiState.value.copy(
-            isLoading = true
-        )
+        _uiState.update {
+            it.copy(
+                isLoading = true
+            )
+        }
     }
 
-    private fun onLoaded() {
-        _uiState.value = _uiState.value.copy(
-            isLoading = false
-        )
+    private fun loaded() {
+        _uiState.update {
+            it.copy(
+                isLoading = false
+            )
+        }
     }
 
     private fun onResult(movies: List<Movie>) {
-        this._uiState.value = this._uiState.value.copy(
-            movies = movies
-        )
+        this._uiState.update {
+            it.copy(
+                movies = movies
+            )
+        }
     }
 
     fun requestMore() {
@@ -125,10 +141,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSearchBy(searchType: SearchType) {
-        _uiState.value = _uiState.value.copy(
-            isLoading = true,
-            movies = null
-        )
+        _uiState.update {
+            it.copy(
+                isLoading = true,
+                movies = null
+            )
+        }
         moviesPaginationController = null
 
         viewModelScope.launch {
@@ -141,7 +159,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun currentSearchType() = when(_uiState.value.selectedMovieListType) {
+    fun currentSearchType() = when (_uiState.value.selectedMovieListType) {
         MovieListType.TOP_RATED -> SearchType.TOP_RATED
         MovieListType.POPULAR -> SearchType.POPULAR
         else -> null

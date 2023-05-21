@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieDetailDescription
@@ -119,13 +119,13 @@ fun DetailsScreen(
     viewModel: DetailsScreenViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    val uiState = remember { viewModel.uiState }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val atTop = scrollState.value == 0
 
     DetailsScreenMain(
         atTop = atTop,
-        uiState = uiState.value,
+        uiState = uiState,
         scrollState = scrollState,
         onFavoriteMovie = {
             viewModel.isToFavoriteOrUnFavorite(it, movie)
