@@ -17,6 +17,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
@@ -31,7 +32,7 @@ fun BaseHomeScreenTab(
     viewModel: HomeViewModel = hiltViewModel(),
     movieType: MovieListType
 ) {
-    val uiState by remember { viewModel.uiState }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
     val lazyColumnState = rememberLazyListState()
     val movies by remember {
