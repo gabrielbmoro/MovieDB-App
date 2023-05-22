@@ -5,6 +5,7 @@ import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.AndroidResourcesProvider
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
@@ -98,15 +99,16 @@ object AppModule {
     }
 
     private val viewModelsModule = module {
-        viewModel {
+        viewModel { (movieListType: MovieListType) ->
             HomeViewModel(
+                movieListType = movieListType,
                 getFavoriteMoviesUseCase = get(),
                 getTopRatedMoviesUseCase = get(),
                 getPopularMoviesUseCase = get()
             )
         }
 
-        viewModel {(movie: Movie) ->
+        viewModel { (movie: Movie) ->
             DetailsScreenViewModel(
                 movie = movie,
                 favoriteMovieUseCase = get(),

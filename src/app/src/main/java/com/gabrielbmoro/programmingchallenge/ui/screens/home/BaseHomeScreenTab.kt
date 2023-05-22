@@ -23,14 +23,12 @@ import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BaseHomeScreenTab(
     navController: NavController,
-    viewModel: HomeViewModel = koinViewModel(),
-    movieType: MovieListType
+    viewModel: HomeViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
@@ -157,8 +155,4 @@ fun BaseHomeScreenTab(
             }
         }
     )
-
-    LaunchedEffect(key1 = Unit, block = {
-        viewModel.setup(movieType)
-    })
 }
