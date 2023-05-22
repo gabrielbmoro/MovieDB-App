@@ -10,16 +10,14 @@ import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUs
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.SearchType
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel(
+    private var movieListType: MovieListType,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
@@ -27,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(
         HomeUIState(
-            selectedMovieListType = MovieListType.TOP_RATED,
+            selectedMovieListType = movieListType,
         )
     )
     val uiState = _uiState.stateIn(
@@ -38,7 +36,11 @@ class HomeViewModel @Inject constructor(
 
     private var moviesPaginationController: PaginationController? = null
 
-    suspend fun setup(movieListType: MovieListType) {
+    init {
+        loadData()
+    }
+
+    private fun loadData() {
         this._uiState.update {
             it.copy(
                 selectedMovieListType = movieListType
@@ -149,14 +151,11 @@ class HomeViewModel @Inject constructor(
         }
         moviesPaginationController = null
 
-        viewModelScope.launch {
-            setup(
-                movieListType = when (searchType) {
-                    SearchType.TOP_RATED -> MovieListType.TOP_RATED
-                    SearchType.POPULAR -> MovieListType.POPULAR
-                }
-            )
+        this.movieListType = when (searchType) {
+            SearchType.TOP_RATED -> MovieListType.TOP_RATED
+            SearchType.POPULAR -> MovieListType.POPULAR
         }
+        loadData()
     }
 
     fun currentSearchType() = when (_uiState.value.selectedMovieListType) {

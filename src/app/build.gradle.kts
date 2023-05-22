@@ -5,7 +5,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
 }
 
@@ -81,9 +80,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
 
     // Dagger - Hilt
-    kapt(libs.hilt.compiler)
-    kapt(libs.hilt.android.compiler)
-    implementation(libs.bundles.hilt)
+    implementation(libs.bundles.koin)
 
 
     testImplementation(libs.bundles.test)

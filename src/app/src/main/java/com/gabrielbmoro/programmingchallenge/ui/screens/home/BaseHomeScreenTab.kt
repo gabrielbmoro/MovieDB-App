@@ -16,7 +16,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
@@ -29,8 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun BaseHomeScreenTab(
     navController: NavController,
-    viewModel: HomeViewModel = hiltViewModel(),
-    movieType: MovieListType
+    viewModel: HomeViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
@@ -157,8 +155,4 @@ fun BaseHomeScreenTab(
             }
         }
     )
-
-    LaunchedEffect(key1 = Unit, block = {
-        viewModel.setup(movieType)
-    })
 }

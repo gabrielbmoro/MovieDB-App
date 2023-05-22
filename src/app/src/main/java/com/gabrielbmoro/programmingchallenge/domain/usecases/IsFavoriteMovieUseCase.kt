@@ -2,9 +2,8 @@ package com.gabrielbmoro.programmingchallenge.domain.usecases
 
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
-import javax.inject.Inject
 
-class IsFavoriteMovieUseCase @Inject constructor(
+class IsFavoriteMovieUseCase constructor(
     private val repository: MoviesRepository
 ) {
 

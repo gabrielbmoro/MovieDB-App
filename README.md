@@ -76,4 +76,4 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 
 ### Tech Stack Summary
 
-- Compose, Dagger Hilt, Coroutines, Retrofit, Room, Mockk.
+- Compose, Koin, Coroutines, Retrofit, Room, Mockk, Gradle Catalogs.

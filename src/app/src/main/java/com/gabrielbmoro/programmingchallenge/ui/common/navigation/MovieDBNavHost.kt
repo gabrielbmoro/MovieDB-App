@@ -9,7 +9,11 @@ import com.gabrielbmoro.programmingchallenge.ui.common.parcelableOf
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
+import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.BaseHomeScreenTab
+import com.gabrielbmoro.programmingchallenge.ui.screens.home.HomeViewModel
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.ParametersHolder
 
 @Composable
 fun MovieDBNavHost(
@@ -23,11 +27,23 @@ fun MovieDBNavHost(
         composable(
             route = NavigationItem.Movies.route
         ) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.TOP_RATED)
+            val viewModel = koinViewModel<HomeViewModel>(
+                parameters = {
+                    ParametersHolder(mutableListOf(MovieListType.TOP_RATED))
+                }
+            )
+            BaseHomeScreenTab(navController, viewModel)
         }
+
         composable(route = NavigationItem.FavoriteMovies.route) {
-            BaseHomeScreenTab(navController, movieType = MovieListType.FAVORITE)
+            val viewModel = koinViewModel<HomeViewModel>(
+                parameters = {
+                    ParametersHolder(mutableListOf(MovieListType.FAVORITE))
+                }
+            )
+            BaseHomeScreenTab(navController, viewModel)
         }
+
         composable(
             route = "${ScreenRoutesBuilder.DETAILED_MOVIE_ROUTE}/{${ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY}}",
             arguments = listOf(
@@ -41,7 +57,14 @@ fun MovieDBNavHost(
                 Movie::class.java
             ) ?: throw IllegalArgumentException("Type should be movie")
 
-            DetailsScreen(navController, movie)
+            val viewModel = koinViewModel<DetailsScreenViewModel>(parameters = {
+                ParametersHolder(
+                    mutableListOf(
+                        movie
+                    )
+                )
+            })
+            DetailsScreen(navController, viewModel)
         }
     }
 }

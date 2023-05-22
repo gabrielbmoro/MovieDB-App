@@ -16,13 +16,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieDetailDescription
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieImage
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.ui.common.theme.ThemePreviews
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieDetailIndicator
@@ -115,8 +113,7 @@ private fun DetailsScreenMain(
 @Composable
 fun DetailsScreen(
     navController: NavController,
-    movie: Movie,
-    viewModel: DetailsScreenViewModel = hiltViewModel()
+    viewModel: DetailsScreenViewModel
 ) {
     val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -128,17 +125,10 @@ fun DetailsScreen(
         uiState = uiState,
         scrollState = scrollState,
         onFavoriteMovie = {
-            viewModel.isToFavoriteOrUnFavorite(it, movie)
+            viewModel.isToFavoriteOrUnFavorite(it)
         },
         onBackEvent = {
             navController.navigateUp()
-        }
-    )
-
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            viewModel.setup(movie)
         }
     )
 }

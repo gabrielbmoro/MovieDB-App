@@ -6,16 +6,14 @@ import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.IsFavoriteMovieUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class DetailsScreenViewModel @Inject constructor(
+class DetailsScreenViewModel constructor(
+    private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
 ) : ViewModel() {
@@ -23,7 +21,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(DetailsUIState.empty())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    suspend fun setup(movie: Movie) {
+    init {
         _uiState.update {
             it.copy(
                 imageUrl = movie.backdropImageUrl.let {
@@ -38,7 +36,9 @@ class DetailsScreenViewModel @Inject constructor(
             )
         }
 
-        checkIfMovieIsFavorite(movie.title)
+        viewModelScope.launch {
+            checkIfMovieIsFavorite(movie.title)
+        }
     }
 
     private suspend fun checkIfMovieIsFavorite(movieTitle: String) {
@@ -52,7 +52,7 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean, movie: Movie) {
+    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
         viewModelScope.launch {
             val response = favoriteMovieUseCase(movie, isToFavorite)
 
