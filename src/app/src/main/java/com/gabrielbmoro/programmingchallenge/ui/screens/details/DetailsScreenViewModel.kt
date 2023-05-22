@@ -6,16 +6,13 @@ import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.IsFavoriteMovieUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class DetailsScreenViewModel @Inject constructor(
+class DetailsScreenViewModel constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
 ) : ViewModel() {

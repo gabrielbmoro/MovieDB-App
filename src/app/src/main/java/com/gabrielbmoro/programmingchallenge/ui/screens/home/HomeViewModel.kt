@@ -10,16 +10,13 @@ import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUs
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.SearchType
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase

@@ -16,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
@@ -26,6 +25,7 @@ import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.ui.common.theme.ThemePreviews
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.MovieDetailIndicator
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 private fun DetailsScreenMain(
@@ -116,7 +116,7 @@ private fun DetailsScreenMain(
 fun DetailsScreen(
     navController: NavController,
     movie: Movie,
-    viewModel: DetailsScreenViewModel = hiltViewModel()
+    viewModel: DetailsScreenViewModel = koinViewModel()
 ) {
     val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

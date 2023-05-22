@@ -3,11 +3,8 @@ package com.gabrielbmoro.programmingchallenge.repository.mappers
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.MovieResponse
 import com.gabrielbmoro.programmingchallenge.repository.room.dto.FavoriteMovieDTO
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class MovieMapper @Inject constructor() {
+class MovieMapper constructor() {
 
     fun mapResponse(movieResponse: MovieResponse): Movie {
         return Movie(

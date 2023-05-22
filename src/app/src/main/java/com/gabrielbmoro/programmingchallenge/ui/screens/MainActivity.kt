@@ -1,17 +1,15 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.programmingchallenge.ui.common.theme.MovieDBAppTheme
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.MovieDBNavHost
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

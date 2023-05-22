@@ -5,9 +5,8 @@ import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-open class FavoriteMovieUseCase @Inject constructor(
+open class FavoriteMovieUseCase constructor(
     private val repository: MoviesRepository,
 ) {
 
