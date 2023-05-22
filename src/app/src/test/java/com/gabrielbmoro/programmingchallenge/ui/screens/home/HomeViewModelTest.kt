@@ -41,63 +41,50 @@ class HomeViewModelTest {
 
     @Test
     fun `should be able to select favorite movies`() {
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.FAVORITE,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        runTest {
-            // act
-            viewModel.setup(MovieListType.FAVORITE)
+        // assert
+        Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
+            .isEqualTo(MovieListType.FAVORITE)
 
-            delay(500L)
-
-            // assert
-            Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
-                .isEqualTo(MovieListType.FAVORITE)
-        }
     }
 
     @Test
     fun `should be able to select top rated movies`() {
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.TOP_RATED,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        runTest {
-            // act
-            viewModel.setup(MovieListType.TOP_RATED)
+        // assert
+        Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
+            .isEqualTo(MovieListType.TOP_RATED)
 
-            // assert
-            Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
-                .isEqualTo(MovieListType.TOP_RATED)
-        }
     }
 
     @Test
     fun `should be able to select popular movies`() {
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.POPULAR,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
-        runTest {
-            // act
-            viewModel.setup(MovieListType.POPULAR)
 
-            delay(500L)
-
-            // assert
-            Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
-                .isEqualTo(MovieListType.POPULAR)
-        }
+        // assert
+        Truth.assertThat(viewModel.uiState.value.selectedMovieListType)
+            .isEqualTo(MovieListType.POPULAR)
     }
 
     @Test
@@ -105,23 +92,22 @@ class HomeViewModelTest {
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
         coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.FAVORITE,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
         runTest {
-            // act
-            viewModel.setup(MovieListType.FAVORITE)
-
             delay(500L)
 
             // assert
             Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data)
         }
     }
+
 
     @Test
     fun `should be able to fetch my favorite movies - not empty list`() {
@@ -132,17 +118,15 @@ class HomeViewModelTest {
         )
         coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.FAVORITE,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
         runTest {
-            // act
-            viewModel.setup(MovieListType.FAVORITE)
-
             delay(500L)
 
             // assert
@@ -154,29 +138,29 @@ class HomeViewModelTest {
         }
     }
 
+
     @Test
     fun `should be able to fetch top rated movies - empty list`() {
         val expected: DataOrException<Page, Exception> =
             DataOrException(Page(emptyList(), 1, 1), null)
         coEvery { getTopRatedMoviesUseCase.invoke(1) }.returns(expected)
 
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.TOP_RATED,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
         runTest {
-            // act
-            viewModel.setup(MovieListType.TOP_RATED)
-
             delay(500L)
 
             // assert
             Truth.assertThat(viewModel.uiState.value.movies).isEqualTo(expected.data?.movies)
         }
     }
+
 
     @Test
     fun `should be able to fetch top rated movies - not empty list`() {
@@ -189,17 +173,15 @@ class HomeViewModelTest {
         )
         coEvery { getTopRatedMoviesUseCase.invoke(1) }.returns(expected)
 
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.TOP_RATED,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
         runTest {
-            // act
-            viewModel.setup(MovieListType.TOP_RATED)
-
             delay(500L)
 
             // assert
@@ -217,17 +199,15 @@ class HomeViewModelTest {
             DataOrException(Page(emptyList(), 1, 1), null)
         coEvery { getPopularMoviesUseCase.invoke(1) }.returns(expected)
 
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.POPULAR,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
         runTest {
-            // act
-            viewModel.setup(MovieListType.POPULAR)
-
             delay(500L)
 
             // assert
@@ -246,17 +226,15 @@ class HomeViewModelTest {
         )
         coEvery { getPopularMoviesUseCase.invoke(1) }.returns(expected)
 
-        // arrange
+        // arrange, act
         val viewModel = HomeViewModel(
+            MovieListType.POPULAR,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
             getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
         )
 
         runTest {
-            // act
-            viewModel.setup(MovieListType.POPULAR)
-
             delay(500L)
 
             // assert
