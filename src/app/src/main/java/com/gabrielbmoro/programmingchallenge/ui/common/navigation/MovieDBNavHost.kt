@@ -9,7 +9,10 @@ import com.gabrielbmoro.programmingchallenge.ui.common.parcelableOf
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreen
+import com.gabrielbmoro.programmingchallenge.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.programmingchallenge.ui.screens.home.BaseHomeScreenTab
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.ParametersHolder
 
 @Composable
 fun MovieDBNavHost(
@@ -41,7 +44,14 @@ fun MovieDBNavHost(
                 Movie::class.java
             ) ?: throw IllegalArgumentException("Type should be movie")
 
-            DetailsScreen(navController, movie)
+            val viewModel = koinViewModel<DetailsScreenViewModel>(parameters = {
+                ParametersHolder(
+                    mutableListOf(
+                        movie
+                    )
+                )
+            })
+            DetailsScreen(navController, viewModel)
         }
     }
 }

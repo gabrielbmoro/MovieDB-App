@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailsScreenViewModel constructor(
+    private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
 ) : ViewModel() {
@@ -20,7 +21,7 @@ class DetailsScreenViewModel constructor(
     private val _uiState = MutableStateFlow(DetailsUIState.empty())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    suspend fun setup(movie: Movie) {
+    init {
         _uiState.update {
             it.copy(
                 imageUrl = movie.backdropImageUrl.let {
@@ -35,7 +36,9 @@ class DetailsScreenViewModel constructor(
             )
         }
 
-        checkIfMovieIsFavorite(movie.title)
+        viewModelScope.launch {
+            checkIfMovieIsFavorite(movie.title)
+        }
     }
 
     private suspend fun checkIfMovieIsFavorite(movieTitle: String) {
@@ -49,7 +52,7 @@ class DetailsScreenViewModel constructor(
         }
     }
 
-    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean, movie: Movie) {
+    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
         viewModelScope.launch {
             val response = favoriteMovieUseCase(movie, isToFavorite)
 

@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.AndroidResourcesProvider
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.ResourcesProvider
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
@@ -22,6 +23,8 @@ import com.gabrielbmoro.programmingchallenge.ui.screens.home.HomeViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -103,8 +106,9 @@ object AppModule {
             )
         }
 
-        viewModel {
+        viewModel {(movie: Movie) ->
             DetailsScreenViewModel(
+                movie = movie,
                 favoriteMovieUseCase = get(),
                 isFavoriteMovieUseCase = get()
             )
