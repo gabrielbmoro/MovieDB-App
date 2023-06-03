@@ -1,15 +1,14 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import androidx.lifecycle.*
-import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
+import androidx.paging.PagingData
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
-import com.gabrielbmoro.programmingchallenge.ui.common.PaginationController
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
-import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.SearchType
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -23,9 +22,9 @@ class HomeViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(
-        HomeUIState(
-            selectedMovieListType = movieListType,
+    private val _uiState = MutableStateFlow<HomeUIState>(
+        HomeUIState.MoviesTabUIState(
+            selectedMovieType = MovieListType.TOP_RATED
         )
     )
     val uiState = _uiState.stateIn(
@@ -34,133 +33,66 @@ class HomeViewModel(
         _uiState.value
     )
 
-    private var moviesPaginationController: PaginationController? = null
-
     init {
-        loadData()
+        if (movieListType == MovieListType.FAVORITE) {
+            loadFavoriteMovies()
+        }
     }
 
-    private fun loadData() {
-        this._uiState.update {
-            it.copy(
-                selectedMovieListType = movieListType
-            )
-        }
-
-        when (movieListType) {
-            MovieListType.FAVORITE -> {
-                runServerCall(
-                    serverCall = {
-                        val result = fetchFavoriteMovies()
-                        onResult(result)
-                    }
+    private fun loadFavoriteMovies() {
+        viewModelScope.launch {
+            _uiState.update {
+                HomeUIState.FavoriteTabUIState(
+                    isLoading = true,
+                    favoriteMovies = null
                 )
             }
 
-            else -> {
-                moviesPaginationController = PaginationController.build { pageNumber ->
-                    runServerCall(
-                        serverCall = {
-                            val result = fetchPaginatedMovies(pageNumber)
-                            onResult(result ?: emptyList())
-                        }
-                    )
-                }
-                moviesPaginationController?.requestMore()
+            _uiState.update {
+                HomeUIState.FavoriteTabUIState(
+                    isLoading = false,
+                    favoriteMovies = getFavoriteMoviesUseCase().data
+                )
             }
-        }
-    }
-
-    private fun runServerCall(serverCall: suspend (() -> Unit)) {
-        viewModelScope.launch {
-            onLoading()
-            serverCall()
         }.invokeOnCompletion {
-            loaded()
-        }
-    }
-
-    private suspend fun fetchFavoriteMovies(): List<Movie> {
-        return getFavoriteMoviesUseCase().data ?: emptyList()
-    }
-
-    private suspend fun fetchPaginatedMovies(pageNumber: Int): List<Movie>? {
-        val page: DataOrException<Page, Exception>? =
-            when (_uiState.value.selectedMovieListType) {
-                MovieListType.TOP_RATED -> {
-                    getTopRatedMoviesUseCase(pageNumber)
-                }
-
-                MovieListType.POPULAR -> {
-                    getPopularMoviesUseCase(pageNumber)
-                }
-
-                else -> {
-                    null
-                }
+            _uiState.update {
+                if (it is HomeUIState.FavoriteTabUIState) {
+                    it.copy(isLoading = false)
+                } else it
             }
-
-        return if (page?.data != null) {
-            val existingMovies = _uiState.value.movies ?: emptyList()
-            val updatedList = existingMovies.toMutableList().apply {
-                addAll(page.data.movies)
-            }.toList()
-
-            val hasNextPage = (page.data.pageNumber < page.data.totalPages)
-            moviesPaginationController?.resultReceived(hasNextPage)
-            updatedList
-        } else {
-            null
         }
     }
 
-    private fun onLoading() {
-        _uiState.update {
-            it.copy(
-                isLoading = true
-            )
+    fun getPaginatedMovies(): Flow<PagingData<Movie>>? {
+        return when (movieListType) {
+            MovieListType.POPULAR -> getPopularMoviesUseCase()
+            MovieListType.TOP_RATED -> getTopRatedMoviesUseCase()
+            else -> null
         }
     }
 
-    private fun loaded() {
-        _uiState.update {
-            it.copy(
-                isLoading = false
-            )
-        }
-    }
-
-    private fun onResult(movies: List<Movie>) {
-        this._uiState.update {
-            it.copy(
-                movies = movies
-            )
-        }
-    }
-
-    fun requestMore() {
-        moviesPaginationController?.requestMore()
-    }
 
     fun onSearchBy(searchType: SearchType) {
         _uiState.update {
-            it.copy(
-                isLoading = true,
-                movies = null
-            )
+            if (it is HomeUIState.MoviesTabUIState) {
+                this.movieListType = when (searchType) {
+                    SearchType.TOP_RATED -> MovieListType.TOP_RATED
+                    SearchType.POPULAR -> MovieListType.POPULAR
+                }
+                it.copy(
+                    selectedMovieType = this.movieListType
+                )
+            } else it
         }
-        moviesPaginationController = null
-
-        this.movieListType = when (searchType) {
-            SearchType.TOP_RATED -> MovieListType.TOP_RATED
-            SearchType.POPULAR -> MovieListType.POPULAR
-        }
-        loadData()
     }
 
-    fun currentSearchType() = when (_uiState.value.selectedMovieListType) {
-        MovieListType.TOP_RATED -> SearchType.TOP_RATED
-        MovieListType.POPULAR -> SearchType.POPULAR
-        else -> null
+    fun currentSearchType(): SearchType? {
+        return if (_uiState.value is HomeUIState.MoviesTabUIState) {
+            when ((_uiState.value as HomeUIState.MoviesTabUIState).selectedMovieType) {
+                MovieListType.TOP_RATED -> SearchType.TOP_RATED
+                MovieListType.POPULAR -> SearchType.POPULAR
+                else -> null
+            }
+        } else null
     }
 }
