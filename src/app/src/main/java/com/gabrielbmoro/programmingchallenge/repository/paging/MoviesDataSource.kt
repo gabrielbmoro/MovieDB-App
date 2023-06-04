@@ -11,34 +11,31 @@ class MoviesDataSource(
     private val pagingType: PagingType
 ) : PagingSource<Int, MovieResponse>() {
 
-    override val keyReuseSupported: Boolean
-        get() = true
-
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
-        val pageNumber = params.key ?: START_PAGE_INDEX
+        val nextPageNumber = params.key ?: START_PAGE_INDEX
 
         return try {
             val result = when (pagingType) {
                 PagingType.POPULAR_MOVIES -> {
                     api.getPopularMovies(
                         apiKey = apiKey,
-                        pageNumber = pageNumber
+                        pageNumber = nextPageNumber
                     )
                 }
 
                 PagingType.TOP_RATED_MOVIES -> {
                     api.getTopRatedMovies(
                         apiKey = apiKey,
-                        pageNumber = pageNumber
+                        pageNumber = nextPageNumber
                     )
                 }
             }
             LoadResult.Page(
                 data = result.results ?: emptyList(),
-                prevKey = pageNumber,
-                nextKey = pageNumber.plus(1)
+                prevKey = if (nextPageNumber > 1) nextPageNumber - 1 else null,
+                nextKey = nextPageNumber.plus(1)
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)
