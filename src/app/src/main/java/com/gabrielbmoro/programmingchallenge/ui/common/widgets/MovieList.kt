@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,10 +19,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 private fun MovieListInternal(
+    lazyListState: LazyListState,
     itemFactory: (LazyListScope.() -> Unit),
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
+        state = lazyListState,
         modifier = modifier.background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -32,6 +35,7 @@ private fun MovieListInternal(
 
 @Composable
 fun MoviesListPaginated(
+    lazyListState: LazyListState,
     pagingDataFlow: Flow<PagingData<Movie>>,
     onSelectMovie: ((Movie) -> Unit),
     modifier: Modifier = Modifier
@@ -39,6 +43,7 @@ fun MoviesListPaginated(
     val lazyPagingItems = pagingDataFlow.collectAsLazyPagingItems()
 
     MovieListInternal(
+        lazyListState = lazyListState,
         modifier = modifier,
         itemFactory = {
             items(
@@ -64,11 +69,13 @@ fun MoviesListPaginated(
 @Composable
 fun MovieList(
     movies: List<Movie>,
+    lazyListState: LazyListState,
     onSelectMovie: (Movie) -> Unit,
     modifier: Modifier = Modifier
 ) {
     MovieListInternal(
         modifier = modifier,
+        lazyListState = lazyListState,
         itemFactory = {
             items(
                 count = movies.size,

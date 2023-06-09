@@ -33,7 +33,6 @@ fun BaseHomeScreenTab(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
-    val lazyColumnState = rememberLazyListState()
 
     var showSearchAlert by remember {
         mutableStateOf(false)
@@ -42,6 +41,8 @@ fun BaseHomeScreenTab(
     var areBarsVisible by remember {
         mutableStateOf(true)
     }
+
+    val lazyListState = rememberLazyListState()
 
     val onSelectMovie: ((Movie) -> Unit) = { movie ->
         navController.navigate(
@@ -83,7 +84,7 @@ fun BaseHomeScreenTab(
                     navController,
                     scrollToTop = {
                         coroutineScope.launch {
-                            lazyColumnState.scrollToItem(0, 0)
+                            lazyListState.scrollToItem(0, 0)
                         }
                     }
                 )
@@ -123,6 +124,7 @@ fun BaseHomeScreenTab(
                             movies = uiState.favoriteMovies
                                 ?: emptyList(),
                             onSelectMovie = onSelectMovie,
+                            lazyListState = lazyListState,
                             modifier = modifier,
                         )
                     }
@@ -130,6 +132,7 @@ fun BaseHomeScreenTab(
                     MoviesListPaginated(
                         pagingDataFlow = uiState.paginatedMovies,
                         onSelectMovie = onSelectMovie,
+                        lazyListState = lazyListState,
                         modifier = modifier,
                     )
                 }
@@ -142,6 +145,7 @@ fun BaseHomeScreenTab(
                             },
                             onSearch = { searchBy ->
                                 viewModel.onSearchBy(searchBy)
+                                coroutineScope.launch { lazyListState.scrollToItem(0, 0) }
                             },
                             searchType = searchType
                         )
