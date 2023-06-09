@@ -37,7 +37,7 @@ class HomeViewModel(
     init {
         when(movieListType) {
             MovieListType.FAVORITE -> loadFavoriteMovies()
-            else -> onSearchBy(SearchType.TOP_RATED)
+            else -> loadBy(movieListType)
         }
     }
 
@@ -77,6 +77,20 @@ class HomeViewModel(
             }
             it.copy(
                 selectedMovieType = movieListType,
+                paginatedMovies = paginatedData
+            )
+        }
+    }
+
+    private fun loadBy(listType: MovieListType){
+        _uiState.update {
+            val paginatedData = when (listType) {
+                MovieListType.TOP_RATED -> getTopRatedMoviesUseCase()
+                MovieListType.POPULAR -> getPopularMoviesUseCase()
+                else -> emptyFlow()
+            }
+            it.copy(
+                selectedMovieType = listType,
                 paginatedMovies = paginatedData
             )
         }

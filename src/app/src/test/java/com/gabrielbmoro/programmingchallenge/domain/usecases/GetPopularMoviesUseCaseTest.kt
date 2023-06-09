@@ -1,13 +1,11 @@
 package com.gabrielbmoro.programmingchallenge.domain.usecases
 
-import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
-import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
-import io.mockk.coEvery
-import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.flow.emptyFlow
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,18 +27,12 @@ class GetPopularMoviesUseCaseTest {
     @Test
     fun `should be able to get all popular movies`() {
         // arrange
-        val popularMovies = Page.mockPageWithWhiteDragonMovieOnly()
+        every { repository.getPopularMovies() }.returns(emptyFlow())
 
-        coEvery { repository.getPopularMovies(1) }.returns(
-            DataOrException(popularMovies)
-        )
+        // act
+        useCase()
 
-        runTest {
-            // act
-            useCase(1)
-
-            // assert
-            coVerify(exactly = 1) { repository.getPopularMovies(1) }
-        }
+        // assert
+        verify(exactly = 1) { repository.getPopularMovies() }
     }
 }
