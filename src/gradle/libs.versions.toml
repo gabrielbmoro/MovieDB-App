@@ -25,7 +25,8 @@ mockk = "1.12.4"
 coroutines = "1.6.4"
 espresso = "3.3.0"
 test_rules_version = "1.3.0"
-gradle = "8.0.1"
+gradle = "8.0.2"
+paging_compose = "1.0.0-alpha20"
 
 [libraries]
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
@@ -55,6 +56,7 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom" }
 compose_material_3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose_material_3" }
+paging_compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_compose" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 navigation_compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_compose_integration" }
 test_core = { group = "androidx.test", name = "core", version.ref = "test_core" }
@@ -65,7 +67,7 @@ kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 room = ["room_ktx", "room_runtime"]
 lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
-compose_extras = ["compose_material_3", "navigation_compose"]
+compose_extras = ["compose_material_3", "navigation_compose", "paging_compose"]
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
 koin = ["koin_android", "koin_compose"]
 

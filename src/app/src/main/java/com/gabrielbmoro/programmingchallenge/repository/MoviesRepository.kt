@@ -1,15 +1,17 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
+import androidx.paging.PagingData
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.Page
+import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
     suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception>
 
-    suspend fun getPopularMovies(pageNumber: Int): DataOrException<Page, Exception>
+    fun getPopularMovies(): Flow<PagingData<Movie>>
 
-    suspend fun getTopRatedMovies(pageNumber: Int): DataOrException<Page, Exception>
+    fun getTopRatedMovies(): Flow<PagingData<Movie>>
 
     suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception>
 

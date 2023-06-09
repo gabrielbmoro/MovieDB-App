@@ -1,13 +1,17 @@
 package com.gabrielbmoro.programmingchallenge.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
-import com.gabrielbmoro.programmingchallenge.domain.model.Page
 import com.gabrielbmoro.programmingchallenge.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.programmingchallenge.repository.mappers.MovieMapper
 import com.gabrielbmoro.programmingchallenge.repository.mappers.PageMapper
+import com.gabrielbmoro.programmingchallenge.repository.paging.MoviesDataSource
 import com.gabrielbmoro.programmingchallenge.repository.retrofit.ApiRepository
 import com.gabrielbmoro.programmingchallenge.repository.room.FavoriteMoviesDAO
+import kotlinx.coroutines.flow.Flow
 
 class MoviesRepositoryImpl(
     private val api: ApiRepository,
@@ -31,28 +35,31 @@ class MoviesRepositoryImpl(
         }
     }
 
-    override suspend fun getPopularMovies(pageNumber: Int): DataOrException<Page, Exception> {
-        return try {
-            val pageResponse = api.getPopularMovies(
-                pageNumber = pageNumber,
-                apiKey = apiToken
-            )
-            DataOrException(data = pageMapper.map(pageResponse), exception = null)
-        } catch (exception: Exception) {
-            DataOrException(exception = exception, data = null)
-        }
-    }
+    override fun getPopularMovies(): Flow<PagingData<Movie>> = getPagingData(
+        MoviesDataSource.PagingType.POPULAR_MOVIES
+    )
 
-    override suspend fun getTopRatedMovies(pageNumber: Int): DataOrException<Page, Exception> {
-        return try {
-            val pageResponse = api.getTopRatedMovies(
-                pageNumber = pageNumber,
-                apiKey = apiToken
+    override fun getTopRatedMovies(): Flow<PagingData<Movie>> =
+        getPagingData(
+            MoviesDataSource.PagingType.TOP_RATED_MOVIES
+        )
+
+    private fun getPagingData(pagingType: MoviesDataSource.PagingType): Flow<PagingData<Movie>> {
+        val pagingDataFlow = Pager(
+            pagingSourceFactory = {
+                MoviesDataSource(
+                    apiKey = apiToken,
+                    api = api,
+                    pagingType = pagingType
+                )
+            },
+            initialKey = 1,
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                maxSize = MAX_SIZE
             )
-            DataOrException(data = pageMapper.map(pageResponse), exception = null)
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
-        }
+        ).flow
+        return pageMapper.map(pagingDataFlow)
     }
 
     override suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception> {
@@ -90,5 +97,10 @@ class MoviesRepositoryImpl(
         } catch (exception: Exception) {
             DataOrException(data = null, exception = exception)
         }
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 20
+        private const val MAX_SIZE = 500
     }
 }

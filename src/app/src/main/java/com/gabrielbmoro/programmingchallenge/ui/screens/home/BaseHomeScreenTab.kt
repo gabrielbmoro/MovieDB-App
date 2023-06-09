@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
+import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
@@ -32,13 +33,6 @@ fun BaseHomeScreenTab(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
-    val lazyColumnState = rememberLazyListState()
-    val movies by remember {
-        derivedStateOf { uiState.movies }
-    }
-    val isLoading by remember {
-        derivedStateOf { uiState.isLoading }
-    }
 
     var showSearchAlert by remember {
         mutableStateOf(false)
@@ -46,6 +40,14 @@ fun BaseHomeScreenTab(
 
     var areBarsVisible by remember {
         mutableStateOf(true)
+    }
+
+    val lazyListState = rememberLazyListState()
+
+    val onSelectMovie: ((Movie) -> Unit) = { movie ->
+        navController.navigate(
+            NavigationItem.DetailsScreen(movie).route
+        )
     }
 
     Scaffold(
@@ -60,7 +62,7 @@ fun BaseHomeScreenTab(
                 AppToolbar(
                     title = stringResource(id = R.string.app_name),
                     backEvent = null,
-                    searchEvent = if (uiState.selectedMovieListType == MovieListType.FAVORITE)
+                    searchEvent = if (uiState.selectedMovieType == MovieListType.FAVORITE)
                         null
                     else {
                         {
@@ -82,7 +84,7 @@ fun BaseHomeScreenTab(
                     navController,
                     scrollToTop = {
                         coroutineScope.launch {
-                            lazyColumnState.scrollToItem(0, 0)
+                            lazyListState.scrollToItem(0, 0)
                         }
                     }
                 )
@@ -105,33 +107,33 @@ fun BaseHomeScreenTab(
                         },
                     )
             ) {
-                if (movies != null) {
-                    MoviesList(
-                        movies = movies!!,
-                        requestMoreCallback = { viewModel.requestMore() },
-                        onSelectMovie = { movie ->
-                            navController.navigate(
-                                NavigationItem.DetailsScreen(movie).route
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                            ),
-                        lazyListState = lazyColumnState
+                val modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
                     )
-
-                    if (movies!!.isEmpty()) {
-                        EmptyState(modifier = Modifier.align(Alignment.Center))
+                if (uiState.selectedMovieType == MovieListType.FAVORITE) {
+                    if (uiState.isLoading) {
+                        BubbleLoader(
+                            modifier = Modifier.align(Alignment.Center),
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    } else {
+                        MovieList(
+                            movies = uiState.favoriteMovies
+                                ?: emptyList(),
+                            onSelectMovie = onSelectMovie,
+                            lazyListState = lazyListState,
+                            modifier = modifier,
+                        )
                     }
-                }
-
-                if (isLoading) {
-                    BubbleLoader(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.secondary
+                } else {
+                    MoviesListPaginated(
+                        pagingDataFlow = uiState.paginatedMovies,
+                        onSelectMovie = onSelectMovie,
+                        lazyListState = lazyListState,
+                        modifier = modifier,
                     )
                 }
 
@@ -142,11 +144,8 @@ fun BaseHomeScreenTab(
                                 showSearchAlert = false
                             },
                             onSearch = { searchBy ->
-                                coroutineScope.launch {
-                                    viewModel.onSearchBy(searchBy)
-
-                                    lazyColumnState.scrollToItem(0, 0)
-                                }
+                                viewModel.onSearchBy(searchBy)
+                                coroutineScope.launch { lazyListState.scrollToItem(0, 0) }
                             },
                             searchType = searchType
                         )

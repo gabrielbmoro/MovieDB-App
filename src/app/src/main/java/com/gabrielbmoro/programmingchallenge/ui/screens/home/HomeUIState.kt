@@ -1,10 +1,13 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
+import androidx.paging.PagingData
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
+import kotlinx.coroutines.flow.Flow
 
 data class HomeUIState(
-    val movies: List<Movie>? = null,
+    val favoriteMovies: List<Movie>? = null,
     val isLoading: Boolean = false,
-    val selectedMovieListType: MovieListType
+    val selectedMovieType: MovieListType,
+    val paginatedMovies: Flow<PagingData<Movie>>
 )
