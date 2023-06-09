@@ -20,9 +20,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
+import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.*
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -61,7 +61,7 @@ fun BaseHomeScreenTab(
                 AppToolbar(
                     title = stringResource(id = R.string.app_name),
                     backEvent = null,
-                    searchEvent = if (uiState is HomeUIState.FavoriteTabUIState)
+                    searchEvent = if (uiState.selectedMovieType == MovieListType.FAVORITE)
                         null
                     else {
                         {
@@ -112,25 +112,23 @@ fun BaseHomeScreenTab(
                         start = 16.dp,
                         end = 16.dp,
                     )
-                if (uiState is HomeUIState.FavoriteTabUIState) {
-                    (uiState as HomeUIState.FavoriteTabUIState).run {
-                        if (isLoading) {
-                            BubbleLoader(
-                                modifier = Modifier.align(Alignment.Center),
-                                color = MaterialTheme.colorScheme.secondary
-                            )
-                        } else {
-                            MovieList(
-                                movies = (uiState as HomeUIState.FavoriteTabUIState).favoriteMovies
-                                    ?: emptyList(),
-                                onSelectMovie = onSelectMovie,
-                                modifier = modifier,
-                            )
-                        }
+                if (uiState.selectedMovieType == MovieListType.FAVORITE) {
+                    if (uiState.isLoading) {
+                        BubbleLoader(
+                            modifier = Modifier.align(Alignment.Center),
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    } else {
+                        MovieList(
+                            movies = uiState.favoriteMovies
+                                ?: emptyList(),
+                            onSelectMovie = onSelectMovie,
+                            modifier = modifier,
+                        )
                     }
                 } else {
                     MoviesListPaginated(
-                        pagingDataFlow = viewModel.getPaginatedMovies() ?: emptyFlow(),
+                        pagingDataFlow = uiState.paginatedMovies,
                         onSelectMovie = onSelectMovie,
                         modifier = modifier,
                     )
@@ -143,11 +141,7 @@ fun BaseHomeScreenTab(
                                 showSearchAlert = false
                             },
                             onSearch = { searchBy ->
-                                coroutineScope.launch {
-                                    viewModel.onSearchBy(searchBy)
-
-                                    lazyColumnState.scrollToItem(0, 0)
-                                }
+                                viewModel.onSearchBy(searchBy)
                             },
                             searchType = searchType
                         )

@@ -1,30 +1,31 @@
 package com.gabrielbmoro.programmingchallenge.ui.screens.home
 
 import androidx.lifecycle.*
-import androidx.paging.PagingData
-import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.model.MovieListType
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.programmingchallenge.ui.common.widgets.SearchType
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private var movieListType: MovieListType,
+    movieListType: MovieListType,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<HomeUIState>(
-        HomeUIState.MoviesTabUIState(
-            selectedMovieType = MovieListType.TOP_RATED
+    private val _uiState = MutableStateFlow(
+        HomeUIState(
+            selectedMovieType = movieListType,
+            paginatedMovies = emptyFlow(),
+            favoriteMovies = null,
+            isLoading = false
         )
     )
     val uiState = _uiState.stateIn(
@@ -34,65 +35,58 @@ class HomeViewModel(
     )
 
     init {
-        if (movieListType == MovieListType.FAVORITE) {
-            loadFavoriteMovies()
+        when(movieListType) {
+            MovieListType.FAVORITE -> loadFavoriteMovies()
+            else -> onSearchBy(SearchType.TOP_RATED)
         }
     }
 
     private fun loadFavoriteMovies() {
         viewModelScope.launch {
             _uiState.update {
-                HomeUIState.FavoriteTabUIState(
+                it.copy(
                     isLoading = true,
                     favoriteMovies = null
                 )
             }
 
             _uiState.update {
-                HomeUIState.FavoriteTabUIState(
+                it.copy(
                     isLoading = false,
                     favoriteMovies = getFavoriteMoviesUseCase().data
                 )
             }
         }.invokeOnCompletion {
             _uiState.update {
-                if (it is HomeUIState.FavoriteTabUIState) {
-                    it.copy(isLoading = false)
-                } else it
+                it.copy(
+                    isLoading = false
+                )
             }
-        }
-    }
-
-    fun getPaginatedMovies(): Flow<PagingData<Movie>>? {
-        return when (movieListType) {
-            MovieListType.POPULAR -> getPopularMoviesUseCase()
-            MovieListType.TOP_RATED -> getTopRatedMoviesUseCase()
-            else -> null
         }
     }
 
 
     fun onSearchBy(searchType: SearchType) {
         _uiState.update {
-            if (it is HomeUIState.MoviesTabUIState) {
-                this.movieListType = when (searchType) {
-                    SearchType.TOP_RATED -> MovieListType.TOP_RATED
-                    SearchType.POPULAR -> MovieListType.POPULAR
-                }
-                it.copy(
-                    selectedMovieType = this.movieListType
+            val (movieListType, paginatedData) = when (searchType) {
+                SearchType.TOP_RATED -> Pair(
+                    MovieListType.TOP_RATED,
+                    getTopRatedMoviesUseCase()
                 )
-            } else it
+                SearchType.POPULAR -> Pair(MovieListType.POPULAR, getPopularMoviesUseCase())
+            }
+            it.copy(
+                selectedMovieType = movieListType,
+                paginatedMovies = paginatedData
+            )
         }
     }
 
     fun currentSearchType(): SearchType? {
-        return if (_uiState.value is HomeUIState.MoviesTabUIState) {
-            when ((_uiState.value as HomeUIState.MoviesTabUIState).selectedMovieType) {
-                MovieListType.TOP_RATED -> SearchType.TOP_RATED
-                MovieListType.POPULAR -> SearchType.POPULAR
-                else -> null
-            }
-        } else null
+        return when (_uiState.value.selectedMovieType) {
+            MovieListType.TOP_RATED -> SearchType.TOP_RATED
+            MovieListType.POPULAR -> SearchType.POPULAR
+            else -> null
+        }
     }
 }
