@@ -33,10 +33,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget  = "17"
-    }
-
     buildTypes {
         debug {
             resValue("string", "api_token", findProperty("MOVIE_DB_API_TOKEN_DEBUG").toString())
