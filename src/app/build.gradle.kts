@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 @Suppress("DSL_SCOPE_VIOLATION")
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -12,12 +13,12 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.gabrielbmoro.programmingchallenge"
-        minSdk = 22
-        targetSdk = 33
+        applicationId = ConfigData.APPLICATION_ID
+        minSdk = ConfigData.MIN_SDK
+        targetSdk = ConfigData.TARGET_SDK
 
-        versionCode = 24
-        versionName = "1.5.3"
+        versionCode = ConfigData.versionCode()
+        versionName = ConfigData.versionName()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
