@@ -7,7 +7,7 @@ object ConfigData {
 
     fun versionCode(): Int {
         val versionCode = try {
-            System.getenv("ANDROID_VERSION_CODE").toIntOrNull()
+            System.getenv("BITRISE_BUILD_NUMBER").toIntOrNull()
         } catch (nullPointerException: NullPointerException) {
             null
         }
@@ -16,7 +16,7 @@ object ConfigData {
 
     fun versionName(): String {
         val versionName = try {
-            System.getenv("ANDROID_VERSION_NAME")
+            "1.6.${System.getenv("BITRISE_BUILD_NUMBER")}"
         } catch (nullPointerException: NullPointerException) {
             null
         }
