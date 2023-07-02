@@ -36,12 +36,12 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_TOKEN", "\"${apiAuth("MOVIE_DB_API_TOKEN_DEBUG")}\"")
+            buildConfigField("String", "API_TOKEN", "\"${debugAPIAuth()}\"")
         }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "API_TOKEN", "\"${apiAuth("MOVIE_DB_API_TOKEN_RELEASE")}\"")
+            buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
         }
     }
     buildFeatures {
