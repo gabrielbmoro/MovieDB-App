@@ -1,6 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.core.di
 
 import androidx.room.Room
+import com.gabrielbmoro.programmingchallenge.BuildConfig
 import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.AndroidResourcesProvider
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.ResourcesProvider
@@ -77,7 +78,7 @@ object AppModule {
         single<MoviesRepository> {
             MoviesRepositoryImpl(
                 api = get(),
-                apiToken = androidContext().resources.getString(R.string.api_token),
+                apiToken = BuildConfig.API_TOKEN,
                 favoriteMoviesDAO = get(),
                 favoriteMoviesMapper = get(),
                 pageMapper = get(),
