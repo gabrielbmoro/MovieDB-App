@@ -27,3 +27,6 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 ### Tech Stack Summary
 
 - Compose, Koin, Coroutines, Retrofit, Room, Mockk, Gradle Catalogs.
+
+---
+More details about the project you can visit the [Wiki](https://github.com/gabrielbmoro/MovieDB-Android/wiki).
