@@ -2,7 +2,6 @@ package com.gabrielbmoro.programmingchallenge.ui.screens.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.programmingchallenge.domain.usecases.IsFavoriteMovieUseCase
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DetailsScreenViewModel constructor(
+class DetailsScreenViewModel (
     private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
@@ -24,9 +23,7 @@ class DetailsScreenViewModel constructor(
     init {
         _uiState.update {
             it.copy(
-                imageUrl = movie.backdropImageUrl.let {
-                    "${ConfigVariables.BIG_SIZE_IMAGE_ADDRESS}${movie.backdropImageUrl}"
-                },
+                imageUrl = movie.backdropImageUrl,
                 movieLanguage = movie.language,
                 isFavorite = movie.isFavorite,
                 movieOverview = movie.overview,

@@ -1,7 +1,7 @@
 package com.gabrielbmoro.programmingchallenge.domain.usecases
 
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
-class GetTopRatedMoviesUseCase constructor(
+class GetTopRatedMoviesUseCase (
     private val repository: MoviesRepository,
 ) {
 

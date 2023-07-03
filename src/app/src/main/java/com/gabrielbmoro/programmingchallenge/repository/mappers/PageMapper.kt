@@ -6,7 +6,7 @@ import com.gabrielbmoro.programmingchallenge.repository.retrofit.responses.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PageMapper constructor(
+class PageMapper (
     private val movieMapper: MovieMapper
 ) {
     fun map(pagingData: Flow<PagingData<MovieResponse>>) =

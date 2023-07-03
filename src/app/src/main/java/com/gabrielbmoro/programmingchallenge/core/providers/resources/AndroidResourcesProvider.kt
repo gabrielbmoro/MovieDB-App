@@ -3,7 +3,7 @@ package com.gabrielbmoro.programmingchallenge.core.providers.resources
 import android.content.res.Resources
 import androidx.annotation.ArrayRes
 
-class AndroidResourcesProvider constructor(
+class AndroidResourcesProvider (
     private val resources: Resources
 ) : ResourcesProvider {
 

@@ -7,7 +7,7 @@ data class DetailsUIState(
     val movieLanguage: String,
     val moviePopularity: Float,
     val movieOverview: String,
-    val imageUrl: String,
+    val imageUrl: String?,
 ) {
     companion object {
         fun empty() = DetailsUIState(

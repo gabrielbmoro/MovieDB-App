@@ -6,7 +6,7 @@ import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-open class FavoriteMovieUseCase constructor(
+open class FavoriteMovieUseCase (
     private val repository: MoviesRepository,
 ) {
 

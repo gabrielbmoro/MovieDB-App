@@ -3,7 +3,7 @@ package com.gabrielbmoro.programmingchallenge.domain.usecases
 import com.gabrielbmoro.programmingchallenge.domain.model.DataOrException
 import com.gabrielbmoro.programmingchallenge.repository.MoviesRepository
 
-class IsFavoriteMovieUseCase constructor(
+class IsFavoriteMovieUseCase (
     private val repository: MoviesRepository
 ) {
 

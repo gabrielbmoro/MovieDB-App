@@ -2,7 +2,6 @@ package com.gabrielbmoro.programmingchallenge.core.di
 
 import androidx.room.Room
 import com.gabrielbmoro.programmingchallenge.BuildConfig
-import com.gabrielbmoro.programmingchallenge.R
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.AndroidResourcesProvider
 import com.gabrielbmoro.programmingchallenge.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
@@ -25,8 +24,6 @@ import com.gabrielbmoro.programmingchallenge.ui.screens.home.HomeViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
-import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
