@@ -9,13 +9,13 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 
 
-class ProgrammingChallengeApp : Application() {
+class MovieDBApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
-            androidContext(this@ProgrammingChallengeApp.applicationContext)
+            androidContext(this@MovieDBApp.applicationContext)
             androidLogger()
             modules(AppModule.list)
         }
