@@ -25,14 +25,14 @@ data class MovieResponse(
             title = "Why do we use it?",
             originalTitle = "Why do we use it?",
             releaseDate = "02-03-2020",
-            backdropPath = "https://image/bucket/s3/ga.png",
+            backdropPath = "/ga.png",
             popularity = 10f,
             votesAverage = 5f,
             originalLanguage = "en-US",
             isAdult = false,
             votes = 2,
             isVideo = false,
-            posterPath = "https://image/bucket/s3/ga.png"
+            posterPath = "/ga.png"
         )
     }
 }

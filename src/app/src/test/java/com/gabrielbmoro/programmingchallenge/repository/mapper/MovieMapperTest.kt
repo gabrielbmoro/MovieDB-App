@@ -41,8 +41,8 @@ class MovieMapperTest {
         val result = MovieMapper().mapResponse(movieResponse)
 
         // assert
-        Truth.assertThat(result.backdropImageUrl).isEqualTo(movieResponse.backdropPath)
-        Truth.assertThat(result.posterImageUrl).isEqualTo(movieResponse.posterPath)
+        Truth.assertThat(result.backdropImageUrl).isEqualTo(MovieMapper.BIG_SIZE_IMAGE_ADDRESS.plus(movieResponse.backdropPath))
+        Truth.assertThat(result.posterImageUrl).isEqualTo(MovieMapper.SMALL_SIZE_IMAGE_ADDRESS.plus(movieResponse.posterPath))
         Truth.assertThat(result.language).isEqualTo(movieResponse.originalLanguage)
         Truth.assertThat(result.title).isEqualTo(movieResponse.title)
         Truth.assertThat(result.overview).isEqualTo(movieResponse.overview)

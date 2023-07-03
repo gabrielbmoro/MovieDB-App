@@ -10,7 +10,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.programmingchallenge.R
-import com.gabrielbmoro.programmingchallenge.core.di.ConfigVariables
 
 @Composable
 fun MovieCard(
@@ -30,7 +29,7 @@ fun MovieCard(
     ) {
         Row {
             MovieImage(
-                imageUrl = imageUrl?.let { "${ConfigVariables.SMALL_SIZE_IMAGE_ADDRESS}$imageUrl" },
+                imageUrl = imageUrl,
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .width(dimensionResource(id = R.dimen.poster_card_width))

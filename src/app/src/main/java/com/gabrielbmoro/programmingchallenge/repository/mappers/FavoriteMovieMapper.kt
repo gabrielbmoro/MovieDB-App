@@ -3,7 +3,7 @@ package com.gabrielbmoro.programmingchallenge.repository.mappers
 import com.gabrielbmoro.programmingchallenge.domain.model.Movie
 import com.gabrielbmoro.programmingchallenge.repository.room.dto.FavoriteMovieDTO
 
-class FavoriteMovieMapper constructor() {
+class FavoriteMovieMapper {
 
     fun map(id: Int? = null, movie: Movie): FavoriteMovieDTO {
         return FavoriteMovieDTO(
