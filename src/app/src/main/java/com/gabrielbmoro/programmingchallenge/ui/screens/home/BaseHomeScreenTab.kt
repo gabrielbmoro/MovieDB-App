@@ -146,4 +146,12 @@ fun BaseHomeScreenTab(
             }
         }
     )
+
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = {
+            viewModel.setup()
+        }
+    )
 }
