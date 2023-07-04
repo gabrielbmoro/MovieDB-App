@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -114,20 +113,14 @@ fun BaseHomeScreenTab(
                         end = 16.dp,
                     )
                 if (uiState.selectedMovieType == MovieListType.FAVORITE) {
-                    if (uiState.isLoading) {
-                        BubbleLoader(
-                            modifier = Modifier.align(Alignment.Center),
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                    } else {
-                        MovieList(
-                            movies = uiState.favoriteMovies
-                                ?: emptyList(),
-                            onSelectMovie = onSelectMovie,
-                            lazyListState = lazyListState,
-                            modifier = modifier,
-                        )
-                    }
+                    MovieList(
+                        movies = uiState.favoriteMovies
+                            ?: emptyList(),
+                        isLoading = uiState.isLoading,
+                        onSelectMovie = onSelectMovie,
+                        lazyListState = lazyListState,
+                        modifier = modifier,
+                    )
                 } else {
                     MoviesListPaginated(
                         pagingDataFlow = uiState.paginatedMovies,

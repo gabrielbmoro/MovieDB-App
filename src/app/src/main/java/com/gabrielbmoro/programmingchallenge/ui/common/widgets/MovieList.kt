@@ -2,14 +2,17 @@ package com.gabrielbmoro.programmingchallenge.ui.common.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
@@ -34,7 +37,7 @@ private fun MovieListInternal(
 }
 
 @Composable
-fun MoviesListPaginated(
+fun BoxScope.MoviesListPaginated(
     lazyListState: LazyListState,
     pagingDataFlow: Flow<PagingData<Movie>>,
     onSelectMovie: ((Movie) -> Unit),
@@ -42,55 +45,69 @@ fun MoviesListPaginated(
 ) {
     val lazyPagingItems = pagingDataFlow.collectAsLazyPagingItems()
 
-    MovieListInternal(
-        lazyListState = lazyListState,
-        modifier = modifier,
-        itemFactory = {
-            items(
-                count = lazyPagingItems.itemCount,
-                key = lazyPagingItems.itemKey(),
-                contentType = lazyPagingItems.itemContentType()
-            ) { index ->
-
-                lazyPagingItems[index]?.let { movie ->
-                    MovieCard(
-                        imageUrl = movie.posterImageUrl,
-                        title = movie.title,
-                        votes = movie.votesAverage,
-                        description = movie.overview,
-                        onClick = { onSelectMovie(movie) }
-                    )
+    if (lazyPagingItems.loadState.refresh == LoadState.Loading) {
+        BubbleLoader(
+            modifier = Modifier.align(Alignment.Center),
+            color = MaterialTheme.colorScheme.secondary
+        )
+    } else {
+        MovieListInternal(
+            lazyListState = lazyListState,
+            modifier = modifier,
+            itemFactory = {
+                items(
+                    count = lazyPagingItems.itemCount,
+                    key = lazyPagingItems.itemKey(),
+                    contentType = lazyPagingItems.itemContentType()
+                ) { index ->
+                    lazyPagingItems[index]?.let { movie ->
+                        MovieCard(
+                            imageUrl = movie.posterImageUrl,
+                            title = movie.title,
+                            votes = movie.votesAverage,
+                            description = movie.overview,
+                            onClick = { onSelectMovie(movie) }
+                        )
+                    }
                 }
             }
-        }
-    )
+        )
+    }
 }
 
 @Composable
-fun MovieList(
+fun BoxScope.MovieList(
     movies: List<Movie>,
     lazyListState: LazyListState,
+    isLoading: Boolean,
     onSelectMovie: (Movie) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    MovieListInternal(
-        modifier = modifier,
-        lazyListState = lazyListState,
-        itemFactory = {
-            items(
-                count = movies.size,
-            ) { index ->
+    if (isLoading) {
+        BubbleLoader(
+            modifier = Modifier.align(Alignment.Center),
+            color = MaterialTheme.colorScheme.secondary
+        )
+    } else {
+        MovieListInternal(
+            modifier = modifier,
+            lazyListState = lazyListState,
+            itemFactory = {
+                items(
+                    count = movies.size,
+                ) { index ->
 
-                movies[index].let { movie ->
-                    MovieCard(
-                        imageUrl = movie.posterImageUrl,
-                        title = movie.title,
-                        votes = movie.votesAverage,
-                        description = movie.overview,
-                        onClick = { onSelectMovie(movie) }
-                    )
+                    movies[index].let { movie ->
+                        MovieCard(
+                            imageUrl = movie.posterImageUrl,
+                            title = movie.title,
+                            votes = movie.votesAverage,
+                            description = movie.overview,
+                            onClick = { onSelectMovie(movie) }
+                        )
+                    }
                 }
             }
-        }
-    )
+        )
+    }
 }
