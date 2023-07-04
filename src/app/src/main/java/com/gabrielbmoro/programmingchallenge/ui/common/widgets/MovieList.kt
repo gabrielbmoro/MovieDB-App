@@ -51,33 +51,42 @@ fun BoxScope.MoviesListPaginated(
             color = MaterialTheme.colorScheme.secondary
         )
     } else {
-        MovieListInternal(
-            lazyListState = lazyListState,
-            modifier = modifier,
-            itemFactory = {
-                items(
-                    count = lazyPagingItems.itemCount,
-                    key = lazyPagingItems.itemKey(),
-                    contentType = lazyPagingItems.itemContentType()
-                ) { index ->
-                    lazyPagingItems[index]?.let { movie ->
-                        MovieCard(
-                            imageUrl = movie.posterImageUrl,
-                            title = movie.title,
-                            votes = movie.votesAverage,
-                            description = movie.overview,
-                            onClick = { onSelectMovie(movie) }
-                        )
-                    }
-                }
+        when (lazyPagingItems.itemCount) {
+            0 -> {
+                EmptyState(
+                    modifier = Modifier.align(Alignment.Center),
+                )
             }
-        )
+            else -> {
+                MovieListInternal(
+                    lazyListState = lazyListState,
+                    modifier = modifier,
+                    itemFactory = {
+                        items(
+                            count = lazyPagingItems.itemCount,
+                            key = lazyPagingItems.itemKey(),
+                            contentType = lazyPagingItems.itemContentType()
+                        ) { index ->
+                            lazyPagingItems[index]?.let { movie ->
+                                MovieCard(
+                                    imageUrl = movie.posterImageUrl,
+                                    title = movie.title,
+                                    votes = movie.votesAverage,
+                                    description = movie.overview,
+                                    onClick = { onSelectMovie(movie) }
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+        }
     }
 }
 
 @Composable
 fun BoxScope.MovieList(
-    movies: List<Movie>,
+    movies: List<Movie>?,
     lazyListState: LazyListState,
     isLoading: Boolean,
     onSelectMovie: (Movie) -> Unit,
@@ -89,25 +98,37 @@ fun BoxScope.MovieList(
             color = MaterialTheme.colorScheme.secondary
         )
     } else {
-        MovieListInternal(
-            modifier = modifier,
-            lazyListState = lazyListState,
-            itemFactory = {
-                items(
-                    count = movies.size,
-                ) { index ->
-
-                    movies[index].let { movie ->
-                        MovieCard(
-                            imageUrl = movie.posterImageUrl,
-                            title = movie.title,
-                            votes = movie.votesAverage,
-                            description = movie.overview,
-                            onClick = { onSelectMovie(movie) }
-                        )
-                    }
-                }
+        when {
+            movies?.isEmpty() == true -> {
+                EmptyState(
+                    modifier = Modifier.align(Alignment.Center),
+                )
             }
-        )
+
+            else -> {
+                val moviesList = movies ?: emptyList()
+
+                MovieListInternal(
+                    modifier = modifier,
+                    lazyListState = lazyListState,
+                    itemFactory = {
+                        items(
+                            count = moviesList.size,
+                        ) { index ->
+
+                            moviesList[index].let { movie ->
+                                MovieCard(
+                                    imageUrl = movie.posterImageUrl,
+                                    title = movie.title,
+                                    votes = movie.votesAverage,
+                                    description = movie.overview,
+                                    onClick = { onSelectMovie(movie) }
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+        }
     }
 }

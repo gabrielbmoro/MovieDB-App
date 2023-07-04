@@ -114,8 +114,7 @@ fun BaseHomeScreenTab(
                     )
                 if (uiState.selectedMovieType == MovieListType.FAVORITE) {
                     MovieList(
-                        movies = uiState.favoriteMovies
-                            ?: emptyList(),
+                        movies = uiState.favoriteMovies,
                         isLoading = uiState.isLoading,
                         onSelectMovie = onSelectMovie,
                         lazyListState = lazyListState,
