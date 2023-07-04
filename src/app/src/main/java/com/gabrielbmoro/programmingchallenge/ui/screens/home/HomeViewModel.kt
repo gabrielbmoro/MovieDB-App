@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    movieListType: MovieListType,
+    private val movieListType: MovieListType,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
@@ -38,6 +38,12 @@ class HomeViewModel(
         when(movieListType) {
             MovieListType.FAVORITE -> loadFavoriteMovies()
             else -> loadBy(movieListType)
+        }
+    }
+
+    fun setup() {
+        if(movieListType == MovieListType.FAVORITE) {
+            loadFavoriteMovies()
         }
     }
 
