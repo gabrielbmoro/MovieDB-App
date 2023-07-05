@@ -7,6 +7,8 @@ plugins {
     kotlin("kapt")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -68,6 +70,8 @@ dependencies {
     implementation(libs.swipe.refresh.layout)
 
     implementation(libs.cardview)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.analytics.ktx)
 
     ksp(libs.room.compiler)
     implementation(libs.bundles.room)

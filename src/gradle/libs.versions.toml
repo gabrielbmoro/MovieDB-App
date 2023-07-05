@@ -1,4 +1,6 @@
 [versions]
+firebase-crashlytics-gradle = "2.9.6"
+google-services = "4.3.15"
 kotlin = "1.8.10"
 koin = "3.4.0"
 compose_bom = "2023.05.01"
@@ -27,8 +29,12 @@ espresso = "3.3.0"
 test_rules_version = "1.3.0"
 gradle = "8.0.2"
 paging_compose = "1.0.0-alpha20"
+firebase-crashlytics-ktx = "18.3.7"
+firebase-analytics-ktx = "21.3.0"
 
 [libraries]
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
+google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
@@ -62,6 +68,8 @@ navigation_compose = { group = "androidx.navigation", name = "navigation-compose
 test_core = { group = "androidx.test", name = "core", version.ref = "test_core" }
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebase-crashlytics-ktx" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebase-analytics-ktx" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
