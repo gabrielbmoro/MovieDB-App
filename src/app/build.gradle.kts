@@ -36,6 +36,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+            keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+
+            storeFile = file(System.getenv("HOME").plus( "/keystores/moviedb-keystore" + System.getenv("KEYSTORE_NAME")))
+            storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField("String", "API_TOKEN", "\"${debugAPIAuth()}\"")
@@ -44,6 +54,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     buildFeatures {
