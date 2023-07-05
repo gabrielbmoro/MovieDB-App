@@ -41,7 +41,7 @@ android {
             keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
             keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
 
-            storeFile = file(System.getenv("HOME").plus( "/keystores/moviedb-keystore"))
+            storeFile = file(System.getenv("HOME").plus( "/moviedb-keystore"))
             storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
         }
     }
