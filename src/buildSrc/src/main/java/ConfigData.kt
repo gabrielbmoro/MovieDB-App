@@ -1,5 +1,5 @@
 object ConfigData {
-    const val APPLICATION_ID = "com.gabrielbmoro.programmingchallenge"
+    const val APPLICATION_ID = "com.gabrielbmoro.moviedb"
     const val MIN_SDK = 22
     const val TARGET_SDK = 33
     private const val LOCAL_VERSION_CODE = 10

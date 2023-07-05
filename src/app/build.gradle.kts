@@ -55,7 +55,7 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
-    namespace = "com.gabrielbmoro.programmingchallenge"
+    namespace = ConfigData.APPLICATION_ID
 }
 
 dependencies {
