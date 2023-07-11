@@ -31,6 +31,7 @@ gradle = "8.0.2"
 paging_compose = "1.0.0-alpha20"
 firebase-crashlytics-ktx = "18.3.7"
 firebase-analytics-ktx = "21.3.0"
+android_youtube_player_version = "12.0.0"
 
 [libraries]
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
@@ -70,6 +71,7 @@ gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gr
 kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebase-crashlytics-ktx" }
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebase-analytics-ktx" }
+android_youtube_player = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android_youtube_player_version" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
