@@ -114,4 +114,7 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation.compose)
+
+    // Player
+    implementation(libs.android.youtube.player)
 }

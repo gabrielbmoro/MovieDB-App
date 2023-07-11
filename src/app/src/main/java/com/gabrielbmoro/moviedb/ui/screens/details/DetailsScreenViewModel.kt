@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetVideoStreamUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -11,10 +12,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DetailsScreenViewModel (
+class DetailsScreenViewModel(
     private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
+    private val getVideoStreamUseCase: GetVideoStreamUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailsUIState.empty())
@@ -35,6 +37,30 @@ class DetailsScreenViewModel (
 
         viewModelScope.launch {
             checkIfMovieIsFavorite(movie.title)
+        }
+    }
+
+    fun prepareVideoStream() {
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isLoading = true
+                )
+            }
+
+            val data = getVideoStreamUseCase(movieId = movie.id)
+
+            _uiState.update {
+                it.copy(
+                    videoId = data.data?.firstOrNull()?.key
+                )
+            }
+        }.invokeOnCompletion {
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                )
+            }
         }
     }
 

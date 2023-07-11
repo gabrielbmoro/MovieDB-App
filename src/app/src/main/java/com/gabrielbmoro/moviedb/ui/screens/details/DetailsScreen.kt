@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,8 @@ import com.gabrielbmoro.moviedb.ui.common.widgets.MovieImage
 import com.gabrielbmoro.moviedb.ui.common.theme.ThemePreviews
 import com.gabrielbmoro.moviedb.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.moviedb.ui.common.widgets.MovieDetailIndicator
+import com.gabrielbmoro.moviedb.ui.common.widgets.PlayButton
+import com.gabrielbmoro.moviedb.ui.common.widgets.VideoPlayer
 
 @Composable
 private fun DetailsScreenMain(
@@ -31,6 +34,7 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: ((Boolean) -> Unit),
+    onPlayVideoStream: (() -> Unit),
     onBackEvent: (() -> Unit)
 ) {
     Scaffold(
@@ -53,26 +57,48 @@ private fun DetailsScreenMain(
                 .verticalScroll(scrollState)
                 .padding(
                     top = it.calculateTopPadding(),
-                    start = 16.dp,
-                    end = 16.dp
                 ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            MovieImage(
-                imageUrl = uiState.imageUrl,
-                contentScale = ContentScale.Fit,
+            Box(
                 modifier = Modifier
-                    .height(250.dp)
+                    .height(280.dp)
                     .fillMaxWidth()
-            )
+            ) {
+                if (uiState.videoId != null) {
+                    VideoPlayer(
+                        videoId = uiState.videoId,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize(),
+                    )
+                } else {
+                    MovieImage(
+                        imageUrl = uiState.imageUrl,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize()
+                    )
+
+                    PlayButton(
+                        onClick = onPlayVideoStream,
+                        isLoading = uiState.isLoading,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            }
 
             MovieDetailIndicator(
                 isFavorite = uiState.isFavorite,
                 votesAverage = uiState.movieVotesAverage,
-                onFavoriteMovie = onFavoriteMovie
+                onFavoriteMovie = onFavoriteMovie,
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
-            Divider()
+            Divider(
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
 
             MovieDetailDescription(
                 titleRes = R.string.overview,
@@ -81,7 +107,8 @@ private fun DetailsScreenMain(
                         text = uiState.movieOverview,
                         style = MaterialTheme.typography.bodyMedium
                     )
-                }
+                },
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             MovieDetailDescription(
@@ -91,7 +118,8 @@ private fun DetailsScreenMain(
                         text = uiState.moviePopularity.toString(),
                         style = MaterialTheme.typography.bodyLarge,
                     )
-                }
+                },
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             MovieDetailDescription(
@@ -101,10 +129,15 @@ private fun DetailsScreenMain(
                         text = uiState.movieLanguage,
                         style = MaterialTheme.typography.bodyMedium,
                     )
-                }
+                },
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(240.dp))
+            Spacer(
+                modifier = Modifier
+                    .height(240.dp)
+                    .padding(horizontal = 16.dp),
+            )
         }
     }
 }
@@ -127,6 +160,9 @@ fun DetailsScreen(
         onFavoriteMovie = {
             viewModel.isToFavoriteOrUnFavorite(it)
         },
+        onPlayVideoStream = {
+            viewModel.prepareVideoStream()
+        },
         onBackEvent = {
             navController.navigateUp()
         }
@@ -142,5 +178,6 @@ fun DetailsScreenPreview() {
         scrollState = ScrollState(0),
         onFavoriteMovie = {},
         onBackEvent = {},
+        onPlayVideoStream = {}
     )
 }

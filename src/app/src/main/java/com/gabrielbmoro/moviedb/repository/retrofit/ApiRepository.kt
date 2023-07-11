@@ -1,7 +1,9 @@
 package com.gabrielbmoro.moviedb.repository.retrofit
 
 import com.gabrielbmoro.moviedb.repository.retrofit.responses.PageResponse
+import com.gabrielbmoro.moviedb.repository.retrofit.responses.VideoStreamsResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -22,4 +24,10 @@ interface ApiRepository {
         @Query("api_key") apiKey: String,
         @Query("page") pageNumber: Int
     ): PageResponse
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getVideoStreams(
+        @Path("movie_id") movieId: Long,
+        @Query("api_key") apiKey: String,
+    ): VideoStreamsResponse
 }

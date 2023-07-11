@@ -3,11 +3,13 @@ package com.gabrielbmoro.moviedb.ui.screens.details
 data class DetailsUIState(
     val isFavorite: Boolean,
     val movieTitle: String,
+    val isLoading: Boolean = false,
     val movieVotesAverage: Float,
     val movieLanguage: String,
     val moviePopularity: Float,
     val movieOverview: String,
     val imageUrl: String?,
+    val videoId: String? = null,
 ) {
     companion object {
         fun empty() = DetailsUIState(
