@@ -25,10 +25,12 @@ fun PlayButton(
     } else {
         Button(
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
+                containerColor = Color.Black.copy(
+                    alpha = 0.4f
+                ),
             ),
+            modifier = modifier,
             onClick = onClick,
-            modifier = modifier
         ) {
             Icon(
                 painterResource(id = R.drawable.ic_play),

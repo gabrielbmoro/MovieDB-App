@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.ui.common.widgets
 
+import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -17,7 +18,11 @@ fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     var youtubePlayer: YouTubePlayerView? = remember {
-        YouTubePlayerView(context).apply {
+        YouTubePlayerView(
+            context
+        ).apply {
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
             addYouTubePlayerListener(
                 object : YouTubePlayerListener {
                     override fun onApiChange(youTubePlayer: YouTubePlayer) {}
