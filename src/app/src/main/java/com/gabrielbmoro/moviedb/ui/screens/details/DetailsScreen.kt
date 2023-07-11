@@ -67,17 +67,19 @@ private fun DetailsScreenMain(
                     .height(250.dp)
                     .fillMaxWidth()
             ) {
-
                 if (uiState.videoId != null) {
                     VideoPlayer(
                         videoId = uiState.videoId,
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier
+                            .align(Alignment.TopCenter),
                     )
                 } else {
                     MovieImage(
                         imageUrl = uiState.imageUrl,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize()
                     )
 
                     PlayButton(
