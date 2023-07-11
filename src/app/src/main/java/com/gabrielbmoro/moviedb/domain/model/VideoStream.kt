@@ -7,4 +7,12 @@ import kotlinx.parcelize.Parcelize
 data class VideoStream(
     val key: String,
     val site: String
-) : Parcelable
+) : Parcelable {
+
+    companion object {
+        fun mockVideoStream() = VideoStream(
+            key = "lViasfV1",
+            site = "YouTube"
+        )
+    }
+}
