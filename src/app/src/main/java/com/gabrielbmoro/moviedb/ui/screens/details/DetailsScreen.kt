@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,8 @@ import com.gabrielbmoro.moviedb.ui.common.widgets.MovieImage
 import com.gabrielbmoro.moviedb.ui.common.theme.ThemePreviews
 import com.gabrielbmoro.moviedb.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.moviedb.ui.common.widgets.MovieDetailIndicator
+import com.gabrielbmoro.moviedb.ui.common.widgets.PlayButton
+import com.gabrielbmoro.moviedb.ui.common.widgets.VideoPlayer
 
 @Composable
 private fun DetailsScreenMain(
@@ -31,6 +34,7 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: ((Boolean) -> Unit),
+    onPlayVideoStream: (() -> Unit),
     onBackEvent: (() -> Unit)
 ) {
     Scaffold(
@@ -58,13 +62,31 @@ private fun DetailsScreenMain(
                 ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            MovieImage(
-                imageUrl = uiState.imageUrl,
-                contentScale = ContentScale.Fit,
+            Box(
                 modifier = Modifier
                     .height(250.dp)
                     .fillMaxWidth()
-            )
+            ) {
+
+                if (uiState.videoId != null) {
+                    VideoPlayer(
+                        videoId = uiState.videoId,
+                        modifier = Modifier.align(Alignment.Center),
+                    )
+                } else {
+                    MovieImage(
+                        imageUrl = uiState.imageUrl,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+
+                    PlayButton(
+                        onClick = onPlayVideoStream,
+                        isLoading = uiState.isLoading,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            }
 
             MovieDetailIndicator(
                 isFavorite = uiState.isFavorite,
@@ -127,6 +149,9 @@ fun DetailsScreen(
         onFavoriteMovie = {
             viewModel.isToFavoriteOrUnFavorite(it)
         },
+        onPlayVideoStream = {
+            viewModel.prepareVideoStream()
+        },
         onBackEvent = {
             navController.navigateUp()
         }
@@ -142,5 +167,6 @@ fun DetailsScreenPreview() {
         scrollState = ScrollState(0),
         onFavoriteMovie = {},
         onBackEvent = {},
+        onPlayVideoStream = {}
     )
 }

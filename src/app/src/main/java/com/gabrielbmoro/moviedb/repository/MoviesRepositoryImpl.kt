@@ -5,9 +5,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 import com.gabrielbmoro.moviedb.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
+import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import com.gabrielbmoro.moviedb.repository.paging.MoviesDataSource
 import com.gabrielbmoro.moviedb.repository.retrofit.ApiRepository
 import com.gabrielbmoro.moviedb.repository.room.FavoriteMoviesDAO
@@ -20,6 +22,7 @@ class MoviesRepositoryImpl(
     private val favoriteMoviesMapper: FavoriteMovieMapper,
     private val pageMapper: PageMapper,
     private val movieMapper: MovieMapper,
+    private val videoStreamMapper: VideoStreamMapper,
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {
@@ -94,6 +97,19 @@ class MoviesRepositoryImpl(
                 title = movieTitle
             ).any()
             DataOrException(data = isFavorite, exception = null)
+        } catch (exception: Exception) {
+            DataOrException(data = null, exception = exception)
+        }
+    }
+
+    override suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception> {
+        return try {
+           val result = api.getVideoStreams(
+               movieId = movieId,
+               apiKey = apiToken
+           )
+            val data = videoStreamMapper.map(result)
+            DataOrException(data = data, exception = null)
         } catch (exception: Exception) {
             DataOrException(data = null, exception = exception)
         }

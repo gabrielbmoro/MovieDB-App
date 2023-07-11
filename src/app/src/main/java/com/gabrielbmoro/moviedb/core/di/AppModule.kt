@@ -10,12 +10,14 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetVideoStreamUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.MoviesRepositoryImpl
 import com.gabrielbmoro.moviedb.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
+import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import com.gabrielbmoro.moviedb.repository.retrofit.ApiRepository
 import com.gabrielbmoro.moviedb.repository.retrofit.LoggedInterceptor
 import com.gabrielbmoro.moviedb.repository.room.DataBaseFactory
@@ -36,6 +38,8 @@ object AppModule {
         factory { PageMapper(get()) }
 
         factory { FavoriteMovieMapper() }
+
+        factory { VideoStreamMapper() }
     }
 
     private val providersModule = module {
@@ -80,6 +84,7 @@ object AppModule {
                 favoriteMoviesMapper = get(),
                 pageMapper = get(),
                 movieMapper = get(),
+                videoStreamMapper = get()
             )
         }
     }
@@ -94,6 +99,8 @@ object AppModule {
         factory { GetPopularMoviesUseCase(get()) }
 
         factory { GetTopRatedMoviesUseCase(get()) }
+
+        factory { GetVideoStreamUseCase(get()) }
     }
 
     private val viewModelsModule = module {
@@ -110,7 +117,8 @@ object AppModule {
             DetailsScreenViewModel(
                 movie = movie,
                 favoriteMovieUseCase = get(),
-                isFavoriteMovieUseCase = get()
+                isFavoriteMovieUseCase = get(),
+                getVideoStreamUseCase = get()
             )
         }
     }
