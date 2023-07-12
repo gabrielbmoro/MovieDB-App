@@ -1,5 +1,5 @@
 <a href="https://devlibrary.withgoogle.com/products/android/repos/gabrielbmoro-MovieDB-Android">
-<img src="https://github.com/gabrielbmoro/MovieDB-Android/assets/9204234/f36cce79-ed71-40a4-8be9-263b775c844e" alt="Google Dev Library Logo" style="width:300px;"/>
+    <img src="img/googleDevLibraryLogo.png" alt="Google Dev Library Logo" style="width:300px;"/>
 </a>
 
 [![Android Badge](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com/)[![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
