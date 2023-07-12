@@ -35,12 +35,25 @@ class DetailsScreenViewModel(
             )
         }
 
+        checkIfMovieIsFavorite(movie.title)
+
+        fetchMoviesTrailer()
+    }
+
+    private fun checkIfMovieIsFavorite(movieTitle: String) {
         viewModelScope.launch {
-            checkIfMovieIsFavorite(movie.title)
+            val data = isFavoriteMovieUseCase.invoke(movieTitle)
+            if (data.data != null) {
+                _uiState.update {
+                    it.copy(
+                        isFavorite = data.data
+                    )
+                }
+            }
         }
     }
 
-    fun prepareVideoStream() {
+    private fun fetchMoviesTrailer() {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
@@ -59,17 +72,6 @@ class DetailsScreenViewModel(
             _uiState.update {
                 it.copy(
                     isLoading = false,
-                )
-            }
-        }
-    }
-
-    private suspend fun checkIfMovieIsFavorite(movieTitle: String) {
-        val data = isFavoriteMovieUseCase.invoke(movieTitle)
-        if (data.data != null) {
-            _uiState.update {
-                it.copy(
-                    isFavorite = data.data
                 )
             }
         }
