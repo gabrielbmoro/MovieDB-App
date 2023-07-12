@@ -10,7 +10,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetVideoStreamUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetTrailersUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.MoviesRepositoryImpl
@@ -100,7 +100,7 @@ object AppModule {
 
         factory { GetTopRatedMoviesUseCase(get()) }
 
-        factory { GetVideoStreamUseCase(get()) }
+        factory { GetTrailersUseCase(get()) }
     }
 
     private val viewModelsModule = module {
@@ -118,7 +118,7 @@ object AppModule {
                 movie = movie,
                 favoriteMovieUseCase = get(),
                 isFavoriteMovieUseCase = get(),
-                getVideoStreamUseCase = get()
+                getTrailersUseCase = get()
             )
         }
     }
