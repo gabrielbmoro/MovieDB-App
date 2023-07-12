@@ -9,6 +9,11 @@ class VideoStreamMapper {
         VideoStream(
             key = it.key,
             site = it.site,
+            size = it.size,
+            type = it.type,
+            official = it.official,
+            name = it.name,
+            id = it.id,
         )
     }
 }

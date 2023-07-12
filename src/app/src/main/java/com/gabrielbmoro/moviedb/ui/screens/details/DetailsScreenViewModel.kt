@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetVideoStreamUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetTrailersUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,7 +16,7 @@ class DetailsScreenViewModel(
     private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val getVideoStreamUseCase: GetVideoStreamUseCase,
+    private val getTrailersUseCase: GetTrailersUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailsUIState.empty())
@@ -48,11 +48,11 @@ class DetailsScreenViewModel(
                 )
             }
 
-            val data = getVideoStreamUseCase(movieId = movie.id)
+            val data = getTrailersUseCase(movieId = movie.id)
 
             _uiState.update {
                 it.copy(
-                    videoId = data.data?.firstOrNull()?.key
+                    videoId = data.data?.key
                 )
             }
         }.invokeOnCompletion {
