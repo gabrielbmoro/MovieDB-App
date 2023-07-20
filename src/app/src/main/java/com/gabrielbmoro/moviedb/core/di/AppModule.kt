@@ -21,6 +21,7 @@ import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import com.gabrielbmoro.moviedb.repository.retrofit.ApiRepository
 import com.gabrielbmoro.moviedb.repository.retrofit.LoggedInterceptor
 import com.gabrielbmoro.moviedb.repository.room.DataBaseFactory
+import com.gabrielbmoro.moviedb.repository.room.MIGRATION_1_2
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.moviedb.ui.screens.home.HomeViewModel
 import okhttp3.OkHttpClient
@@ -54,7 +55,11 @@ object AppModule {
                 androidContext(),
                 DataBaseFactory::class.java,
                 "MovieDBAppDataBase"
-            ).build().favoriteMoviesDAO()
+            )
+                .addMigrations(MIGRATION_1_2)
+                .fallbackToDestructiveMigration()
+                .build()
+                .favoriteMoviesDAO()
         }
     }
 

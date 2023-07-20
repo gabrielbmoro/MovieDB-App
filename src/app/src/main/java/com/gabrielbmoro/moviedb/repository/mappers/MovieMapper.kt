@@ -27,7 +27,7 @@ class MovieMapper {
 
     fun mapFavorite(favoriteMovie: FavoriteMovieDTO): Movie {
         return Movie(
-            id = favoriteMovie.id?.toLong() ?: System.currentTimeMillis(),
+            id = favoriteMovie.movieId,
             releaseDate = favoriteMovie.releaseDate,
             isFavorite = true,
             language = favoriteMovie.language,

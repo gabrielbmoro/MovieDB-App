@@ -15,7 +15,8 @@ class FavoriteMovieMapper {
             posterImageUrl = movie.posterImageUrl,
             backdropImageUrl = movie.backdropImageUrl,
             popularity = movie.popularity,
-            releaseDate = movie.releaseDate
+            releaseDate = movie.releaseDate,
+            movieId = movie.id
         )
     }
 }
