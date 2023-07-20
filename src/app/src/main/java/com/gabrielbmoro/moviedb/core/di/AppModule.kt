@@ -55,7 +55,11 @@ object AppModule {
                 androidContext(),
                 DataBaseFactory::class.java,
                 "MovieDBAppDataBase"
-            ).addMigrations(MIGRATION_1_2).build().favoriteMoviesDAO()
+            )
+                .addMigrations(MIGRATION_1_2)
+                .fallbackToDestructiveMigration()
+                .build()
+                .favoriteMoviesDAO()
         }
     }
 
