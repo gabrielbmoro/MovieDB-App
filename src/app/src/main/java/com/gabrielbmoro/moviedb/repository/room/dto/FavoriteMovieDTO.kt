@@ -3,7 +3,6 @@ package com.gabrielbmoro.moviedb.repository.room.dto
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "favorite_movies")
 data class FavoriteMovieDTO(
     @PrimaryKey(autoGenerate = true)
@@ -15,7 +14,8 @@ data class FavoriteMovieDTO(
     val overview: String,
     val releaseDate: String,
     val language: String,
-    val popularity: Float
+    val popularity: Float,
+    val movieId: Long,
 ) {
     companion object {
         fun mockWhyDoWeUseMovie() = FavoriteMovieDTO(
@@ -26,7 +26,8 @@ data class FavoriteMovieDTO(
             posterImageUrl = "https://image/bucket/s3/ga.png",
             popularity = 10f,
             votesAverage = 5f,
-            language = "en-US"
+            language = "en-US",
+            movieId = 0L
         )
     }
 }
