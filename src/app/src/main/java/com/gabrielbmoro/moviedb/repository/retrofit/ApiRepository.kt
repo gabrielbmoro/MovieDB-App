@@ -13,13 +13,13 @@ import retrofit2.http.Query
  */
 interface ApiRepository {
 
-    @GET("discover/movie?sort_by=popularity.desc")
+    @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String,
         @Query("page") pageNumber: Int
     ): PageResponse
 
-    @GET("discover/movie?sort_by=vote_average.desc")
+    @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
         @Query("page") pageNumber: Int
