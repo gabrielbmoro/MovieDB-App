@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#BB86FC</color>
-    <color name="star_color">#FFA000</color>
-    <color name="heart_color">#D32F2F</color>
-    <color name="colorSecondary">#FFFFFF</color>
+    <color name="colorPrimary">#825500</color>
+    <color name="colorPrimaryDark">#825500</color>
+    <color name="colorAccent">#FFDDAE</color>
 </resources>
