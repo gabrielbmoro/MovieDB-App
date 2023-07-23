@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.ui.screens.home
 
 import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
@@ -95,7 +96,7 @@ class HomeViewModel(
                 MovieListType.TOP_RATED -> getTopRatedMoviesUseCase()
                 MovieListType.POPULAR -> getPopularMoviesUseCase()
                 else -> emptyFlow()
-            }
+            }.cachedIn(viewModelScope)
             it.copy(
                 selectedMovieType = listType,
                 paginatedMovies = paginatedData
