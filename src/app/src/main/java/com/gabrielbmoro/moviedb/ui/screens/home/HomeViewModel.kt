@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.ui.screens.home
 
 import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
@@ -35,14 +36,14 @@ class HomeViewModel(
     )
 
     init {
-        when(movieListType) {
+        when (movieListType) {
             MovieListType.FAVORITE -> loadFavoriteMovies()
             else -> loadBy(movieListType)
         }
     }
 
     fun setup() {
-        if(movieListType == MovieListType.FAVORITE) {
+        if (movieListType == MovieListType.FAVORITE) {
             loadFavoriteMovies()
         }
     }
@@ -79,6 +80,7 @@ class HomeViewModel(
                     MovieListType.TOP_RATED,
                     getTopRatedMoviesUseCase()
                 )
+
                 SearchType.POPULAR -> Pair(MovieListType.POPULAR, getPopularMoviesUseCase())
             }
             it.copy(
@@ -88,13 +90,13 @@ class HomeViewModel(
         }
     }
 
-    private fun loadBy(listType: MovieListType){
+    private fun loadBy(listType: MovieListType) {
         _uiState.update {
             val paginatedData = when (listType) {
                 MovieListType.TOP_RATED -> getTopRatedMoviesUseCase()
                 MovieListType.POPULAR -> getPopularMoviesUseCase()
                 else -> emptyFlow()
-            }
+            }.cachedIn(viewModelScope)
             it.copy(
                 selectedMovieType = listType,
                 paginatedMovies = paginatedData
@@ -107,6 +109,12 @@ class HomeViewModel(
             MovieListType.TOP_RATED -> SearchType.TOP_RATED
             MovieListType.POPULAR -> SearchType.POPULAR
             else -> null
+        }
+    }
+
+    fun updateScrollPosition(y: Float) {
+        _uiState.update {
+            it.copy(areBarsVisible = y > 0)
         }
     }
 }
