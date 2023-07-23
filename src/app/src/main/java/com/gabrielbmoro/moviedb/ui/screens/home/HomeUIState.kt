@@ -9,5 +9,6 @@ data class HomeUIState(
     val favoriteMovies: List<Movie>? = null,
     val isLoading: Boolean = false,
     val selectedMovieType: MovieListType,
+    val areBarsVisible: Boolean = true,
     val paginatedMovies: Flow<PagingData<Movie>>
 )

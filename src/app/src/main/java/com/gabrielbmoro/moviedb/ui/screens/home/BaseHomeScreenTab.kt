@@ -37,10 +37,6 @@ fun BaseHomeScreenTab(
         mutableStateOf(false)
     }
 
-    var areBarsVisible by remember {
-        mutableStateOf(true)
-    }
-
     val lazyListState = rememberLazyListState()
 
     val onSelectMovie: ((Movie) -> Unit) = { movie ->
@@ -52,7 +48,7 @@ fun BaseHomeScreenTab(
     Scaffold(
         topBar = {
             AnimatedVisibility(
-                visible = areBarsVisible,
+                visible = uiState.areBarsVisible,
                 enter = expandVertically(
                     tween(delayMillis = 200, durationMillis = 500)
                 ),
@@ -73,7 +69,7 @@ fun BaseHomeScreenTab(
         },
         bottomBar = {
             AnimatedVisibility(
-                visible = areBarsVisible,
+                visible = uiState.areBarsVisible,
                 enter = fadeIn(
                     tween(delayMillis = 200, durationMillis = 500)
                 ),
@@ -100,7 +96,7 @@ fun BaseHomeScreenTab(
                                 available: Offset,
                                 source: NestedScrollSource
                             ): Offset {
-                                areBarsVisible = available.y > 0
+                                viewModel.updateScrollPosition(available.y)
                                 return super.onPreScroll(available, source)
                             }
                         },
