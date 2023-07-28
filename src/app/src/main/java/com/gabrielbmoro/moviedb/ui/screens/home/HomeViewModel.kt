@@ -74,20 +74,11 @@ class HomeViewModel(
 
 
     fun onSearchBy(searchType: SearchType) {
-        _uiState.update {
-            val (movieListType, paginatedData) = when (searchType) {
-                SearchType.TOP_RATED -> Pair(
-                    MovieListType.TOP_RATED,
-                    getTopRatedMoviesUseCase()
-                )
-
-                SearchType.POPULAR -> Pair(MovieListType.POPULAR, getPopularMoviesUseCase())
-            }
-            it.copy(
-                selectedMovieType = movieListType,
-                paginatedMovies = paginatedData
-            )
+        val movieListType = when (searchType) {
+            SearchType.TOP_RATED -> MovieListType.TOP_RATED
+            SearchType.POPULAR -> MovieListType.POPULAR
         }
+        loadBy(movieListType)
     }
 
     private fun loadBy(listType: MovieListType) {
