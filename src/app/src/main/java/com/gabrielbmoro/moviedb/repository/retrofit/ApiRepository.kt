@@ -15,25 +15,21 @@ interface ApiRepository {
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("api_key") apiKey: String,
         @Query("page") pageNumber: Int
     ): PageResponse
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
-        @Query("api_key") apiKey: String,
         @Query("page") pageNumber: Int
     ): PageResponse
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
-        @Query("api_key") apiKey: String,
         @Query("page") pageNumber: Int
     ): PageResponse
 
     @GET("movie/{movie_id}/videos")
     suspend fun getVideoStreams(
         @Path("movie_id") movieId: Long,
-        @Query("api_key") apiKey: String,
     ): VideoStreamsResponse
 }

@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.repository.retrofit
+package com.gabrielbmoro.moviedb.repository.retrofit.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Response

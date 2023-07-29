@@ -20,7 +20,8 @@ import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
 import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import com.gabrielbmoro.moviedb.repository.retrofit.ApiRepository
-import com.gabrielbmoro.moviedb.repository.retrofit.LoggedInterceptor
+import com.gabrielbmoro.moviedb.repository.retrofit.interceptors.AuthenticationInterceptor
+import com.gabrielbmoro.moviedb.repository.retrofit.interceptors.LoggedInterceptor
 import com.gabrielbmoro.moviedb.repository.room.DataBaseFactory
 import com.gabrielbmoro.moviedb.repository.room.MIGRATION_1_2
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreenViewModel
@@ -73,6 +74,11 @@ object AppModule {
                     OkHttpClient.Builder()
                         .connectTimeout(15, TimeUnit.SECONDS)
                         .readTimeout(15, TimeUnit.SECONDS)
+                        .addInterceptor(
+                            AuthenticationInterceptor(
+                                BuildConfig.API_TOKEN
+                            )
+                        )
                         .addInterceptor(LoggedInterceptor())
                         .build()
                 )
@@ -85,7 +91,6 @@ object AppModule {
         single<MoviesRepository> {
             MoviesRepositoryImpl(
                 api = get(),
-                apiToken = BuildConfig.API_TOKEN,
                 favoriteMoviesDAO = get(),
                 favoriteMoviesMapper = get(),
                 pageMapper = get(),

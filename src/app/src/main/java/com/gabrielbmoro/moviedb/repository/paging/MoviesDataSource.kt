@@ -7,7 +7,6 @@ import com.gabrielbmoro.moviedb.repository.retrofit.responses.MovieResponse
 
 class MoviesDataSource(
     private val api: ApiRepository,
-    private val apiKey: String,
     private val pagingType: PagingType
 ) : PagingSource<Int, MovieResponse>() {
 
@@ -20,21 +19,18 @@ class MoviesDataSource(
             val result = when (pagingType) {
                 PagingType.POPULAR_MOVIES -> {
                     api.getPopularMovies(
-                        apiKey = apiKey,
                         pageNumber = nextPageNumber
                     )
                 }
 
                 PagingType.TOP_RATED_MOVIES -> {
                     api.getTopRatedMovies(
-                        apiKey = apiKey,
                         pageNumber = nextPageNumber
                     )
                 }
 
                 PagingType.COMING_SOON -> {
                     api.getUpcomingMovies(
-                        apiKey = apiKey,
                         pageNumber = nextPageNumber
                     )
                 }
