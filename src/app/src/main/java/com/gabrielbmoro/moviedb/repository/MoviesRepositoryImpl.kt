@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 class MoviesRepositoryImpl(
     private val api: ApiRepository,
     private val favoriteMoviesDAO: FavoriteMoviesDAO,
-    private val apiToken: String,
     private val favoriteMoviesMapper: FavoriteMovieMapper,
     private val pageMapper: PageMapper,
     private val movieMapper: MovieMapper,
@@ -56,7 +55,6 @@ class MoviesRepositoryImpl(
         val pagingDataFlow = Pager(
             pagingSourceFactory = {
                 MoviesDataSource(
-                    apiKey = apiToken,
                     api = api,
                     pagingType = pagingType
                 )
@@ -111,7 +109,6 @@ class MoviesRepositoryImpl(
         return try {
            val result = api.getVideoStreams(
                movieId = movieId,
-               apiKey = apiToken
            )
             val data = videoStreamMapper.map(result)
             DataOrException(data = data, exception = null)
