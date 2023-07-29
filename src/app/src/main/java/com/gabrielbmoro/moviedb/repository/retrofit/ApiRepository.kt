@@ -25,6 +25,12 @@ interface ApiRepository {
         @Query("page") pageNumber: Int
     ): PageResponse
 
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("api_key") apiKey: String,
+        @Query("page") pageNumber: Int
+    ): PageResponse
+
     @GET("movie/{movie_id}/videos")
     suspend fun getVideoStreams(
         @Path("movie_id") movieId: Long,

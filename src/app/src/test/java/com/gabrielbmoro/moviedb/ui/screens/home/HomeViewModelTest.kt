@@ -8,6 +8,7 @@ import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.ui.common.widgets.SearchType
 import com.google.common.truth.Truth
 import io.mockk.coEvery
@@ -26,6 +27,7 @@ class HomeViewModelTest {
     private lateinit var getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
     private lateinit var getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase
     private lateinit var getPopularMoviesUseCase: GetPopularMoviesUseCase
+    private lateinit var getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -39,6 +41,7 @@ class HomeViewModelTest {
         getFavoriteMoviesUseCase = mockk()
         getTopRatedMoviesUseCase = mockk()
         getPopularMoviesUseCase = mockk()
+        getUpcomingMoviesUseCase = mockk()
     }
 
     @Test
@@ -48,7 +51,8 @@ class HomeViewModelTest {
             MovieListType.FAVORITE,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase
         )
 
         // assert
@@ -68,7 +72,8 @@ class HomeViewModelTest {
             MovieListType.TOP_RATED,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase,
         )
 
         // assert
@@ -88,7 +93,8 @@ class HomeViewModelTest {
             MovieListType.POPULAR,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase
         )
 
 
@@ -108,7 +114,8 @@ class HomeViewModelTest {
             MovieListType.FAVORITE,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase
         )
 
         runTest {
@@ -135,7 +142,8 @@ class HomeViewModelTest {
             MovieListType.FAVORITE,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase
         )
 
         runTest {
@@ -161,7 +169,8 @@ class HomeViewModelTest {
             MovieListType.POPULAR,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase,
         )
 
         runTest {
@@ -186,7 +195,8 @@ class HomeViewModelTest {
             MovieListType.TOP_RATED,
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             getPopularMoviesUseCase = getPopularMoviesUseCase,
-            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase
+            getTopRatedMoviesUseCase = getTopRatedMoviesUseCase,
+            getUpcomingMoviesUseCase = getUpcomingMoviesUseCase
         )
 
         runTest {

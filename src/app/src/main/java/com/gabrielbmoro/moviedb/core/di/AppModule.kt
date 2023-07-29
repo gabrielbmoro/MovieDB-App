@@ -7,6 +7,7 @@ import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
@@ -105,6 +106,8 @@ object AppModule {
 
         factory { GetTopRatedMoviesUseCase(get()) }
 
+        factory { GetUpcomingMoviesUseCase(get()) }
+
         factory { GetTrailersUseCase(get()) }
     }
 
@@ -114,7 +117,8 @@ object AppModule {
                 movieListType = movieListType,
                 getFavoriteMoviesUseCase = get(),
                 getTopRatedMoviesUseCase = get(),
-                getPopularMoviesUseCase = get()
+                getPopularMoviesUseCase = get(),
+                getUpcomingMoviesUseCase = get(),
             )
         }
 
