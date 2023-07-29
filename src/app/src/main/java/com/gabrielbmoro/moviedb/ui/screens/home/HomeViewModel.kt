@@ -6,6 +6,7 @@ import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.ui.common.widgets.SearchType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +19,8 @@ class HomeViewModel(
     private val movieListType: MovieListType,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
+    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -77,6 +79,7 @@ class HomeViewModel(
         val movieListType = when (searchType) {
             SearchType.TOP_RATED -> MovieListType.TOP_RATED
             SearchType.POPULAR -> MovieListType.POPULAR
+            SearchType.UPCOMING -> MovieListType.UPCOMING
         }
         loadBy(movieListType)
     }
@@ -86,6 +89,7 @@ class HomeViewModel(
             val paginatedData = when (listType) {
                 MovieListType.TOP_RATED -> getTopRatedMoviesUseCase()
                 MovieListType.POPULAR -> getPopularMoviesUseCase()
+                MovieListType.UPCOMING -> getUpcomingMoviesUseCase()
                 else -> emptyFlow()
             }.cachedIn(viewModelScope)
             it.copy(
@@ -99,6 +103,7 @@ class HomeViewModel(
         return when (_uiState.value.selectedMovieType) {
             MovieListType.TOP_RATED -> SearchType.TOP_RATED
             MovieListType.POPULAR -> SearchType.POPULAR
+            MovieListType.UPCOMING -> SearchType.UPCOMING
             else -> null
         }
     }

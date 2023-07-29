@@ -14,6 +14,7 @@ import com.gabrielbmoro.moviedb.R
 
 enum class SearchType(@StringRes val descriptionRes: Int) {
     TOP_RATED(R.string.top_rated_movies_title),
+    UPCOMING(R.string.upcoming_movies_title),
     POPULAR(R.string.popular_movies_title),
 }
 
@@ -67,10 +68,10 @@ fun MovieSearchAlert(
         text = {
             Column {
                 SearchOption(
-                    isChecked = currentSearchSelected == SearchType.TOP_RATED,
-                    title = stringResource(id = SearchType.TOP_RATED.descriptionRes),
+                    isChecked = currentSearchSelected == SearchType.UPCOMING,
+                    title = stringResource(id = SearchType.UPCOMING.descriptionRes),
                     onClick = {
-                        currentSearchSelected = SearchType.TOP_RATED
+                        currentSearchSelected = SearchType.UPCOMING
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -80,6 +81,15 @@ fun MovieSearchAlert(
                     title = stringResource(id = SearchType.POPULAR.descriptionRes),
                     onClick = {
                         currentSearchSelected = SearchType.POPULAR
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                SearchOption(
+                    isChecked = currentSearchSelected == SearchType.TOP_RATED,
+                    title = stringResource(id = SearchType.TOP_RATED.descriptionRes),
+                    onClick = {
+                        currentSearchSelected = SearchType.TOP_RATED
                     },
                     modifier = Modifier.fillMaxWidth()
                 )

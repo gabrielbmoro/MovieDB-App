@@ -30,6 +30,18 @@ class MoviesListTypeTest {
     }
 
     @Test
+    fun `should be able to identify a upcoming movie`() {
+        // arrange
+        val favoriteMovieId = 4
+
+        // act
+        val type = favoriteMovieId.convertToMovieListType()
+
+        // assert
+        Truth.assertThat(type).isEqualTo(MovieListType.UPCOMING)
+    }
+
+    @Test
     fun `should be able to identify a popular movie`() {
         // arrange
         val popularMovieId = 3
@@ -44,7 +56,7 @@ class MoviesListTypeTest {
     @Test
     fun `should not be able to identify a unknown movie`() {
         // arrange
-        val popularMovieId = 4
+        val popularMovieId = -1
 
         // act
         val type = popularMovieId.convertToMovieListType()

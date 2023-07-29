@@ -29,7 +29,7 @@ fun MovieDBNavHost(
         ) {
             val viewModel = koinViewModel<HomeViewModel>(
                 parameters = {
-                    ParametersHolder(mutableListOf(MovieListType.TOP_RATED))
+                    ParametersHolder(mutableListOf(MovieListType.UPCOMING))
                 }
             )
             BaseHomeScreenTab(navController, viewModel)

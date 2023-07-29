@@ -13,6 +13,8 @@ interface MoviesRepository {
 
     fun getTopRatedMovies(): Flow<PagingData<Movie>>
 
+    fun getUpcomingMovies(): Flow<PagingData<Movie>>
+
     suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception>
 
     suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception>
