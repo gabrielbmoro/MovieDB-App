@@ -17,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -33,6 +34,7 @@ import com.gabrielbmoro.moviedb.ui.common.navigation.NavigationItem
 import com.gabrielbmoro.moviedb.ui.common.widgets.AppToolbar
 import com.gabrielbmoro.moviedb.ui.common.widgets.MovieBottomNavigationBar
 import com.gabrielbmoro.moviedb.ui.common.widgets.MoviesCarousel
+import kotlinx.coroutines.launch
 
 @Composable
 fun MovieScreen(
@@ -41,6 +43,9 @@ fun MovieScreen(
 ) {
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
 
     val onSelectMovie: ((Movie) -> Unit) = { movie ->
         navController.navigate(
@@ -74,7 +79,11 @@ fun MovieScreen(
             ) {
                 MovieBottomNavigationBar(
                     navController,
-                    scrollToTop = {}
+                    scrollToTop = {
+                        coroutineScope.launch {
+                            scrollState.scrollTo(0)
+                        }
+                    }
                 )
             }
         },
@@ -104,7 +113,7 @@ fun MovieScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .align(Alignment.TopCenter)
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(scrollState)
                 ) {
                     MoviesCarousel(
                         sectionTitle = stringResource(id = R.string.upcoming_movies_title),
