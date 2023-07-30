@@ -5,7 +5,6 @@ import com.gabrielbmoro.moviedb.BuildConfig
 import com.gabrielbmoro.moviedb.core.providers.resources.AndroidResourcesProvider
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.domain.model.Movie
-import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
@@ -25,7 +24,6 @@ import com.gabrielbmoro.moviedb.repository.retrofit.interceptors.LoggedIntercept
 import com.gabrielbmoro.moviedb.repository.room.DataBaseFactory
 import com.gabrielbmoro.moviedb.repository.room.MIGRATION_1_2
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreenViewModel
-import com.gabrielbmoro.moviedb.ui.screens.home.HomeViewModel
 import com.gabrielbmoro.moviedb.ui.screens.movies.MoviesViewModel
 import com.gabrielbmoro.moviedb.ui.screens.wishlist.WishlistViewModel
 import okhttp3.OkHttpClient
@@ -119,16 +117,6 @@ object AppModule {
     }
 
     private val viewModelsModule = module {
-        viewModel { (movieListType: MovieListType) ->
-            HomeViewModel(
-                movieListType = movieListType,
-                getFavoriteMoviesUseCase = get(),
-                getTopRatedMoviesUseCase = get(),
-                getPopularMoviesUseCase = get(),
-                getUpcomingMoviesUseCase = get(),
-            )
-        }
-
         viewModel { (movie: Movie) ->
             DetailsScreenViewModel(
                 movie = movie,

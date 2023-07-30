@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.gabrielbmoro.moviedb.R
@@ -16,7 +15,6 @@ import com.gabrielbmoro.moviedb.ui.common.theme.ThemePreviews
 fun AppToolbar(
     title: String,
     backEvent: (() -> Unit)? = null,
-    searchEvent: (() -> Unit)? = null,
 ) {
     val navigationIcon: @Composable (() -> Unit) = backEvent?.let {
         {
@@ -38,16 +36,6 @@ fun AppToolbar(
             )
         },
         navigationIcon = navigationIcon,
-        actions = {
-            searchEvent?.let {
-                IconButton(onClick = searchEvent) {
-                    Icon(
-                        painterResource(id = R.drawable.ic_search),
-                        contentDescription = stringResource(id = R.string.search)
-                    )
-                }
-            }
-        }
     )
 }
 

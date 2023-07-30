@@ -7,13 +7,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.gabrielbmoro.moviedb.ui.common.parcelableOf
 import com.gabrielbmoro.moviedb.domain.model.Movie
-import com.gabrielbmoro.moviedb.domain.model.MovieListType
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreenViewModel
-import com.gabrielbmoro.moviedb.ui.screens.home.BaseHomeScreenTab
-import com.gabrielbmoro.moviedb.ui.screens.home.HomeViewModel
 import com.gabrielbmoro.moviedb.ui.screens.movies.MovieScreen
 import com.gabrielbmoro.moviedb.ui.screens.movies.MoviesViewModel
+import com.gabrielbmoro.moviedb.ui.screens.wishlist.WishlistScreen
+import com.gabrielbmoro.moviedb.ui.screens.wishlist.WishlistViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.ParametersHolder
 
@@ -34,12 +33,8 @@ fun MovieDBNavHost(
         }
 
         composable(route = NavigationItem.FavoriteMovies.route) {
-            val viewModel = koinViewModel<HomeViewModel>(
-                parameters = {
-                    ParametersHolder(mutableListOf(MovieListType.FAVORITE))
-                }
-            )
-            BaseHomeScreenTab(navController, viewModel)
+            val viewModel = koinViewModel<WishlistViewModel>()
+            WishlistScreen(navController, viewModel)
         }
 
         composable(

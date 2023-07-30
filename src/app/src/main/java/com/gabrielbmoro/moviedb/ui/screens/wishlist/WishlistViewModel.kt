@@ -38,4 +38,10 @@ class WishlistViewModel(
             }
         }
     }
+
+    fun updateScrollPosition(y: Float) {
+        _uiState.update {
+            it.copy(areBarsVisible = y > 0)
+        }
+    }
 }
