@@ -25,7 +25,7 @@ class WishlistViewModel(
         _uiState.value
     )
 
-    init {
+    fun load() {
         viewModelScope.launch {
             val result = getFavoriteMoviesUseCase()
 

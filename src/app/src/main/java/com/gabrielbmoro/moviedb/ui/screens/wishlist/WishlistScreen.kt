@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,4 +75,11 @@ fun WishlistScreen(
             }
         }
     }
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = {
+            viewModel.load()
+        }
+    )
 }
