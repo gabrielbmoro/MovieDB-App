@@ -26,6 +26,8 @@ import com.gabrielbmoro.moviedb.repository.room.DataBaseFactory
 import com.gabrielbmoro.moviedb.repository.room.MIGRATION_1_2
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.moviedb.ui.screens.home.HomeViewModel
+import com.gabrielbmoro.moviedb.ui.screens.movies.MoviesViewModel
+import com.gabrielbmoro.moviedb.ui.screens.wishlist.WishlistViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -133,6 +135,20 @@ object AppModule {
                 favoriteMovieUseCase = get(),
                 isFavoriteMovieUseCase = get(),
                 getTrailersUseCase = get()
+            )
+        }
+
+        viewModel {
+            MoviesViewModel(
+                getTopRatedMoviesUseCase = get(),
+                getUpcomingMoviesUseCase = get(),
+                getPopularMoviesUseCase = get()
+            )
+        }
+
+        viewModel {
+            WishlistViewModel(
+                getFavoriteMoviesUseCase = get()
             )
         }
     }

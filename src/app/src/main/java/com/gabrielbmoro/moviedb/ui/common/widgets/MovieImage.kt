@@ -6,19 +6,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.gabrielbmoro.moviedb.R
 
 @Composable
-fun MovieImage(imageUrl: String?, modifier: Modifier = Modifier, contentScale: ContentScale) {
+fun MovieImage(
+    imageUrl: String?,
+    contentDescription: String,
+    contentScale: ContentScale,
+    modifier: Modifier = Modifier,
+) {
 
     if (imageUrl != null) {
         AsyncImage(
             model = imageUrl,
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
-            contentDescription = stringResource(id = R.string.poster),
+            contentDescription = contentDescription,
             modifier = modifier
         )
     } else {
@@ -26,7 +30,7 @@ fun MovieImage(imageUrl: String?, modifier: Modifier = Modifier, contentScale: C
             painter = painterResource(id = R.drawable.ic_movie),
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
-            contentDescription = stringResource(id = R.string.poster),
+            contentDescription = contentDescription,
             modifier = modifier
         )
     }

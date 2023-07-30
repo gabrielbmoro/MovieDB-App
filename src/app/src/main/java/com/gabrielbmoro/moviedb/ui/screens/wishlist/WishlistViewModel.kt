@@ -1,0 +1,41 @@
+package com.gabrielbmoro.moviedb.ui.screens.wishlist
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class WishlistViewModel(
+    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
+) : ViewModel() {
+
+    private val _uiState = MutableStateFlow(
+        WishlistUIState(
+            favoriteMovies = null,
+            isLoading = false,
+        )
+    )
+    val uiState = _uiState.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        _uiState.value
+    )
+
+    init {
+        viewModelScope.launch {
+            val result = getFavoriteMoviesUseCase()
+
+            if (result.exception == null) {
+                _uiState.update {
+                    it.copy(
+                        favoriteMovies = result.data
+                    )
+                }
+            }
+        }
+    }
+}

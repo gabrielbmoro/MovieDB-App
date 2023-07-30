@@ -12,6 +12,8 @@ import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.moviedb.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.moviedb.ui.screens.home.BaseHomeScreenTab
 import com.gabrielbmoro.moviedb.ui.screens.home.HomeViewModel
+import com.gabrielbmoro.moviedb.ui.screens.movies.MovieScreen
+import com.gabrielbmoro.moviedb.ui.screens.movies.MoviesViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.ParametersHolder
 
@@ -27,12 +29,8 @@ fun MovieDBNavHost(
         composable(
             route = NavigationItem.Movies.route
         ) {
-            val viewModel = koinViewModel<HomeViewModel>(
-                parameters = {
-                    ParametersHolder(mutableListOf(MovieListType.UPCOMING))
-                }
-            )
-            BaseHomeScreenTab(navController, viewModel)
+            val viewModel = koinViewModel<MoviesViewModel>()
+            MovieScreen(navController, viewModel)
         }
 
         composable(route = NavigationItem.FavoriteMovies.route) {

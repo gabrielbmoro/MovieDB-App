@@ -21,7 +21,7 @@ import com.gabrielbmoro.moviedb.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-private fun MovieListInternal(
+fun MovieListInternal(
     lazyListState: LazyListState,
     itemFactory: (LazyListScope.() -> Unit),
     modifier: Modifier = Modifier
