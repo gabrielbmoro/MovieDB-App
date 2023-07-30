@@ -41,7 +41,7 @@ fun MovieScreen(
 
     ScreenScaffold(
         areBarsVisible = uiState.value.areBarsVisible,
-        appBarTitle = stringResource(id = R.string.movies_title),
+        appBarTitle = stringResource(id = R.string.movies),
         navController = navController,
         scrollToTop = {
             coroutineScope.launch {
@@ -59,7 +59,7 @@ fun MovieScreen(
                 .verticalScroll(scrollState)
         ) {
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.upcoming_movies_title),
+                sectionTitle = stringResource(id = R.string.upcoming),
                 movies = uiState.value.upcomingMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
@@ -70,7 +70,7 @@ fun MovieScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.popular_movies_title),
+                sectionTitle = stringResource(id = R.string.popular),
                 movies = uiState.value.popularMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
@@ -81,7 +81,7 @@ fun MovieScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.top_rated_movies_title),
+                sectionTitle = stringResource(id = R.string.top_rated),
                 movies = uiState.value.topRatedMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
