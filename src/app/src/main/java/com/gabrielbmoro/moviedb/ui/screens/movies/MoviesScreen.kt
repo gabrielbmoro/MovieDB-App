@@ -81,7 +81,7 @@ fun MovieScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.upcoming),
+                sectionTitle = stringResource(id = R.string.top_rated),
                 movies = uiState.value.topRatedMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
@@ -92,7 +92,7 @@ fun MovieScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.top_rated),
+                sectionTitle = stringResource(id = R.string.upcoming),
                 movies = uiState.value.upcomingMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
