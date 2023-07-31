@@ -34,6 +34,12 @@ class MoviesDataSource(
                         pageNumber = nextPageNumber
                     )
                 }
+
+                PagingType.NOW_PLAYING -> {
+                    api.getNowPlayingMovies(
+                        pageNumber = nextPageNumber
+                    )
+                }
             }
             LoadResult.Page(
                 data = result.results ?: emptyList(),
@@ -46,7 +52,7 @@ class MoviesDataSource(
     }
 
     enum class PagingType {
-        POPULAR_MOVIES, TOP_RATED_MOVIES, COMING_SOON
+        POPULAR_MOVIES, TOP_RATED_MOVIES, COMING_SOON, NOW_PLAYING
     }
 
     companion object {

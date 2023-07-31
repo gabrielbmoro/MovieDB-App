@@ -10,7 +10,7 @@ class GetTrailersUseCase(
     suspend operator fun invoke(movieId: Long): DataOrException<VideoStream?, Exception> {
         val result = repository.getVideoStreams(movieId)
         val trailer = result.data?.firstOrNull {
-            it.site == "YouTube" && it.official && it.type == "Trailer"
+            it.site == SITE_KEY && it.official && it.type == TYPE_KEY
         }
 
         return DataOrException(trailer, result.exception)

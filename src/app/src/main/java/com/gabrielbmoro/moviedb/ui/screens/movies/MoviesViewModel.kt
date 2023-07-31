@@ -3,6 +3,7 @@ package com.gabrielbmoro.moviedb.ui.screens.movies
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
@@ -15,6 +16,7 @@ class MoviesViewModel(
     getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     getPopularMoviesUseCase: GetPopularMoviesUseCase,
     getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
+    getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -24,6 +26,8 @@ class MoviesViewModel(
             topRatedMoviesPagingData = getTopRatedMoviesUseCase()
                 .cachedIn(viewModelScope),
             popularMoviesPagingData = getPopularMoviesUseCase()
+                .cachedIn(viewModelScope),
+            nowPlayingMoviesPagingData = getNowPlayingMoviesUseCase()
                 .cachedIn(viewModelScope)
         )
     )

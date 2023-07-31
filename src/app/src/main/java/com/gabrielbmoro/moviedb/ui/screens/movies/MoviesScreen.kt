@@ -59,8 +59,8 @@ fun MovieScreen(
                 .verticalScroll(scrollState)
         ) {
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.upcoming),
-                movies = uiState.value.upcomingMoviesPagingData,
+                sectionTitle = stringResource(id = R.string.now_playing),
+                movies = uiState.value.nowPlayingMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -81,8 +81,19 @@ fun MovieScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             MoviesCarousel(
-                sectionTitle = stringResource(id = R.string.top_rated),
+                sectionTitle = stringResource(id = R.string.upcoming),
                 movies = uiState.value.topRatedMoviesPagingData,
+                onSelectMovie = onSelectMovie,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(320.dp)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            MoviesCarousel(
+                sectionTitle = stringResource(id = R.string.top_rated),
+                movies = uiState.value.upcomingMoviesPagingData,
                 onSelectMovie = onSelectMovie,
                 modifier = Modifier
                     .fillMaxWidth()

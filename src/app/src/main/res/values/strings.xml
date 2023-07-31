@@ -4,7 +4,8 @@
     <string name="search">Search</string>
     <string name="filter_by">Filter by</string>
     <string name="token_value">755e0c67ac2fa886e775fb9057f0a32f</string>
-    <string name="top_rated">Top Rated</string>
+    <string name="top_rated">Top rated</string>
+    <string name="now_playing">Now playing</string>
     <string name="popular">Popular</string>
     <string name="upcoming">Up coming</string>
     <string name="movies">Movies</string>
