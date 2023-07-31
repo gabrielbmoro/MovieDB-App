@@ -51,6 +51,11 @@ class MoviesRepositoryImpl(
             MoviesDataSource.PagingType.COMING_SOON
         )
 
+    override fun getNowPlayingMovies(): Flow<PagingData<Movie>> =
+        getPagingData(
+            MoviesDataSource.PagingType.NOW_PLAYING
+        )
+
     private fun getPagingData(pagingType: MoviesDataSource.PagingType): Flow<PagingData<Movie>> {
         val pagingDataFlow = Pager(
             pagingSourceFactory = {

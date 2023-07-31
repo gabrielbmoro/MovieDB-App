@@ -4,11 +4,12 @@
     <string name="search">Search</string>
     <string name="filter_by">Filter by</string>
     <string name="token_value">755e0c67ac2fa886e775fb9057f0a32f</string>
-    <string name="top_rated_movies_title">Top Rated</string>
-    <string name="popular_movies_title">Popular</string>
-    <string name="upcoming_movies_title">Up coming</string>
-    <string name="movies_title">Movies</string>
-    <string name="favorite_movies_title">Favorite</string>
+    <string name="top_rated">Top rated</string>
+    <string name="now_playing">Now playing</string>
+    <string name="popular">Popular</string>
+    <string name="upcoming">Up coming</string>
+    <string name="movies">Movies</string>
+    <string name="favorite">Favorite</string>
     <string name="release_date">Release Date:</string>
     <string name="expand">Expand</string>
     <string name="hide">Hide</string>
@@ -24,7 +25,6 @@
     <string name="popularity">Popularity</string>
     <string name="vote_average">Vote Average</string>
     <string name="favorite_option">Favorite option</string>
-    <string name="favorite">Favorite</string>
     <string name="transition_name">movie card</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="error_message">Alguma coisa deu errado</string>

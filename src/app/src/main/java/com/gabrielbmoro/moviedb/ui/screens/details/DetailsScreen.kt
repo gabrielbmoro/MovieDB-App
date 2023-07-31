@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -76,7 +77,8 @@ private fun DetailsScreenMain(
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
-                            .fillMaxSize()
+                            .fillMaxSize(),
+                        contentDescription = stringResource(id = R.string.poster)
                     )
                 }
             }

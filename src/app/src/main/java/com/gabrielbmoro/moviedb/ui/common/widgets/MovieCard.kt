@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.R
 
@@ -33,14 +34,15 @@ fun MovieCard(
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .width(dimensionResource(id = R.dimen.poster_card_width))
-                    .fillMaxHeight()
+                    .fillMaxHeight(),
+                contentDescription = stringResource(id = R.string.poster)
             )
             MovieCardInformation(
                 title = title,
                 votes = votes,
                 modifier = Modifier
                     .fillMaxSize(),
-                description = description
+                description = description,
             )
         }
     }

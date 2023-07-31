@@ -16,13 +16,13 @@ sealed class NavigationItem(
 
     object Movies : NavigationItemTab(
         icon = R.drawable.ic_theaters,
-        title = R.string.movies_title,
+        title = R.string.movies,
         route = ScreenRoutesBuilder.MOVIES_ROUTE
     )
 
     object FavoriteMovies : NavigationItemTab(
         icon = R.drawable.ic_stars,
-        title = R.string.favorite_movies_title,
+        title = R.string.favorite,
         route = ScreenRoutesBuilder.FAVORITE_MOVIES_ROUTE
     )
 
