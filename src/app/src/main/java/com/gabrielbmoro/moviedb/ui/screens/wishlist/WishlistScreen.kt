@@ -53,13 +53,13 @@ fun WishlistScreen(
             uiState.value.isLoading -> {
                 BubbleLoader(
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.align(Alignment.TopCenter)
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
 
             uiState.value.favoriteMovies?.isEmpty() == true -> {
                 EmptyState(
-                    modifier = Modifier.align(Alignment.TopCenter)
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
 
@@ -69,7 +69,9 @@ fun WishlistScreen(
                         moviesList = moviesList,
                         onSelectMovie = onSelectMovie,
                         lazyListState = lazyListState,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.TopCenter)
                     )
                 }
             }
