@@ -48,8 +48,8 @@ fun MovieScreen(
                 scrollState.scrollTo(0)
             }
         },
-        updateScrollPosition = {
-            viewModel.updateScrollPosition(it.y)
+        onShowBars = {
+            viewModel.showBars(it)
         }
     ) {
         Column(

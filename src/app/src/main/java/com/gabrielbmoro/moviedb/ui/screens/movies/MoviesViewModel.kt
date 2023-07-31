@@ -34,9 +34,9 @@ class MoviesViewModel(
         _uiState.value
     )
 
-    fun updateScrollPosition(y: Float) {
+    fun showBars(show: Boolean) {
         _uiState.update {
-            it.copy(areBarsVisible = y > 0)
+            it.copy(areBarsVisible = show)
         }
     }
 }

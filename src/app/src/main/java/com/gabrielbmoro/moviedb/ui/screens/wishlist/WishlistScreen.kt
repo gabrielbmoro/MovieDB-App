@@ -40,8 +40,8 @@ fun WishlistScreen(
         areBarsVisible = uiState.value.areBarsVisible,
         appBarTitle = stringResource(id = R.string.favorite_movies_screen_title),
         navController = navController,
-        updateScrollPosition = {
-            viewModel.updateScrollPosition(it.y)
+        onShowBars = {
+            viewModel.showBars(it)
         },
         scrollToTop = {
             coroutineScope.launch {

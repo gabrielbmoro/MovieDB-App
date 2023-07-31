@@ -25,7 +25,7 @@ fun ScreenScaffold(
     appBarTitle: String,
     navController: NavController,
     modifier: Modifier = Modifier,
-    updateScrollPosition: ((Offset) -> Unit),
+    onShowBars: ((Boolean) -> Unit),
     scrollToTop: (() -> Unit),
     screenContent: @Composable BoxScope.() -> Unit,
 ) {
@@ -65,12 +65,13 @@ fun ScreenScaffold(
                 .fillMaxSize()
                 .nestedScroll(
                     object : NestedScrollConnection {
-                        override fun onPreScroll(
+                        override fun onPostScroll(
+                            consumed: Offset,
                             available: Offset,
                             source: NestedScrollSource
                         ): Offset {
-                            updateScrollPosition(available)
-                            return super.onPreScroll(available, source)
+                            onShowBars(consumed.y == 0f)
+                            return super.onPostScroll(consumed, available, source)
                         }
                     },
                 )
