@@ -134,7 +134,8 @@ object AppModule {
                 getTopRatedMoviesUseCase = get(),
                 getUpcomingMoviesUseCase = get(),
                 getPopularMoviesUseCase = get(),
-                getNowPlayingMoviesUseCase = get()
+                getNowPlayingMoviesUseCase = get(),
+                resourcesProvider = get()
             )
         }
 
