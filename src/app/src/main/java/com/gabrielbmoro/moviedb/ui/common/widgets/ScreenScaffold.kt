@@ -61,7 +61,10 @@ fun ScreenScaffold(
     ) {
         Box(
             modifier = modifier
-                .padding(top = it.calculateTopPadding())
+                .padding(
+                    top = it.calculateTopPadding(),
+                    bottom = it.calculateBottomPadding()
+                )
                 .fillMaxSize()
                 .nestedScroll(
                     object : NestedScrollConnection {
