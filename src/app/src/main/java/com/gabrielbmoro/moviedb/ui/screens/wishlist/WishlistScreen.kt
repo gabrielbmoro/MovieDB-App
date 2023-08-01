@@ -37,12 +37,9 @@ fun WishlistScreen(
     }
 
     ScreenScaffold(
-        areBarsVisible = uiState.value.areBarsVisible,
+        showTopBar = true,
         appBarTitle = stringResource(id = R.string.favorite_movies_screen_title),
         navController = navController,
-        onShowBars = {
-            viewModel.showBars(it)
-        },
         scrollToTop = {
             coroutineScope.launch {
                 lazyListState.scrollToItem(0, 0)

@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -22,11 +23,11 @@ fun MovieCard(
     onClick: (() -> Unit)
 ) {
     Card(
-        shape = RoundedCornerShape(12.dp),
         modifier = modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
             .clickable(onClick = onClick)
-            .height(dimensionResource(id = R.dimen.card_view_image_height))
+            .height(dimensionResource(id = R.dimen.card_view_image_height)),
     ) {
         Row {
             MovieImage(

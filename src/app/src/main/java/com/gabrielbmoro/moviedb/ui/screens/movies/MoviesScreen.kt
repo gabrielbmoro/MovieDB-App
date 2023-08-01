@@ -1,13 +1,14 @@
 package com.gabrielbmoro.moviedb.ui.screens.movies
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,8 +31,15 @@ fun MovieScreen(
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
-    val scrollState = rememberScrollState()
+    val lazyListState = rememberLazyListState()
+    val showTopBar by remember {
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex == 0
+        }
+    }
+
     val coroutineScope = rememberCoroutineScope()
+
 
     val onSelectMovie: ((Movie) -> Unit) = { movie ->
         navController.navigate(
@@ -40,35 +48,32 @@ fun MovieScreen(
     }
 
     ScreenScaffold(
-        areBarsVisible = uiState.value.areBarsVisible,
+        showTopBar = showTopBar,
         appBarTitle = stringResource(id = R.string.movies),
         navController = navController,
         scrollToTop = {
             coroutineScope.launch {
-                scrollState.scrollTo(0)
+                lazyListState.animateScrollToItem(0)
             }
-        },
-        onShowBars = {
-            viewModel.showBars(it)
         }
     ) {
-        Column(
+        LazyColumn(
+            state = lazyListState,
+            content = {
+                items(uiState.value.carousels.size) {
+                    val carousel = uiState.value.carousels[it]
+                    MoviesCarousel(
+                        content = carousel,
+                        onSelectMovie = onSelectMovie,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(320.dp)
+                    )
+                }
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.TopCenter)
-                .verticalScroll(scrollState)
-        ) {
-            uiState.value.carousels.forEach { carousel ->
-                MoviesCarousel(
-                    content = carousel,
-                    onSelectMovie = onSelectMovie,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(320.dp)
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-            }
-        }
+        )
     }
 }

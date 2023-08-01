@@ -38,10 +38,4 @@ class WishlistViewModel(
             }
         }
     }
-
-    fun showBars(show: Boolean) {
-        _uiState.update {
-            it.copy(areBarsVisible = show)
-        }
-    }
 }

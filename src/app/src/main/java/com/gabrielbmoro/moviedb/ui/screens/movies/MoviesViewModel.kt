@@ -13,7 +13,6 @@ import com.gabrielbmoro.moviedb.ui.common.widgets.MoviesCarouselContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 
 class MoviesViewModel(
     resourcesProvider: ResourcesProvider,
@@ -51,10 +50,4 @@ class MoviesViewModel(
         SharingStarted.Eagerly,
         _uiState.value
     )
-
-    fun showBars(show: Boolean) {
-        _uiState.update {
-            it.copy(areBarsVisible = show)
-        }
-    }
 }
