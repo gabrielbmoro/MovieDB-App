@@ -3,7 +3,6 @@ package com.gabrielbmoro.moviedb.ui.common.widgets
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +33,7 @@ data class MoviesCarouselContent(
 )
 
 @Composable
-fun ColumnScope.MoviesCarousel(
+fun MoviesCarousel(
     content: MoviesCarouselContent,
     onSelectMovie: ((Movie) -> Unit),
     modifier: Modifier = Modifier,
