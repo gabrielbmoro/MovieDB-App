@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.ui.screens.movies
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -74,6 +75,7 @@ fun MovieScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.TopCenter),
+            contentPadding = PaddingValues(vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp, alignment = Alignment.Top)
         )
     }

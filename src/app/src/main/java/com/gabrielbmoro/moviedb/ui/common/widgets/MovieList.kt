@@ -21,8 +21,8 @@ fun MovieList(
     LazyColumn(
         state = lazyListState,
         modifier = modifier.background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(vertical = 8.dp)
     ) {
         items(
             count = moviesList.size,

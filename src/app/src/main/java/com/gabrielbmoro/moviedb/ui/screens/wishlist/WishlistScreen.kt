@@ -44,7 +44,7 @@ fun WishlistScreen(
             coroutineScope.launch {
                 lazyListState.scrollToItem(0, 0)
             }
-        }
+        },
     ) {
         when {
             uiState.value.isLoading -> {
