@@ -32,7 +32,7 @@ fun MovieDBNavHost(
             MovieScreen(navController, viewModel)
         }
 
-        composable(route = NavigationItem.FavoriteMovies.route) {
+        composable(route = NavigationItem.WishList.route) {
             val viewModel = koinViewModel<WishlistViewModel>()
             WishlistScreen(navController, viewModel)
         }

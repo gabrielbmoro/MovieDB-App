@@ -38,7 +38,7 @@ fun WishlistScreen(
 
     ScreenScaffold(
         showTopBar = true,
-        appBarTitle = stringResource(id = R.string.favorite_movies_screen_title),
+        appBarTitle = stringResource(id = R.string.wishlist),
         navController = navController,
         scrollToTop = {
             coroutineScope.launch {

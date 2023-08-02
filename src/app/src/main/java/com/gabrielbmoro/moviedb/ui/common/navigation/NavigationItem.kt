@@ -20,10 +20,10 @@ sealed class NavigationItem(
         route = ScreenRoutesBuilder.MOVIES_ROUTE
     )
 
-    object FavoriteMovies : NavigationItemTab(
+    object WishList : NavigationItemTab(
         icon = R.drawable.ic_stars,
-        title = R.string.favorite,
-        route = ScreenRoutesBuilder.FAVORITE_MOVIES_ROUTE
+        title = R.string.wishlist,
+        route = ScreenRoutesBuilder.WISHLIST_ROUTE
     )
 
     data class DetailsScreen(

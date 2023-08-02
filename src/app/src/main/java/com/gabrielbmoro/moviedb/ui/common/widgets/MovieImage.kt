@@ -5,8 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.gabrielbmoro.moviedb.R
 
 @Composable
@@ -18,8 +20,14 @@ fun MovieImage(
 ) {
 
     if (imageUrl != null) {
+        val context = LocalContext.current
+        val imageRequest = ImageRequest.Builder(context)
+            .placeholder(R.drawable.ic_movie)
+            .data(imageUrl)
+            .build()
+
         AsyncImage(
-            model = imageUrl,
+            model = imageRequest,
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
             contentDescription = contentDescription,
