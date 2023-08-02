@@ -13,7 +13,7 @@ import com.gabrielbmoro.moviedb.ui.common.navigation.NavigationItem
 fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> Unit)) {
     val items = listOf(
         NavigationItem.Movies,
-        NavigationItem.FavoriteMovies
+        NavigationItem.WishList
     )
 
     NavigationBar {

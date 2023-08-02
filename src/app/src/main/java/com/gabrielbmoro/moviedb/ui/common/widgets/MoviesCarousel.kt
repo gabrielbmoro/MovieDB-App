@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -43,7 +44,9 @@ fun MoviesCarousel(
 
     Text(
         text = content.sectionTitle,
-        style = MaterialTheme.typography.headlineMedium
+        style = MaterialTheme.typography.titleMedium.copy(
+            fontSize = 18.sp
+        )
     )
 
     Spacer(

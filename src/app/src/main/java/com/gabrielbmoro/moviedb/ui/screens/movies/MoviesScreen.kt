@@ -1,5 +1,7 @@
 package com.gabrielbmoro.moviedb.ui.screens.movies
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,7 +42,6 @@ fun MovieScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-
     val onSelectMovie: ((Movie) -> Unit) = { movie ->
         navController.navigate(
             NavigationItem.DetailsScreen(movie).route
@@ -73,7 +74,9 @@ fun MovieScreen(
             },
             modifier = Modifier
                 .fillMaxSize()
-                .align(Alignment.TopCenter)
+                .align(Alignment.TopCenter),
+            contentPadding = PaddingValues(vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(18.dp, alignment = Alignment.Top)
         )
     }
 }

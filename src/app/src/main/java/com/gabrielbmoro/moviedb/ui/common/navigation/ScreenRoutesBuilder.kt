@@ -10,7 +10,7 @@ object ScreenRoutesBuilder {
     const val DETAILED_MOVIE_ARGUMENT_KEY = "targetMovie"
 
     private const val HOME_SCREEN_ROUTE = "home"
-    const val FAVORITE_MOVIES_ROUTE = "$HOME_SCREEN_ROUTE/favoriteMovies"
+    const val WISHLIST_ROUTE = "$HOME_SCREEN_ROUTE/favoriteMovies"
     const val MOVIES_ROUTE = "$HOME_SCREEN_ROUTE/moviesRoute"
 
     fun detailedMovieRoute(movie: Movie): String {
