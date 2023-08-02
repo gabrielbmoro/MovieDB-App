@@ -36,6 +36,9 @@ fun AppToolbar(
             )
         },
         navigationIcon = navigationIcon,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        )
     )
 }
 
