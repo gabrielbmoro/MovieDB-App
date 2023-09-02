@@ -55,13 +55,21 @@ retrofit_converter_json = { group = "com.squareup.retrofit2", name = "converter-
 koin_compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+compose_ui_test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "junit"}
 arc_core_common = { group = "androidx.arch.core", name = "core-common", version.ref = "arch_core" }
 arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", version.ref = "arch_core" }
 arc_core_testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch_core" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
 compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom" }
+compose_bom_ui = { module = "androidx.compose.ui:ui" }
+compose_bom_preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose_bom_activity = { module = "androidx.activity:activity-compose" }
+compose_bom_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose_bom_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
 compose_material_3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose_material_3" }
 paging_compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_compose" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }

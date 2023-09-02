@@ -98,15 +98,17 @@ dependencies {
     // Dagger - Hilt
     implementation(libs.bundles.koin)
 
-
+    // Test
     testImplementation(libs.bundles.test)
+    androidTestImplementation(libs.compose.ui.test)
 
     // Compose
     implementation(platform(libs.compose.bom))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.activity:activity-compose")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.compose.bom.ui)
+    implementation(libs.compose.bom.preview)
+    implementation(libs.compose.bom.activity)
+    debugImplementation(libs.compose.bom.ui.tooling)
+    debugImplementation(libs.compose.bom.ui.test.manifest)
     implementation(libs.bundles.compose.extras)
 
     // Coil
