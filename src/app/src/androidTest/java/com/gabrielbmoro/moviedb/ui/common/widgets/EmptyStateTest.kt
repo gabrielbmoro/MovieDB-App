@@ -19,6 +19,7 @@ class EmptyStateTest {
             EmptyState()
         }
 
+        // assert
         composeTestRule
             .onNodeWithText("No movie here")
             .assertIsDisplayed()
@@ -31,6 +32,7 @@ class EmptyStateTest {
             EmptyState()
         }
 
+        // assert
         composeTestRule
             .onNodeWithContentDescription("Sad emoji")
             .assertExists()
