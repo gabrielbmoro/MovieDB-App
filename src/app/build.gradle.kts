@@ -40,10 +40,6 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
-
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
