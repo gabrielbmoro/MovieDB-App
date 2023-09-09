@@ -1,1 +1,6 @@
 include ':app'
+include ':repository'
+include ':core'
+include ':feature_movies'
+include ':moviedetails'
+include ':feature_details'
