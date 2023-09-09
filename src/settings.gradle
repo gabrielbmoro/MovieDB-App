@@ -1,6 +1,0 @@
-include ':app'
-include ':repository'
-include ':core'
-include ':feature_movies'
-include ':feature_details'
-include ':feature_wishlist'
