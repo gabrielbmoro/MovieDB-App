@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "${ConfigData.APPLICATION_ID}.feature.wishlist"
+    namespace = "com.gabrielbmoro.moviedb.feature.wishlist"
 }
 
 dependencies {

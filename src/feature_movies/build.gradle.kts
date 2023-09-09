@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "${ConfigData.APPLICATION_ID}.feature.movies"
+    namespace = "com.gabrielbmoro.moviedb.feature.movies"
 }
 
 dependencies {

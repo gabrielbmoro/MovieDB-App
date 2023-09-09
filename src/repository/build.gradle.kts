@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "${ConfigData.APPLICATION_ID}.repository"
+    namespace = "com.gabrielbmoro.moviedb.repository"
 }
 
 dependencies {

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "${ConfigData.APPLICATION_ID}.core"
+    namespace = "com.gabrielbmoro.moviedb.core"
 }
 
 dependencies {
