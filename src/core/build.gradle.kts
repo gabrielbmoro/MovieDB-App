@@ -32,4 +32,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
+
+    // Test
+    testImplementation(libs.bundles.test)
+    androidTestImplementation(libs.bundles.test)
+    androidTestImplementation(libs.ui.compose.test)
 }

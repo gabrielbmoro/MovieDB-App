@@ -28,4 +28,12 @@ dependencies {
     debugImplementation(libs.compose.bom.ui.tooling)
     debugImplementation(libs.compose.bom.ui.test.manifest)
     implementation(libs.bundles.compose.extras)
+
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.koin)
+
+    // Test
+    testImplementation(libs.bundles.test)
+    androidTestImplementation(libs.bundles.test)
+    androidTestImplementation(libs.ui.compose.test)
 }

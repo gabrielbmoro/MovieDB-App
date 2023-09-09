@@ -6,6 +6,7 @@ koin = "3.4.0"
 compose_bom = "2023.05.01"
 compose_compiler = "1.4.3"
 compose_material_3 = "1.1.0"
+multidex = "2.0.1"
 nav_compose_integration = "2.6.0-rc01"
 coil = "2.3.0"
 appcompat = "1.6.1"
@@ -32,8 +33,15 @@ paging_compose = "1.0.0-alpha20"
 firebase-crashlytics-ktx = "18.3.7"
 firebase-analytics-ktx = "21.3.0"
 android_youtube_player_version = "12.0.0"
+agp = "8.0.2"
+kotlin1810 = "1.8.10"
+core-ktx = "1.10.1"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+material = "1.9.0"
 
 [libraries]
+androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
@@ -80,6 +88,10 @@ kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebase-crashlytics-ktx" }
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebase-analytics-ktx" }
 android_youtube_player = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android_youtube_player_version" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
@@ -90,3 +102,5 @@ retrofit = ["retrofit", "retrofit_converter_json", "gson"]
 koin = ["koin_android", "koin_compose"]
 
 [plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin1810" }

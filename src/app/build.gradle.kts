@@ -44,9 +44,11 @@ dependencies {
 
     implementation(libs.kotlin)
 
-    api(project(":repository"))
-
     api(project(":core"))
+    api(project(":repository"))
+    api(project(":feature_movies"))
+    api(project(":feature_details"))
+    api(project(":feature_wishlist"))
 
     implementation(libs.appcompat)
 
@@ -83,7 +85,4 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation.compose)
-
-    // Player
-    implementation(libs.android.youtube.player)
 }

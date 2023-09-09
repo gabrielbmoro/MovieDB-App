@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Back</string>
+    <string name="empty_view_title">No movie here</string>
+    <string name="alt_sad_emoji">Sad emoji</string>
+    <string name="poster">Poster</string>
+</resources>

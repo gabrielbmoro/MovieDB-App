@@ -60,7 +60,7 @@ fun PluginContainer.configure(project: Project) {
 fun AppExtension.applyCommons() {
     compileSdkVersion(ConfigData.COMPILE_SDK)
 
-    defaultConfig.apply {
+    defaultConfig {
         minSdk = ConfigData.MIN_SDK
         targetSdk = ConfigData.TARGET_SDK
         versionCode = ConfigData.versionCode()
@@ -84,7 +84,7 @@ fun AppExtension.applyCommons() {
         unitTests.isReturnDefaultValues = true
     }
 
-    compileOptions.apply {
+    compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -96,14 +96,25 @@ fun AppExtension.applyCommons() {
 fun LibraryExtension.applyCommons() {
     compileSdk = ConfigData.COMPILE_SDK
 
-    defaultConfig.apply {
+    defaultConfig {
         minSdk = ConfigData.MIN_SDK
-        targetSdk = ConfigData.TARGET_SDK
     }
 
-    compileOptions.apply {
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+
+    compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
+    buildFeatures {
+        compose = true
     }
 }
 

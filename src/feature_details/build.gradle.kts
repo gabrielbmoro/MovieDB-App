@@ -20,6 +20,9 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.lifecycle)
+
     // Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.bom.ui)
@@ -28,4 +31,12 @@ dependencies {
     debugImplementation(libs.compose.bom.ui.tooling)
     debugImplementation(libs.compose.bom.ui.test.manifest)
     implementation(libs.bundles.compose.extras)
+
+    // Player
+    implementation(libs.android.youtube.player)
+
+    // Test
+    testImplementation(libs.bundles.test)
+    androidTestImplementation(libs.bundles.test)
+    androidTestImplementation(libs.ui.compose.test)
 }
