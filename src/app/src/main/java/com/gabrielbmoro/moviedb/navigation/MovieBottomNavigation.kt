@@ -9,7 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun MovieBottomNavigationBar(navController: NavController, scrollToTop: (() -> Unit)) {
+fun MovieBottomNavigationBar(
+    navController: NavController,
+    scrollToTop: (() -> Unit)
+) {
     val items = listOf(
         NavigationItem.Movies,
         NavigationItem.WishList

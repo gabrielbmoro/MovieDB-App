@@ -18,6 +18,21 @@ import org.koin.core.parameter.ParametersHolder
 fun MovieDBNavHost(
     navController: NavHostController,
 ) {
+    val navigateToDetailsScreen : (Movie) -> Unit = { movie ->
+        navController.navigate(
+            NavigationItem.DetailsScreen(movie).route
+        )
+    }
+
+    val bottomBar : @Composable (()->Unit) = {
+        MovieBottomNavigationBar(
+            navController = navController,
+            scrollToTop = {
+
+            }
+        )
+    }
+
     NavHost(
         navController = navController,
         startDestination = NavigationItem.Movies.route,
@@ -27,30 +42,15 @@ fun MovieDBNavHost(
             route = NavigationItem.Movies.route
         ) {
             MovieScreen(
-                bottomBar = {
-                    MovieBottomNavigationBar(
-                        navController = navController,
-                        scrollToTop = {
-
-                        }
-                    )
-                },
-                navigateToDetailsScreen = { movie ->
-                    navController.navigate(
-                        NavigationItem.DetailsScreen(movie).route
-                    )
-                }
+                bottomBar = bottomBar,
+                navigateToDetailsScreen = navigateToDetailsScreen
             )
         }
 
         composable(route = NavigationItem.WishList.route) {
             WishlistScreen(
-                navigateToDetailsScreen = {
-
-                },
-                bottomBar = {
-
-                }
+                navigateToDetailsScreen = navigateToDetailsScreen,
+                bottomBar = bottomBar
             )
         }
 
@@ -76,7 +76,7 @@ fun MovieDBNavHost(
             })
             DetailsScreen(
                 onBackEvent = {
-
+                    navController.navigateUp()
                 },
                 viewModel = viewModel
             )
