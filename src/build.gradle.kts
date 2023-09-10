@@ -5,9 +5,7 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 
-plugins {
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
-}
+plugins { id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false }
 
 buildscript {
     repositories {
@@ -28,6 +26,12 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
+        kotlinOptions {
+            jvmTarget = ConfigData.JAVA_VM_TARGET
+        }
+    }
 }
 
 subprojects {
@@ -46,6 +50,7 @@ fun PluginContainer.configure(project: Project) {
                         applyCommons()
                     }
             }
+
             is LibraryPlugin -> {
                 project.extensions
                     .getByType<LibraryExtension>()
@@ -67,7 +72,7 @@ fun AppExtension.applyCommons() {
         versionCode = ConfigData.versionCode()
         versionName = ConfigData.versionName()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = ConfigData.TEST_INSTRUMENTATION_RUNNER
         vectorDrawables.useSupportLibrary = true
 
         applicationId = ConfigData.APPLICATION_ID
@@ -86,8 +91,8 @@ fun AppExtension.applyCommons() {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
+        targetCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
     }
 
     buildFeatures.compose = true
@@ -108,8 +113,8 @@ fun LibraryExtension.applyCommons() {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
+        targetCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
     }
 
     testOptions {
@@ -120,7 +125,7 @@ fun LibraryExtension.applyCommons() {
 }
 
 
-tasks.register("clean",Delete::class){
+tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
@@ -131,6 +136,9 @@ object ConfigData {
     const val COMPILE_SDK = 33
     private const val LOCAL_VERSION_CODE = 10
     private const val LOCAL_VERSION_NAME = "1.0.0"
+    val JAVA_COMPATIBILITY_VERSION = JavaVersion.VERSION_17
+    const val JAVA_VM_TARGET = "17"
+    const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
     fun versionCode(): Int {
         val versionCode = try {
