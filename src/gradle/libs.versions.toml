@@ -1,11 +1,13 @@
 [versions]
 firebase-crashlytics-gradle = "2.9.6"
 google-services = "4.3.15"
+hilt-android = "2.44"
+hilt-navigation-compose = "1.0.0"
 kotlin = "1.8.10"
-koin = "3.4.0"
 compose_bom = "2023.05.01"
 compose_compiler = "1.4.3"
 compose_material_3 = "1.1.0"
+multidex = "2.0.1"
 nav_compose_integration = "2.6.0-rc01"
 coil = "2.3.0"
 appcompat = "1.6.1"
@@ -32,10 +34,20 @@ paging_compose = "1.0.0-alpha20"
 firebase-crashlytics-ktx = "18.3.7"
 firebase-analytics-ktx = "21.3.0"
 android_youtube_player_version = "12.0.0"
+agp = "8.0.2"
+kotlin1810 = "1.8.10"
+core-ktx = "1.10.1"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+material = "1.9.0"
 
 [libraries]
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
@@ -52,8 +64,6 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit_converter_json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-koin_compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 arc_core_common = { group = "androidx.arch.core", name = "core-common", version.ref = "arch_core" }
 arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", version.ref = "arch_core" }
@@ -69,7 +79,7 @@ compose_bom_activity = { module = "androidx.activity:activity-compose" }
 compose_bom_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose_bom_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
-ui_compose_test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose_compiler"}
+ui_compose_test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose_compiler" }
 compose_material_3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose_material_3" }
 paging_compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_compose" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -80,6 +90,10 @@ kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebase-crashlytics-ktx" }
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebase-analytics-ktx" }
 android_youtube_player = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android_youtube_player_version" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
@@ -87,6 +101,8 @@ lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmo
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose", "paging_compose"]
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
-koin = ["koin_android", "koin_compose"]
+hilt = ["hilt-android", "androidx-hilt-navigation-compose"]
 
 [plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin1810" }

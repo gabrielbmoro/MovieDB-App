@@ -1,10 +1,19 @@
 @file:Suppress("UnstableApiUsage")
+
 @Suppress("DSL_SCOPE_VIOLATION")
+
+fun Project.debugAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_DEBUG")
+    ?: System.getenv("MOVIE_DB_API_TOKEN_DEBUG")
+
+fun Project.releaseAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_RELEASE")
+    ?: System.getenv("MOVIE_DB_API_TOKEN_RELEASE")
+
 
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
@@ -12,36 +21,12 @@ plugins {
 }
 
 android {
-    compileSdk = 33
-
-    defaultConfig {
-        applicationId = ConfigData.APPLICATION_ID
-        minSdk = ConfigData.MIN_SDK
-        targetSdk = ConfigData.TARGET_SDK
-
-        versionCode = ConfigData.versionCode()
-        versionName = ConfigData.versionName()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
-    }
-
-    /*
-    * When I add the CustomPreference I needed to put this block to avoid the error:
-    * - Invoke-customs are only supported starting with Android O (--min-api 26.
-    * - Reference: https://stackoverflow.com/questions/49891730/invoke-customs-are-only-supported-starting-with-android-0-min-api-26
-    */
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
     signingConfigs {
         create("release") {
             keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
             keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
 
-            storeFile = file(System.getenv("HOME").plus( "/moviedb-keystore"))
+            storeFile = file(System.getenv("HOME").plus("/moviedb-keystore"))
             storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
         }
     }
@@ -52,23 +37,14 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
             signingConfig = signingConfigs.getByName("release")
         }
     }
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
-    testOptions {
-        unitTests.isReturnDefaultValues = true
-    }
-    namespace = ConfigData.APPLICATION_ID
 }
 
 dependencies {
@@ -76,7 +52,14 @@ dependencies {
 
     implementation(libs.kotlin)
 
+    api(project(":core"))
+    api(project(":feature_movies"))
+    api(project(":feature_details"))
+    api(project(":feature_wishlist"))
+
     implementation(libs.appcompat)
+
+    implementation(libs.gson)
 
     implementation(libs.swipe.refresh.layout)
 
@@ -84,19 +67,15 @@ dependencies {
     implementation(libs.firebase.crashlytics.ktx)
     implementation(libs.firebase.analytics.ktx)
 
-    ksp(libs.room.compiler)
-    implementation(libs.bundles.room)
-
     implementation(libs.bundles.lifecycle)
 
     implementation(libs.preferences.ktx)
 
     implementation(libs.timber)
 
-    implementation(libs.bundles.retrofit)
-
-    // Dagger - Hilt
-    implementation(libs.bundles.koin)
+    // Koin
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     // Test
     testImplementation(libs.bundles.test)
@@ -112,12 +91,6 @@ dependencies {
     debugImplementation(libs.compose.bom.ui.test.manifest)
     implementation(libs.bundles.compose.extras)
 
-    // Coil
-    implementation(libs.coil)
-
     // Navigation
     implementation(libs.navigation.compose)
-
-    // Player
-    implementation(libs.android.youtube.player)
 }
