@@ -2,6 +2,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -30,7 +31,9 @@ dependencies {
     implementation(libs.bundles.compose.extras)
 
     implementation(libs.bundles.lifecycle)
-    implementation(libs.bundles.koin)
+
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
 
     // Test
     testImplementation(libs.bundles.test)

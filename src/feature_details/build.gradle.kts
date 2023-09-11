@@ -2,6 +2,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -20,7 +21,8 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(libs.bundles.koin)
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
     implementation(libs.bundles.lifecycle)
 
     // Compose

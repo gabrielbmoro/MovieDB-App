@@ -1,8 +1,9 @@
 [versions]
 firebase-crashlytics-gradle = "2.9.6"
 google-services = "4.3.15"
+hilt-android = "2.44"
+hilt-navigation-compose = "1.0.0"
 kotlin = "1.8.10"
-koin = "3.4.0"
 compose_bom = "2023.05.01"
 compose_compiler = "1.4.3"
 compose_material_3 = "1.1.0"
@@ -41,9 +42,12 @@ espresso-core = "3.5.1"
 material = "1.9.0"
 
 [libraries]
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
@@ -60,8 +64,6 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit_converter_json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-koin_compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 arc_core_common = { group = "androidx.arch.core", name = "core-common", version.ref = "arch_core" }
 arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", version.ref = "arch_core" }
@@ -77,7 +79,7 @@ compose_bom_activity = { module = "androidx.activity:activity-compose" }
 compose_bom_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose_bom_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
-ui_compose_test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose_compiler"}
+ui_compose_test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose_compiler" }
 compose_material_3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose_material_3" }
 paging_compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_compose" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -99,7 +101,7 @@ lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmo
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose", "paging_compose"]
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
-koin = ["koin_android", "koin_compose"]
+hilt = ["hilt-android", "androidx-hilt-navigation-compose"]
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

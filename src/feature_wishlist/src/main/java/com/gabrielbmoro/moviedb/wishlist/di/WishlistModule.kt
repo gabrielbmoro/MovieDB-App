@@ -1,20 +1,18 @@
 package com.gabrielbmoro.moviedb.wishlist.di
 
+import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
-import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@Module
+@InstallIn(SingletonComponent::class)
 object WishlistModule {
-    val module = module {
-        viewModel {
-            WishlistViewModel(
-                get(),
-            )
-        }
 
-        single {
-            GetFavoriteMoviesUseCase(get())
-        }
+    @Provides
+    fun getFavoriteMoviesUseCase(repository: MoviesRepository): GetFavoriteMoviesUseCase {
+        return GetFavoriteMoviesUseCase(repository)
     }
 }

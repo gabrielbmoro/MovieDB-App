@@ -2,6 +2,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -17,7 +18,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Koin
-    implementation(libs.bundles.koin)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     implementation(libs.timber)
 

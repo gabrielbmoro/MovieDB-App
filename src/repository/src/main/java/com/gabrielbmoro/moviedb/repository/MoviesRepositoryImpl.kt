@@ -4,18 +4,19 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
-import com.gabrielbmoro.moviedb.repository.model.Movie
-import com.gabrielbmoro.moviedb.repository.model.VideoStream
+import com.gabrielbmoro.moviedb.repository.datasources.paging.MoviesDataSource
+import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
+import com.gabrielbmoro.moviedb.repository.datasources.room.FavoriteMoviesDAO
 import com.gabrielbmoro.moviedb.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
 import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
-import com.gabrielbmoro.moviedb.repository.datasources.paging.MoviesDataSource
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
-import com.gabrielbmoro.moviedb.repository.datasources.room.FavoriteMoviesDAO
+import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class MoviesRepositoryImpl(
+class MoviesRepositoryImpl @Inject constructor(
     private val api: ApiRepository,
     private val favoriteMoviesDAO: FavoriteMoviesDAO,
     private val favoriteMoviesMapper: FavoriteMovieMapper,
@@ -112,9 +113,9 @@ class MoviesRepositoryImpl(
 
     override suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception> {
         return try {
-           val result = api.getVideoStreams(
-               movieId = movieId,
-           )
+            val result = api.getVideoStreams(
+                movieId = movieId,
+            )
             val data = videoStreamMapper.map(result)
             DataOrException(data = data, exception = null)
         } catch (exception: Exception) {

@@ -26,6 +26,7 @@ private fun getDrawableAccordingToStarPosition(votes: Float, position: Int): Int
             else
                 R.drawable.ic_star_border
         }
+
         else -> R.drawable.ic_star_border
     }
 }

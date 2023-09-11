@@ -5,26 +5,23 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.core.ui.parcelableOf
 import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreen
-import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieScreen
+import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreen
-import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.ParametersHolder
 
 @Composable
 fun MovieDBNavHost(
     navController: NavHostController,
 ) {
-    val navigateToDetailsScreen : (Movie) -> Unit = { movie ->
+    val navigateToDetailsScreen: (Movie) -> Unit = { movie ->
         navController.navigate(
             NavigationItem.DetailsScreen(movie).route
         )
     }
 
-    val bottomBar : @Composable (()->Unit) = {
+    val bottomBar: @Composable (() -> Unit) = {
         MovieBottomNavigationBar(
             navController = navController,
             scrollToTop = {
@@ -67,18 +64,11 @@ fun MovieDBNavHost(
                 Movie::class.java
             ) ?: throw IllegalArgumentException("Type should be movie")
 
-            val viewModel = koinViewModel<DetailsScreenViewModel>(parameters = {
-                ParametersHolder(
-                    mutableListOf(
-                        movie
-                    )
-                )
-            })
             DetailsScreen(
                 onBackEvent = {
                     navController.navigateUp()
                 },
-                viewModel = viewModel
+                movie = movie,
             )
         }
     }

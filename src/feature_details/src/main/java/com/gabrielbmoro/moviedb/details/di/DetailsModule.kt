@@ -3,31 +3,28 @@ package com.gabrielbmoro.moviedb.details.di
 import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.GetTrailersUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreenViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import com.gabrielbmoro.moviedb.repository.MoviesRepository
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@Module
+@InstallIn(SingletonComponent::class)
 object DetailsModule {
-    val module = module {
-        viewModel {
-            DetailsScreenViewModel(
-                get(),
-                get(),
-                get(),
-                get()
-            )
-        }
 
-        single {
-            FavoriteMovieUseCase(get())
-        }
+    @Provides
+    fun favoriteUseCase(repository: MoviesRepository): FavoriteMovieUseCase {
+        return FavoriteMovieUseCase(repository)
+    }
 
-        single {
-            GetTrailersUseCase(get())
-        }
+    @Provides
+    fun getTrailersUseCase(repository: MoviesRepository): GetTrailersUseCase {
+        return GetTrailersUseCase(repository)
+    }
 
-        single {
-            IsFavoriteMovieUseCase(get())
-        }
+    @Provides
+    fun isFavoriteMovieUseCase(repository: MoviesRepository): IsFavoriteMovieUseCase {
+        return IsFavoriteMovieUseCase(repository)
     }
 }

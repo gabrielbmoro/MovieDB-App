@@ -1,4 +1,5 @@
 @file:Suppress("UnstableApiUsage")
+
 @Suppress("DSL_SCOPE_VIOLATION")
 
 fun Project.debugAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_DEBUG")
@@ -12,6 +13,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
@@ -24,7 +26,7 @@ android {
             keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
             keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
 
-            storeFile = file(System.getenv("HOME").plus( "/moviedb-keystore"))
+            storeFile = file(System.getenv("HOME").plus("/moviedb-keystore"))
             storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
         }
     }
@@ -35,7 +37,10 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
             signingConfig = signingConfigs.getByName("release")
         }
@@ -48,7 +53,6 @@ dependencies {
     implementation(libs.kotlin)
 
     api(project(":core"))
-    api(project(":repository"))
     api(project(":feature_movies"))
     api(project(":feature_details"))
     api(project(":feature_wishlist"))
@@ -70,7 +74,8 @@ dependencies {
     implementation(libs.timber)
 
     // Koin
-    implementation(libs.bundles.koin)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     // Test
     testImplementation(libs.bundles.test)

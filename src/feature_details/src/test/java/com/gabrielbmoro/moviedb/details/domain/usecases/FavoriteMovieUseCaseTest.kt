@@ -1,8 +1,8 @@
 package com.gabrielbmoro.moviedb.details.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
-import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
+import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify

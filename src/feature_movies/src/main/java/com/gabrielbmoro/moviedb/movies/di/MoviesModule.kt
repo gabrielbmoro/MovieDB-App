@@ -4,28 +4,33 @@ import com.gabrielbmoro.moviedb.movies.domain.usecases.GetNowPlayingMoviesUseCas
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetUpcomingMoviesUseCase
-import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import com.gabrielbmoro.moviedb.repository.MoviesRepository
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@Module
+@InstallIn(SingletonComponent::class)
 object MoviesModule {
-    val module = module {
-        viewModel {
-            MoviesViewModel(
-                get(),
-                get(),
-                get(),
-                get(),
-                get()
-            )
-        }
 
-        single { GetNowPlayingMoviesUseCase(get()) }
+    @Provides
+    fun getNowPlayingMoviesUseCase(repository: MoviesRepository): GetNowPlayingMoviesUseCase {
+        return GetNowPlayingMoviesUseCase(repository)
+    }
 
-        single { GetPopularMoviesUseCase(get()) }
+    @Provides
+    fun getPopularMoviesUseCase(repository: MoviesRepository): GetPopularMoviesUseCase {
+        return GetPopularMoviesUseCase(repository)
+    }
 
-        single { GetTopRatedMoviesUseCase(get()) }
+    @Provides
+    fun getTopRatedMoviesUseCase(repository: MoviesRepository): GetTopRatedMoviesUseCase {
+        return GetTopRatedMoviesUseCase(repository)
+    }
 
-        single { GetUpcomingMoviesUseCase(get()) }
+    @Provides
+    fun getUpcomingMoviesUseCase(repository: MoviesRepository): GetUpcomingMoviesUseCase {
+        return GetUpcomingMoviesUseCase(repository)
     }
 }

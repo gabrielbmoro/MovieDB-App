@@ -3,8 +3,9 @@ package com.gabrielbmoro.moviedb.details.domain.usecases
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
+import javax.inject.Inject
 
-class GetTrailersUseCase(
+class GetTrailersUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
     suspend operator fun invoke(movieId: Long): DataOrException<VideoStream?, Exception> {

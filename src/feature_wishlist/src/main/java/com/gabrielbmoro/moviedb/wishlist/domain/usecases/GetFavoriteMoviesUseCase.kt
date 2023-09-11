@@ -5,8 +5,9 @@ import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class GetFavoriteMoviesUseCase(
+class GetFavoriteMoviesUseCase @Inject constructor(
     private val repository: MoviesRepository,
 ) {
 

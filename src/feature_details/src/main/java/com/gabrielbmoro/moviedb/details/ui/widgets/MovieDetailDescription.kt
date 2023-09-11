@@ -20,7 +20,7 @@ private fun SectionTitle(title: String, modifier: Modifier = Modifier) {
 @Composable
 fun MovieDetailDescription(
     @StringRes titleRes: Int,
-    content: @Composable ()->Unit,
+    content: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {

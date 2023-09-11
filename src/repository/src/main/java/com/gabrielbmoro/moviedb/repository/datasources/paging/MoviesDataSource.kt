@@ -4,8 +4,9 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieResponse
+import javax.inject.Inject
 
-class MoviesDataSource(
+class MoviesDataSource @Inject constructor(
     private val api: ApiRepository,
     private val pagingType: PagingType
 ) : PagingSource<Int, MovieResponse>() {

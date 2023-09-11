@@ -8,7 +8,8 @@ import com.gabrielbmoro.moviedb.wishlist.ui.MainDispatcherRule
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule

@@ -8,20 +8,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.EmptyState
-import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
 import com.gabrielbmoro.moviedb.feature.wishlist.R
-import org.koin.androidx.compose.koinViewModel
+import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 
 @Composable
 fun WishlistScreen(
     navigateToDetailsScreen: ((Movie) -> Unit),
     bottomBar: @Composable (() -> Unit),
-    viewModel: WishlistViewModel = koinViewModel(),
+    viewModel: WishlistViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 

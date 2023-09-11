@@ -4,7 +4,6 @@ import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
-import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbar
 import org.junit.Rule
 import org.junit.Test
 
@@ -54,7 +53,7 @@ class AppToolbarTest {
     @Test
     fun hideAppBarNavigationUpIcon() {
         // arrange
-        val backEvent : (()->Unit)? = null
+        val backEvent: (() -> Unit)? = null
 
         // act
         composeTestRule.setContent {

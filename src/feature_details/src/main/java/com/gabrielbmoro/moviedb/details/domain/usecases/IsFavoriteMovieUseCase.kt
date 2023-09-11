@@ -2,8 +2,9 @@ package com.gabrielbmoro.moviedb.details.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
+import javax.inject.Inject
 
-class IsFavoriteMovieUseCase(
+class IsFavoriteMovieUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
 

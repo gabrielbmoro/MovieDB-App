@@ -21,7 +21,10 @@ fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
         YouTubePlayerView(
             context
         ).apply {
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
 
             addYouTubePlayerListener(
                 object : YouTubePlayerListener {

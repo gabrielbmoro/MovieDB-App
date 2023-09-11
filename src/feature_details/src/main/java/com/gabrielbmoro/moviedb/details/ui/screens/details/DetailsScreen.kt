@@ -5,28 +5,38 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gabrielbmoro.moviedb.feature.details.R
-import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
-import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
 import com.gabrielbmoro.moviedb.core.ui.theme.ThemePreviews
 import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbar
+import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
+import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
-import org.koin.androidx.compose.koinViewModel
+import com.gabrielbmoro.moviedb.feature.details.R
+import com.gabrielbmoro.moviedb.repository.model.Movie
 
 @Composable
 private fun DetailsScreenMain(
@@ -139,7 +149,8 @@ private fun DetailsScreenMain(
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun DetailsScreen(
-    viewModel: DetailsScreenViewModel = koinViewModel(),
+    viewModel: DetailsScreenViewModel = hiltViewModel(),
+    movie: Movie,
     onBackEvent: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -155,6 +166,13 @@ fun DetailsScreen(
             viewModel.isToFavoriteOrUnFavorite(it)
         },
         onBackEvent = onBackEvent
+    )
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = {
+            viewModel.setup(movie)
+        }
     )
 }
 
