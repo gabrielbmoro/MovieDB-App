@@ -35,7 +35,7 @@ MOVIE_DB_API_TOKEN_RELEASE=<token here>
 ### Tech stack summary 🛠️
 
 - Jetpack Compose
-- Koin
+- Hilt
 - Coroutines
 - Retrofit
 - Room
