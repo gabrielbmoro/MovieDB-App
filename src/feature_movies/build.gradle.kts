@@ -21,7 +21,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    /// Compose
+    // Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose.impl)
     debugImplementation(libs.bundles.compose.debug.impl)
