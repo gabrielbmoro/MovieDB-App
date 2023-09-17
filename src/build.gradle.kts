@@ -139,14 +139,6 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
-task("addPreCommitGitHookOnBuild") {
-    println("⚈ ⚈ ⚈ Running Add Pre Commit Git Hook Script on Build ⚈ ⚈ ⚈")
-    exec {
-        commandLine("cp", "./.script/pre-commit", "../.git/hooks")
-    }
-    println("✅ Added Pre Commit Git Hook Script.")
-}
-
 object ConfigData {
     const val APPLICATION_ID = "com.gabrielbmoro.moviedb"
     const val MIN_SDK = 22
