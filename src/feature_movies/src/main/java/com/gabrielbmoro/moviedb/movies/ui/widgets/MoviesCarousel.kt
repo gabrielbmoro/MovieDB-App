@@ -39,7 +39,7 @@ data class MoviesCarouselContent(
 fun MoviesCarousel(
     content: MoviesCarouselContent,
     onSelectMovie: ((Movie) -> Unit),
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val lazyPagingItems = content.movies.collectAsLazyPagingItems()
     val lazyListState = rememberLazyListState()
@@ -84,7 +84,7 @@ fun MoviesCarousel(
                                 .width(180.dp)
                                 .clip(RoundedCornerShape(12.dp))
                                 .clickable { onSelectMovie(movie) }
-                                .fillMaxHeight(),
+                                .fillMaxHeight()
                         )
                     }
                 }

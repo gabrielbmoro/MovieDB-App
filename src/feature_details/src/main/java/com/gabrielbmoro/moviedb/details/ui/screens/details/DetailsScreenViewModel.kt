@@ -18,7 +18,7 @@ import javax.inject.Inject
 class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val getTrailersUseCase: GetTrailersUseCase,
+    private val getTrailersUseCase: GetTrailersUseCase
 ) : ViewModel() {
 
     private lateinit var movie: Movie
@@ -76,7 +76,7 @@ class DetailsScreenViewModel @Inject constructor(
         }.invokeOnCompletion {
             _uiState.update {
                 it.copy(
-                    isLoading = false,
+                    isLoading = false
                 )
             }
         }

@@ -78,7 +78,7 @@ class GetTrailersUseCaseTest {
         coEvery { repository.getVideoStreams(movieId) }.returns(
             DataOrException(
                 listOf(
-                    VideoStream.mockVideoStreamNotTrailer(),
+                    VideoStream.mockVideoStreamNotTrailer()
                 )
             )
         )

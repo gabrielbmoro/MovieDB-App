@@ -21,7 +21,7 @@ import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 fun WishlistScreen(
     navigateToDetailsScreen: ((Movie) -> Unit),
     bottomBar: @Composable (() -> Unit),
-    viewModel: WishlistViewModel = hiltViewModel(),
+    viewModel: WishlistViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -30,7 +30,7 @@ fun WishlistScreen(
     ScreenScaffold(
         showTopBar = true,
         appBarTitle = stringResource(id = R.string.wishlist),
-        bottomBar = bottomBar,
+        bottomBar = bottomBar
     ) {
         when {
             uiState.value.isLoading -> {

@@ -8,6 +8,7 @@ import com.android.build.gradle.LibraryPlugin
 plugins {
     id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
     id("com.google.dagger.hilt.android") version "2.44" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
 buildscript {
@@ -38,8 +39,15 @@ allprojects {
 }
 
 subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
+
     // Accessing the `PluginContainer` in order to use `whenPluginAdded` function
     project.plugins.configure(project = project)
+
+    // Optionally configure plugin
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        debug.set(true)
+    }
 }
 
 // Extension function on `PluginContainer`
@@ -126,7 +134,6 @@ fun LibraryExtension.applyCommons() {
 
     buildFeatures.compose = true
 }
-
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

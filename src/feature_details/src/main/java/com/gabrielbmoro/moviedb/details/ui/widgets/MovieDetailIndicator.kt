@@ -32,7 +32,7 @@ fun MovieDetailIndicator(
             onFavoriteMovie(isFavorite.not())
         }
         FiveStars(
-            votes = votesAverage,
+            votes = votesAverage
         )
     }
 }

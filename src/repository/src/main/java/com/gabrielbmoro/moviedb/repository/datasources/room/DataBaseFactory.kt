@@ -8,5 +8,4 @@ import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
 abstract class DataBaseFactory : RoomDatabase() {
 
     abstract fun favoriteMoviesDAO(): FavoriteMoviesDAO
-
 }

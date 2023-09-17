@@ -20,7 +20,7 @@ import com.gabrielbmoro.moviedb.core.ui.theme.ThemePreviews
 @Composable
 fun AppToolbar(
     title: String,
-    backEvent: (() -> Unit)? = null,
+    backEvent: (() -> Unit)? = null
 ) {
     val navigationIcon: @Composable (() -> Unit) = backEvent?.let {
         {

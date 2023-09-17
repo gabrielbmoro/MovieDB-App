@@ -24,7 +24,7 @@ private fun Bubble(
     startFractionValue: Float,
     targetFractionValue: Float,
     delayTimeMillis: Int,
-    durationTimeMillis: Int,
+    durationTimeMillis: Int
 ) {
     val animatedValue = remember { Animatable(startFractionValue) }
 

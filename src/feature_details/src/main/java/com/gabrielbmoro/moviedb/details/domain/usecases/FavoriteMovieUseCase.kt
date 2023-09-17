@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 open class FavoriteMovieUseCase @Inject constructor(
-    private val repository: MoviesRepository,
+    private val repository: MoviesRepository
 ) {
 
     suspend operator fun invoke(

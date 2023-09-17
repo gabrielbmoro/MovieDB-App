@@ -14,7 +14,7 @@ class VideoStreamMapper @Inject constructor() {
             type = it.type,
             official = it.official,
             name = it.name,
-            id = it.id,
+            id = it.id
         )
     }
 }

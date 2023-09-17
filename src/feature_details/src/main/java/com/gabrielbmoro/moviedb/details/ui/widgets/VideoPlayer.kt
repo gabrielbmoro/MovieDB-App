@@ -14,7 +14,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 @Composable
 fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
-
     val context = LocalContext.current
 
     var youtubePlayer: YouTubePlayerView? = remember {

@@ -13,7 +13,7 @@ import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreen
 
 @Composable
 fun MovieDBNavHost(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     val navigateToDetailsScreen: (Movie) -> Unit = { movie ->
         navController.navigate(
@@ -25,16 +25,14 @@ fun MovieDBNavHost(
         MovieBottomNavigationBar(
             navController = navController,
             scrollToTop = {
-
             }
         )
     }
 
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.Movies.route,
+        startDestination = NavigationItem.Movies.route
     ) {
-
         composable(
             route = NavigationItem.Movies.route
         ) {
@@ -57,7 +55,7 @@ fun MovieDBNavHost(
                 navArgument(ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY) {
                     type = NavMovieType()
                 }
-            ),
+            )
         ) {
             val movie = it.arguments?.parcelableOf(
                 ScreenRoutesBuilder.DETAILED_MOVIE_ARGUMENT_KEY,
@@ -68,7 +66,7 @@ fun MovieDBNavHost(
                 onBackEvent = {
                     navController.navigateUp()
                 },
-                movie = movie,
+                movie = movie
             )
         }
     }

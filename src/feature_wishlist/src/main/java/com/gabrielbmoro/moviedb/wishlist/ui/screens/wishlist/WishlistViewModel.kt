@@ -19,7 +19,7 @@ class WishlistViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(
         WishlistUIState(
             favoriteMovies = null,
-            isLoading = false,
+            isLoading = false
         )
     )
     val uiState = _uiState.stateIn(

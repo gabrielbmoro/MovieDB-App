@@ -22,7 +22,7 @@ class MoviesViewModel @Inject constructor(
     getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     getPopularMoviesUseCase: GetPopularMoviesUseCase,
     getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
+    getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
