@@ -12,7 +12,7 @@ import javax.inject.Named
 object AppModule {
 
 
-    
+
     @Provides
     @Named("api_token")
     fun apiToken(): String {
