@@ -23,7 +23,7 @@ dependencies {
 
     implementation(libs.paging.compose)
 
-    // Koin
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 

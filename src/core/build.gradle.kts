@@ -17,7 +17,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Koin
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
@@ -25,11 +25,8 @@ dependencies {
 
     // Compose
     implementation(platform(libs.compose.bom))
-    implementation(libs.compose.bom.ui)
-    implementation(libs.compose.bom.preview)
-    implementation(libs.compose.bom.activity)
-    debugImplementation(libs.compose.bom.ui.tooling)
-    debugImplementation(libs.compose.bom.ui.test.manifest)
+    implementation(libs.bundles.compose.impl)
+    debugImplementation(libs.bundles.compose.debug.impl)
     implementation(libs.bundles.compose.extras)
 
     // Coil

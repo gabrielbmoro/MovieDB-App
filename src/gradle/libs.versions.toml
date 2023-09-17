@@ -102,6 +102,9 @@ room = ["room_ktx", "room_runtime"]
 lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose", "paging_compose"]
+compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
+compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
+
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
 hilt = ["hilt-android", "androidx-hilt-navigation-compose"]
 
