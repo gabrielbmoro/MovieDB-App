@@ -6,9 +6,9 @@ import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 
 plugins {
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
-    id("com.google.dagger.hilt.android") version "2.44" apply false
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.ktlint)
 }
 
 buildscript {
@@ -38,8 +38,10 @@ allprojects {
     }
 }
 
+val ktlintPluginId = libs.plugins.ktlint.get().pluginId
+
 subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
+    apply(plugin = ktlintPluginId) // Version should be inherited from parent
 
     // Accessing the `PluginContainer` in order to use `whenPluginAdded` function
     project.plugins.configure(project = project)
