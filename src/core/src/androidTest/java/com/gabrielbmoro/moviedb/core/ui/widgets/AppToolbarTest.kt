@@ -33,7 +33,6 @@ class AppToolbarTest {
     fun showAppBarNavigationUpIcon() {
         // arrange
         val backEvent = {
-
         }
 
         // act

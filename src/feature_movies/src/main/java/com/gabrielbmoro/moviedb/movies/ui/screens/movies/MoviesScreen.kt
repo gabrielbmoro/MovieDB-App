@@ -26,9 +26,8 @@ import com.gabrielbmoro.moviedb.repository.model.Movie
 fun MovieScreen(
     bottomBar: @Composable (() -> Unit),
     navigateToDetailsScreen: ((Movie) -> Unit),
-    viewModel: MoviesViewModel = hiltViewModel(),
+    viewModel: MoviesViewModel = hiltViewModel()
 ) {
-
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     val lazyListState = rememberLazyListState()
@@ -41,7 +40,7 @@ fun MovieScreen(
     ScreenScaffold(
         showTopBar = showTopBar,
         appBarTitle = stringResource(id = R.string.movies),
-        bottomBar = bottomBar,
+        bottomBar = bottomBar
     ) {
         LazyColumn(
             state = lazyListState,

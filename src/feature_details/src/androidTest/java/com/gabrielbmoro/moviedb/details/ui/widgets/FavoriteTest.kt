@@ -19,7 +19,6 @@ class FavoriteTest {
         // act
         composeTestRule.setContent {
             Favorite(isFavorite = isFavorite) {
-
             }
         }
 
@@ -37,7 +36,6 @@ class FavoriteTest {
         // act
         composeTestRule.setContent {
             Favorite(isFavorite = isFavorite) {
-
             }
         }
 

@@ -40,7 +40,7 @@ class WishlistViewModelTest {
 
         // act
         val viewModel = WishlistViewModel(
-            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
         )
         viewModel.load()
 
@@ -52,20 +52,20 @@ class WishlistViewModelTest {
         }
     }
 
-
     @Test
     fun `should be able to fetch my favorite movies - not empty list`() {
         // arrange
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(
             listOf(
                 Movie.mockChuckNorrisVsVandammeMovie()
-            ), null
+            ),
+            null
         )
         coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
         // act
         val viewModel = WishlistViewModel(
-            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
         )
         viewModel.load()
 

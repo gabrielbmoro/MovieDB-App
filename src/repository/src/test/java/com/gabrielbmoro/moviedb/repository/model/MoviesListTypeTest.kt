@@ -64,5 +64,4 @@ class MoviesListTypeTest {
         // assert
         Truth.assertThat(type).isNull()
     }
-
 }

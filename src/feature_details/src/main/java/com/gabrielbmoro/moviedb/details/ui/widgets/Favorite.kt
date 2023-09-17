@@ -20,20 +20,23 @@ import com.gabrielbmoro.moviedb.feature.details.R
 
 @Composable
 fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> Unit)) {
-    val heartPair = if (!isFavorite) Pair(
-        R.drawable.ic_heart_border,
-        stringResource(id = R.string.alt_is_not_favorite)
-    )
-    else Pair(
-        R.drawable.ic_heart_filled,
-        stringResource(id = R.string.alt_is_favorite)
-    )
+    val heartPair = if (!isFavorite) {
+        Pair(
+            R.drawable.ic_heart_border,
+            stringResource(id = R.string.alt_is_not_favorite)
+        )
+    } else {
+        Pair(
+            R.drawable.ic_heart_filled,
+            stringResource(id = R.string.alt_is_favorite)
+        )
+    }
 
     Card(
         modifier = modifier
             .size(56.dp)
             .clip(CircleShape)
-            .clickable(onClick = action),
+            .clickable(onClick = action)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(

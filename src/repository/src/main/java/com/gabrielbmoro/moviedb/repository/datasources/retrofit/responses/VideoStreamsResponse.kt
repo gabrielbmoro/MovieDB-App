@@ -16,7 +16,7 @@ data class VideoStreamsResponseItem(
     @SerializedName("official")
     val official: Boolean,
     @SerializedName("type")
-    val type: String,
+    val type: String
 )
 
 data class VideoStreamsResponse(

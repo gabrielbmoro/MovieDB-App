@@ -26,7 +26,7 @@ fun EmptyState(modifier: Modifier = Modifier) {
     ) {
         Image(
             painter = painterResource(R.mipmap.ic_sad_emoji),
-            contentDescription = stringResource(id = R.string.alt_sad_emoji),
+            contentDescription = stringResource(id = R.string.alt_sad_emoji)
         )
         Text(
             text = stringResource(R.string.empty_view_title),

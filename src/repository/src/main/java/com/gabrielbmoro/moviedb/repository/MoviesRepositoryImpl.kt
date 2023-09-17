@@ -22,7 +22,7 @@ class MoviesRepositoryImpl @Inject constructor(
     private val favoriteMoviesMapper: FavoriteMovieMapper,
     private val pageMapper: PageMapper,
     private val movieMapper: MovieMapper,
-    private val videoStreamMapper: VideoStreamMapper,
+    private val videoStreamMapper: VideoStreamMapper
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {
@@ -114,7 +114,7 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception> {
         return try {
             val result = api.getVideoStreams(
-                movieId = movieId,
+                movieId = movieId
             )
             val data = videoStreamMapper.map(result)
             DataOrException(data = data, exception = null)

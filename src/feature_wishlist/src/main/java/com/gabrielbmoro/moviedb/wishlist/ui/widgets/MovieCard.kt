@@ -33,7 +33,7 @@ fun MovieCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .clickable(onClick = onClick)
-            .height(dimensionResource(id = R.dimen.card_view_image_height)),
+            .height(dimensionResource(id = R.dimen.card_view_image_height))
     ) {
         Row {
             MovieImage(
@@ -49,7 +49,7 @@ fun MovieCard(
                 votes = votes,
                 modifier = Modifier
                     .fillMaxSize(),
-                description = description,
+                description = description
             )
         }
     }

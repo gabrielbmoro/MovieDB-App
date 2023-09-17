@@ -21,10 +21,11 @@ private fun getDrawableAccordingToStarPosition(votes: Float, position: Int): Int
     return when {
         votes >= position -> R.drawable.ic_star
         votes < position -> {
-            if (votes.roundToInt() == position)
+            if (votes.roundToInt() == position) {
                 R.drawable.ic_star_half
-            else
+            } else {
                 R.drawable.ic_star_border
+            }
         }
 
         else -> R.drawable.ic_star_border
@@ -39,7 +40,8 @@ fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(
-                        numberOfStars, 0
+                        numberOfStars,
+                        0
                     )
                 ),
                 contentDescription = ""
@@ -47,7 +49,8 @@ fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(
-                        numberOfStars, 1
+                        numberOfStars,
+                        1
                     )
                 ),
                 contentDescription = ""
@@ -55,7 +58,8 @@ fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(
-                        numberOfStars, 2
+                        numberOfStars,
+                        2
                     )
                 ),
                 contentDescription = ""
@@ -63,7 +67,8 @@ fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(
-                        numberOfStars, 3
+                        numberOfStars,
+                        3
                     )
                 ),
                 contentDescription = ""
@@ -71,7 +76,8 @@ fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(
                     id = getDrawableAccordingToStarPosition(
-                        numberOfStars, 4
+                        numberOfStars,
+                        4
                     )
                 ),
                 contentDescription = ""

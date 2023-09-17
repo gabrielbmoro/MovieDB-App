@@ -16,9 +16,8 @@ fun MovieImage(
     imageUrl: String?,
     contentDescription: String,
     contentScale: ContentScale,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
-
     if (imageUrl != null) {
         val context = LocalContext.current
         val imageRequest = ImageRequest.Builder(context)

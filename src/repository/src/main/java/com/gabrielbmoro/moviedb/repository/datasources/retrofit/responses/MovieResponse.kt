@@ -15,7 +15,7 @@ data class MovieResponse(
     @SerializedName("backdrop_path") val backdropPath: String?,
     @SerializedName("adult") val isAdult: Boolean?,
     @SerializedName("overview") val overview: String?,
-    @SerializedName("release_date") val releaseDate: String?,
+    @SerializedName("release_date") val releaseDate: String?
 ) {
 
     companion object {

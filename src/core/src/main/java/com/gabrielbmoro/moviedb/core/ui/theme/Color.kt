@@ -2,7 +2,6 @@ package com.gabrielbmoro.moviedb.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-
 // Color scheme based on: https://github.com/android/compose-samples/blob/main/Reply/app/src/main/java/com/example/reply/ui/theme/Color.kt
 
 val LightPrimary = Color(0xFF825500)

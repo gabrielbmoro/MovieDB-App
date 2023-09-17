@@ -35,6 +35,6 @@ interface ApiRepository {
 
     @GET("movie/{movie_id}/videos")
     suspend fun getVideoStreams(
-        @Path("movie_id") movieId: Long,
+        @Path("movie_id") movieId: Long
     ): VideoStreamsResponse
 }

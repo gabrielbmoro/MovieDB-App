@@ -19,7 +19,7 @@ fun ScreenScaffold(
     appBarTitle: String,
     modifier: Modifier = Modifier,
     bottomBar: @Composable () -> Unit,
-    screenContent: @Composable BoxScope.() -> Unit,
+    screenContent: @Composable BoxScope.() -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -36,7 +36,7 @@ fun ScreenScaffold(
                 )
             }
         },
-        bottomBar = bottomBar,
+        bottomBar = bottomBar
     ) {
         Box(
             modifier = modifier
@@ -44,7 +44,7 @@ fun ScreenScaffold(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
                     start = 16.dp,
-                    end = 16.dp,
+                    end = 16.dp
                 )
                 .fillMaxSize()
         ) {

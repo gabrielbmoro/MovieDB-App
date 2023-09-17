@@ -65,7 +65,7 @@ private fun DetailsScreenMain(
                 .fillMaxSize()
                 .verticalScroll(scrollState)
                 .padding(
-                    top = it.calculateTopPadding(),
+                    top = it.calculateTopPadding()
                 ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -79,7 +79,7 @@ private fun DetailsScreenMain(
                         videoId = uiState.videoId,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
-                            .fillMaxSize(),
+                            .fillMaxSize()
                     )
                 } else {
                     MovieImage(
@@ -120,7 +120,7 @@ private fun DetailsScreenMain(
                 content = {
                     Text(
                         text = uiState.moviePopularity.toString(),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 },
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -131,7 +131,7 @@ private fun DetailsScreenMain(
                 content = {
                     Text(
                         text = uiState.movieLanguage,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 },
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -140,7 +140,7 @@ private fun DetailsScreenMain(
             Spacer(
                 modifier = Modifier
                     .height(240.dp)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)
             )
         }
     }
@@ -151,7 +151,7 @@ private fun DetailsScreenMain(
 fun DetailsScreen(
     viewModel: DetailsScreenViewModel = hiltViewModel(),
     movie: Movie,
-    onBackEvent: () -> Unit,
+    onBackEvent: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -184,6 +184,6 @@ fun DetailsScreenPreview() {
         uiState = DetailsUIState.mocked1(),
         scrollState = ScrollState(0),
         onFavoriteMovie = {},
-        onBackEvent = {},
+        onBackEvent = {}
     )
 }

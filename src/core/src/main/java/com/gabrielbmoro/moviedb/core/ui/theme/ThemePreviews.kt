@@ -14,4 +14,3 @@ import androidx.compose.ui.tooling.preview.Preview
     uiMode = Configuration.UI_MODE_NIGHT_NO
 )
 annotation class ThemePreviews
-
