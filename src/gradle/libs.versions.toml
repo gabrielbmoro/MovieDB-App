@@ -40,6 +40,8 @@ core-ktx = "1.10.1"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 material = "1.9.0"
+ktlint_plugin = "11.5.1"
+ksp = "1.8.10-1.0.9"
 
 [libraries]
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
@@ -100,9 +102,13 @@ room = ["room_ktx", "room_runtime"]
 lifecycle = ["lifecycle_livedata_ktx", "lifecycle_extensions", "lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose", "paging_compose"]
+compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
+compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
+
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
 hilt = ["hilt-android", "androidx-hilt-navigation-compose"]
 
 [plugins]
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin1810" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
+ksp =  { id = "com.google.devtools.ksp", version.ref = "ksp" }

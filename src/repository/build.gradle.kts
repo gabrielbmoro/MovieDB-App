@@ -3,7 +3,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
     id("kotlin-parcelize")
 }
 
@@ -23,7 +23,7 @@ dependencies {
 
     implementation(libs.paging.compose)
 
-    // Koin
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 

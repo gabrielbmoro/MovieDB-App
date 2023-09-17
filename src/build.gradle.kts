@@ -6,9 +6,9 @@ import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 
 plugins {
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
-    id("com.google.dagger.hilt.android") version "2.44" apply false
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.ktlint)
 }
 
 buildscript {
@@ -33,13 +33,15 @@ allprojects {
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
         kotlinOptions {
-            jvmTarget = ConfigData.JAVA_VM_TARGET
+            jvmTarget = Config.javaVMTarget
         }
     }
 }
 
+val ktLintPluginId: String = libs.plugins.ktlint.get().pluginId
+
 subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint") // Version should be inherited from parent
+    apply(plugin = ktLintPluginId) // Version should be inherited from parent
 
     // Accessing the `PluginContainer` in order to use `whenPluginAdded` function
     project.plugins.configure(project = project)
@@ -75,18 +77,18 @@ fun PluginContainer.configure(project: Project) {
 
 // Extension function on `AppExtension`
 fun AppExtension.applyCommons() {
-    compileSdkVersion(ConfigData.COMPILE_SDK)
+    compileSdkVersion(Config.compileSdk)
 
     defaultConfig {
-        minSdk = ConfigData.MIN_SDK
-        targetSdk = ConfigData.TARGET_SDK
-        versionCode = ConfigData.versionCode()
-        versionName = ConfigData.versionName()
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
+        versionCode = Config.versionCode()
+        versionName = Config.versionName()
 
-        testInstrumentationRunner = ConfigData.TEST_INSTRUMENTATION_RUNNER
+        testInstrumentationRunner = Config.testInstrumentationRunner
         vectorDrawables.useSupportLibrary = true
 
-        applicationId = ConfigData.APPLICATION_ID
+        applicationId = Config.applicationId
 
         vectorDrawables.useSupportLibrary = true
 
@@ -102,21 +104,21 @@ fun AppExtension.applyCommons() {
     }
 
     compileOptions {
-        sourceCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
-        targetCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
+        sourceCompatibility = Config.javaCompatibilityVersion
+        targetCompatibility = Config.javaCompatibilityVersion
     }
 
     buildFeatures.compose = true
 
-    namespace = ConfigData.APPLICATION_ID
+    namespace = Config.applicationId
 }
 
 // Extension function on `LibraryExtension`
 fun LibraryExtension.applyCommons() {
-    compileSdk = ConfigData.COMPILE_SDK
+    compileSdk = Config.compileSdk
 
     defaultConfig {
-        minSdk = ConfigData.MIN_SDK
+        minSdk = Config.minSdk
     }
 
     composeOptions {
@@ -124,8 +126,8 @@ fun LibraryExtension.applyCommons() {
     }
 
     compileOptions {
-        sourceCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
-        targetCompatibility = ConfigData.JAVA_COMPATIBILITY_VERSION
+        sourceCompatibility = Config.javaCompatibilityVersion
+        targetCompatibility = Config.javaCompatibilityVersion
     }
 
     testOptions {
@@ -139,16 +141,16 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
-object ConfigData {
-    const val APPLICATION_ID = "com.gabrielbmoro.moviedb"
-    const val MIN_SDK = 22
-    const val TARGET_SDK = 33
-    const val COMPILE_SDK = 33
-    private const val LOCAL_VERSION_CODE = 10
-    private const val LOCAL_VERSION_NAME = "1.0.0"
-    val JAVA_COMPATIBILITY_VERSION = JavaVersion.VERSION_17
-    const val JAVA_VM_TARGET = "17"
-    const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
+object Config {
+    const val applicationId = "com.gabrielbmoro.moviedb"
+    const val minSdk = 22
+    const val targetSdk = 33
+    const val compileSdk = 33
+    private const val localVersionCode = 10
+    private const val localVersionName = "1.0.0"
+    val javaCompatibilityVersion = JavaVersion.VERSION_17
+    const val javaVMTarget = "17"
+    const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     fun versionCode(): Int {
         val versionCode = try {
@@ -156,7 +158,7 @@ object ConfigData {
         } catch (nullPointerException: NullPointerException) {
             null
         }
-        return versionCode ?: LOCAL_VERSION_CODE
+        return versionCode ?: localVersionCode
     }
 
     fun versionName(): String {
@@ -166,6 +168,6 @@ object ConfigData {
             null
         }
 
-        return versionName?.ifEmpty { LOCAL_VERSION_NAME } ?: LOCAL_VERSION_NAME
+        return versionName?.ifEmpty { localVersionName } ?: localVersionName
     }
 }
