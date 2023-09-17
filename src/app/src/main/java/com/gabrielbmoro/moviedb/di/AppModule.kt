@@ -11,6 +11,7 @@ import javax.inject.Named
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    
     @Provides
     @Named("api_token")
     fun apiToken(): String {
