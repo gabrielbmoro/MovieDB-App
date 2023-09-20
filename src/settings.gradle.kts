@@ -1,6 +1,6 @@
 include(
     ":app",
-    ":repository",
+    ":data",
     ":core",
     ":feature_movies",
     ":feature_details",
