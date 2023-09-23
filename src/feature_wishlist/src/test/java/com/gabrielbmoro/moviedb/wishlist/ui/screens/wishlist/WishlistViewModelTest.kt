@@ -1,10 +1,10 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.gabrielbmoro.moviedb.core.testing.MainDispatcherRule
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
-import com.gabrielbmoro.moviedb.wishlist.ui.MainDispatcherRule
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.mockk
