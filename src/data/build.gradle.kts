@@ -29,6 +29,4 @@ dependencies {
 
     // Test
     testImplementation(libs.bundles.test)
-    androidTestImplementation(libs.bundles.test)
-    androidTestImplementation(libs.ui.compose.test)
 }
