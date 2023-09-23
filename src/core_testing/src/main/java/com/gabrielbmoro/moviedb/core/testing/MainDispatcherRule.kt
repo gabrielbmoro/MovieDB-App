@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.wishlist.ui
+package com.gabrielbmoro.moviedb.core.testing
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

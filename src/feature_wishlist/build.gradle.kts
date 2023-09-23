@@ -12,6 +12,7 @@ android {
 dependencies {
     api(project(":core"))
     api(project(":data"))
+    testApi(project(":core_testing"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
