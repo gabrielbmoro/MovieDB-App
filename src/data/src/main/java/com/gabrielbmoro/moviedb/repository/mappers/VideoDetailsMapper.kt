@@ -8,16 +8,12 @@ class VideoDetailsMapper @Inject constructor() {
 
     fun map(movieDetailResponse: MovieDetailResponse) = MovieDetail(
         adult = movieDetailResponse.adult,
-        backdropPath = movieDetailResponse.backdropPath,
-        genres = movieDetailResponse.genres.map { it.name }.reduce { acc, s -> "$acc,$s" },
+        genres = movieDetailResponse.genres.map { it.name },
         budget = movieDetailResponse.budget,
         homepage = movieDetailResponse.homepage,
-        id = movieDetailResponse.id,
         imdbId = movieDetailResponse.imdbId,
-        originalLanguage = movieDetailResponse.originalLanguage,
-        originalTitle = movieDetailResponse.originalTitle,
-        overview = movieDetailResponse.overview,
-        popularity = movieDetailResponse.popularity,
-        posterPath = movieDetailResponse.posterPath,
+        status = movieDetailResponse.status,
+        tagline = movieDetailResponse.tagline,
+        productionCompanies = movieDetailResponse.productionCompanies.map { it.name }
     )
 }
