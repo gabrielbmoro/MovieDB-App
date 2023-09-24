@@ -1,20 +1,21 @@
 package com.gabrielbmoro.moviedb.details.domain.usecases
 
-import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 class GetTrailersUseCase @Inject constructor(
     private val repository: MoviesRepository
 ) {
-    suspend operator fun invoke(movieId: Long): DataOrException<VideoStream?, Exception> {
-        val result = repository.getVideoStreams(movieId)
-        val trailer = result.data?.firstOrNull {
-            it.site == SITE_KEY && it.official && it.type == TYPE_KEY
+    operator fun invoke(movieId: Long): Flow<VideoStream?> {
+        return repository.getVideoStreams(movieId).transform {
+            val videoStream = it.firstOrNull { videoStream ->
+                videoStream.site == SITE_KEY && videoStream.official && videoStream.type == TYPE_KEY
+            }
+            emit(videoStream)
         }
-
-        return DataOrException(trailer, result.exception)
     }
 
     companion object {

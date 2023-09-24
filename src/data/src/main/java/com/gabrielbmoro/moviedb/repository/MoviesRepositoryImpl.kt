@@ -10,10 +10,13 @@ import com.gabrielbmoro.moviedb.repository.datasources.room.FavoriteMoviesDAO
 import com.gabrielbmoro.moviedb.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
+import com.gabrielbmoro.moviedb.repository.mappers.VideoDetailsMapper
 import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
@@ -22,7 +25,8 @@ class MoviesRepositoryImpl @Inject constructor(
     private val favoriteMoviesMapper: FavoriteMovieMapper,
     private val pageMapper: PageMapper,
     private val movieMapper: MovieMapper,
-    private val videoStreamMapper: VideoStreamMapper
+    private val videoStreamMapper: VideoStreamMapper,
+    private val videoDetailsMapper: VideoDetailsMapper
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {
@@ -111,15 +115,23 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception> {
-        return try {
+    override fun getVideoStreams(movieId: Long): Flow<List<VideoStream>> {
+        return flow {
             val result = api.getVideoStreams(
                 movieId = movieId
             )
             val data = videoStreamMapper.map(result)
-            DataOrException(data = data, exception = null)
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
+            emit(data)
+        }
+    }
+
+    override fun getMovieDetail(movieId: Long): Flow<MovieDetail> {
+        return flow {
+            val result = api.getMovieDetails(
+                movieId = movieId
+            )
+            val data = videoDetailsMapper.map(result)
+            emit(data)
         }
     }
 

@@ -3,6 +3,7 @@ package com.gabrielbmoro.moviedb.repository
 import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 
@@ -23,5 +24,7 @@ interface MoviesRepository {
 
     suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception>
 
-    suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception>
+    fun getVideoStreams(movieId: Long): Flow<List<VideoStream>>
+
+    fun getMovieDetail(movieId: Long): Flow<MovieDetail>
 }
