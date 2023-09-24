@@ -10,8 +10,10 @@ import com.gabrielbmoro.moviedb.repository.datasources.room.FavoriteMoviesDAO
 import com.gabrielbmoro.moviedb.repository.mappers.FavoriteMovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
+import com.gabrielbmoro.moviedb.repository.mappers.VideoDetailsMapper
 import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -22,7 +24,8 @@ class MoviesRepositoryImpl @Inject constructor(
     private val favoriteMoviesMapper: FavoriteMovieMapper,
     private val pageMapper: PageMapper,
     private val movieMapper: MovieMapper,
-    private val videoStreamMapper: VideoStreamMapper
+    private val videoStreamMapper: VideoStreamMapper,
+    private val videoDetailsMapper: VideoDetailsMapper,
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {
@@ -117,6 +120,18 @@ class MoviesRepositoryImpl @Inject constructor(
                 movieId = movieId
             )
             val data = videoStreamMapper.map(result)
+            DataOrException(data = data, exception = null)
+        } catch (exception: Exception) {
+            DataOrException(data = null, exception = exception)
+        }
+    }
+
+    override suspend fun getMovieDetail(movieId: Long): DataOrException<MovieDetail?, Exception> {
+        return try {
+            val result = api.getMovieDetails(
+                movieId = movieId
+            )
+            val data = videoDetailsMapper.map(result)
             DataOrException(data = data, exception = null)
         } catch (exception: Exception) {
             DataOrException(data = null, exception = exception)

@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.repository.datasources.retrofit
 
+import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.PageResponse
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponse
 import retrofit2.http.GET
@@ -37,4 +38,9 @@ interface ApiRepository {
     suspend fun getVideoStreams(
         @Path("movie_id") movieId: Long
     ): VideoStreamsResponse
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Long
+    ): MovieDetailResponse
 }
