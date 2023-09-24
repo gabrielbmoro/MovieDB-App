@@ -137,6 +137,58 @@ private fun DetailsScreenMain(
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
+            uiState.genres?.let {
+                MovieDetailDescription(
+                    titleRes = R.string.genres,
+                    content = {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
+            uiState.tagLine?.let {
+                MovieDetailDescription(
+                    titleRes = R.string.tagline,
+                    content = {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
+            uiState.productionCompanies?.let {
+                MovieDetailDescription(
+                    titleRes = R.string.production_companies,
+                    content = {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
+            uiState.homepage?.let {
+                MovieDetailDescription(
+                    titleRes = R.string.homepage,
+                    content = {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
             Spacer(
                 modifier = Modifier
                     .height(240.dp)

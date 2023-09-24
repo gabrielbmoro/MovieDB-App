@@ -69,7 +69,12 @@ class DetailsScreenViewModel @Inject constructor(
             getMovieDetailsUseCase(movieId = movie.id).collect { movieDetails ->
                 _uiState.update {
                     it.copy(
-                        videoId = movieDetails.videoId
+                        videoId = movieDetails.videoId,
+                        tagLine = movieDetails.tagline,
+                        status = movieDetails.status,
+                        genres = movieDetails.genres.reduceToText(),
+                        homepage = movieDetails.homepage,
+                        productionCompanies = movieDetails.productionCompanies.reduceToText()
                     )
                 }
             }
@@ -92,4 +97,8 @@ class DetailsScreenViewModel @Inject constructor(
             }
         }
     }
+
+
+    private fun List<String>.reduceToText() = reduce { acc, s -> "$acc, $s" }
+
 }

@@ -5,4 +5,8 @@
     <string name="overview">Overview</string>
     <string name="popularity">Popularity</string>
     <string name="language">Language</string>
+    <string name="tagline">Tagline</string>
+    <string name="production_companies">Production companies</string>
+    <string name="homepage">Homepage</string>
+    <string name="genres">Genres</string>
 </resources>

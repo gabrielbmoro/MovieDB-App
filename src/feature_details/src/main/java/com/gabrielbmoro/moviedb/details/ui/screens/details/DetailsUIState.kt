@@ -9,6 +9,11 @@ data class DetailsUIState(
     val moviePopularity: Float,
     val movieOverview: String,
     val imageUrl: String?,
+    val tagLine: String? = null,
+    val genres: String? = null,
+    val status: String? = null,
+    val productionCompanies: String? = null,
+    val homepage: String? = null,
     val videoId: String? = null
 ) {
     companion object {
