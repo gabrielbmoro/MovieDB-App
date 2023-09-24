@@ -23,37 +23,35 @@ class DetailsScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var movie: Movie
+    private lateinit var successData: DetailsUIState.SuccessData
     private val _uiState = MutableStateFlow<DetailsUIState>(DetailsUIState.empty())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     fun setup(movie: Movie) {
         this.movie = movie
+        this.successData = DetailsUIState.SuccessData(
+            imageUrl = this.movie.backdropImageUrl,
+            movieLanguage = this.movie.language,
+            isFavorite = this.movie.isFavorite,
+            movieOverview = this.movie.overview,
+            moviePopularity = this.movie.popularity,
+            movieTitle = this.movie.title,
+            movieVotesAverage = this.movie.votesAverage
+        )
 
-        _uiState.update {
-            successDataFromMovie()
-        }
+        _uiState.update { this.successData }
 
         checkIfMovieIsFavorite(movie.title)
 
         fetchMoviesDetails()
     }
 
-    private fun successDataFromMovie() = DetailsUIState.SuccessData(
-        imageUrl = this.movie.backdropImageUrl,
-        movieLanguage = this.movie.language,
-        isFavorite = this.movie.isFavorite,
-        movieOverview = this.movie.overview,
-        moviePopularity = this.movie.popularity,
-        movieTitle = this.movie.title,
-        movieVotesAverage = this.movie.votesAverage
-    )
-
     private fun checkIfMovieIsFavorite(movieTitle: String) {
         viewModelScope.launch {
             val data = isFavoriteMovieUseCase.invoke(movieTitle)
             if (data.data != null && _uiState.value is DetailsUIState.SuccessData) {
                 _uiState.update {
-                    successDataFromMovie().copy(
+                    successData.copy(
                         isFavorite = data.data!!
                     )
                 }
@@ -76,7 +74,7 @@ class DetailsScreenViewModel @Inject constructor(
                 }
                 .collect { movieDetails ->
                     _uiState.update {
-                        successDataFromMovie().copy(
+                        successData = successData.copy(
                             videoId = movieDetails.videoId,
                             tagLine = movieDetails.tagline,
                             status = movieDetails.status,
@@ -84,6 +82,7 @@ class DetailsScreenViewModel @Inject constructor(
                             homepage = movieDetails.homepage,
                             productionCompanies = movieDetails.productionCompanies.reduceToText()
                         )
+                        successData
                     }
                 }
         }
@@ -96,7 +95,7 @@ class DetailsScreenViewModel @Inject constructor(
             if (response.data != null) {
                 movie.isFavorite = isToFavorite
                 _uiState.update {
-                    successDataFromMovie().copy(
+                    successData.copy(
                         isFavorite = movie.isFavorite
                     )
                 }
