@@ -8,5 +8,7 @@
     <string name="tagline">Tagline</string>
     <string name="production_companies">Production companies</string>
     <string name="homepage">Homepage</string>
+    <string name="error_title">Sorry for that!</string>
+    <string name="error_message">Something went wrong. Please try again!</string>
     <string name="genres">Genres</string>
 </resources>
