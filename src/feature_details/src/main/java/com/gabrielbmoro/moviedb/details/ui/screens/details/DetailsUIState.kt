@@ -16,7 +16,7 @@ sealed class DetailsUIState(
         val productionCompanies: String? = null,
         val homepage: String? = null,
         val videoId: String? = null,
-        override val movieTitle: String,
+        override val movieTitle: String
     ) : DetailsUIState(movieTitle = movieTitle)
 
     data class Error(

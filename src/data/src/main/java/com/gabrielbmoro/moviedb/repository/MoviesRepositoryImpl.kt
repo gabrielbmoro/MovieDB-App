@@ -26,7 +26,7 @@ class MoviesRepositoryImpl @Inject constructor(
     private val pageMapper: PageMapper,
     private val movieMapper: MovieMapper,
     private val videoStreamMapper: VideoStreamMapper,
-    private val videoDetailsMapper: VideoDetailsMapper,
+    private val videoDetailsMapper: VideoDetailsMapper
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {

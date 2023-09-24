@@ -10,5 +10,5 @@ data class ProductionCompanyResponse(
     @SerializedName("name")
     val name: String,
     @SerializedName("origin_country")
-    val originCountry: String,
+    val originCountry: String
 )

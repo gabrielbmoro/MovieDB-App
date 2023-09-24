@@ -104,7 +104,5 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-
     private fun List<String>.reduceToText() = reduce { acc, s -> "$acc, $s" }
-
 }
