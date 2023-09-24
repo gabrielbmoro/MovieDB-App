@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.details.ui.screens.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.details.domain.usecases.GetTrailersUseCase
+import com.gabrielbmoro.moviedb.details.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val getTrailersUseCase: GetTrailersUseCase
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
 ) : ViewModel() {
 
     private lateinit var movie: Movie
@@ -42,7 +42,7 @@ class DetailsScreenViewModel @Inject constructor(
 
         checkIfMovieIsFavorite(movie.title)
 
-        fetchMoviesTrailer()
+        fetchMoviesDetails()
     }
 
     private fun checkIfMovieIsFavorite(movieTitle: String) {
@@ -58,7 +58,7 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
-    private fun fetchMoviesTrailer() {
+    private fun fetchMoviesDetails() {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
@@ -66,12 +66,12 @@ class DetailsScreenViewModel @Inject constructor(
                 )
             }
 
-            val data = getTrailersUseCase(movieId = movie.id)
-
-            _uiState.update {
-                it.copy(
-                    videoId = data.data?.key
-                )
+            getMovieDetailsUseCase(movieId = movie.id).collect { movieDetails ->
+                _uiState.update {
+                    it.copy(
+                        videoId = movieDetails.videoId
+                    )
+                }
             }
         }.invokeOnCompletion {
             _uiState.update {

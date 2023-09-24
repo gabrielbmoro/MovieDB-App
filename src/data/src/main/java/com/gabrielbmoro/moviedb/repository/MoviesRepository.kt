@@ -24,7 +24,7 @@ interface MoviesRepository {
 
     suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception>
 
-    suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception>
+    fun getVideoStreams(movieId: Long): Flow<List<VideoStream>>
 
-    suspend fun getMovieDetail(movieId: Long): DataOrException<MovieDetail?,Exception>
+    fun getMovieDetail(movieId: Long): Flow<MovieDetail>
 }

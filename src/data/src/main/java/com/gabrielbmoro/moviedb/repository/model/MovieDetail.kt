@@ -17,4 +17,5 @@ data class MovieDetail(
     val overview: String,
     val popularity: Number,
     val posterPath: String,
+    var videoId: String? = null,
 ) : Parcelable

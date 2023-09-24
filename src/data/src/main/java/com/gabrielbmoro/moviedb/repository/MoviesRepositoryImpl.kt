@@ -16,6 +16,7 @@ import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
@@ -114,27 +115,23 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getVideoStreams(movieId: Long): DataOrException<List<VideoStream>, Exception> {
-        return try {
+    override fun getVideoStreams(movieId: Long): Flow<List<VideoStream>> {
+        return flow {
             val result = api.getVideoStreams(
                 movieId = movieId
             )
             val data = videoStreamMapper.map(result)
-            DataOrException(data = data, exception = null)
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
+            emit(data)
         }
     }
 
-    override suspend fun getMovieDetail(movieId: Long): DataOrException<MovieDetail?, Exception> {
-        return try {
+    override fun getMovieDetail(movieId: Long): Flow<MovieDetail> {
+        return flow {
             val result = api.getMovieDetails(
                 movieId = movieId
             )
             val data = videoDetailsMapper.map(result)
-            DataOrException(data = data, exception = null)
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
+            emit(data)
         }
     }
 
