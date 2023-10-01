@@ -23,7 +23,7 @@ Welcome to the MovieDB-Android app! If you like movies, you will like this app, 
 ## How to get my access token? 👮 
 
 1. Create an account [Movie DB API](https://www.themoviedb.org) (if you don't have it);
-2. Copy the value of your [Bearer token](https://developer.themoviedb.org/docs/authentication-application#bearer-token)
+2. Copy the value of your [Bearer token](https://developer.themoviedb.org/docs/authentication-application#bearer-token);
 3. Paste the value of your token your `gradle.properties` file (_Global properties_):
 
 If your bearer token is:
