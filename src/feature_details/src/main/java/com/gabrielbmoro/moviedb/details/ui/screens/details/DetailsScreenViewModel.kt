@@ -104,7 +104,7 @@ class DetailsScreenViewModel @Inject constructor(
     }
 
     fun hideVideo() {
-        if(_uiState.value is DetailsUIState.SuccessData) {
+        if (_uiState.value is DetailsUIState.SuccessData) {
             _uiState.update {
                 (it as DetailsUIState.SuccessData).copy(
                     showVideo = false
