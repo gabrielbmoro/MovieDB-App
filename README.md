@@ -12,16 +12,28 @@ Welcome to the MovieDB-Android app! If you like movies, you will like this app, 
 
 ---
 
-## How to run the project? 📦
+## How to run the project?
 
-After create an account at [Movie DB API](https://www.themoviedb.org), you will have a token to access the API. 
+1. Install Android Studio (latest version);
+2. Select the option to open a project;
+3. Select the project -> ⚠️ The Android project is inside of the `src` directory ⚠️ 
 
-You should specify the token in your `gradle.properties` file.
+## How to get my access token? 📦
 
+1. Create an account [Movie DB API](https://www.themoviedb.org) (if you don't have it);
+2. Copy the value of your [Bearer token](https://developer.themoviedb.org/docs/authentication-application#bearer-token)
+3. Paste the value of your token your `gradle.properties` file.
+
+If your bearer token is:
+```
+Bearer IASJFIAJSINVISNIBNISBNSBNAISNB
+```
+
+You should add in your `gradle.properties` file:
 
 ```
-MOVIE_DB_API_TOKEN_DEBUG=<token here>
-MOVIE_DB_API_TOKEN_RELEASE=<token here>
+MOVIE_DB_API_TOKEN_DEBUG=IASJFIAJSINVISNIBNISBNSBNAISNB
+MOVIE_DB_API_TOKEN_RELEASE=IASJFIAJSINVISNIBNISBNSBNAISNB
 ```
 
 ---
