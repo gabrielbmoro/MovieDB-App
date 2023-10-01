@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.details.ui.widgets
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -9,23 +10,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 @Composable
-fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
+fun VideoPlayer(
+    videoId: String,
+    shouldStartMuted: Boolean,
+    onFullScreenEvent: ((String) -> Unit)?,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
+    val showFullScreenOption = onFullScreenEvent != null
 
     var youtubePlayer: YouTubePlayerView? = remember {
         YouTubePlayerView(
             context
         ).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+            enableAutomaticInitialization = false
 
-            addYouTubePlayerListener(
+            initialize(
                 object : YouTubePlayerListener {
                     override fun onApiChange(youTubePlayer: YouTubePlayer) {}
 
@@ -58,7 +64,9 @@ fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
                             videoId = videoId,
                             0f
                         )
-                        youTubePlayer.mute()
+                        if (shouldStartMuted) {
+                            youTubePlayer.mute()
+                        }
                     }
 
                     override fun onStateChange(
@@ -84,8 +92,32 @@ fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
                         loadedFraction: Float
                     ) {
                     }
-                }
+                },
+                IFramePlayerOptions
+                    .Builder()
+                    .controls(1)
+                    .fullscreen(if (showFullScreenOption) 1 else 0)
+                    .build()
             )
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            onFullScreenEvent?.let {
+                addFullscreenListener(
+                    object : FullscreenListener {
+                        override fun onEnterFullscreen(
+                            fullscreenView: View,
+                            exitFullscreen: () -> Unit
+                        ) {
+                            onFullScreenEvent(videoId)
+                        }
+
+                        override fun onExitFullscreen() {}
+                    }
+                )
+            }
         }
     }
 

@@ -16,6 +16,7 @@ sealed class DetailsUIState(
         val productionCompanies: String? = null,
         val homepage: String? = null,
         val videoId: String? = null,
+        val showVideo: Boolean = true,
         override val movieTitle: String
     ) : DetailsUIState(movieTitle = movieTitle)
 

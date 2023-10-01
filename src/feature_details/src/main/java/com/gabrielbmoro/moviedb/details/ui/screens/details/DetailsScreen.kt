@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbar
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
+import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.gabrielbmoro.moviedb.details.ui.widgets.ErrorMessage
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
@@ -56,7 +58,10 @@ fun DetailsScreen(
         onFavoriteMovie = {
             viewModel.isToFavoriteOrUnFavorite(it)
         },
-        onBackEvent = onBackEvent
+        onBackEvent = onBackEvent,
+        onHideVideo = {
+            viewModel.hideVideo()
+        }
     )
 
     LaunchedEffect(
@@ -73,6 +78,7 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: ((Boolean) -> Unit),
+    onHideVideo: () -> Unit,
     onBackEvent: (() -> Unit)
 ) {
     Scaffold(
@@ -99,6 +105,7 @@ private fun DetailsScreenMain(
                 modifier = Modifier
                     .then(modifier)
                     .verticalScroll(scrollState),
+                onHideVideo = onHideVideo,
                 onFavoriteMovie = onFavoriteMovie
             )
 
@@ -125,9 +132,12 @@ private fun DetailsScreenMain(
 @Composable
 private fun DetailsScreenSuccessInfo(
     uiState: DetailsUIState.SuccessData,
+    onHideVideo: (() -> Unit),
     modifier: Modifier = Modifier,
     onFavoriteMovie: (Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -137,22 +147,33 @@ private fun DetailsScreenSuccessInfo(
                 .height(280.dp)
                 .fillMaxWidth()
         ) {
-            if (uiState.videoId != null) {
-                VideoPlayer(
-                    videoId = uiState.videoId,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxSize()
-                )
-            } else {
-                MovieImage(
-                    imageUrl = uiState.imageUrl,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxSize(),
-                    contentDescription = stringResource(id = R.string.poster)
-                )
+            when {
+                uiState.showVideo && uiState.videoId != null -> {
+                    VideoPlayer(
+                        videoId = uiState.videoId,
+                        onFullScreenEvent = { videoId ->
+                            onHideVideo()
+                            context.startActivity(
+                                FullScreenActivity.launchIntent(context, videoId)
+                            )
+                        },
+                        shouldStartMuted = true,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize()
+                    )
+                }
+
+                else -> {
+                    MovieImage(
+                        imageUrl = uiState.imageUrl,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize(),
+                        contentDescription = stringResource(id = R.string.poster)
+                    )
+                }
             }
         }
 
