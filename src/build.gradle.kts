@@ -163,7 +163,7 @@ object Config {
 
     fun versionName(): String {
         val versionName = try {
-            "1.6.${System.getenv("BITRISE_BUILD_NUMBER")}"
+            "1.8.${System.getenv("BITRISE_BUILD_NUMBER")}"
         } catch (nullPointerException: NullPointerException) {
             null
         }
