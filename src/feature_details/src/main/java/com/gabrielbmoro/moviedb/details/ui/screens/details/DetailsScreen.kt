@@ -58,7 +58,10 @@ fun DetailsScreen(
         onFavoriteMovie = {
             viewModel.isToFavoriteOrUnFavorite(it)
         },
-        onBackEvent = onBackEvent
+        onBackEvent = onBackEvent,
+        onHideVideo = {
+            viewModel.hideVideo()
+        }
     )
 
     LaunchedEffect(
@@ -75,6 +78,7 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: ((Boolean) -> Unit),
+    onHideVideo: () -> Unit,
     onBackEvent: (() -> Unit)
 ) {
     Scaffold(
@@ -101,6 +105,7 @@ private fun DetailsScreenMain(
                 modifier = Modifier
                     .then(modifier)
                     .verticalScroll(scrollState),
+                onHideVideo = onHideVideo,
                 onFavoriteMovie = onFavoriteMovie
             )
 
@@ -127,6 +132,7 @@ private fun DetailsScreenMain(
 @Composable
 private fun DetailsScreenSuccessInfo(
     uiState: DetailsUIState.SuccessData,
+    onHideVideo: (() -> Unit),
     modifier: Modifier = Modifier,
     onFavoriteMovie: (Boolean) -> Unit
 ) {
@@ -141,28 +147,33 @@ private fun DetailsScreenSuccessInfo(
                 .height(280.dp)
                 .fillMaxWidth()
         ) {
-            if (uiState.videoId != null) {
-                VideoPlayer(
-                    videoId = uiState.videoId,
-                    onFullScreenEvent = { videoId ->
-                        context.startActivity(
-                            FullScreenActivity.launchIntent(context, videoId)
-                        )
-                    },
-                    shouldStartMuted = true,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxSize()
-                )
-            } else {
-                MovieImage(
-                    imageUrl = uiState.imageUrl,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxSize(),
-                    contentDescription = stringResource(id = R.string.poster)
-                )
+            when {
+                uiState.showVideo && uiState.videoId != null -> {
+                    VideoPlayer(
+                        videoId = uiState.videoId,
+                        onFullScreenEvent = { videoId ->
+                            onHideVideo()
+                            context.startActivity(
+                                FullScreenActivity.launchIntent(context, videoId)
+                            )
+                        },
+                        shouldStartMuted = true,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize()
+                    )
+                }
+
+                else -> {
+                    MovieImage(
+                        imageUrl = uiState.imageUrl,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize(),
+                        contentDescription = stringResource(id = R.string.poster)
+                    )
+                }
             }
         }
 
