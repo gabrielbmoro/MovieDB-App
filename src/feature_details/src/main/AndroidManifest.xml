@@ -4,6 +4,7 @@
     <application>
         <activity
             android:name="com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout" />
+            android:screenOrientation="landscape"
+            android:configChanges="screenSize|keyboardHidden|smallestScreenSize|screenLayout" />
     </application>
 </manifest>
