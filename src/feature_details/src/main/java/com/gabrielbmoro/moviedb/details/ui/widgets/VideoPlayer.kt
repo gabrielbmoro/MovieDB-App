@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.details.ui.widgets
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -7,25 +8,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 @Composable
-fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
+fun VideoPlayer(videoId: String, isFullScreen: Boolean, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     var youtubePlayer: YouTubePlayerView? = remember {
         YouTubePlayerView(
             context
         ).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+            enableAutomaticInitialization = false
 
-            addYouTubePlayerListener(
+            initialize(
                 object : YouTubePlayerListener {
                     override fun onApiChange(youTubePlayer: YouTubePlayer) {}
 
@@ -84,8 +85,34 @@ fun VideoPlayer(videoId: String, modifier: Modifier = Modifier) {
                         loadedFraction: Float
                     ) {
                     }
-                }
+                },
+                IFramePlayerOptions
+                    .Builder()
+                    .controls(1)
+                    .fullscreen(if (isFullScreen) 0 else 1)
+                    .build()
             )
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            if (isFullScreen.not()) {
+                addFullscreenListener(
+                    object : FullscreenListener {
+                        override fun onEnterFullscreen(
+                            fullscreenView: View,
+                            exitFullscreen: () -> Unit
+                        ) {
+                            context.startActivity(
+                                FullScreenActivity.launchIntent(context, videoId)
+                            )
+                        }
+
+                        override fun onExitFullscreen() {}
+                    }
+                )
+            }
         }
     }
 

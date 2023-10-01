@@ -140,6 +140,7 @@ private fun DetailsScreenSuccessInfo(
             if (uiState.videoId != null) {
                 VideoPlayer(
                     videoId = uiState.videoId,
+                    isFullScreen = false,
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .fillMaxSize()
