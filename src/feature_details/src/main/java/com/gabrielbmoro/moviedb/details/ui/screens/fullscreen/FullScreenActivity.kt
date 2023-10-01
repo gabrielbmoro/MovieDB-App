@@ -21,6 +21,7 @@ class FullScreenActivity : ComponentActivity() {
             VideoPlayer(
                 videoId = videoId,
                 onFullScreenEvent = null,
+                shouldStartMuted = false,
                 modifier = Modifier.fillMaxSize()
             )
         }

@@ -149,6 +149,7 @@ private fun DetailsScreenSuccessInfo(
                             FullScreenActivity.launchIntent(context, videoId)
                         )
                     },
+                    shouldStartMuted = true,
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .fillMaxSize()

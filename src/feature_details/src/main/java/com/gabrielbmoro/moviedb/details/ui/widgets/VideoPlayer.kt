@@ -18,6 +18,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 @Composable
 fun VideoPlayer(
     videoId: String,
+    shouldStartMuted: Boolean,
     onFullScreenEvent: ((String) -> Unit)?,
     modifier: Modifier = Modifier
 ) {
@@ -63,7 +64,9 @@ fun VideoPlayer(
                             videoId = videoId,
                             0f
                         )
-                        youTubePlayer.mute()
+                        if (shouldStartMuted) {
+                            youTubePlayer.mute()
+                        }
                     }
 
                     override fun onStateChange(
