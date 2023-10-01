@@ -99,39 +99,48 @@ private fun DetailsScreenMain(
             .padding(top = it.calculateTopPadding())
             .fillMaxSize()
 
-        when (uiState) {
-            is DetailsUIState.SuccessData -> DetailsScreenSuccessInfo(
-                uiState = uiState,
-                modifier = Modifier
-                    .then(modifier)
-                    .verticalScroll(scrollState),
-                onHideVideo = onHideVideo,
-                onFavoriteMovie = onFavoriteMovie
-            )
+        when {
+            uiState.isLoading -> DetailsScreenLoading(modifier)
 
-            is DetailsUIState.Error ->
-                Box(modifier = modifier) {
-                    ErrorMessage(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
+            uiState.errorMessage != null -> DetailsScreenError(modifier)
 
-            is DetailsUIState.Loading -> {
-                Box(modifier = modifier) {
-                    BubbleLoader(
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
-                }
+            else -> {
+                DetailsScreenContent(
+                    uiState = uiState,
+                    modifier = Modifier
+                        .then(modifier)
+                        .verticalScroll(scrollState),
+                    onHideVideo = onHideVideo,
+                    onFavoriteMovie = onFavoriteMovie
+                )
             }
         }
     }
 }
 
 @Composable
-private fun DetailsScreenSuccessInfo(
-    uiState: DetailsUIState.SuccessData,
+private fun DetailsScreenError(modifier: Modifier) {
+    Box(modifier = modifier) {
+        ErrorMessage(
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
+private fun DetailsScreenLoading(modifier: Modifier) {
+    Box(modifier = modifier) {
+        BubbleLoader(
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
+private fun DetailsScreenContent(
+    uiState: DetailsUIState,
     onHideVideo: (() -> Unit),
     modifier: Modifier = Modifier,
     onFavoriteMovie: (Boolean) -> Unit

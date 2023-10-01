@@ -23,23 +23,22 @@ class DetailsScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var movie: Movie
-    private lateinit var successData: DetailsUIState.SuccessData
-    private val _uiState = MutableStateFlow<DetailsUIState>(DetailsUIState.empty())
+    private val _uiState = MutableStateFlow(DetailsUIState.empty())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     fun setup(movie: Movie) {
         this.movie = movie
-        this.successData = DetailsUIState.SuccessData(
-            imageUrl = this.movie.backdropImageUrl,
-            movieLanguage = this.movie.language,
-            isFavorite = this.movie.isFavorite,
-            movieOverview = this.movie.overview,
-            moviePopularity = this.movie.popularity,
-            movieTitle = this.movie.title,
-            movieVotesAverage = this.movie.votesAverage
-        )
-
-        _uiState.update { this.successData }
+        this._uiState.update {
+            DetailsUIState(
+                imageUrl = this.movie.backdropImageUrl,
+                movieLanguage = this.movie.language,
+                isFavorite = this.movie.isFavorite,
+                movieOverview = this.movie.overview,
+                moviePopularity = this.movie.popularity,
+                movieTitle = this.movie.title,
+                movieVotesAverage = this.movie.votesAverage
+            )
+        }
 
         checkIfMovieIsFavorite(movie.title)
 
@@ -49,10 +48,10 @@ class DetailsScreenViewModel @Inject constructor(
     private fun checkIfMovieIsFavorite(movieTitle: String) {
         viewModelScope.launch {
             val data = isFavoriteMovieUseCase.invoke(movieTitle)
-            if (data.data != null && _uiState.value is DetailsUIState.SuccessData) {
+            if (data.data != null) {
                 _uiState.update {
-                    successData.copy(
-                        isFavorite = data.data!!
+                    it.copy(
+                        isFavorite = data.data ?: false
                     )
                 }
             }
@@ -61,20 +60,20 @@ class DetailsScreenViewModel @Inject constructor(
 
     private fun fetchMoviesDetails() {
         viewModelScope.launch {
-            _uiState.update { DetailsUIState.Loading(movie.title) }
+            updateLoadingState(true)
 
             getMovieDetailsUseCase(movieId = movie.id)
                 .catch {
                     _uiState.update {
-                        DetailsUIState.Error(
-                            "something went wrong",
-                            movieTitle = movie.title
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = "Something went wrong"
                         )
                     }
                 }
                 .collect { movieDetails ->
                     _uiState.update {
-                        successData = successData.copy(
+                        it.copy(
                             videoId = movieDetails.videoId,
                             tagLine = movieDetails.tagline,
                             status = movieDetails.status,
@@ -82,10 +81,15 @@ class DetailsScreenViewModel @Inject constructor(
                             homepage = movieDetails.homepage,
                             productionCompanies = movieDetails.productionCompanies.reduceToText()
                         )
-                        successData
                     }
                 }
+        }.invokeOnCompletion {
+            updateLoadingState(false)
         }
+    }
+
+    private fun updateLoadingState(isLoading: Boolean) {
+        _uiState.update { it.copy(isLoading = isLoading) }
     }
 
     fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
@@ -95,7 +99,7 @@ class DetailsScreenViewModel @Inject constructor(
             if (response.data != null) {
                 movie.isFavorite = isToFavorite
                 _uiState.update {
-                    successData.copy(
+                    it.copy(
                         isFavorite = movie.isFavorite
                     )
                 }
@@ -104,12 +108,8 @@ class DetailsScreenViewModel @Inject constructor(
     }
 
     fun hideVideo() {
-        if (_uiState.value is DetailsUIState.SuccessData) {
-            _uiState.update {
-                (it as DetailsUIState.SuccessData).copy(
-                    showVideo = false
-                )
-            }
+        _uiState.update {
+            it.copy(showVideo = false)
         }
     }
 

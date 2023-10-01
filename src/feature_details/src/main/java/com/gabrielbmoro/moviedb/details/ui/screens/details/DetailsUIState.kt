@@ -1,36 +1,25 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-sealed class DetailsUIState(
-    open val movieTitle: String
+data class DetailsUIState(
+    val movieTitle: String,
+    val isLoading: Boolean = false,
+    val isFavorite: Boolean,
+    val movieVotesAverage: Float,
+    val movieLanguage: String,
+    val moviePopularity: Float,
+    val movieOverview: String,
+    val imageUrl: String?,
+    val tagLine: String? = null,
+    val genres: String? = null,
+    val status: String? = null,
+    val productionCompanies: String? = null,
+    val homepage: String? = null,
+    val videoId: String? = null,
+    val showVideo: Boolean = true,
+    val errorMessage: String? = null
 ) {
-    data class SuccessData(
-        val isFavorite: Boolean,
-        val movieVotesAverage: Float,
-        val movieLanguage: String,
-        val moviePopularity: Float,
-        val movieOverview: String,
-        val imageUrl: String?,
-        val tagLine: String? = null,
-        val genres: String? = null,
-        val status: String? = null,
-        val productionCompanies: String? = null,
-        val homepage: String? = null,
-        val videoId: String? = null,
-        val showVideo: Boolean = true,
-        override val movieTitle: String
-    ) : DetailsUIState(movieTitle = movieTitle)
-
-    data class Error(
-        val message: String,
-        override val movieTitle: String
-    ) : DetailsUIState(movieTitle = movieTitle)
-
-    data class Loading(override val movieTitle: String) : DetailsUIState(
-        movieTitle = movieTitle
-    )
-
     companion object {
-        fun empty() = SuccessData(
+        fun empty() = DetailsUIState(
             isFavorite = false,
             movieTitle = "",
             moviePopularity = 0f,
@@ -40,7 +29,7 @@ sealed class DetailsUIState(
             imageUrl = ""
         )
 
-        fun mocked1() = SuccessData(
+        fun mocked1() = DetailsUIState(
             isFavorite = true,
             movieTitle = "Dragão branco",
             moviePopularity = 2f,
