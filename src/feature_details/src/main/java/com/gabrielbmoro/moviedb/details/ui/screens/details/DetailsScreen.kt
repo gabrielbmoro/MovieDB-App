@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbar
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
+import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.gabrielbmoro.moviedb.details.ui.widgets.ErrorMessage
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
@@ -128,6 +130,8 @@ private fun DetailsScreenSuccessInfo(
     modifier: Modifier = Modifier,
     onFavoriteMovie: (Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -140,7 +144,11 @@ private fun DetailsScreenSuccessInfo(
             if (uiState.videoId != null) {
                 VideoPlayer(
                     videoId = uiState.videoId,
-                    isFullScreen = false,
+                    onFullScreenEvent = { videoId ->
+                        context.startActivity(
+                            FullScreenActivity.launchIntent(context, videoId)
+                        )
+                    },
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .fillMaxSize()

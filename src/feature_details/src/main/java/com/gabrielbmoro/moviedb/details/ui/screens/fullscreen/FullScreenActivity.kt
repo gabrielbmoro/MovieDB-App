@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 
 class FullScreenActivity : ComponentActivity() {
@@ -16,7 +18,11 @@ class FullScreenActivity : ComponentActivity() {
             ?: throw IllegalStateException("It is required video id argument")
 
         setContent {
-            VideoPlayer(videoId = videoId, isFullScreen = true)
+            VideoPlayer(
+                videoId = videoId,
+                onFullScreenEvent = null,
+                modifier = Modifier.fillMaxSize()
+            )
         }
     }
 

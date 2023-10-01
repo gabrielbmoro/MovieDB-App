@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
@@ -17,8 +16,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFram
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 @Composable
-fun VideoPlayer(videoId: String, isFullScreen: Boolean, modifier: Modifier = Modifier) {
+fun VideoPlayer(
+    videoId: String,
+    onFullScreenEvent: ((String) -> Unit)?,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
+    val showFullScreenOption = onFullScreenEvent != null
 
     var youtubePlayer: YouTubePlayerView? = remember {
         YouTubePlayerView(
@@ -89,7 +93,7 @@ fun VideoPlayer(videoId: String, isFullScreen: Boolean, modifier: Modifier = Mod
                 IFramePlayerOptions
                     .Builder()
                     .controls(1)
-                    .fullscreen(if (isFullScreen) 0 else 1)
+                    .fullscreen(if (showFullScreenOption) 1 else 0)
                     .build()
             )
             layoutParams = ViewGroup.LayoutParams(
@@ -97,16 +101,14 @@ fun VideoPlayer(videoId: String, isFullScreen: Boolean, modifier: Modifier = Mod
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
 
-            if (isFullScreen.not()) {
+            onFullScreenEvent?.let {
                 addFullscreenListener(
                     object : FullscreenListener {
                         override fun onEnterFullscreen(
                             fullscreenView: View,
                             exitFullscreen: () -> Unit
                         ) {
-                            context.startActivity(
-                                FullScreenActivity.launchIntent(context, videoId)
-                            )
+                            onFullScreenEvent(videoId)
                         }
 
                         override fun onExitFullscreen() {}
