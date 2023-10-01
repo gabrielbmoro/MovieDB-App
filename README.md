@@ -12,13 +12,13 @@ Welcome to the MovieDB-Android app! If you like movies, you will like this app, 
 
 ---
 
-## How to run the project?
+## How to run the project? 📦
 
 1. Install Android Studio (latest version);
 2. Select the option to open a project;
 3. Select the project -> ⚠️ The Android project is inside of the `src` directory ⚠️ 
 
-## How to get my access token? 📦
+## How to get my access token? 👮 
 
 1. Create an account [Movie DB API](https://www.themoviedb.org) (if you don't have it);
 2. Copy the value of your [Bearer token](https://developer.themoviedb.org/docs/authentication-application#bearer-token)
