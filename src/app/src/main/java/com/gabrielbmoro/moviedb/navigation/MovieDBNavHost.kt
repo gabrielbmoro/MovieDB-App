@@ -9,6 +9,7 @@ import com.gabrielbmoro.moviedb.core.ui.parcelableOf
 import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieScreen
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.search.ui.screens.search.SearchScreen
 import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreen
 
 @Composable
@@ -38,7 +39,10 @@ fun MovieDBNavHost(
         ) {
             MovieScreen(
                 bottomBar = bottomBar,
-                navigateToDetailsScreen = navigateToDetailsScreen
+                navigateToDetailsScreen = navigateToDetailsScreen,
+                navigateToSearchScreen = {
+                    navController.navigate(ScreenRoutesBuilder.SEARCH_ROUTE)
+                }
             )
         }
 
@@ -47,6 +51,12 @@ fun MovieDBNavHost(
                 navigateToDetailsScreen = navigateToDetailsScreen,
                 bottomBar = bottomBar
             )
+        }
+
+        composable(
+            route = ScreenRoutesBuilder.SEARCH_ROUTE
+        ) {
+            SearchScreen()
         }
 
         composable(

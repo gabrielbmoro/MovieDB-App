@@ -12,6 +12,7 @@ object ScreenRoutesBuilder {
     private const val HOME_SCREEN_ROUTE = "home"
     const val WISHLIST_ROUTE = "$HOME_SCREEN_ROUTE/favoriteMovies"
     const val MOVIES_ROUTE = "$HOME_SCREEN_ROUTE/moviesRoute"
+    const val SEARCH_ROUTE = "$HOME_SCREEN_ROUTE/search"
 
     fun detailedMovieRoute(movie: Movie): String {
         val json = Uri.encode(Gson().toJson(movie))

@@ -53,6 +53,7 @@ dependencies {
     api(project(":feature_movies"))
     api(project(":feature_details"))
     api(project(":feature_wishlist"))
+    api(project(":feature_search"))
 
     implementation(libs.appcompat)
 
