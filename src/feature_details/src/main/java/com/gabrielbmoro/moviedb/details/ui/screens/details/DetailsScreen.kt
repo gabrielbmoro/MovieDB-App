@@ -36,6 +36,7 @@ import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.gabrielbmoro.moviedb.details.ui.widgets.ErrorMessage
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
+import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 import com.gabrielbmoro.moviedb.feature.details.R
 import com.gabrielbmoro.moviedb.repository.model.Movie
@@ -273,9 +274,8 @@ private fun DetailsScreenContent(
             MovieDetailDescription(
                 titleRes = R.string.homepage,
                 content = {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodyMedium
+                    TextUrl(
+                        url = it
                     )
                 },
                 modifier = Modifier.padding(horizontal = 16.dp)
