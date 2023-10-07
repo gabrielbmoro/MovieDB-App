@@ -77,7 +77,7 @@ class DetailsScreenViewModel @Inject constructor(
                             videoId = movieDetails.videoId,
                             tagLine = movieDetails.tagline,
                             status = movieDetails.status,
-                            genres = movieDetails.genres.reduceToText(),
+                            genres = movieDetails.genres,
                             homepage = movieDetails.homepage,
                             productionCompanies = movieDetails.productionCompanies.reduceToText()
                         )

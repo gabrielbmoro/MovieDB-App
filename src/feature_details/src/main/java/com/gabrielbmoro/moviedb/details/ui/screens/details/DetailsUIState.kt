@@ -10,7 +10,7 @@ data class DetailsUIState(
     val movieOverview: String,
     val imageUrl: String?,
     val tagLine: String? = null,
-    val genres: String? = null,
+    val genres: List<String>? = null,
     val status: String? = null,
     val productionCompanies: String? = null,
     val homepage: String? = null,
