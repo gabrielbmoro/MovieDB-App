@@ -40,6 +40,8 @@ fun MovieScreen(
     ScreenScaffold(
         showTopBar = showTopBar,
         appBarTitle = stringResource(id = R.string.movies),
+        searchEvent = {
+        },
         bottomBar = bottomBar
     ) {
         LazyColumn(
