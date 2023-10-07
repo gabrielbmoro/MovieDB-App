@@ -34,6 +34,7 @@ import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
 import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.gabrielbmoro.moviedb.details.ui.widgets.ErrorMessage
+import com.gabrielbmoro.moviedb.details.ui.widgets.GenresCard
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
@@ -197,6 +198,13 @@ private fun DetailsScreenContent(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
+        uiState.genres?.let { genres ->
+            GenresCard(
+                genres = genres,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+
         MovieDetailDescription(
             titleRes = R.string.overview,
             content = {
@@ -229,19 +237,6 @@ private fun DetailsScreenContent(
             },
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-
-        uiState.genres?.let {
-            MovieDetailDescription(
-                titleRes = R.string.genres,
-                content = {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
 
         uiState.tagLine?.let {
             MovieDetailDescription(
