@@ -18,4 +18,10 @@ dependencies {
     implementation(libs.bundles.compose.impl)
     debugImplementation(libs.bundles.compose.debug.impl)
     implementation(libs.bundles.compose.extras)
+
+    // Hilt
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
+
+    implementation(libs.bundles.lifecycle)
 }
