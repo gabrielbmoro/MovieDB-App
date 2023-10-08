@@ -27,4 +27,6 @@ interface MoviesRepository {
     fun getVideoStreams(movieId: Long): Flow<List<VideoStream>>
 
     fun getMovieDetail(movieId: Long): Flow<MovieDetail>
+
+    fun searchMovieBy(query: String): Flow<List<Movie>>
 }

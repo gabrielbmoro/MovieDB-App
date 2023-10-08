@@ -43,4 +43,14 @@ interface ApiRepository {
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Long
     ): MovieDetailResponse
+
+    @GET("search/movie")
+    suspend fun searchMovieBy(
+        @Query("query")
+        query: String,
+        @Query("include_adult")
+        includeAdult: Boolean = false,
+        @Query("language")
+        language: String = "en-US"
+    ): PageResponse
 }

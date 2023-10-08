@@ -56,7 +56,7 @@ fun MovieDBNavHost(
         composable(
             route = ScreenRoutesBuilder.SEARCH_ROUTE
         ) {
-            SearchScreen()
+            SearchScreen(navigateToDetailsScreen = navigateToDetailsScreen)
         }
 
         composable(

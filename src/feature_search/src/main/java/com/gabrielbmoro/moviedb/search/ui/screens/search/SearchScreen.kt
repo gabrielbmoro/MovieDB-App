@@ -9,10 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
 
 @Composable
-fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(viewModel: SearchViewModel = hiltViewModel(), navigateToDetailsScreen: ((Movie) -> Unit)) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
@@ -30,5 +32,13 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
             },
             modifier = Modifier.fillMaxWidth()
         )
+
+        uiState.value.results?.let { movies ->
+            MoviesResult(
+                movies = movies,
+                modifier = Modifier.fillMaxWidth(),
+                navigateToDetailsScreen = navigateToDetailsScreen
+            )
+        }
     }
 }
