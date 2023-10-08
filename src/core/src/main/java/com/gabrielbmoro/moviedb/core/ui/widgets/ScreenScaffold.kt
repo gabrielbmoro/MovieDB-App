@@ -31,7 +31,7 @@ fun ScreenScaffold(
                 ),
                 exit = shrinkVertically()
             ) {
-                AppToolbar(
+                AppToolbarTitle(
                     title = appBarTitle,
                     backEvent = null,
                     searchEvent = searchEvent

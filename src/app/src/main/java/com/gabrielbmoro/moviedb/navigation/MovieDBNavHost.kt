@@ -22,6 +22,10 @@ fun MovieDBNavHost(
         )
     }
 
+    val onBack: (() -> Unit) = {
+        navController.navigateUp()
+    }
+
     val bottomBar: @Composable (() -> Unit) = {
         MovieBottomNavigationBar(
             navController = navController,
@@ -56,7 +60,10 @@ fun MovieDBNavHost(
         composable(
             route = ScreenRoutesBuilder.SEARCH_ROUTE
         ) {
-            SearchScreen(navigateToDetailsScreen = navigateToDetailsScreen)
+            SearchScreen(
+                navigateToDetailsScreen = navigateToDetailsScreen,
+                onBackEvent = onBack
+            )
         }
 
         composable(
@@ -73,9 +80,7 @@ fun MovieDBNavHost(
             ) ?: throw IllegalArgumentException("Type should be movie")
 
             DetailsScreen(
-                onBackEvent = {
-                    navController.navigateUp()
-                },
+                onBackEvent = onBack,
                 movie = movie
             )
         }

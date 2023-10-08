@@ -40,7 +40,36 @@ private fun SearchNavigationIcon(event: () -> Unit, modifier: Modifier = Modifie
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppToolbar(
+fun CustomAppToolbar(
+    title: @Composable () -> Unit,
+    backEvent: (() -> Unit)? = null,
+    searchEvent: (() -> Unit)? = null
+) {
+    val backNavigationIcon: @Composable (() -> Unit) = backEvent?.let {
+        {
+            BackNavigationIcon(it)
+        }
+    } ?: { }
+
+    TopAppBar(
+        title = {
+            title()
+        },
+        navigationIcon = backNavigationIcon,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        actions = {
+            searchEvent?.let { searchEvent ->
+                SearchNavigationIcon(event = searchEvent)
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppToolbarTitle(
     title: String,
     backEvent: (() -> Unit)? = null,
     searchEvent: (() -> Unit)? = null
@@ -75,6 +104,6 @@ fun AppToolbar(
 @Composable
 fun AppToolbarPreview() {
     MovieDBAppTheme {
-        AppToolbar("Jumangi")
+        AppToolbarTitle("Jumangi")
     }
 }

@@ -18,7 +18,7 @@ class AppToolbarTest {
 
         // act
         composeTestRule.setContent {
-            AppToolbar(
+            AppToolbarTitle(
                 title = title
             )
         }
@@ -37,7 +37,7 @@ class AppToolbarTest {
 
         // act
         composeTestRule.setContent {
-            AppToolbar(
+            AppToolbarTitle(
                 title = "any title",
                 backEvent = backEvent
             )
@@ -56,7 +56,7 @@ class AppToolbarTest {
 
         // act
         composeTestRule.setContent {
-            AppToolbar(
+            AppToolbarTitle(
                 title = "any title",
                 backEvent = backEvent
             )

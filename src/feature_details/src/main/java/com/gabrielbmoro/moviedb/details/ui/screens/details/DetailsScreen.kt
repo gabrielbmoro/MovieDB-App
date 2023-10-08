@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbar
+import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbarTitle
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
 import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
@@ -90,7 +90,7 @@ private fun DetailsScreenMain(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-                AppToolbar(
+                AppToolbarTitle(
                     title = uiState.movieTitle,
                     backEvent = onBackEvent
                 )
