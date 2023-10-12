@@ -14,7 +14,7 @@ import com.gabrielbmoro.moviedb.repository.model.Movie
 fun MoviesResult(
     movies: List<Movie>,
     navigateToDetailsScreen: (Movie) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),

@@ -27,7 +27,7 @@ import kotlinx.coroutines.delay
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     navigateToDetailsScreen: ((Movie) -> Unit),
-    onBackEvent: (() -> Unit),
+    onBackEvent: (() -> Unit)
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 

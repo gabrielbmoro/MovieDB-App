@@ -40,7 +40,9 @@ fun SearchInputText(
                 )
             }
         }
-    } else null
+    } else {
+        null
+    }
 
     TextField(
         value = currentValue,
@@ -51,10 +53,10 @@ fun SearchInputText(
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer
         ),
         trailingIcon = trailingIcon,
-        modifier = modifier.focusRequester(focusRequester),
+        modifier = modifier.focusRequester(focusRequester)
     )
 }
 
@@ -66,6 +68,7 @@ fun SearchInputTextPreview() {
             currentValue = "teste",
             onValueChanged = {},
             focusRequester = FocusRequester(),
-            onClearText = {})
+            onClearText = {}
+        )
     }
 }

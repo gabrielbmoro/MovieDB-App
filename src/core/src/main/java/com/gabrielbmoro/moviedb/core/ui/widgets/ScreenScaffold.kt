@@ -18,7 +18,7 @@ fun ScreenScaffold(
     showTopBar: Boolean,
     appBarTitle: String,
     modifier: Modifier = Modifier,
-    searchEvent: (()->Unit)? = null,
+    searchEvent: (() -> Unit)? = null,
     bottomBar: @Composable () -> Unit,
     screenContent: @Composable BoxScope.() -> Unit
 ) {
