@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.wishlist.ui.widgets
+package com.gabrielbmoro.moviedb.core.ui.widgets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +16,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gabrielbmoro.moviedb.core.ui.widgets.FiveStars
 
 @Composable
 fun MovieCardInformation(

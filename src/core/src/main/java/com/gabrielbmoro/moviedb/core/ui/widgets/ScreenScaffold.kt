@@ -18,6 +18,7 @@ fun ScreenScaffold(
     showTopBar: Boolean,
     appBarTitle: String,
     modifier: Modifier = Modifier,
+    searchEvent: (() -> Unit)? = null,
     bottomBar: @Composable () -> Unit,
     screenContent: @Composable BoxScope.() -> Unit
 ) {
@@ -30,9 +31,10 @@ fun ScreenScaffold(
                 ),
                 exit = shrinkVertically()
             ) {
-                AppToolbar(
+                AppToolbarTitle(
                     title = appBarTitle,
-                    backEvent = null
+                    backEvent = null,
+                    searchEvent = searchEvent
                 )
             }
         },

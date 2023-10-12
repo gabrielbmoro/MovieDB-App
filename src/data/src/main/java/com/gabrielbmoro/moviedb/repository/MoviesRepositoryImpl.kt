@@ -135,6 +135,12 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun searchMovieBy(query: String): Flow<List<Movie>> = flow {
+        val result = api.searchMovieBy(query = query)
+        val movies = result.results?.map { movieMapper.mapResponse(it) } ?: emptyList()
+        emit(movies)
+    }
+
     companion object {
         private const val PAGE_SIZE = 20
         private const val MAX_SIZE = 500

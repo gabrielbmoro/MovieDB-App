@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.wishlist.ui.widgets
+package com.gabrielbmoro.moviedb.core.ui.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -17,7 +17,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.core.R
-import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
 
 @Composable
 fun MovieCard(
