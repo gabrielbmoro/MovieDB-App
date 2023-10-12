@@ -40,27 +40,25 @@ class WishlistViewModelTest {
     }
 
     @Test
-    fun `should be able to fetch my favorite movies - empty list`() {
+    fun `should be able to fetch my favorite movies - empty list`() = runTest {
         // arrange
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
         coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
-
-        // act
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
         )
+
+        // act
         viewModel.load()
 
-        runTest {
-            delay(500L)
+        delay(500L)
 
-            // assert
-            Truth.assertThat(viewModel.uiState.value.favoriteMovies).isEqualTo(expected.data)
-        }
+        // assert
+        Truth.assertThat(viewModel.uiState.value.favoriteMovies).isEqualTo(expected.data)
     }
 
     @Test
-    fun `should be able to fetch my favorite movies - not empty list`() {
+    fun `should be able to fetch my favorite movies - not empty list`() = runTest {
         // arrange
         val expected: DataOrException<List<Movie>, Exception> = DataOrException(
             listOf(
@@ -70,21 +68,19 @@ class WishlistViewModelTest {
         )
         coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
 
-        // act
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
         )
+
+        // act
         viewModel.load()
+        delay(500L)
 
-        runTest {
-            delay(500L)
-
-            // assert
-            Truth.assertThat(
-                viewModel.uiState.value.favoriteMovies
-            ).contains(
-                Movie.mockChuckNorrisVsVandammeMovie()
-            )
-        }
+        // assert
+        Truth.assertThat(
+            viewModel.uiState.value.favoriteMovies
+        ).contains(
+            Movie.mockChuckNorrisVsVandammeMovie()
+        )
     }
 }
