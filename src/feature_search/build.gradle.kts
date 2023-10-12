@@ -24,4 +24,6 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.bundles.lifecycle)
+
+    testImplementation(libs.bundles.test)
 }
