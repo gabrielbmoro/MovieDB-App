@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.core.ui.theme.MovieDBAppTheme
@@ -37,6 +38,7 @@ fun SearchInputText(
                 Image(
                     imageVector = Icons.Filled.Close,
                     contentDescription = stringResource(id = android.R.string.cancel),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
                 )
             }
         }
