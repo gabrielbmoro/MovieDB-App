@@ -46,12 +46,12 @@ fun SearchInputText(
 
     TextField(
         value = currentValue,
-        textStyle = MaterialTheme.typography.titleLarge,
+        textStyle = MaterialTheme.typography.titleMedium,
         onValueChange = onValueChanged,
         placeholder = {
             Text(
                 stringResource(id = R.string.search_movie_placeholder),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium
             )
         },
         colors = TextFieldDefaults.colors(
@@ -59,6 +59,7 @@ fun SearchInputText(
             disabledContainerColor = MaterialTheme.colorScheme.primaryContainer
         ),
         trailingIcon = trailingIcon,
+        maxLines = 1,
         modifier = modifier.focusRequester(focusRequester)
     )
 }
