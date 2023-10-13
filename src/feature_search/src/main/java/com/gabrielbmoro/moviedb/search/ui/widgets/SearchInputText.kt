@@ -36,7 +36,7 @@ fun SearchInputText(
             ) {
                 Image(
                     imageVector = Icons.Filled.Close,
-                    contentDescription = stringResource(id = android.R.string.cancel)
+                    contentDescription = stringResource(id = android.R.string.cancel),
                 )
             }
         }
@@ -46,10 +46,13 @@ fun SearchInputText(
 
     TextField(
         value = currentValue,
-        textStyle = MaterialTheme.typography.labelMedium,
+        textStyle = MaterialTheme.typography.titleLarge,
         onValueChange = onValueChanged,
         placeholder = {
-            Text(stringResource(id = R.string.search_movie_placeholder))
+            Text(
+                stringResource(id = R.string.search_movie_placeholder),
+                style = MaterialTheme.typography.titleLarge
+            )
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
