@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
@@ -16,7 +17,7 @@ class SearchViewModel @Inject constructor(
     private val searchMovieUseCase: SearchMovieUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SearchUIState(""))
+    private val _uiState = MutableStateFlow(SearchUIState(TextFieldValue("")))
 
     val uiState = _uiState.stateIn(
         viewModelScope,
@@ -24,11 +25,11 @@ class SearchViewModel @Inject constructor(
         _uiState.value
     )
 
-    fun onSearchQueryChanged(searchQuery: String) {
+    fun onSearchQueryChanged(searchQuery: TextFieldValue) {
         _uiState.update { it.copy(searchQuery = searchQuery) }
 
         viewModelScope.launch {
-            searchMovieUseCase.invoke(searchQuery).collect { movies ->
+            searchMovieUseCase.invoke(searchQuery.text).collect { movies ->
                 _uiState.update {
                     it.copy(
                         results = movies
@@ -41,7 +42,7 @@ class SearchViewModel @Inject constructor(
     fun onClearSearchQuery() {
         _uiState.update {
             it.copy(
-                searchQuery = "",
+                searchQuery = TextFieldValue(text = ""),
                 results = null
             )
         }
