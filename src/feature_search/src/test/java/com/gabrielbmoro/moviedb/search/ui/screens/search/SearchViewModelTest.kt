@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.compose.ui.text.input.TextFieldValue
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import com.google.common.truth.Truth
@@ -46,7 +47,7 @@ class SearchViewModelTest {
             emit(listOf(Movie.mockChuckNorrisVsVandammeMovie()))
         }
         every { searchMovieUseCase(any()) }.returns(resultFlow)
-        val searchQuery = "Chuck Nor"
+        val searchQuery = TextFieldValue("Chuck Nor")
 
         val viewModel = SearchViewModel(searchMovieUseCase)
 
@@ -68,7 +69,7 @@ class SearchViewModelTest {
         // arrange
         val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
         every { searchMovieUseCase(any()) }.returns(resultFlow)
-        val searchQuery = "Ice ag"
+        val searchQuery = TextFieldValue("Ice ag")
 
         val viewModel = SearchViewModel(searchMovieUseCase)
 
@@ -90,7 +91,7 @@ class SearchViewModelTest {
         val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
         every { searchMovieUseCase(any()) }.returns(resultFlow)
         val viewModel = SearchViewModel(searchMovieUseCase)
-        viewModel.onSearchQueryChanged("Test")
+        viewModel.onSearchQueryChanged(TextFieldValue("Test"))
         delay(500)
 
         // act
@@ -98,7 +99,7 @@ class SearchViewModelTest {
         delay(500)
 
         // assert
-        Truth.assertThat(viewModel.uiState.value.searchQuery).isEmpty()
+        Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEmpty()
         Truth.assertThat(viewModel.uiState.value.results).isNull()
     }
 }

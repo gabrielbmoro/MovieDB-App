@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.core.ui.theme.MovieDBAppTheme
 import com.gabrielbmoro.moviedb.core.ui.theme.ThemePreviews
@@ -22,13 +23,13 @@ import com.gabrielbmoro.moviedb.feature.search.R
 
 @Composable
 fun SearchInputText(
-    currentValue: String,
-    onValueChanged: ((String) -> Unit),
+    currentValue: TextFieldValue,
+    onValueChanged: ((TextFieldValue) -> Unit),
     onClearText: (() -> Unit),
     focusRequester: FocusRequester,
     modifier: Modifier = Modifier
 ) {
-    val trailingIcon: @Composable (() -> Unit)? = if (currentValue.isNotEmpty()) {
+    val trailingIcon: @Composable (() -> Unit)? = if (currentValue.text.isNotEmpty()) {
         {
             IconButton(
                 onClick = onClearText,
@@ -71,7 +72,7 @@ fun SearchInputText(
 fun SearchInputTextPreview() {
     MovieDBAppTheme {
         SearchInputText(
-            currentValue = "teste",
+            currentValue = TextFieldValue(text = "teste"),
             onValueChanged = {},
             focusRequester = FocusRequester(),
             onClearText = {}
