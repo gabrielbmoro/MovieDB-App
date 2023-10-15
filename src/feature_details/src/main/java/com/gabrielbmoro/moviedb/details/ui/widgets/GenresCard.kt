@@ -20,20 +20,24 @@ import com.gabrielbmoro.moviedb.core.ui.theme.ThemePreviews
 fun GenresCard(genres: List<String>, modifier: Modifier = Modifier) {
     FlowRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         maxItemsInEachRow = 4
     ) {
         genres.forEach {
             Card(
                 shape = CircleShape,
+                modifier = Modifier.padding(vertical = 4.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
             ) {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.labelMedium.copy(
+                    style = MaterialTheme.typography.labelLarge.copy(
                         color = MaterialTheme.colorScheme.secondaryContainer
                     ),
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                    modifier = Modifier.padding(
+                        horizontal = 8.dp,
+                        vertical = 4.dp
+                    )
                 )
             }
         }
@@ -47,6 +51,9 @@ fun GenresCardPreview() {
         GenresCard(
             genres = listOf(
                 "Action",
+                "Drama",
+                "Comedy",
+                "Terror",
                 "Drama",
                 "Comedy",
                 "Terror"
