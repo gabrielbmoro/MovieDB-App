@@ -11,8 +11,8 @@ android {
 
 dependencies {
 
-    api(project(":core"))
-    api(project(":data"))
+    implementation(projects.data)
+    implementation(projects.core)
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

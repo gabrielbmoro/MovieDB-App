@@ -49,11 +49,12 @@ dependencies {
 
     implementation(libs.kotlin)
 
-    api(project(":core"))
-    api(project(":feature_movies"))
-    api(project(":feature_details"))
-    api(project(":feature_wishlist"))
-    api(project(":feature_search"))
+    implementation(projects.data)
+    implementation(projects.core)
+    implementation(projects.featureWishlist)
+    implementation(projects.featureMovies)
+    implementation(projects.featureDetails)
+    implementation(projects.featureSearch)
 
     implementation(libs.appcompat)
 

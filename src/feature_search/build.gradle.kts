@@ -10,8 +10,8 @@ android {
 }
 
 dependencies {
-    api(project(":core"))
-    api(project(":data"))
+    implementation(projects.data)
+    implementation(projects.core)
 
     // Compose
     implementation(platform(libs.compose.bom))
