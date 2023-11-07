@@ -5,6 +5,7 @@ plugins {
     kotlin("kapt")
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
+    alias(libs.plugins.kover)
 }
 
 android {

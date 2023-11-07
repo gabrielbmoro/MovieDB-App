@@ -3,6 +3,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    alias(libs.plugins.kover)
 }
 
 android {
