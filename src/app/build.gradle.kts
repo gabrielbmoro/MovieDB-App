@@ -15,6 +15,36 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    alias(libs.plugins.kover)
+}
+
+koverReport {
+    filters {
+        excludes {
+            packages(
+                "*.di",
+                "*.datasources",
+                "*.providers",
+                "dagger.hilt.internal.aggregatedroot.codegen",
+                "hilt_aggregated_deps",
+                "*.dto",
+                "*.core.ui.*",
+                "*.widgets",
+                "*.navigation"
+            )
+
+            classes(
+                "*.BuildConfig",
+                "*.ComposableSingletons",
+                "*.Hilt_MainActivity",
+                "*_Factory*",
+                "*Activity",
+                "*ScreenKt*",
+                "*_HiltModules*"
+            )
+            annotatedBy("Generated")
+        }
+    }
 }
 
 android {
@@ -89,4 +119,12 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation.compose)
+
+    // Kover
+    kover(projects.core)
+    kover(projects.data)
+    kover(projects.featureDetails)
+    kover(projects.featureMovies)
+    kover(projects.featureSearch)
+    kover(projects.featureWishlist)
 }
