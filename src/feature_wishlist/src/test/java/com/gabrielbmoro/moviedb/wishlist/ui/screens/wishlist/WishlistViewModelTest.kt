@@ -9,7 +9,6 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -49,9 +48,7 @@ class WishlistViewModelTest {
         )
 
         // act
-        viewModel.load()
-
-        delay(500L)
+        viewModel.load().await()
 
         // assert
         Truth.assertThat(viewModel.uiState.value.favoriteMovies).isEqualTo(expected.data)
@@ -73,8 +70,7 @@ class WishlistViewModelTest {
         )
 
         // act
-        viewModel.load()
-        delay(500L)
+        viewModel.load().await()
 
         // assert
         Truth.assertThat(
