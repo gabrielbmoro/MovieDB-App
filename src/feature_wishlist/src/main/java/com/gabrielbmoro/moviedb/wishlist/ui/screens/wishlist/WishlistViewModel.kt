@@ -29,12 +29,10 @@ class WishlistViewModel @Inject constructor(
     )
 
     fun load() = viewModelScope.async {
-        val result = getFavoriteMoviesUseCase()
-
-        if (result.exception == null) {
+        getFavoriteMoviesUseCase().collect { movies ->
             _uiState.update {
                 it.copy(
-                    favoriteMovies = result.data
+                    favoriteMovies = movies
                 )
             }
         }

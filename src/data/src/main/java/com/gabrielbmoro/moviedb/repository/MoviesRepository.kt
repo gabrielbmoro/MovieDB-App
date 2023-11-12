@@ -8,7 +8,7 @@ import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception>
+    fun getFavoriteMovies(): Flow<List<Movie>>
 
     fun getPopularMovies(): Flow<PagingData<Movie>>
 
