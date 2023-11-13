@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import com.google.common.truth.Truth
@@ -9,7 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -52,9 +53,7 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onSearchQueryChanged(searchQuery)
-
-        delay(500L)
+        viewModel.onSearchQueryChanged(searchQuery).await()
 
         // assert
         Truth.assertThat(viewModel.uiState.value.results)
@@ -74,9 +73,7 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onSearchQueryChanged(searchQuery)
-
-        delay(500L)
+        viewModel.onSearchQueryChanged(searchQuery).await()
 
         // assert
         Truth.assertThat(viewModel.uiState.value.results).isEmpty()
@@ -91,14 +88,13 @@ class SearchViewModelTest {
         val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
         every { searchMovieUseCase(any()) }.returns(resultFlow)
         val viewModel = SearchViewModel(searchMovieUseCase)
-        viewModel.onSearchQueryChanged(TextFieldValue("Test"))
-        delay(500)
+        viewModel.onSearchQueryChanged(TextFieldValue("searchQuery")).await()
 
         // act
         viewModel.onClearSearchQuery()
-        delay(500)
 
         // assert
+        viewModel.viewModelScope.async { }.await()
         Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEmpty()
         Truth.assertThat(viewModel.uiState.value.results).isNull()
     }

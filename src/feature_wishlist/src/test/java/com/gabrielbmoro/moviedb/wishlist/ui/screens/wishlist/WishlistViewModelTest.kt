@@ -1,15 +1,15 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
 import com.google.common.truth.Truth
-import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -42,39 +42,35 @@ class WishlistViewModelTest {
     @Test
     fun `should be able to fetch my favorite movies - empty list`() = runTest {
         // arrange
-        val expected: DataOrException<List<Movie>, Exception> = DataOrException(emptyList(), null)
-        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
+        val expected: Flow<List<Movie>> = flowOf(emptyList())
+        every { getFavoriteMoviesUseCase.invoke() }.returns(expected)
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
         )
 
         // act
-        viewModel.load()
-
-        delay(500L)
+        viewModel.load().await()
 
         // assert
-        Truth.assertThat(viewModel.uiState.value.favoriteMovies).isEqualTo(expected.data)
+        Truth.assertThat(viewModel.uiState.value.favoriteMovies).isEmpty()
     }
 
     @Test
     fun `should be able to fetch my favorite movies - not empty list`() = runTest {
         // arrange
-        val expected: DataOrException<List<Movie>, Exception> = DataOrException(
+        val expected = flowOf(
             listOf(
                 Movie.mockChuckNorrisVsVandammeMovie()
-            ),
-            null
+            )
         )
-        coEvery { getFavoriteMoviesUseCase.invoke() }.returns(expected)
+        every { getFavoriteMoviesUseCase() }.returns(expected)
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
         )
 
         // act
-        viewModel.load()
-        delay(500L)
+        viewModel.load().await()
 
         // assert
         Truth.assertThat(

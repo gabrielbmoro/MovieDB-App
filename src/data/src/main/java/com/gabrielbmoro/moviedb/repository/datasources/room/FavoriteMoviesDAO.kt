@@ -5,12 +5,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteMoviesDAO {
 
     @Query("SELECT * FROM favorite_movies")
-    suspend fun allFavoriteMovies(): List<FavoriteMovieDTO>
+    fun allFavoriteMovies(): Flow<List<FavoriteMovieDTO>>
 
     @Query("SELECT * FROM favorite_movies WHERE title = :title")
     suspend fun isThereAMovie(title: String): List<FavoriteMovieDTO>

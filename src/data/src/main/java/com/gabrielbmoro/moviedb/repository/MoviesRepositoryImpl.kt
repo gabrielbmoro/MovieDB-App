@@ -17,6 +17,7 @@ import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
@@ -29,16 +30,11 @@ class MoviesRepositoryImpl @Inject constructor(
     private val videoDetailsMapper: VideoDetailsMapper
 ) : MoviesRepository {
 
-    override suspend fun getFavoriteMovies(): DataOrException<List<Movie>, Exception> {
-        return try {
-            DataOrException(
-                data = favoriteMoviesDAO.allFavoriteMovies().map {
-                    movieMapper.mapFavorite(it)
-                },
-                exception = null
-            )
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
+    override fun getFavoriteMovies(): Flow<List<Movie>> {
+        return favoriteMoviesDAO.allFavoriteMovies().map { data ->
+            data.map {
+                movieMapper.mapFavorite(it)
+            }
         }
     }
 

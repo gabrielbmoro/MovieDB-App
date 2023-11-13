@@ -1,12 +1,12 @@
 package com.gabrielbmoro.moviedb.wishlist.domain.usecases
 
-import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.Movie
-import io.mockk.coEvery
-import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -31,14 +31,14 @@ class GetFavoriteMoviesUseCaseTest {
         // arrange
         val favoriteMovies = listOf(Movie.mockWhiteDragonNotFavorite())
 
-        coEvery { repository.getFavoriteMovies() }.returns(DataOrException(favoriteMovies))
+        every { repository.getFavoriteMovies() }.returns(flowOf(favoriteMovies))
 
         runTest {
             // act
-            useCase()
-
-            // assert
-            coVerify(exactly = 1) { repository.getFavoriteMovies() }
+            useCase().collect {
+                // assert
+                verify(exactly = 1) { repository.getFavoriteMovies() }
+            }
         }
     }
 }

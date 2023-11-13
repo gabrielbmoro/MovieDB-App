@@ -2,6 +2,7 @@
 
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 
@@ -68,11 +69,20 @@ fun PluginContainer.configure(project: Project) {
                 project.extensions
                     .getByType<LibraryExtension>()
                     .apply {
-                        applyCommons()
+                        val isComposeEnabled = project.name.contains("feature") ||
+                            project.name.contains("core")
+                        applyCommons(isComposeEnabled)
                     }
             }
         }
     }
+}
+
+fun BaseExtension.enableCompose() {
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+    buildFeatures.compose = true
 }
 
 // Extension function on `AppExtension`
@@ -95,10 +105,6 @@ fun AppExtension.applyCommons() {
         multiDexEnabled = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
@@ -108,23 +114,19 @@ fun AppExtension.applyCommons() {
         targetCompatibility = Config.javaCompatibilityVersion
     }
 
-    buildFeatures.compose = true
+    enableCompose()
 
     namespace = Config.applicationId
 }
 
 // Extension function on `LibraryExtension`
-fun LibraryExtension.applyCommons() {
+fun LibraryExtension.applyCommons(isComposeEnabled: Boolean) {
     compileSdk = Config.compileSdk
 
     defaultConfig {
         minSdk = Config.minSdk
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
-
     compileOptions {
         sourceCompatibility = Config.javaCompatibilityVersion
         targetCompatibility = Config.javaCompatibilityVersion
@@ -134,7 +136,12 @@ fun LibraryExtension.applyCommons() {
         unitTests.isReturnDefaultValues = true
     }
 
-    buildFeatures.compose = true
+    if (isComposeEnabled) {
+        enableCompose()
+        println("Enabling compose")
+    } else {
+        println("Compose Disabled")
+    }
 }
 
 tasks.register("clean", Delete::class) {
