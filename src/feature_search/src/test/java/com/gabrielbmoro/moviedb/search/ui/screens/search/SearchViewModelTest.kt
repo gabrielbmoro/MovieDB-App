@@ -94,7 +94,7 @@ class SearchViewModelTest {
         viewModel.onClearSearchQuery()
 
         // assert
-        viewModel.viewModelScope.async {  }.await()
+        viewModel.viewModelScope.async { }.await()
         Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEmpty()
         Truth.assertThat(viewModel.uiState.value.results).isNull()
     }

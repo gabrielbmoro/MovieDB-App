@@ -69,8 +69,8 @@ fun PluginContainer.configure(project: Project) {
                 project.extensions
                     .getByType<LibraryExtension>()
                     .apply {
-                        val isComposeEnabled = project.name.contains("feature")
-                                || project.name.contains("core")
+                        val isComposeEnabled = project.name.contains("feature") ||
+                            project.name.contains("core")
                         applyCommons(isComposeEnabled)
                     }
             }
