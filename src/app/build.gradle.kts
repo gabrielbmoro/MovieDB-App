@@ -7,15 +7,14 @@ fun Project.releaseAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_RELEASE")
     ?: System.getenv("MOVIE_DB_API_TOKEN_RELEASE")
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    id("android-app-plugin")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     alias(libs.plugins.kover)
+    alias(libs.plugins.ktlint)
 }
 
 koverReport {
@@ -86,8 +85,6 @@ dependencies {
     implementation(projects.featureDetails)
     implementation(projects.featureSearch)
 
-    implementation(libs.appcompat)
-
     implementation(libs.gson)
 
     implementation(libs.swipe.refresh.layout)
@@ -101,21 +98,6 @@ dependencies {
     implementation(libs.preferences.ktx)
 
     implementation(libs.timber)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
-    // Test
-    testImplementation(libs.bundles.test)
-    androidTestImplementation(libs.bundles.test)
-    androidTestImplementation(libs.ui.compose.test)
-
-    // Compose
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.compose.impl)
-    debugImplementation(libs.bundles.compose.debug.impl)
-    implementation(libs.bundles.compose.extras)
 
     // Navigation
     implementation(libs.navigation.compose)
