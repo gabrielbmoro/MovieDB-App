@@ -1,12 +1,7 @@
 import config.Config
-import ext.getLibrariesFromCatalogs
-import ext.getLibraryFromCatalogs
+import ext.debugAPIAuth
 import ext.getVersionFromCatalogs
-import gradle.kotlin.dsl.accessors._c89c08324d0c311f4189ceef586b2d42.androidTestImplementation
-import gradle.kotlin.dsl.accessors._c89c08324d0c311f4189ceef586b2d42.debugImplementation
-import gradle.kotlin.dsl.accessors._c89c08324d0c311f4189ceef586b2d42.implementation
-import gradle.kotlin.dsl.accessors._c89c08324d0c311f4189ceef586b2d42.kapt
-import gradle.kotlin.dsl.accessors._c89c08324d0c311f4189ceef586b2d42.testImplementation
+import ext.releaseAPIAuth
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -16,7 +11,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Config.compileSdk)
+    compileSdk = Config.compileSdk
 
     defaultConfig {
         minSdk = Config.minSdk
@@ -53,29 +48,29 @@ android {
     kotlinOptions {
         jvmTarget = Config.javaVMTarget
     }
-}
 
-dependencies {
-    implementation(getLibraryFromCatalogs("core.ktx"))
-    implementation(getLibraryFromCatalogs("appcompat"))
-    implementation(getLibraryFromCatalogs("material"))
-    testImplementation(getLibraryFromCatalogs("junit"))
-    androidTestImplementation(getLibraryFromCatalogs("androidx.test.ext.junit"))
-    androidTestImplementation(getLibraryFromCatalogs("espresso.core"))
+    signingConfigs {
+        create("release") {
+            keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+            keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
 
-    getLibrariesFromCatalogs("hilt").forEach { implementation(it) }
-    kapt(getLibraryFromCatalogs("hilt.android.compiler"))
+            storeFile = file(System.getenv("HOME").plus("/moviedb-keystore"))
+            storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
+        }
+    }
 
-    getLibrariesFromCatalogs("lifecycle").forEach { implementation(it) }
-
-    // Compose
-    implementation(platform(getLibraryFromCatalogs("compose.bom")))
-    getLibrariesFromCatalogs("compose.impl").forEach { implementation(it) }
-    getLibrariesFromCatalogs("compose.debug.impl").forEach { debugImplementation(it) }
-    getLibrariesFromCatalogs("compose.extras").forEach { implementation(it) }
-
-    // Test
-    getLibrariesFromCatalogs("test").forEach { testImplementation(it) }
-    getLibrariesFromCatalogs("test").forEach { androidTestImplementation(it) }
-    androidTestImplementation(getLibraryFromCatalogs("ui.compose.test"))
+    buildTypes {
+        debug {
+            buildConfigField("String", "API_TOKEN", "\"${debugAPIAuth()}\"")
+        }
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
 }

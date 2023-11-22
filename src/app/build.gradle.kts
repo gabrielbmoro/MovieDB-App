@@ -1,11 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-fun Project.debugAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_DEBUG")
-    ?: System.getenv("MOVIE_DB_API_TOKEN_DEBUG")
-
-fun Project.releaseAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_RELEASE")
-    ?: System.getenv("MOVIE_DB_API_TOKEN_RELEASE")
-
 plugins {
     id("android-app-plugin")
     id("com.google.dagger.hilt.android")
@@ -46,33 +40,6 @@ koverReport {
     }
 }
 
-android {
-    signingConfigs {
-        create("release") {
-            keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
-            keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
-
-            storeFile = file(System.getenv("HOME").plus("/moviedb-keystore"))
-            storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
-        }
-    }
-
-    buildTypes {
-        debug {
-            buildConfigField("String", "API_TOKEN", "\"${debugAPIAuth()}\"")
-        }
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
-            signingConfig = signingConfigs.getByName("release")
-        }
-    }
-}
-
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
@@ -109,4 +76,24 @@ dependencies {
     kover(projects.featureMovies)
     kover(projects.featureSearch)
     kover(projects.featureWishlist)
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
+
+    implementation(libs.bundles.lifecycle)
+
+    // Compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose.impl)
+    debugImplementation(libs.bundles.compose.debug.impl)
+    implementation(libs.bundles.compose.extras)
+
+    // Test
+    testImplementation(libs.bundles.test)
+    androidTestImplementation(libs.bundles.test)
+    androidTestImplementation(libs.ui.compose.test)
 }

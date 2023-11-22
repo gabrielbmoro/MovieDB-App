@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("android-data-library-plugin")
+    id("android-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.kover)
 }
@@ -11,13 +11,19 @@ android {
 
 dependencies {
     implementation(libs.preferences.ktx)
-
     implementation(libs.timber)
-
     implementation(libs.bundles.retrofit)
 
+    // Room
     ksp(libs.room.compiler)
     implementation(libs.bundles.room)
 
     implementation(libs.paging.compose)
+
+    // Test
+    testImplementation(libs.bundles.test)
+
+    // Hilt
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
 }
