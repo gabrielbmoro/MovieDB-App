@@ -25,7 +25,7 @@ android {
     }
 
     testOptions {
-        unitTests.isReturnDefaultValues = true
+        unitTests.isReturnDefaultValues = Config.haveUnitTestsDefaultValues
     }
 
     kotlinOptions {

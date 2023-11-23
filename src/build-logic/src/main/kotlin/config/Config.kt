@@ -11,6 +11,7 @@ object Config {
     private const val localVersionName = "1.0.0"
     val javaCompatibilityVersion = JavaVersion.VERSION_17
     const val javaVMTarget = "17"
+    const val haveUnitTestsDefaultValues = true
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     fun versionCode(): Int {
