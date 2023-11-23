@@ -1,8 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    id("android-compose-library-plugin")
     alias(libs.plugins.kover)
 }
 
@@ -11,19 +9,20 @@ android {
 }
 
 dependencies {
-
     implementation(projects.data)
     implementation(projects.core)
+
+    // Player
+    implementation(libs.android.youtube.player)
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    implementation(libs.timber)
 
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.android.compiler)
+
     implementation(libs.bundles.lifecycle)
 
     // Compose
@@ -31,9 +30,6 @@ dependencies {
     implementation(libs.bundles.compose.impl)
     debugImplementation(libs.bundles.compose.debug.impl)
     implementation(libs.bundles.compose.extras)
-
-    // Player
-    implementation(libs.android.youtube.player)
 
     // Test
     testImplementation(libs.bundles.test)
