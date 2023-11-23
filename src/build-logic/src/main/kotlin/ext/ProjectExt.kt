@@ -14,6 +14,6 @@ fun Project.getVersionFromCatalogs(alias: String): String {
         .findVersion(alias).get().requiredVersion
 }
 
-fun Project.debugAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_DEBUG") as String
+fun Project.debugAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_DEBUG").toString()
 
-fun Project.releaseAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_RELEASE") as String
+fun Project.releaseAPIAuth() = findProperty("MOVIE_DB_API_TOKEN_RELEASE").toString()
