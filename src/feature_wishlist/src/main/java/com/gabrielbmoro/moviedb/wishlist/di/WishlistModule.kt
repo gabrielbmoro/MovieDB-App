@@ -2,17 +2,19 @@ package com.gabrielbmoro.moviedb.wishlist.di
 
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
+import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object WishlistModule {
 
     @Provides
     fun getFavoriteMoviesUseCase(repository: MoviesRepository): GetFavoriteMoviesUseCase {
-        return GetFavoriteMoviesUseCase(repository)
+        return GetFavoriteMoviesUseCaseImpl(repository)
     }
 }
