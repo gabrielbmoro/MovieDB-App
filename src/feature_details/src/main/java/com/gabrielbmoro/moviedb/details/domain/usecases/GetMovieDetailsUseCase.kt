@@ -7,13 +7,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
+interface GetMovieDetailsUseCase {
+    operator fun invoke(movieId: Long): Flow<MovieDetail>
+}
+
 @ViewModelScoped
-class GetMovieDetailsUseCase @Inject constructor(
+class GetMovieDetailsUseCaseImpl @Inject constructor(
     private val repository: MoviesRepository,
     private val getTrailersUseCase: GetTrailersUseCase
-) {
+) : GetMovieDetailsUseCase {
 
-    operator fun invoke(movieId: Long): Flow<MovieDetail> = repository.getMovieDetail(movieId)
+    override operator fun invoke(movieId: Long): Flow<MovieDetail> = repository.getMovieDetail(movieId)
         .zip(
             other = getTrailersUseCase(movieId),
             transform = { f1, f2 ->

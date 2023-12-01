@@ -2,6 +2,8 @@ package com.gabrielbmoro.moviedb.details.di
 
 import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCaseImpl
+import com.gabrielbmoro.moviedb.details.domain.usecases.GetMovieDetailsUseCase
+import com.gabrielbmoro.moviedb.details.domain.usecases.GetMovieDetailsUseCaseImpl
 import com.gabrielbmoro.moviedb.details.domain.usecases.GetTrailersUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.GetTrailersUseCaseImpl
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
@@ -29,5 +31,13 @@ object DetailsModule {
     @Provides
     fun isFavoriteMovieUseCase(repository: MoviesRepository): IsFavoriteMovieUseCase {
         return IsFavoriteMovieUseCaseImpl(repository)
+    }
+
+    @Provides
+    fun getMovieDetailsUseCaseImpl(
+        repository: MoviesRepository,
+        getTrailersUseCase: GetTrailersUseCase
+    ): GetMovieDetailsUseCase {
+        return GetMovieDetailsUseCaseImpl(repository, getTrailersUseCase)
     }
 }
