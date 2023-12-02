@@ -15,7 +15,7 @@ import org.junit.runners.JUnit4
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
-class GetFavoriteMoviesUseCaseTest {
+class GetFavoriteMoviesUseCaseImplTest {
 
     private lateinit var repository: MoviesRepository
     private lateinit var useCase: GetFavoriteMoviesUseCase
@@ -23,7 +23,7 @@ class GetFavoriteMoviesUseCaseTest {
     @Before
     fun before() {
         repository = mockk()
-        useCase = GetFavoriteMoviesUseCase(repository)
+        useCase = GetFavoriteMoviesUseCaseImpl(repository)
     }
 
     @Test

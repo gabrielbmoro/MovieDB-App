@@ -17,7 +17,7 @@ import org.junit.runners.JUnit4
 
 @ExperimentalCoroutinesApi
 @RunWith(JUnit4::class)
-class GetTrailersUseCaseTest {
+class GetTrailersUseCaseImplTest {
 
     private lateinit var repository: MoviesRepository
     private lateinit var useCase: GetTrailersUseCase
@@ -25,7 +25,7 @@ class GetTrailersUseCaseTest {
     @Before
     fun before() {
         repository = mockk()
-        useCase = GetTrailersUseCase(repository)
+        useCase = GetTrailersUseCaseImpl(repository)
     }
 
     @Test
