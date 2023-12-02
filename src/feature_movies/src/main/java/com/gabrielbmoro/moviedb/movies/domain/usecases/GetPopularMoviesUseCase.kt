@@ -1,10 +1,19 @@
 package com.gabrielbmoro.moviedb.movies.domain.usecases
 
+import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
+import com.gabrielbmoro.moviedb.repository.model.Movie
+import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetPopularMoviesUseCase @Inject constructor(
+interface GetPopularMoviesUseCase {
+    operator fun invoke(): Flow<PagingData<Movie>>
+}
+
+@ViewModelScoped
+class GetPopularMoviesUseCaseImpl @Inject constructor(
     private val repository: MoviesRepository
-) {
-    operator fun invoke() = repository.getPopularMovies()
+) : GetPopularMoviesUseCase {
+    override operator fun invoke() = repository.getPopularMovies()
 }

@@ -21,7 +21,7 @@ class GetTopRatedMoviesUseCaseTest {
     @Before
     fun before() {
         repository = mockk()
-        useCase = GetTopRatedMoviesUseCase(repository)
+        useCase = GetTopRatedMoviesUseCaseImpl(repository)
     }
 
     @Test

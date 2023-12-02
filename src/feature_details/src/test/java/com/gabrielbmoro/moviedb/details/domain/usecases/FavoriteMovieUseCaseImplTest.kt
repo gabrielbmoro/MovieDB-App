@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class FavoriteMovieUseCaseTest {
+class FavoriteMovieUseCaseImplTest {
 
     private lateinit var repository: MoviesRepository
     private lateinit var useCase: FavoriteMovieUseCase
@@ -21,7 +21,7 @@ class FavoriteMovieUseCaseTest {
     @Before
     fun before() {
         repository = mockk()
-        useCase = FavoriteMovieUseCase(repository)
+        useCase = FavoriteMovieUseCaseImpl(repository)
     }
 
     @Test
