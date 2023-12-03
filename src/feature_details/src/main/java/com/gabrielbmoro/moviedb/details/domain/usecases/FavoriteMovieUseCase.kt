@@ -3,7 +3,6 @@ package com.gabrielbmoro.moviedb.details.domain.usecases
 import com.gabrielbmoro.moviedb.domain.model.DataOrException
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.Movie
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -15,7 +14,6 @@ interface FavoriteMovieUseCase {
     ): DataOrException<Boolean, Exception>
 }
 
-@ViewModelScoped
 open class FavoriteMovieUseCaseImpl @Inject constructor(
     private val repository: MoviesRepository
 ) : FavoriteMovieUseCase {

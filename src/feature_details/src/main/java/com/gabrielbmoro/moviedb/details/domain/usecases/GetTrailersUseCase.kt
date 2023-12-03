@@ -2,7 +2,6 @@ package com.gabrielbmoro.moviedb.details.domain.usecases
 
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
@@ -11,7 +10,6 @@ interface GetTrailersUseCase {
     operator fun invoke(movieId: Long): Flow<VideoStream?>
 }
 
-@ViewModelScoped
 class GetTrailersUseCaseImpl @Inject constructor(
     private val repository: MoviesRepository
 ) : GetTrailersUseCase {
