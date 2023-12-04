@@ -1,7 +1,5 @@
 import config.Config
 
-import gradle.kotlin.dsl.accessors._c89c08324d0c311f4189ceef586b2d42.android
-
 import org.gradle.kotlin.dsl.kotlin
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed

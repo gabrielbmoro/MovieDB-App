@@ -13,27 +13,32 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object MoviesModule {
 
     @Provides
+    @ViewModelScoped
     fun getNowPlayingMoviesUseCase(repository: MoviesRepository): GetNowPlayingMoviesUseCase {
         return GetNowPlayingMoviesUseCaseImpl(repository)
     }
 
     @Provides
+    @ViewModelScoped
     fun getPopularMoviesUseCase(repository: MoviesRepository): GetPopularMoviesUseCase {
         return GetPopularMoviesUseCaseImpl(repository)
     }
 
     @Provides
+    @ViewModelScoped
     fun getTopRatedMoviesUseCase(repository: MoviesRepository): GetTopRatedMoviesUseCase {
         return GetTopRatedMoviesUseCaseImpl(repository)
     }
 
     @Provides
+    @ViewModelScoped
     fun getUpcomingMoviesUseCase(repository: MoviesRepository): GetUpcomingMoviesUseCase {
         return GetUpcomingMoviesUseCaseImpl(repository)
     }
