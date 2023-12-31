@@ -17,10 +17,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -35,8 +36,9 @@ import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
 import com.gabrielbmoro.moviedb.details.ui.screens.fullscreen.FullScreenActivity
 import com.gabrielbmoro.moviedb.details.ui.widgets.ErrorMessage
 import com.gabrielbmoro.moviedb.details.ui.widgets.GenresCard
-import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailDescription
 import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
+import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
+import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 import com.gabrielbmoro.moviedb.feature.details.R
@@ -51,19 +53,19 @@ fun DetailsScreen(
     val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val atTop = scrollState.value == 0
+    val atTop by remember {
+        derivedStateOf {
+            scrollState.value == 0
+        }
+    }
 
     DetailsScreenMain(
         atTop = atTop,
         uiState = uiState,
         scrollState = scrollState,
-        onFavoriteMovie = {
-            viewModel.isToFavoriteOrUnFavorite(it)
-        },
+        onFavoriteMovie = viewModel::isToFavoriteOrUnFavorite,
         onBackEvent = onBackEvent,
-        onHideVideo = {
-            viewModel.hideVideo()
-        }
+        onHideVideo = viewModel::hideVideo
     )
 
     LaunchedEffect(
@@ -206,73 +208,63 @@ private fun DetailsScreenContent(
             )
         }
 
-        MovieDetailDescription(
-            titleRes = R.string.overview,
-            content = {
-                Text(
-                    text = uiState.movieOverview,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
+        SectionTitle(
+            title = stringResource(id = R.string.overview),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+        SectionBody(
+            body = uiState.movieOverview,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
-        MovieDetailDescription(
-            titleRes = R.string.popularity,
-            content = {
-                Text(
-                    text = uiState.moviePopularity.toString(),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            },
+
+        SectionTitle(
+            title = stringResource(id = R.string.popularity),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+        SectionBody(
+            body = uiState.moviePopularity.toString(),
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
-        MovieDetailDescription(
-            titleRes = R.string.language,
-            content = {
-                Text(
-                    text = uiState.movieLanguage,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
+        SectionTitle(
+            title = stringResource(id = R.string.language),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+        SectionBody(
+            body = uiState.movieLanguage,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
-        uiState.tagLine?.let {
-            MovieDetailDescription(
-                titleRes = R.string.tagline,
-                content = {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
+        uiState.tagLine?.let { tagLine ->
+            SectionTitle(
+                title = stringResource(id = R.string.tagline),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            SectionBody(
+                body = uiState.tagLine,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         uiState.productionCompanies?.let {
-            MovieDetailDescription(
-                titleRes = R.string.production_companies,
-                content = {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                },
+            SectionTitle(
+                title = stringResource(id = R.string.production_companies),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            SectionBody(
+                body = uiState.productionCompanies,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         uiState.homepage?.let {
-            MovieDetailDescription(
-                titleRes = R.string.homepage,
-                content = {
-                    TextUrl(
-                        url = it
-                    )
-                },
+            SectionTitle(
+                title = stringResource(id = R.string.homepage),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            TextUrl(
+                url = it,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
