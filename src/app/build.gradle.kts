@@ -97,3 +97,8 @@ dependencies {
     androidTestImplementation(libs.bundles.test)
     androidTestImplementation(libs.ui.compose.test)
 }
+android {
+    buildFeatures {
+        buildConfig = true
+    }
+}
