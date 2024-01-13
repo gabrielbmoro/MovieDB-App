@@ -7,12 +7,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import com.gabrielbmoro.moviedb.core.ui.syncTopBarsColors
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 
 class FullScreenActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        syncTopBarsColors()
 
         val videoId = intent.getStringExtra(FULL_SCREEN_VIDEO_ID_INTENT_KEY)
             ?: throw IllegalStateException("It is required video id argument")
