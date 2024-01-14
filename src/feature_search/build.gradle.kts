@@ -20,7 +20,7 @@ dependencies {
     implementation(libs.timber)
 
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     implementation(libs.bundles.lifecycle)
 
