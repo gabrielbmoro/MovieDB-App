@@ -2,6 +2,7 @@
 plugins {
     id("android-compose-library-plugin")
     alias(libs.plugins.kover)
+    alias(libs.plugins.ksp)
 }
 
 android {
