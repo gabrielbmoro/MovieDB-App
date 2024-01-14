@@ -25,5 +25,5 @@ dependencies {
 
     // Hilt
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 }

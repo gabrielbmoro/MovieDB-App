@@ -2,6 +2,7 @@
 plugins {
     id("android-compose-library-plugin")
     alias(libs.plugins.kover)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -18,7 +19,7 @@ dependencies {
     implementation(libs.timber)
 
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     implementation(libs.bundles.lifecycle)
 

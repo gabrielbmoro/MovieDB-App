@@ -5,8 +5,8 @@ import org.gradle.api.JavaVersion
 object Config {
     const val applicationId = "com.gabrielbmoro.moviedb"
     const val minSdk = 22
-    const val targetSdk = 33
-    const val compileSdk = 33
+    const val targetSdk = 34
+    const val compileSdk = 34
     private const val localVersionCode = 10
     private const val localVersionName = "1.0.0"
     val javaCompatibilityVersion = JavaVersion.VERSION_17

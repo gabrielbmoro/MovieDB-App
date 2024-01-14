@@ -3,12 +3,12 @@
 plugins {
     id("android-app-plugin")
     id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     alias(libs.plugins.kover)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
 }
 
 koverReport {
@@ -82,7 +82,7 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     implementation(libs.bundles.lifecycle)
 
@@ -96,4 +96,9 @@ dependencies {
     testImplementation(libs.bundles.test)
     androidTestImplementation(libs.bundles.test)
     androidTestImplementation(libs.ui.compose.test)
+}
+android {
+    buildFeatures {
+        buildConfig = true
+    }
 }
