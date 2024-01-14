@@ -242,7 +242,7 @@ private fun DetailsScreenContent(
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             SectionBody(
-                body = uiState.tagLine,
+                body = tagLine,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
