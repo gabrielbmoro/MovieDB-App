@@ -29,6 +29,8 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
+
 @OptIn(FlowPreview::class)
 @Composable
 fun SearchInputText(
@@ -92,7 +94,7 @@ fun SearchInputText(
     LaunchedEffect(
         key1 = Unit,
         block = {
-            searchFlow.debounce(600L).collect { query ->
+            searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { query ->
                 Timber.d("Search --> by $query")
                 onSearchBy(query)
             }
