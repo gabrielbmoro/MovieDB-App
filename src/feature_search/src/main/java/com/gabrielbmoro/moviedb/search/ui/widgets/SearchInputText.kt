@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -20,15 +23,27 @@ import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.core.ui.theme.MovieDBAppTheme
 import com.gabrielbmoro.moviedb.core.ui.theme.ThemePreviews
 import com.gabrielbmoro.moviedb.feature.search.R
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
+@OptIn(FlowPreview::class)
 @Composable
 fun SearchInputText(
     currentValue: TextFieldValue,
-    onValueChanged: ((TextFieldValue) -> Unit),
+    onQueryChanged: ((TextFieldValue) -> Unit),
+    onSearchBy: (String) -> Unit,
     onClearText: (() -> Unit),
     focusRequester: FocusRequester,
     modifier: Modifier = Modifier
 ) {
+    val searchFlow = remember {
+        MutableSharedFlow<String>()
+    }
+    val coroutineScope = rememberCoroutineScope()
+
     val trailingIcon: @Composable (() -> Unit)? = if (currentValue.text.isNotEmpty()) {
         {
             IconButton(
@@ -50,7 +65,15 @@ fun SearchInputText(
     TextField(
         value = currentValue,
         textStyle = MaterialTheme.typography.titleMedium,
-        onValueChange = onValueChanged,
+        onValueChange = {
+            onQueryChanged(it)
+
+            Timber.d("Search --> typing ${it.text}")
+
+            coroutineScope.launch {
+                searchFlow.emit(it.text)
+            }
+        },
         placeholder = {
             Text(
                 stringResource(id = R.string.search_movie_placeholder),
@@ -65,6 +88,16 @@ fun SearchInputText(
         maxLines = 1,
         modifier = modifier.focusRequester(focusRequester)
     )
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = {
+            searchFlow.debounce(600L).collect { query ->
+                Timber.d("Search --> by $query")
+                onSearchBy(query)
+            }
+        },
+    )
 }
 
 @ThemePreviews
@@ -73,7 +106,8 @@ fun SearchInputTextPreview() {
     MovieDBAppTheme {
         SearchInputText(
             currentValue = TextFieldValue(text = "teste"),
-            onValueChanged = {},
+            onQueryChanged = {},
+            onSearchBy = {},
             focusRequester = FocusRequester(),
             onClearText = {}
         )

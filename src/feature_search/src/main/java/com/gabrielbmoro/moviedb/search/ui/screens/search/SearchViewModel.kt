@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,16 +25,8 @@ class SearchViewModel @Inject constructor(
         _uiState.value
     )
 
-    fun onSearchQueryChanged(searchQuery: TextFieldValue) = viewModelScope.async {
+    fun onQueryChanged(searchQuery: TextFieldValue) {
         _uiState.update { it.copy(searchQuery = searchQuery) }
-
-        searchMovieUseCase.invoke(searchQuery.text).collect { movies ->
-            _uiState.update {
-                it.copy(
-                    results = movies
-                )
-            }
-        }
     }
 
     fun onClearSearchQuery() {
@@ -43,6 +35,16 @@ class SearchViewModel @Inject constructor(
                 searchQuery = TextFieldValue(text = ""),
                 results = null
             )
+        }
+    }
+
+    fun onSearchBy(query: String) {
+        viewModelScope.launch {
+            searchMovieUseCase(query).collect { movies ->
+                _uiState.update {
+                    it.copy(results = movies)
+                }
+            }
         }
     }
 }
