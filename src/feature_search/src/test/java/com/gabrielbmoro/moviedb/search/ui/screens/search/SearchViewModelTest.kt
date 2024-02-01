@@ -53,14 +53,12 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onSearchQueryChanged(searchQuery).await()
+        viewModel.onSearchBy(searchQuery.text)
 
         // assert
+        viewModel.viewModelScope.async {  }.await()
         Truth.assertThat(viewModel.uiState.value.results)
             .contains(Movie.mockChuckNorrisVsVandammeMovie())
-        Truth.assertThat(viewModel.uiState.value.searchQuery).isEqualTo(
-            searchQuery
-        )
     }
 
     @Test
@@ -73,13 +71,11 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onSearchQueryChanged(searchQuery).await()
+        viewModel.onSearchBy(searchQuery.text)
 
         // assert
+        viewModel.viewModelScope.async {  }.await()
         Truth.assertThat(viewModel.uiState.value.results).isEmpty()
-        Truth.assertThat(viewModel.uiState.value.searchQuery).isEqualTo(
-            searchQuery
-        )
     }
 
     @Test
@@ -88,7 +84,6 @@ class SearchViewModelTest {
         val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
         every { searchMovieUseCase(any()) }.returns(resultFlow)
         val viewModel = SearchViewModel(searchMovieUseCase)
-        viewModel.onSearchQueryChanged(TextFieldValue("searchQuery")).await()
 
         // act
         viewModel.onClearSearchQuery()
@@ -97,5 +92,20 @@ class SearchViewModelTest {
         viewModel.viewModelScope.async { }.await()
         Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEmpty()
         Truth.assertThat(viewModel.uiState.value.results).isNull()
+    }
+
+    @Test
+    fun `should be able to update the search query - search query changed`() = runTest {
+        // arrange
+        val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
+        every { searchMovieUseCase(any()) }.returns(resultFlow)
+        val viewModel = SearchViewModel(searchMovieUseCase)
+
+        // act
+        viewModel.onQueryChanged(TextFieldValue("searchQuery"))
+
+        // assert
+        viewModel.viewModelScope.async { }.await()
+        Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEqualTo("searchQuery")
     }
 }
