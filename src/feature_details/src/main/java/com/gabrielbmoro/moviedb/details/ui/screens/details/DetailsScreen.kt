@@ -63,9 +63,13 @@ fun DetailsScreen(
         atTop = atTop,
         uiState = uiState,
         scrollState = scrollState,
-        onFavoriteMovie = viewModel::isToFavoriteOrUnFavorite,
+        onFavoriteMovie = {
+            viewModel.accept(DetailsIntent.FavoriteMovie)
+        },
         onBackEvent = onBackEvent,
-        onHideVideo = viewModel::hideVideo
+        onHideVideo = {
+            viewModel.accept(DetailsIntent.HideVideo)
+        }
     )
 
     LaunchedEffect(
@@ -81,7 +85,7 @@ private fun DetailsScreenMain(
     atTop: Boolean,
     uiState: DetailsUIState,
     scrollState: ScrollState,
-    onFavoriteMovie: ((Boolean) -> Unit),
+    onFavoriteMovie: () -> Unit,
     onHideVideo: () -> Unit,
     onBackEvent: (() -> Unit)
 ) {
@@ -145,9 +149,9 @@ private fun DetailsScreenLoading(modifier: Modifier) {
 @Composable
 private fun DetailsScreenContent(
     uiState: DetailsUIState,
-    onHideVideo: (() -> Unit),
+    onHideVideo: () -> Unit,
     modifier: Modifier = Modifier,
-    onFavoriteMovie: (Boolean) -> Unit
+    onFavoriteMovie: () -> Unit
 ) {
     val context = LocalContext.current
 

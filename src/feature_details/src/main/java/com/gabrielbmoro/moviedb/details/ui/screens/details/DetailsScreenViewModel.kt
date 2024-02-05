@@ -1,17 +1,13 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,15 +16,13 @@ class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ViewModel() {
+) : ViewModelMVI<DetailsIntent, DetailsUIState>() {
 
     private lateinit var movie: Movie
-    private val _uiState = MutableStateFlow(DetailsUIState.empty())
-    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     fun setup(movie: Movie) {
         this.movie = movie
-        this._uiState.update {
+        updateState(
             DetailsUIState(
                 imageUrl = this.movie.backdropImageUrl,
                 movieLanguage = this.movie.language,
@@ -38,22 +32,47 @@ class DetailsScreenViewModel @Inject constructor(
                 movieTitle = this.movie.title,
                 movieVotesAverage = this.movie.votesAverage
             )
-        }
+        )
 
         checkIfMovieIsFavorite(movie.title)
 
         fetchMoviesDetails()
     }
 
+    override fun defaultEmptyState() = DetailsUIState.empty()
+
+    override suspend fun execute(intent: DetailsIntent): DetailsUIState {
+        return when (intent) {
+            is DetailsIntent.HideVideo -> {
+                getState().copy(
+                    showVideo = false
+                )
+            }
+
+            is DetailsIntent.FavoriteMovie -> {
+                val value = getState().isFavorite
+                val desiredValue = value.not()
+                val result = favoriteMovieUseCase.invoke(movie, toFavorite = desiredValue)
+                if (result.data == true) {
+                    getState().copy(
+                        isFavorite = desiredValue
+                    )
+                } else {
+                    getState()
+                }
+            }
+        }
+    }
+
     private fun checkIfMovieIsFavorite(movieTitle: String) {
         viewModelScope.launch {
             val data = isFavoriteMovieUseCase.invoke(movieTitle)
             if (data.data != null) {
-                _uiState.update {
-                    it.copy(
+                updateState(
+                    getState().copy(
                         isFavorite = data.data ?: false
                     )
-                }
+                )
             }
         }
     }
@@ -64,16 +83,16 @@ class DetailsScreenViewModel @Inject constructor(
 
             getMovieDetailsUseCase(movieId = movie.id)
                 .catch {
-                    _uiState.update {
-                        it.copy(
+                    updateState(
+                        getState().copy(
                             isLoading = false,
                             errorMessage = "Something went wrong"
                         )
-                    }
+                    )
                 }
                 .collect { movieDetails ->
-                    _uiState.update {
-                        it.copy(
+                    updateState(
+                        getState().copy(
                             videoId = movieDetails.videoId,
                             tagLine = movieDetails.tagline,
                             status = movieDetails.status,
@@ -81,7 +100,7 @@ class DetailsScreenViewModel @Inject constructor(
                             homepage = movieDetails.homepage,
                             productionCompanies = movieDetails.productionCompanies.reduceToText()
                         )
-                    }
+                    )
                 }
         }.invokeOnCompletion {
             updateLoadingState(false)
@@ -89,28 +108,7 @@ class DetailsScreenViewModel @Inject constructor(
     }
 
     private fun updateLoadingState(isLoading: Boolean) {
-        _uiState.update { it.copy(isLoading = isLoading) }
-    }
-
-    fun isToFavoriteOrUnFavorite(isToFavorite: Boolean) {
-        viewModelScope.launch {
-            val response = favoriteMovieUseCase(movie, isToFavorite)
-
-            if (response.data != null) {
-                movie.isFavorite = isToFavorite
-                _uiState.update {
-                    it.copy(
-                        isFavorite = movie.isFavorite
-                    )
-                }
-            }
-        }
-    }
-
-    fun hideVideo() {
-        _uiState.update {
-            it.copy(showVideo = false)
-        }
+        updateState(getState().copy(isLoading = isLoading))
     }
 
     private fun List<String>.reduceToText() = reduce { acc, s -> "$acc, $s" }
