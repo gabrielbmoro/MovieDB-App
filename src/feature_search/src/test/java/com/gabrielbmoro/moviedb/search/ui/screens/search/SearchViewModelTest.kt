@@ -53,7 +53,7 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onSearchBy(searchQuery.text)
+        viewModel.accept(SearchUserIntent.SearchBy(searchQuery))
 
         // assert
         viewModel.viewModelScope.async {  }.await()
@@ -71,7 +71,7 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onSearchBy(searchQuery.text)
+        viewModel.accept(SearchUserIntent.SearchBy(searchQuery))
 
         // assert
         viewModel.viewModelScope.async {  }.await()
@@ -86,7 +86,7 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onClearSearchQuery()
+        viewModel.accept(SearchUserIntent.ClearSearchField)
 
         // assert
         viewModel.viewModelScope.async { }.await()
@@ -102,7 +102,7 @@ class SearchViewModelTest {
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
-        viewModel.onQueryChanged(TextFieldValue("searchQuery"))
+        viewModel.accept(SearchUserIntent.SearchInputFieldChanged(TextFieldValue("searchQuery")))
 
         // assert
         viewModel.viewModelScope.async { }.await()

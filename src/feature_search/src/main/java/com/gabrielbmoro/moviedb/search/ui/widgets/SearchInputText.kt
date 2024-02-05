@@ -36,13 +36,13 @@ private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
 fun SearchInputText(
     currentValue: TextFieldValue,
     onQueryChanged: ((TextFieldValue) -> Unit),
-    onSearchBy: (String) -> Unit,
+    onSearchBy: (TextFieldValue) -> Unit,
     onClearText: (() -> Unit),
     focusRequester: FocusRequester,
     modifier: Modifier = Modifier
 ) {
     val searchFlow = remember {
-        MutableSharedFlow<String>()
+        MutableSharedFlow<TextFieldValue>()
     }
     val coroutineScope = rememberCoroutineScope()
 
@@ -73,7 +73,7 @@ fun SearchInputText(
             Timber.d("Search --> typing ${it.text}")
 
             coroutineScope.launch {
-                searchFlow.emit(it.text)
+                searchFlow.emit(it)
             }
         },
         placeholder = {
