@@ -1,5 +1,10 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
+sealed class DetailsUserIntent {
+    data object HideVideo : DetailsUserIntent()
+    data object FavoriteMovie : DetailsUserIntent()
+}
+
 data class DetailsUIState(
     val movieTitle: String,
     val isLoading: Boolean = false,
@@ -26,16 +31,6 @@ data class DetailsUIState(
             movieLanguage = "",
             movieVotesAverage = 0f,
             movieOverview = "",
-            imageUrl = ""
-        )
-
-        fun mocked1() = DetailsUIState(
-            isFavorite = true,
-            movieTitle = "Dragão branco",
-            moviePopularity = 2f,
-            movieLanguage = "pt-BR",
-            movieVotesAverage = 5f,
-            movieOverview = "Um filme que conta a história de um lutador de karatê",
             imageUrl = ""
         )
     }

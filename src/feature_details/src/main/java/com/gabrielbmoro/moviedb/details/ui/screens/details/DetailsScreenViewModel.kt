@@ -16,7 +16,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ViewModelMVI<DetailsIntent, DetailsUIState>() {
+) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
 
     private lateinit var movie: Movie
 
@@ -41,15 +41,15 @@ class DetailsScreenViewModel @Inject constructor(
 
     override fun defaultEmptyState() = DetailsUIState.empty()
 
-    override suspend fun execute(intent: DetailsIntent): DetailsUIState {
+    override suspend fun execute(intent: DetailsUserIntent): DetailsUIState {
         return when (intent) {
-            is DetailsIntent.HideVideo -> {
+            is DetailsUserIntent.HideVideo -> {
                 getState().copy(
                     showVideo = false
                 )
             }
 
-            is DetailsIntent.FavoriteMovie -> {
+            is DetailsUserIntent.FavoriteMovie -> {
                 val value = getState().isFavorite
                 val desiredValue = value.not()
                 val result = favoriteMovieUseCase.invoke(movie, toFavorite = desiredValue)

@@ -8,27 +8,27 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class ViewModelMVI <in Intent: Any, State: Any>: ViewModel() {
+abstract class ViewModelMVI <in UserIntent: Any, ScreenState: Any>: ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    protected abstract suspend fun execute(intent: Intent): State
+    protected abstract suspend fun execute(intent: UserIntent): ScreenState
 
-    protected abstract fun defaultEmptyState(): State
+    protected abstract fun defaultEmptyState(): ScreenState
 
-    fun accept(intent: Intent) {
+    fun accept(intent: UserIntent) {
         viewModelScope.launch {
             val state = execute(intent)
             _uiState.update { state }
         }
     }
 
-    protected fun updateState(state: State) {
+    protected fun updateState(state: ScreenState) {
         _uiState.update { state }
     }
 
-    protected fun getState() : State{
+    protected fun getState() : ScreenState{
         return _uiState.value
     }
 }

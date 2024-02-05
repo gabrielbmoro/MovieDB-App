@@ -64,11 +64,11 @@ fun DetailsScreen(
         uiState = uiState,
         scrollState = scrollState,
         onFavoriteMovie = {
-            viewModel.accept(DetailsIntent.FavoriteMovie)
+            viewModel.accept(DetailsUserIntent.FavoriteMovie)
         },
         onBackEvent = onBackEvent,
         onHideVideo = {
-            viewModel.accept(DetailsIntent.HideVideo)
+            viewModel.accept(DetailsUserIntent.HideVideo)
         }
     )
 
