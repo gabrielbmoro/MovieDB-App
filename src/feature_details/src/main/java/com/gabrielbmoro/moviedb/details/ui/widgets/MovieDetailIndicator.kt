@@ -16,7 +16,7 @@ import com.gabrielbmoro.moviedb.core.ui.widgets.FiveStars
 fun MovieDetailIndicator(
     isFavorite: Boolean,
     votesAverage: Float,
-    onFavoriteMovie: ((Boolean) -> Unit),
+    onFavoriteMovie: (() -> Unit),
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -27,10 +27,10 @@ fun MovieDetailIndicator(
             .background(MaterialTheme.colorScheme.surface)
     ) {
         Favorite(
-            isFavorite = isFavorite
-        ) {
-            onFavoriteMovie(isFavorite.not())
-        }
+            isFavorite = isFavorite,
+            action = onFavoriteMovie
+        )
+
         FiveStars(
             votes = votesAverage
         )

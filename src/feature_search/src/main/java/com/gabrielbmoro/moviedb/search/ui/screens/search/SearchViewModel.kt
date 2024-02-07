@@ -1,49 +1,36 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchMovieUseCase: SearchMovieUseCase
-) : ViewModel() {
+) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
 
-    private val _uiState = MutableStateFlow(SearchUIState(TextFieldValue("")))
+    override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 
-    val uiState = _uiState.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        _uiState.value
-    )
+    override suspend fun execute(intent: SearchUserIntent): SearchUIState {
+        return when (intent) {
+            is SearchUserIntent.SearchBy -> {
+                getState().copy(
+                    results = searchMovieUseCase(intent.query.text)
+                )
+            }
 
-    fun onQueryChanged(searchQuery: TextFieldValue) {
-        _uiState.update { it.copy(searchQuery = searchQuery) }
-    }
+            is SearchUserIntent.ClearSearchField -> {
+                getState().copy(
+                    searchQuery = TextFieldValue("")
+                )
+            }
 
-    fun onClearSearchQuery() {
-        _uiState.update {
-            it.copy(
-                searchQuery = TextFieldValue(text = ""),
-                results = null
-            )
-        }
-    }
-
-    fun onSearchBy(query: String) {
-        viewModelScope.launch {
-            searchMovieUseCase(query).collect { movies ->
-                _uiState.update {
-                    it.copy(results = movies)
-                }
+            is SearchUserIntent.SearchInputFieldChanged -> {
+                getState().copy(
+                    searchQuery = intent.query
+                )
             }
         }
     }

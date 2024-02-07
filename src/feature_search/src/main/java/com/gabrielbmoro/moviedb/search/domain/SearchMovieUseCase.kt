@@ -2,15 +2,17 @@ package com.gabrielbmoro.moviedb.search.domain
 
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.Movie
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 interface SearchMovieUseCase {
-    operator fun invoke(query: String): Flow<List<Movie>>
+    suspend operator fun invoke(query: String): List<Movie>
 }
 
 class SearchMovieUseCaseImpl @Inject constructor(
     private val repository: MoviesRepository
 ) : SearchMovieUseCase {
-    override operator fun invoke(query: String) = repository.searchMovieBy(query)
+    override suspend operator fun invoke(query: String): List<Movie> {
+        return repository.searchMovieBy(query).first()
+    }
 }
