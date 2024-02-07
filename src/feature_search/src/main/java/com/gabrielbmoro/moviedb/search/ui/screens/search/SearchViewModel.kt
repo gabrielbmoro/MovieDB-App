@@ -4,7 +4,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +17,7 @@ class SearchViewModel @Inject constructor(
         return when (intent) {
             is SearchUserIntent.SearchBy -> {
                 getState().copy(
-                    results = searchMovieUseCase(intent.query.text).first()
+                    results = searchMovieUseCase(intent.query.text)
                 )
             }
 

@@ -6,13 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import com.google.common.truth.Truth
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -44,10 +42,7 @@ class SearchViewModelTest {
     @Test
     fun `should be able to search for a movie - founded movie`() = runTest {
         // arrange
-        val resultFlow: Flow<List<Movie>> = flow {
-            emit(listOf(Movie.mockChuckNorrisVsVandammeMovie()))
-        }
-        every { searchMovieUseCase(any()) }.returns(resultFlow)
+        coEvery { searchMovieUseCase(any()) }.returns(listOf(Movie.mockChuckNorrisVsVandammeMovie()))
         val searchQuery = TextFieldValue("Chuck Nor")
 
         val viewModel = SearchViewModel(searchMovieUseCase)
@@ -64,8 +59,7 @@ class SearchViewModelTest {
     @Test
     fun `should be able to search for a movie - empty list`() = runTest {
         // arrange
-        val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
-        every { searchMovieUseCase(any()) }.returns(resultFlow)
+        coEvery { searchMovieUseCase(any()) }.returns(emptyList())
         val searchQuery = TextFieldValue("Ice ag")
 
         val viewModel = SearchViewModel(searchMovieUseCase)
@@ -81,8 +75,7 @@ class SearchViewModelTest {
     @Test
     fun `should be able to reset the search field - empty search`() = runTest {
         // arrange
-        val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
-        every { searchMovieUseCase(any()) }.returns(resultFlow)
+        coEvery { searchMovieUseCase(any()) }.returns(emptyList())
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
@@ -97,8 +90,7 @@ class SearchViewModelTest {
     @Test
     fun `should be able to update the search query - search query changed`() = runTest {
         // arrange
-        val resultFlow: Flow<List<Movie>> = flow { emit(emptyList()) }
-        every { searchMovieUseCase(any()) }.returns(resultFlow)
+        coEvery { searchMovieUseCase(any()) }.returns(emptyList())
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
