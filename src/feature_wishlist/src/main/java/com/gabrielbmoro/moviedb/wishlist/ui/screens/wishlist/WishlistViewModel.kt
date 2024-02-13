@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -12,7 +12,7 @@ class WishlistViewModel @Inject constructor(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
 ) : ViewModelMVI<Any, WishlistUIState>() {
 
-    fun load() = viewModelScope.async {
+    fun load() = viewModelScope.launch {
         getFavoriteMoviesUseCase().collect { movies ->
             updateState(
                 getState().copy(
