@@ -2,7 +2,6 @@ package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import com.google.common.truth.Truth
@@ -10,8 +9,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -51,7 +50,7 @@ class SearchViewModelTest {
         viewModel.accept(SearchUserIntent.SearchBy(searchQuery))
 
         // assert
-        viewModel.viewModelScope.async {  }.await()
+        advanceUntilIdle()
         Truth.assertThat(viewModel.uiState.value.results)
             .contains(Movie.mockChuckNorrisVsVandammeMovie())
     }
@@ -68,7 +67,7 @@ class SearchViewModelTest {
         viewModel.accept(SearchUserIntent.SearchBy(searchQuery))
 
         // assert
-        viewModel.viewModelScope.async {  }.await()
+        advanceUntilIdle()
         Truth.assertThat(viewModel.uiState.value.results).isEmpty()
     }
 
@@ -82,7 +81,7 @@ class SearchViewModelTest {
         viewModel.accept(SearchUserIntent.ClearSearchField)
 
         // assert
-        viewModel.viewModelScope.async { }.await()
+        advanceUntilIdle()
         Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEmpty()
         Truth.assertThat(viewModel.uiState.value.results).isNull()
     }
@@ -97,7 +96,7 @@ class SearchViewModelTest {
         viewModel.accept(SearchUserIntent.SearchInputFieldChanged(TextFieldValue("searchQuery")))
 
         // assert
-        viewModel.viewModelScope.async { }.await()
+        advanceUntilIdle()
         Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEqualTo("searchQuery")
     }
 }
