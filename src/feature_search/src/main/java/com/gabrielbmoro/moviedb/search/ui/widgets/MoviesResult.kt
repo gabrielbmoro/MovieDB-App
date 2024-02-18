@@ -32,7 +32,8 @@ fun MoviesResult(
                 onClick = {
                     navigateToDetailsScreen(movie)
                 },
-                votes = movie.votesAverage
+                votes = movie.votesAverage,
+                onDeleteClick = null
             )
         }
     }

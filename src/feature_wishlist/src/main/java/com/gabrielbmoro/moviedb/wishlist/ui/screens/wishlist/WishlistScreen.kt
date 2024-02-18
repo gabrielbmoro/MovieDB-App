@@ -52,6 +52,9 @@ fun WishlistScreen(
                         moviesList = moviesList,
                         onSelectMovie = navigateToDetailsScreen,
                         lazyListState = lazyListState,
+                        onDeleteMovie = {
+                                        
+                        },
                         modifier = Modifier
                             .fillMaxSize()
                             .align(Alignment.TopCenter)

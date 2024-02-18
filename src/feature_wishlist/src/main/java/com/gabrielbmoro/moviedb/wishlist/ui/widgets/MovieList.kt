@@ -16,6 +16,7 @@ import com.gabrielbmoro.moviedb.repository.model.Movie
 fun MovieList(
     moviesList: List<Movie>,
     onSelectMovie: (Movie) -> Unit,
+    onDeleteMovie: (Movie) -> Unit,
     lazyListState: LazyListState,
     modifier: Modifier = Modifier
 ) {
@@ -35,7 +36,8 @@ fun MovieList(
                     title = movie.title,
                     votes = movie.votesAverage,
                     description = movie.overview,
-                    onClick = { onSelectMovie(movie) }
+                    onClick = { onSelectMovie(movie) },
+                    onDeleteClick = { onDeleteMovie(movie) }
                 )
             }
         }

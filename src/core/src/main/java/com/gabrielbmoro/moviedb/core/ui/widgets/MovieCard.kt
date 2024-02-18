@@ -41,27 +41,37 @@ fun MovieCard(
     description: String,
     votes: Float,
     modifier: Modifier = Modifier,
-    onClick: (() -> Unit)
+    onClick: (() -> Unit),
+    onDeleteClick: (() -> Unit)?
 ) {
     val offsetX = remember { Animatable(0f) }
     val draggableState = rememberSwipeState(offsetX)
 
-    Box(modifier = modifier) {
+    var cardModifier = Modifier
+        .fillMaxWidth()
+        .height(dimensionResource(id = R.dimen.card_view_image_height))
 
-        DeleteButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.align(Alignment.CenterEnd)
-        )
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(dimensionResource(id = R.dimen.card_view_image_height))
+    onDeleteClick?.let {
+        cardModifier = cardModifier.then(
+            Modifier
                 .draggable(
                     state = draggableState,
                     orientation = Orientation.Horizontal
                 )
                 .offset(x = offsetX.targetValue.dp),
+        )
+    }
+
+    Box(modifier = modifier) {
+        onDeleteClick?.let {
+            DeleteButton(
+                onClick = onDeleteClick,
+                modifier = Modifier.align(Alignment.CenterEnd)
+            )
+        }
+
+        Card(
+            modifier = cardModifier,
             shape = RoundedCornerShape(12.dp),
             onClick = onClick
         ) {
