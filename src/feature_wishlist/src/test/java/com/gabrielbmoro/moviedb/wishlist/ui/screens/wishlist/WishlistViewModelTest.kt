@@ -1,9 +1,13 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.wishlist.domain.usecases.DeleteMovieUseCase
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
 import com.google.common.truth.Truth
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +28,8 @@ import org.junit.Test
 class WishlistViewModelTest {
 
     private lateinit var getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
+    private lateinit var deleteMovieUseCase: DeleteMovieUseCase
+    private lateinit var resourcesProvider: ResourcesProvider
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -33,6 +39,8 @@ class WishlistViewModelTest {
         Dispatchers.setMain(StandardTestDispatcher())
 
         getFavoriteMoviesUseCase = mockk()
+        deleteMovieUseCase = mockk()
+        resourcesProvider = mockk()
     }
 
     @After
@@ -46,7 +54,9 @@ class WishlistViewModelTest {
         val expected: Flow<List<Movie>> = flowOf(emptyList())
         every { getFavoriteMoviesUseCase.invoke() }.returns(expected)
         val viewModel = WishlistViewModel(
-            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            deleteMovieUseCase = deleteMovieUseCase,
+            resourcesProvider = resourcesProvider
         )
 
         // act
@@ -68,7 +78,9 @@ class WishlistViewModelTest {
         every { getFavoriteMoviesUseCase() }.returns(expected)
 
         val viewModel = WishlistViewModel(
-            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            deleteMovieUseCase = deleteMovieUseCase,
+            resourcesProvider = resourcesProvider
         )
 
         // act
@@ -81,5 +93,33 @@ class WishlistViewModelTest {
         ).contains(
             Movie.mockChuckNorrisVsVandammeMovie()
         )
+    }
+
+    @Test
+    fun `should be able to process delete movie intent`() = runTest {
+        // arrange
+        val expected = flowOf(
+            listOf(
+                Movie.mockChuckNorrisVsVandammeMovie()
+            )
+        )
+        every { resourcesProvider.getString(any()) }.returns("Chuck norris")
+        coEvery { deleteMovieUseCase.invoke(Movie.mockChuckNorrisVsVandammeMovie().title) }.returns(
+            true
+        )
+        every { getFavoriteMoviesUseCase() }.returns(expected)
+
+        val viewModel = WishlistViewModel(
+            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+            deleteMovieUseCase = deleteMovieUseCase,
+            resourcesProvider = resourcesProvider
+        )
+
+        // act
+        viewModel.accept(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+
+        // assert
+        advanceUntilIdle()
+        coVerify(exactly = 1) { deleteMovieUseCase.invoke(Movie.mockChuckNorrisVsVandammeMovie().title) }
     }
 }
