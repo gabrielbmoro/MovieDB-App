@@ -52,8 +52,8 @@ fun WishlistScreen(
                         moviesList = moviesList,
                         onSelectMovie = navigateToDetailsScreen,
                         lazyListState = lazyListState,
-                        onDeleteMovie = {
-                                        
+                        onDeleteMovie = { movie ->
+                            viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
                         },
                         modifier = Modifier
                             .fillMaxSize()
