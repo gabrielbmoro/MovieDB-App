@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.core.ui.widgets
 
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
@@ -56,7 +57,10 @@ fun MovieCard(
             anchors = anchors,
             velocityThreshold = { with(density) { 100.dp.toPx() } },
             positionalThreshold = { totalDistance -> totalDistance * 0.5f },
-            animationSpec = tween()
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessMediumLow,
+            ),
         ).apply { updateAnchors(anchors) }
     }
 
