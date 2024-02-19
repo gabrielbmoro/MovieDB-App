@@ -23,7 +23,9 @@ object WishlistModule {
 
     @Provides
     @ViewModelScoped
-    fun deleteMovieUseCase(repository: MoviesRepository): DeleteMovieUseCase {
+    fun deleteMovieUseCase(
+        repository: MoviesRepository
+    ): DeleteMovieUseCase {
         return DeleteMovieUseCaseImpl(repository)
     }
 }
