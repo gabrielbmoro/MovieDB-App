@@ -3,8 +3,11 @@ package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,13 +27,16 @@ fun WishlistScreen(
     viewModel: WishlistViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
-
+    val snackbarHostState = remember { SnackbarHostState() }
     val lazyListState = rememberLazyListState()
 
     ScreenScaffold(
         showTopBar = true,
         appBarTitle = stringResource(id = R.string.wishlist),
-        bottomBar = bottomBar
+        bottomBar = bottomBar,
+        snackBarHost = {
+            SnackbarHost(snackbarHostState)
+        }
     ) {
         when {
             uiState.value.isLoading -> {
@@ -52,6 +58,9 @@ fun WishlistScreen(
                         moviesList = moviesList,
                         onSelectMovie = navigateToDetailsScreen,
                         lazyListState = lazyListState,
+                        onDeleteMovie = { movie ->
+                            viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
+                        },
                         modifier = Modifier
                             .fillMaxSize()
                             .align(Alignment.TopCenter)
@@ -60,6 +69,17 @@ fun WishlistScreen(
             }
         }
     }
+
+    LaunchedEffect(
+        key1 = Unit,
+        block = {
+            viewModel.label.collect { userMessage ->
+                userMessage?.let {
+                    snackbarHostState.showSnackbar(message = it)
+                }
+            }
+        }
+    )
 
     LaunchedEffect(
         key1 = Unit,

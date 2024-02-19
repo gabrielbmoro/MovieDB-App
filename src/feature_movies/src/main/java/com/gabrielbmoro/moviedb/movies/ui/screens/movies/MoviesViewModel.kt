@@ -20,7 +20,7 @@ class MoviesViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
-) : ViewModelMVI<Any, MoviesUIState>() {
+) : ViewModelMVI<Any, MoviesUIState, Any>() {
 
     init {
         loadMovies()

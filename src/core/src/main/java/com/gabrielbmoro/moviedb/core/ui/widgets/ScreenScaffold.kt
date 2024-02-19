@@ -20,6 +20,7 @@ fun ScreenScaffold(
     modifier: Modifier = Modifier,
     searchEvent: (() -> Unit)? = null,
     bottomBar: @Composable () -> Unit,
+    snackBarHost: @Composable () -> Unit = {},
     screenContent: @Composable BoxScope.() -> Unit
 ) {
     Scaffold(
@@ -38,6 +39,7 @@ fun ScreenScaffold(
                 )
             }
         },
+        snackbarHost = snackBarHost,
         bottomBar = bottomBar
     ) {
         Box(

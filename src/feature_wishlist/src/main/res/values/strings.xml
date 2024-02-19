@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="wishlist">Wishlist</string>
+    <string name="delete_success_message">Movie deleted successfully</string>
 </resources>
