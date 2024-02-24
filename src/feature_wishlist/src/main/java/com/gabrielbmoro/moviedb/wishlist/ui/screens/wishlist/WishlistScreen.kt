@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.gabrielbmoro.moviedb.core.ui.mvi.LabelWatcherEffect
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.EmptyState
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
@@ -70,13 +71,11 @@ fun WishlistScreen(
         }
     }
 
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            viewModel.label.collect { userMessage ->
-                userMessage?.let {
-                    snackbarHostState.showSnackbar(message = it)
-                }
+    LabelWatcherEffect(
+        labelFlow = viewModel.label,
+        onLabelPublished = { userMessage ->
+            userMessage?.let {
+                snackbarHostState.showSnackbar(message = it)
             }
         }
     )
