@@ -11,35 +11,6 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-koverReport {
-    filters {
-        excludes {
-            packages(
-                "*.di",
-                "*.datasources",
-                "*.providers",
-                "dagger.hilt.internal.aggregatedroot.codegen",
-                "hilt_aggregated_deps",
-                "*.dto",
-                "*.core.ui.*",
-                "*.widgets",
-                "*.navigation"
-            )
-
-            classes(
-                "*.BuildConfig",
-                "*.ComposableSingletons",
-                "*.Hilt_MainActivity",
-                "*_Factory*",
-                "*Activity",
-                "*ScreenKt*",
-                "*_HiltModules*"
-            )
-            annotatedBy("Generated")
-        }
-    }
-}
-
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
@@ -70,12 +41,7 @@ dependencies {
     implementation(libs.navigation.compose)
 
     // Kover
-    kover(projects.core)
-    kover(projects.data)
-    kover(projects.featureDetails)
-    kover(projects.featureMovies)
-    kover(projects.featureSearch)
-    kover(projects.featureWishlist)
+    rootProject.subprojects.forEach { kover(it) }
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -97,8 +63,38 @@ dependencies {
     androidTestImplementation(libs.bundles.test)
     androidTestImplementation(libs.ui.compose.test)
 }
+
 android {
     buildFeatures {
         buildConfig = true
+    }
+}
+
+koverReport {
+    filters {
+        excludes {
+            packages(
+                "*.di",
+                "*.datasources",
+                "*.providers",
+                "dagger.hilt.internal.aggregatedroot.codegen",
+                "hilt_aggregated_deps",
+                "*.dto",
+                "*.core.ui.*",
+                "*.widgets",
+                "*.navigation"
+            )
+
+            classes(
+                "*.BuildConfig",
+                "*.ComposableSingletons",
+                "*.Hilt_MainActivity",
+                "*_Factory*",
+                "*Activity",
+                "*ScreenKt*",
+                "*_HiltModules*"
+            )
+            annotatedBy("Generated")
+        }
     }
 }

@@ -27,7 +27,10 @@ fun MovieList(
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
         items(
-            count = moviesList.size
+            count = moviesList.size,
+            key = { index ->
+                moviesList[index].id
+            }
         ) { index ->
 
             moviesList[index].let { movie ->

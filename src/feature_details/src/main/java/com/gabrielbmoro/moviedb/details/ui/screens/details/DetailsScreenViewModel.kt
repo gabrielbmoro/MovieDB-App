@@ -16,7 +16,7 @@ class DetailsScreenViewModel @Inject constructor(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ViewModelMVI<DetailsUserIntent, DetailsUIState, Any>() {
+) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
 
     private lateinit var movie: Movie
 

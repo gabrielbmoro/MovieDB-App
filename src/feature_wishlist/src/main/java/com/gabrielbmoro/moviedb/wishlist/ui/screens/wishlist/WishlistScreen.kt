@@ -71,12 +71,11 @@ fun WishlistScreen(
     }
 
     LaunchedEffect(
-        key1 = Unit,
+        key1 = uiState.value,
         block = {
-            viewModel.label.collect { userMessage ->
-                userMessage?.let {
-                    snackbarHostState.showSnackbar(message = it)
-                }
+            uiState.value.resultMessage?.let { resultMessage ->
+                snackbarHostState.showSnackbar(resultMessage)
+                viewModel.onResultMessageReset()
             }
         }
     )
