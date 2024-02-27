@@ -9,5 +9,6 @@ sealed class WishlistUserIntent {
 data class WishlistUIState(
     val favoriteMovies: List<Movie>? = null,
     val isLoading: Boolean = false,
-    val areBarsVisible: Boolean = true
+    val areBarsVisible: Boolean = true,
+    val resultMessage: String? = null,
 )

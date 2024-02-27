@@ -9,7 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchMovieUseCase: SearchMovieUseCase
-) : ViewModelMVI<SearchUserIntent, SearchUIState, Any>() {
+) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
 
     override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 

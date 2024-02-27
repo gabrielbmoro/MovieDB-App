@@ -16,7 +16,7 @@ class WishlistViewModel @Inject constructor(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val deleteMovieUseCase: DeleteMovieUseCase,
     private val resourcesProvider: ResourcesProvider
-) : ViewModelMVI<WishlistUserIntent, WishlistUIState, String>() {
+) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
     fun load() = viewModelScope.launch {
         getFavoriteMoviesUseCase().collect { movies ->
             updateState(
@@ -32,16 +32,21 @@ class WishlistViewModel @Inject constructor(
             is WishlistUserIntent.DeleteMovie -> {
                 val result = deleteMovieUseCase(intent.movie.title)
                 if (result == true) {
-                    publish(
-                        resourcesProvider.getString(R.string.delete_success_message)
+                    uiState.value.copy(
+                        favoriteMovies = getFavoriteMoviesUseCase().first(),
+                        resultMessage = resourcesProvider.getString(
+                            R.string.delete_success_message
+                        )
                     )
-
-                    uiState.value.copy(favoriteMovies = getFavoriteMoviesUseCase().first())
                 } else {
                     uiState.value
                 }
             }
         }
+    }
+
+    fun onResultMessageReset() {
+        updateState(uiState.value.copy(resultMessage = null))
     }
 
     override fun defaultEmptyState(): WishlistUIState = WishlistUIState()
