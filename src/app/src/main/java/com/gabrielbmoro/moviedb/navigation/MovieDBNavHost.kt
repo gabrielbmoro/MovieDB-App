@@ -82,10 +82,10 @@ fun MovieDBNavHost(
                 Movie::class.java
             ) ?: throw IllegalArgumentException("Type should be movie")
 
-            val detailsViewModel = koinViewModel<DetailsScreenViewModel>{ parametersOf(movie) }
+            val detailsViewModel = koinViewModel<DetailsScreenViewModel> { parametersOf(movie) }
             DetailsScreen(
                 viewModel = detailsViewModel,
-                onBackEvent = onBack,
+                onBackEvent = onBack
             )
         }
     }
