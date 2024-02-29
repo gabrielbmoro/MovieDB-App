@@ -14,11 +14,12 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val featureDetailsModule = module {
-    viewModel {
+    viewModel { params ->
         DetailsScreenViewModel(
             favoriteMovieUseCase = get(),
             isFavoriteMovieUseCase = get(),
-            getMovieDetailsUseCase = get()
+            getMovieDetailsUseCase = get(),
+            movie = params.get()
         )
     }
 

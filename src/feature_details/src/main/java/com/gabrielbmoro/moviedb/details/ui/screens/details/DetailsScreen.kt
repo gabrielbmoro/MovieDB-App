@@ -14,12 +14,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -42,13 +40,10 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 import com.gabrielbmoro.moviedb.feature.details.R
-import com.gabrielbmoro.moviedb.repository.model.Movie
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(
-    viewModel: DetailsScreenViewModel = koinViewModel(),
-    movie: Movie,
+    viewModel: DetailsScreenViewModel,
     onBackEvent: () -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -70,13 +65,6 @@ fun DetailsScreen(
         onBackEvent = onBackEvent,
         onHideVideo = {
             viewModel.accept(DetailsUserIntent.HideVideo)
-        }
-    )
-
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            viewModel.setup(movie)
         }
     )
 }

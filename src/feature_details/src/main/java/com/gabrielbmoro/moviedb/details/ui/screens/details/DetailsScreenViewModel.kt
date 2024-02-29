@@ -10,15 +10,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class DetailsScreenViewModel(
+    private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
 ) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
 
-    private lateinit var movie: Movie
-
-    fun setup(movie: Movie) {
-        this.movie = movie
+    init {
         updateState(
             DetailsUIState(
                 imageUrl = this.movie.backdropImageUrl,
