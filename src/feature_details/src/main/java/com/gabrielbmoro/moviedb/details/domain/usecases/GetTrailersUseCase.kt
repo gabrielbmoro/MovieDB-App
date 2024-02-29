@@ -4,13 +4,12 @@ import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
-import javax.inject.Inject
 
 interface GetTrailersUseCase {
     operator fun invoke(movieId: Long): Flow<VideoStream?>
 }
 
-class GetTrailersUseCaseImpl @Inject constructor(
+class GetTrailersUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetTrailersUseCase {
     override operator fun invoke(movieId: Long): Flow<VideoStream?> {

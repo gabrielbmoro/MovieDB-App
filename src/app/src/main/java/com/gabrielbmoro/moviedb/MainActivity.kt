@@ -9,9 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.core.ui.syncTopBarsColors
 import com.gabrielbmoro.moviedb.core.ui.theme.MovieDBAppTheme
 import com.gabrielbmoro.moviedb.navigation.MovieDBNavHost
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

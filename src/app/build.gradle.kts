@@ -2,7 +2,6 @@
 
 plugins {
     id("android-app-plugin")
-    id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -47,9 +46,6 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
 
-    implementation(libs.bundles.hilt)
-    ksp(libs.hilt.android.compiler)
-
     implementation(libs.bundles.lifecycle)
 
     // Compose
@@ -57,6 +53,10 @@ dependencies {
     implementation(libs.bundles.compose.impl)
     debugImplementation(libs.bundles.compose.debug.impl)
     implementation(libs.bundles.compose.extras)
+
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.bundles.koin.impl)
 
     // Test
     testImplementation(libs.bundles.test)

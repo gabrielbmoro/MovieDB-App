@@ -6,13 +6,10 @@ import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.feature.wishlist.R
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.DeleteMovieUseCase
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class WishlistViewModel @Inject constructor(
+class WishlistViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val deleteMovieUseCase: DeleteMovieUseCase,
     private val resourcesProvider: ResourcesProvider

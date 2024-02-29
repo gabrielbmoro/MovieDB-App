@@ -1,8 +1,6 @@
 [versions]
 firebase-crashlytics-gradle = "2.9.9"
 google-services = "4.4.0"
-hilt-android = "2.48"
-hilt-navigation-compose = "1.1.0"
 kotlin = "1.9.20"
 compose_bom = "2024.02.00"
 compose_compiler = "1.5.4"
@@ -42,14 +40,12 @@ material = "1.11.0"
 ktlint_plugin = "11.5.1"
 ksp = "1.9.20-1.0.13"
 kover = "0.7.5"
+koin_bom = "3.6.0-wasm-alpha2"
 
 [libraries]
-androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
@@ -79,6 +75,11 @@ compose_bom_activity = { module = "androidx.activity:activity-compose" }
 compose_bom_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose_bom_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
+koin_bom = { module = "io.insert-koin:koin-bom", version.ref = "koin_bom" }
+koin_core = { module = "io.insert-koin:koin-core" }
+koin_android = { module = "io.insert-koin:koin-android" }
+koin_androidx_compose = { module = "io.insert-koin:koin-androidx-compose" }
+
 ui_compose_test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose_compiler" }
 compose_material_3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose_material_3" }
 paging_compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging_compose" }
@@ -101,13 +102,12 @@ lifecycle = ["lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "truth", "mockk", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose", "paging_compose"]
 compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
+koin_impl = ["koin_core", "koin_android", "koin_androidx_compose"]
 compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
 
 retrofit = ["retrofit", "retrofit_converter_json", "gson"]
-hilt = ["hilt-android", "androidx-hilt-navigation-compose"]
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }

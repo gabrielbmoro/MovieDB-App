@@ -15,19 +15,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
 import com.gabrielbmoro.moviedb.feature.movies.R
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarousel
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MovieScreen(
     bottomBar: @Composable (() -> Unit),
     navigateToDetailsScreen: ((Movie) -> Unit),
     navigateToSearchScreen: (() -> Unit),
-    viewModel: MoviesViewModel = hiltViewModel()
+    viewModel: MoviesViewModel = koinViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 

@@ -1,19 +1,11 @@
 package com.gabrielbmoro.moviedb.di
 
 import com.gabrielbmoro.moviedb.BuildConfig
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Named
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Provides
-    @Named("api_token")
-    fun apiToken(): String {
-        return BuildConfig.API_TOKEN
+val appModule = module {
+    single(named("api_token")) {
+        BuildConfig.API_TOKEN
     }
 }

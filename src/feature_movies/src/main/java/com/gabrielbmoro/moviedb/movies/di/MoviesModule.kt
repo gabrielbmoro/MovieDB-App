@@ -8,38 +8,35 @@ import com.gabrielbmoro.moviedb.movies.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetTopRatedMoviesUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetUpcomingMoviesUseCaseImpl
-import com.gabrielbmoro.moviedb.repository.MoviesRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-@InstallIn(ViewModelComponent::class)
-object MoviesModule {
-
-    @Provides
-    @ViewModelScoped
-    fun getNowPlayingMoviesUseCase(repository: MoviesRepository): GetNowPlayingMoviesUseCase {
-        return GetNowPlayingMoviesUseCaseImpl(repository)
+val featureMoviesModule = module {
+    viewModel {
+        MoviesViewModel(
+            getPopularMoviesUseCase = get(),
+            getNowPlayingMoviesUseCase = get(),
+            getTopRatedMoviesUseCase = get(),
+            getUpcomingMoviesUseCase = get(),
+            resourcesProvider = get()
+        )
     }
 
-    @Provides
-    @ViewModelScoped
-    fun getPopularMoviesUseCase(repository: MoviesRepository): GetPopularMoviesUseCase {
-        return GetPopularMoviesUseCaseImpl(repository)
-    }
+    factory {
+        GetPopularMoviesUseCaseImpl(repository = get())
+    }.bind(GetPopularMoviesUseCase::class)
 
-    @Provides
-    @ViewModelScoped
-    fun getTopRatedMoviesUseCase(repository: MoviesRepository): GetTopRatedMoviesUseCase {
-        return GetTopRatedMoviesUseCaseImpl(repository)
-    }
+    factory {
+        GetNowPlayingMoviesUseCaseImpl(repository = get())
+    }.bind(GetNowPlayingMoviesUseCase::class)
 
-    @Provides
-    @ViewModelScoped
-    fun getUpcomingMoviesUseCase(repository: MoviesRepository): GetUpcomingMoviesUseCase {
-        return GetUpcomingMoviesUseCaseImpl(repository)
-    }
+    factory {
+        GetTopRatedMoviesUseCaseImpl(repository = get())
+    }.bind(GetTopRatedMoviesUseCase::class)
+
+    factory {
+        GetUpcomingMoviesUseCaseImpl(repository = get())
+    }.bind(GetUpcomingMoviesUseCase::class)
 }

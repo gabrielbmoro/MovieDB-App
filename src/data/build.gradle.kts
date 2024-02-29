@@ -23,7 +23,7 @@ dependencies {
     // Test
     testImplementation(libs.bundles.test)
 
-    // Hilt
-    implementation(libs.bundles.hilt)
-    ksp(libs.hilt.android.compiler)
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.bundles.koin.impl)
 }

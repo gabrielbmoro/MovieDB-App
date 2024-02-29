@@ -1,19 +1,11 @@
 package com.gabrielbmoro.moviedb.core.di
 
-import android.content.Context
 import com.gabrielbmoro.moviedb.core.providers.resources.AndroidResourcesProvider
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import org.koin.android.ext.koin.androidApplication
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object CoreModule {
-    @Provides
-    fun bindsResourcesProvider(@ApplicationContext context: Context): ResourcesProvider {
-        return AndroidResourcesProvider(context.resources)
-    }
+val coreModule = module {
+    factory { AndroidResourcesProvider(androidApplication().resources) } bind ResourcesProvider::class
 }

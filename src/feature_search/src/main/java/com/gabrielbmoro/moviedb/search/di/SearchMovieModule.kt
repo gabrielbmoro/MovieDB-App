@@ -1,21 +1,20 @@
 package com.gabrielbmoro.moviedb.search.di
 
-import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCaseImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import com.gabrielbmoro.moviedb.search.ui.screens.search.SearchViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-@InstallIn(ViewModelComponent::class)
-object SearchMovieModule {
-
-    @Provides
-    @ViewModelScoped
-    fun searchMovieUseCase(repository: MoviesRepository): SearchMovieUseCase {
-        return SearchMovieUseCaseImpl(repository)
+val featureSearchMovieModule = module {
+    viewModel {
+        SearchViewModel(
+            searchMovieUseCase = get()
+        )
     }
+
+    factory { SearchMovieUseCaseImpl(repository = get()) }.bind(
+        SearchMovieUseCase::class
+    )
 }

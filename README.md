@@ -49,7 +49,7 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 ### Tech stack summary 🛠️
 
 - Jetpack Compose
-- Hilt
+- [Koin](https://github.com/InsertKoinIO/koin)
 - Coroutines
 - Retrofit
 - Room

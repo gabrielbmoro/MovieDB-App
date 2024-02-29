@@ -5,9 +5,8 @@ import androidx.paging.map
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class PageMapper @Inject constructor(
+class PageMapper(
     private val movieMapper: MovieMapper
 ) {
     fun map(pagingData: Flow<PagingData<MovieResponse>>) =

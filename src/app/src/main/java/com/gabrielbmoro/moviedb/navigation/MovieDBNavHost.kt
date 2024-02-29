@@ -7,10 +7,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.gabrielbmoro.moviedb.core.ui.parcelableOf
 import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreen
+import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreenViewModel
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieScreen
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import com.gabrielbmoro.moviedb.search.ui.screens.search.SearchScreen
 import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreen
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MovieDBNavHost(
@@ -79,9 +82,10 @@ fun MovieDBNavHost(
                 Movie::class.java
             ) ?: throw IllegalArgumentException("Type should be movie")
 
+            val detailsViewModel = koinViewModel<DetailsScreenViewModel> { parametersOf(movie) }
             DetailsScreen(
-                onBackEvent = onBack,
-                movie = movie
+                viewModel = detailsViewModel,
+                onBackEvent = onBack
             )
         }
     }

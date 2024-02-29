@@ -2,9 +2,8 @@ package com.gabrielbmoro.moviedb.repository.mappers
 
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.repository.model.MovieDetail
-import javax.inject.Inject
 
-class VideoDetailsMapper @Inject constructor() {
+class VideoDetailsMapper {
 
     fun map(movieDetailResponse: MovieDetailResponse) = MovieDetail(
         adult = movieDetailResponse.adult,
