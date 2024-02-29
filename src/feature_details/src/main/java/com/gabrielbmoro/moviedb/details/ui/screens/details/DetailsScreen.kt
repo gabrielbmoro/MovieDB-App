@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -28,7 +29,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbarTitle
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
@@ -43,10 +43,11 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 import com.gabrielbmoro.moviedb.feature.details.R
 import com.gabrielbmoro.moviedb.repository.model.Movie
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(
-    viewModel: DetailsScreenViewModel = hiltViewModel(),
+    viewModel: DetailsScreenViewModel = koinViewModel(),
     movie: Movie,
     onBackEvent: () -> Unit
 ) {
@@ -201,7 +202,7 @@ private fun DetailsScreenContent(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 

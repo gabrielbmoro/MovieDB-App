@@ -1,31 +1,28 @@
 package com.gabrielbmoro.moviedb.wishlist.di
 
-import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.DeleteMovieUseCase
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.DeleteMovieUseCaseImpl
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCaseImpl
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-@InstallIn(ViewModelComponent::class)
-object WishlistModule {
-
-    @Provides
-    @ViewModelScoped
-    fun getFavoriteMoviesUseCase(repository: MoviesRepository): GetFavoriteMoviesUseCase {
-        return GetFavoriteMoviesUseCaseImpl(repository)
+val featureWishlistModule = module {
+    viewModel {
+        WishlistViewModel(
+            deleteMovieUseCase = get(),
+            getFavoriteMoviesUseCase = get(),
+            resourcesProvider = get()
+        )
     }
 
-    @Provides
-    @ViewModelScoped
-    fun deleteMovieUseCase(
-        repository: MoviesRepository
-    ): DeleteMovieUseCase {
-        return DeleteMovieUseCaseImpl(repository)
-    }
+    factory {
+        DeleteMovieUseCaseImpl(repository = get())
+    }.bind(DeleteMovieUseCase::class)
+
+    factory {
+        GetFavoriteMoviesUseCaseImpl(repository = get())
+    }.bind(GetFavoriteMoviesUseCase::class)
 }

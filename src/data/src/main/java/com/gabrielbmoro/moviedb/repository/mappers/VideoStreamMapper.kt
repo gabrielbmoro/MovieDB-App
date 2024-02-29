@@ -2,9 +2,8 @@ package com.gabrielbmoro.moviedb.repository.mappers
 
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.repository.model.VideoStream
-import javax.inject.Inject
 
-class VideoStreamMapper @Inject constructor() {
+class VideoStreamMapper {
 
     fun map(videoStreamResponse: VideoStreamsResponse) = videoStreamResponse.results.map {
         VideoStream(

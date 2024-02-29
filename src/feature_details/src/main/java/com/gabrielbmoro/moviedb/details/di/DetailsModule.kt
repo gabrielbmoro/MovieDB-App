@@ -8,41 +8,33 @@ import com.gabrielbmoro.moviedb.details.domain.usecases.GetTrailersUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.GetTrailersUseCaseImpl
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCaseImpl
-import com.gabrielbmoro.moviedb.repository.MoviesRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreenViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-@InstallIn(ViewModelComponent::class)
-object DetailsModule {
-
-    @Provides
-    @ViewModelScoped
-    fun favoriteUseCase(repository: MoviesRepository): FavoriteMovieUseCase {
-        return FavoriteMovieUseCaseImpl(repository)
+val featureDetailsModule = module {
+    viewModel {
+        DetailsScreenViewModel(
+            favoriteMovieUseCase = get(),
+            isFavoriteMovieUseCase = get(),
+            getMovieDetailsUseCase = get()
+        )
     }
 
-    @Provides
-    @ViewModelScoped
-    fun getTrailersUseCase(repository: MoviesRepository): GetTrailersUseCase {
-        return GetTrailersUseCaseImpl(repository)
-    }
+    factory { FavoriteMovieUseCaseImpl(repository = get()) }.bind(
+        FavoriteMovieUseCase::class
+    )
 
-    @Provides
-    @ViewModelScoped
-    fun isFavoriteMovieUseCase(repository: MoviesRepository): IsFavoriteMovieUseCase {
-        return IsFavoriteMovieUseCaseImpl(repository)
-    }
+    factory { IsFavoriteMovieUseCaseImpl(repository = get()) }.bind(
+        IsFavoriteMovieUseCase::class
+    )
 
-    @Provides
-    @ViewModelScoped
-    fun getMovieDetailsUseCaseImpl(
-        repository: MoviesRepository,
-        getTrailersUseCase: GetTrailersUseCase
-    ): GetMovieDetailsUseCase {
-        return GetMovieDetailsUseCaseImpl(repository, getTrailersUseCase)
-    }
+    factory { GetMovieDetailsUseCaseImpl(getTrailersUseCase = get(), repository = get()) }.bind(
+        GetMovieDetailsUseCase::class
+    )
+
+    factory {
+        GetTrailersUseCaseImpl(repository = get())
+    }.bind(GetTrailersUseCase::class)
 }

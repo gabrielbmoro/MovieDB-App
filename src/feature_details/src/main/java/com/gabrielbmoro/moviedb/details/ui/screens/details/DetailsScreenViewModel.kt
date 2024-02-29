@@ -6,13 +6,10 @@ import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.repository.model.Movie
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class DetailsScreenViewModel @Inject constructor(
+class DetailsScreenViewModel(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase

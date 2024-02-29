@@ -18,9 +18,8 @@ import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class MoviesRepositoryImpl @Inject constructor(
+class MoviesRepositoryImpl(
     private val api: ApiRepository,
     private val favoriteMoviesDAO: FavoriteMoviesDAO,
     private val favoriteMoviesMapper: FavoriteMovieMapper,

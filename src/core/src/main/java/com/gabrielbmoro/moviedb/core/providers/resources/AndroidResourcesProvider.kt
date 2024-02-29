@@ -2,9 +2,8 @@ package com.gabrielbmoro.moviedb.core.providers.resources
 
 import android.content.res.Resources
 import androidx.annotation.ArrayRes
-import javax.inject.Inject
 
-class AndroidResourcesProvider @Inject constructor(
+class AndroidResourcesProvider(
     private val resources: Resources
 ) : ResourcesProvider {
 

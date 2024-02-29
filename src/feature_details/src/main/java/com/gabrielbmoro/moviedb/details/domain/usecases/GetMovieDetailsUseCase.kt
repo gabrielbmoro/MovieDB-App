@@ -4,13 +4,12 @@ import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.zip
-import javax.inject.Inject
 
 interface GetMovieDetailsUseCase {
     operator fun invoke(movieId: Long): Flow<MovieDetail>
 }
 
-class GetMovieDetailsUseCaseImpl @Inject constructor(
+class GetMovieDetailsUseCaseImpl(
     private val repository: MoviesRepository,
     private val getTrailersUseCase: GetTrailersUseCase
 ) : GetMovieDetailsUseCase {

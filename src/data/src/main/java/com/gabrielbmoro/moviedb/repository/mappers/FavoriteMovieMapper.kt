@@ -2,9 +2,8 @@ package com.gabrielbmoro.moviedb.repository.mappers
 
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
 import com.gabrielbmoro.moviedb.repository.model.Movie
-import javax.inject.Inject
 
-class FavoriteMovieMapper @Inject constructor() {
+class FavoriteMovieMapper {
 
     fun map(id: Int? = null, movie: Movie): FavoriteMovieDTO {
         return FavoriteMovieDTO(

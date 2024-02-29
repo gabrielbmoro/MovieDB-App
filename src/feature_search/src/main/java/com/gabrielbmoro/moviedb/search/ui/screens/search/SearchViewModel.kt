@@ -3,11 +3,9 @@ package com.gabrielbmoro.moviedb.search.ui.screens.search
 import androidx.compose.ui.text.input.TextFieldValue
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class SearchViewModel @Inject constructor(
+
+class SearchViewModel constructor(
     private val searchMovieUseCase: SearchMovieUseCase
 ) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
 

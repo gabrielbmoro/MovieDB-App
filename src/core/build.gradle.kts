@@ -21,8 +21,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.timber)
 
-    implementation(libs.bundles.hilt)
-    ksp(libs.hilt.android.compiler)
+    // Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.bundles.koin.impl)
 
     implementation(libs.bundles.lifecycle)
 

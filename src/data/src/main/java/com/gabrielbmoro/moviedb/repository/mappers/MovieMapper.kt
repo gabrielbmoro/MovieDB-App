@@ -3,9 +3,8 @@ package com.gabrielbmoro.moviedb.repository.mappers
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieResponse
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
 import com.gabrielbmoro.moviedb.repository.model.Movie
-import javax.inject.Inject
 
-class MovieMapper @Inject constructor() {
+class MovieMapper {
 
     fun mapResponse(movieResponse: MovieResponse): Movie {
         return Movie(

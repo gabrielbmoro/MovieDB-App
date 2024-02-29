@@ -4,13 +4,12 @@ import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
 interface GetUpcomingMoviesUseCase {
     operator fun invoke(): Flow<PagingData<Movie>>
 }
 
-class GetUpcomingMoviesUseCaseImpl @Inject constructor(
+class GetUpcomingMoviesUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetUpcomingMoviesUseCase {
 

@@ -5,7 +5,6 @@ import com.gabrielbmoro.moviedb.repository.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 interface FavoriteMovieUseCase {
     suspend operator fun invoke(
@@ -14,7 +13,7 @@ interface FavoriteMovieUseCase {
     ): DataOrException<Boolean, Exception>
 }
 
-open class FavoriteMovieUseCaseImpl @Inject constructor(
+open class FavoriteMovieUseCaseImpl(
     private val repository: MoviesRepository
 ) : FavoriteMovieUseCase {
 

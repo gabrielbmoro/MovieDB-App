@@ -10,11 +10,8 @@ import com.gabrielbmoro.moviedb.movies.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarouselContent
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class MoviesViewModel @Inject constructor(
+class MoviesViewModel constructor(
     private val resourcesProvider: ResourcesProvider,
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
