@@ -16,7 +16,7 @@ import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.EmptyState
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
 import com.gabrielbmoro.moviedb.feature.wishlist.R
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 import org.koin.androidx.compose.koinViewModel
 

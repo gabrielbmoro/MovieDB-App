@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.repository.mappers
 
+import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponse
-import com.gabrielbmoro.moviedb.repository.model.VideoStream
 
 class VideoStreamMapper {
 

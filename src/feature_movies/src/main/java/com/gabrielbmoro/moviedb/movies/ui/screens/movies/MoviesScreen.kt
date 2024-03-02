@@ -17,9 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.feature.movies.R
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarousel
-import com.gabrielbmoro.moviedb.repository.model.Movie
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

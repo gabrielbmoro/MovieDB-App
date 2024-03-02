@@ -3,7 +3,11 @@ package com.gabrielbmoro.moviedb.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.gabrielbmoro.moviedb.domain.model.DataOrException
+import com.gabrielbmoro.moviedb.domain.MoviesRepository
+import com.gabrielbmoro.moviedb.domain.entities.DataOrException
+import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
+import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 import com.gabrielbmoro.moviedb.repository.datasources.paging.MoviesDataSource
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
 import com.gabrielbmoro.moviedb.repository.datasources.room.FavoriteMoviesDAO
@@ -12,9 +16,6 @@ import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
 import com.gabrielbmoro.moviedb.repository.mappers.PageMapper
 import com.gabrielbmoro.moviedb.repository.mappers.VideoDetailsMapper
 import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
-import com.gabrielbmoro.moviedb.repository.model.Movie
-import com.gabrielbmoro.moviedb.repository.model.MovieDetail
-import com.gabrielbmoro.moviedb.repository.model.VideoStream
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

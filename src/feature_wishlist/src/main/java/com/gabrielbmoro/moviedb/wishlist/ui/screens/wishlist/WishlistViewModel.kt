@@ -4,14 +4,14 @@ import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.feature.wishlist.R
-import com.gabrielbmoro.moviedb.wishlist.domain.usecases.DeleteMovieUseCase
-import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class WishlistViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
-    private val deleteMovieUseCase: DeleteMovieUseCase,
+    private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val resourcesProvider: ResourcesProvider
 ) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
     fun load() = viewModelScope.launch {
@@ -27,8 +27,8 @@ class WishlistViewModel(
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
         return when (intent) {
             is WishlistUserIntent.DeleteMovie -> {
-                val result = deleteMovieUseCase(intent.movie.title)
-                if (result == true) {
+                val result = favoriteMovieUseCase(intent.movie, false)
+                if (result.data == true) {
                     uiState.value.copy(
                         favoriteMovies = getFavoriteMoviesUseCase().first(),
                         resultMessage = resourcesProvider.getString(

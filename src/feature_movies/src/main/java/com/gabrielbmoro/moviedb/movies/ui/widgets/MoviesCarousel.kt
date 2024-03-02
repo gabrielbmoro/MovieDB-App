@@ -27,7 +27,7 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import kotlinx.coroutines.flow.Flow
 
 data class MoviesCarouselContent(

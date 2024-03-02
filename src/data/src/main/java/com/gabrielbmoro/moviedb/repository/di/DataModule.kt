@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.repository.di
 
 import androidx.room.Room
-import com.gabrielbmoro.moviedb.repository.MoviesRepository
+import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.MoviesRepositoryImpl
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.interceptors.AuthenticationInterceptor

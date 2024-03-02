@@ -55,7 +55,7 @@ class WishlistViewModelTest {
         every { getFavoriteMoviesUseCase.invoke() }.returns(expected)
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            deleteMovieUseCase = deleteMovieUseCase,
+            favoriteMovieUseCase = deleteMovieUseCase,
             resourcesProvider = resourcesProvider
         )
 
@@ -79,7 +79,7 @@ class WishlistViewModelTest {
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            deleteMovieUseCase = deleteMovieUseCase,
+            favoriteMovieUseCase = deleteMovieUseCase,
             resourcesProvider = resourcesProvider
         )
 
@@ -111,7 +111,7 @@ class WishlistViewModelTest {
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            deleteMovieUseCase = deleteMovieUseCase,
+            favoriteMovieUseCase = deleteMovieUseCase,
             resourcesProvider = resourcesProvider
         )
 

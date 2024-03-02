@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.navigation
 import android.os.Bundle
 import androidx.navigation.NavType
 import com.gabrielbmoro.moviedb.core.ui.parcelableOf
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.google.gson.Gson
 
 class NavMovieType : NavType<Movie>(false) {

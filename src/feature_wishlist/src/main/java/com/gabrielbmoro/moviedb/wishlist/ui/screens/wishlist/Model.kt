@@ -1,6 +1,6 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 
 sealed class WishlistUserIntent {
     data class DeleteMovie(val movie: Movie) : WishlistUserIntent()

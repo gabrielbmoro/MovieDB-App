@@ -4,14 +4,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.feature.movies.R
-import com.gabrielbmoro.moviedb.movies.domain.usecases.GetNowPlayingMoviesUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecases.GetPopularMoviesUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecases.GetTopRatedMoviesUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarouselContent
 
-class MoviesViewModel constructor(
+class MoviesViewModel(
     private val resourcesProvider: ResourcesProvider,
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
