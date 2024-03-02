@@ -2,9 +2,10 @@ package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
-import com.gabrielbmoro.moviedb.repository.model.Movie
-import com.gabrielbmoro.moviedb.wishlist.domain.usecases.DeleteMovieUseCase
-import com.gabrielbmoro.moviedb.wishlist.domain.usecases.GetFavoriteMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.entities.DataOrException
+import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -28,7 +29,7 @@ import org.junit.Test
 class WishlistViewModelTest {
 
     private lateinit var getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
-    private lateinit var deleteMovieUseCase: DeleteMovieUseCase
+    private lateinit var favoriteMovieUseCase: FavoriteMovieUseCase
     private lateinit var resourcesProvider: ResourcesProvider
 
     @get:Rule
@@ -39,7 +40,7 @@ class WishlistViewModelTest {
         Dispatchers.setMain(StandardTestDispatcher())
 
         getFavoriteMoviesUseCase = mockk()
-        deleteMovieUseCase = mockk()
+        favoriteMovieUseCase = mockk()
         resourcesProvider = mockk()
     }
 
@@ -55,7 +56,7 @@ class WishlistViewModelTest {
         every { getFavoriteMoviesUseCase.invoke() }.returns(expected)
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            favoriteMovieUseCase = deleteMovieUseCase,
+            favoriteMovieUseCase = favoriteMovieUseCase,
             resourcesProvider = resourcesProvider
         )
 
@@ -79,7 +80,7 @@ class WishlistViewModelTest {
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            favoriteMovieUseCase = deleteMovieUseCase,
+            favoriteMovieUseCase = favoriteMovieUseCase,
             resourcesProvider = resourcesProvider
         )
 
@@ -104,14 +105,19 @@ class WishlistViewModelTest {
             )
         )
         every { resourcesProvider.getString(any()) }.returns("Chuck norris")
-        coEvery { deleteMovieUseCase.invoke(Movie.mockChuckNorrisVsVandammeMovie().title) }.returns(
-            true
+        coEvery {
+            favoriteMovieUseCase.invoke(
+                Movie.mockChuckNorrisVsVandammeMovie(),
+                toFavorite = false
+            )
+        }.returns(
+            DataOrException(data = false)
         )
         every { getFavoriteMoviesUseCase() }.returns(expected)
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            favoriteMovieUseCase = deleteMovieUseCase,
+            favoriteMovieUseCase = favoriteMovieUseCase,
             resourcesProvider = resourcesProvider
         )
 
@@ -120,6 +126,6 @@ class WishlistViewModelTest {
 
         // assert
         advanceUntilIdle()
-        coVerify(exactly = 1) { deleteMovieUseCase.invoke(Movie.mockChuckNorrisVsVandammeMovie().title) }
+        coVerify(exactly = 1) { favoriteMovieUseCase.invoke(Movie.mockChuckNorrisVsVandammeMovie(), false) }
     }
 }
