@@ -17,6 +17,7 @@ dependencies {
 
     implementation(projects.data)
     implementation(projects.core)
+    implementation(projects.domain)
     implementation(projects.featureWishlist)
     implementation(projects.featureMovies)
     implementation(projects.featureDetails)

@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.navigation
 
 import android.net.Uri
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.google.gson.Gson
 
 object ScreenRoutesBuilder {

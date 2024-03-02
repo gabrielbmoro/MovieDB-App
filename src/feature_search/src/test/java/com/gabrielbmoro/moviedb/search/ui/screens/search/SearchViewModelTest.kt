@@ -2,8 +2,8 @@ package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.compose.ui.text.input.TextFieldValue
-import com.gabrielbmoro.moviedb.repository.model.Movie
-import com.gabrielbmoro.moviedb.search.domain.SearchMovieUseCase
+import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.mockk

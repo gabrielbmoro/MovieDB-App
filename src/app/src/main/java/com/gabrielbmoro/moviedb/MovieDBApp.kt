@@ -4,6 +4,7 @@ import android.app.Application
 import com.gabrielbmoro.moviedb.core.di.coreModule
 import com.gabrielbmoro.moviedb.details.di.featureDetailsModule
 import com.gabrielbmoro.moviedb.di.appModule
+import com.gabrielbmoro.moviedb.domain.di.domainModule
 import com.gabrielbmoro.moviedb.movies.di.featureMoviesModule
 import com.gabrielbmoro.moviedb.repository.di.dataModule
 import com.gabrielbmoro.moviedb.search.di.featureSearchMovieModule
@@ -33,6 +34,7 @@ class MovieDBApp : Application() {
             modules(
                 appModule,
                 coreModule,
+                domainModule,
                 dataModule,
                 featureDetailsModule,
                 featureMoviesModule,

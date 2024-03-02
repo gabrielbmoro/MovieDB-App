@@ -10,6 +10,9 @@ android {
 }
 
 dependencies {
+
+    implementation(projects.domain)
+
     implementation(libs.preferences.ktx)
     implementation(libs.timber)
     implementation(libs.bundles.retrofit)

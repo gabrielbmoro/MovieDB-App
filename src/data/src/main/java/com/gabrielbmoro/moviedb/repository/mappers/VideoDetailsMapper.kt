@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.repository.mappers
 
+import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieDetailResponse
-import com.gabrielbmoro.moviedb.repository.model.MovieDetail
 
 class VideoDetailsMapper {
 

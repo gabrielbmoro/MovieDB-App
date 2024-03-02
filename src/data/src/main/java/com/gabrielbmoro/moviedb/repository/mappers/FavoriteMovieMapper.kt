@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.repository.mappers
 
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
-import com.gabrielbmoro.moviedb.repository.model.Movie
 
 class FavoriteMovieMapper {
 

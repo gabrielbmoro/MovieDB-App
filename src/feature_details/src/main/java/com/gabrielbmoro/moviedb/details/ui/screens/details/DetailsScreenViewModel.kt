@@ -2,10 +2,10 @@ package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
-import com.gabrielbmoro.moviedb.details.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.details.domain.usecases.GetMovieDetailsUseCase
-import com.gabrielbmoro.moviedb.details.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 

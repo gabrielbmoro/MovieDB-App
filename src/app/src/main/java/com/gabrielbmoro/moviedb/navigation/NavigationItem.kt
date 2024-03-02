@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.gabrielbmoro.moviedb.R
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 
 sealed class NavigationItem(
     open val route: String

@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":domain")
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
