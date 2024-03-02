@@ -1,6 +1,6 @@
 package com.gabrielbmoro.moviedb.repository.mappers
 
-import com.gabrielbmoro.moviedb.repository.model.Movie
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Test

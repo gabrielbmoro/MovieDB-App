@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.repository.model
+package com.gabrielbmoro.moviedb.domain.entities
 
 import com.google.common.truth.Truth
 import org.junit.Test
