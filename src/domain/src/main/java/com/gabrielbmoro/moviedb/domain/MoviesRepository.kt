@@ -1,7 +1,6 @@
 package com.gabrielbmoro.moviedb.domain
 
 import androidx.paging.PagingData
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
@@ -18,11 +17,11 @@ interface MoviesRepository {
 
     fun getNowPlayingMovies(): Flow<PagingData<Movie>>
 
-    suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception>
+    suspend fun favorite(movie: Movie)
 
-    suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception>
+    suspend fun unFavorite(movieTitle: String)
 
-    suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception>
+    suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean
 
     fun getVideoStreams(movieId: Long): Flow<List<VideoStream>>
 

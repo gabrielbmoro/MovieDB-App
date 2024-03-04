@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
@@ -74,41 +73,21 @@ class MoviesRepositoryImpl(
         return pageMapper.map(pagingDataFlow)
     }
 
-    override suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception> {
-        return try {
-            val movieDTO = favoriteMoviesMapper.map(
-                movie = movie
-            )
-            val isFavorite = checkIsAFavoriteMovie(movieDTO.title)
-            if (isFavorite.data != null && isFavorite.data == false) {
-                favoriteMoviesDAO.saveFavorite(movieDTO)
-                DataOrException(data = true, exception = null)
-            } else {
-                DataOrException(data = false, exception = isFavorite.exception)
-            }
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
-        }
+    override suspend fun favorite(movie: Movie) {
+        val movieDTO = favoriteMoviesMapper.map(
+            movie = movie
+        )
+        favoriteMoviesDAO.saveFavorite(movieDTO)
     }
 
-    override suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception> {
-        return try {
-            favoriteMoviesDAO.removeFavorite(movieTitle)
-            DataOrException(data = true, exception = null)
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = null)
-        }
+    override suspend fun unFavorite(movieTitle: String) {
+        favoriteMoviesDAO.removeFavorite(movieTitle)
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception> {
-        return try {
-            val isFavorite = favoriteMoviesDAO.isThereAMovie(
-                title = movieTitle
-            ).any()
-            DataOrException(data = isFavorite, exception = null)
-        } catch (exception: Exception) {
-            DataOrException(data = null, exception = exception)
-        }
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
+        return favoriteMoviesDAO.isThereAMovie(
+            title = movieTitle
+        ).any()
     }
 
     override fun getVideoStreams(movieId: Long): Flow<List<VideoStream>> {

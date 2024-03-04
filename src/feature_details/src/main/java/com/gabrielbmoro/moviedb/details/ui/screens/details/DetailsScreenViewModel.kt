@@ -47,14 +47,11 @@ class DetailsScreenViewModel(
             is DetailsUserIntent.FavoriteMovie -> {
                 val value = getState().isFavorite
                 val desiredValue = value.not()
-                val result = favoriteMovieUseCase.invoke(movie, toFavorite = desiredValue)
-                if (result.data == true) {
-                    getState().copy(
-                        isFavorite = desiredValue
-                    )
-                } else {
-                    getState()
-                }
+                favoriteMovieUseCase.invoke(movie, toFavorite = desiredValue)
+                val result = isFavoriteMovieUseCase(movie.title)
+                getState().copy(
+                    isFavorite = result
+                )
             }
         }
     }
@@ -62,13 +59,11 @@ class DetailsScreenViewModel(
     private fun checkIfMovieIsFavorite(movieTitle: String) {
         viewModelScope.launch {
             val data = isFavoriteMovieUseCase.invoke(movieTitle)
-            if (data.data != null) {
-                updateState(
-                    getState().copy(
-                        isFavorite = data.data ?: false
-                    )
+            updateState(
+                getState().copy(
+                    isFavorite = data
                 )
-            }
+            )
         }
     }
 

@@ -2,10 +2,10 @@ package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
+import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -30,6 +30,7 @@ class WishlistViewModelTest {
 
     private lateinit var getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FavoriteMovieUseCase
+    private lateinit var isFavoriteMovieUseCase: IsFavoriteMovieUseCase
     private lateinit var resourcesProvider: ResourcesProvider
 
     @get:Rule
@@ -41,6 +42,7 @@ class WishlistViewModelTest {
 
         getFavoriteMoviesUseCase = mockk()
         favoriteMovieUseCase = mockk()
+        isFavoriteMovieUseCase = mockk()
         resourcesProvider = mockk()
     }
 
@@ -57,7 +59,8 @@ class WishlistViewModelTest {
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             favoriteMovieUseCase = favoriteMovieUseCase,
-            resourcesProvider = resourcesProvider
+            resourcesProvider = resourcesProvider,
+            isFavoriteMovieUseCase = isFavoriteMovieUseCase
         )
 
         // act
@@ -81,7 +84,8 @@ class WishlistViewModelTest {
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             favoriteMovieUseCase = favoriteMovieUseCase,
-            resourcesProvider = resourcesProvider
+            resourcesProvider = resourcesProvider,
+            isFavoriteMovieUseCase = isFavoriteMovieUseCase
         )
 
         // act
@@ -104,21 +108,17 @@ class WishlistViewModelTest {
                 Movie.mockChuckNorrisVsVandammeMovie()
             )
         )
+        coEvery { isFavoriteMovieUseCase.invoke(any()) }.returns(true)
         every { resourcesProvider.getString(any()) }.returns("Chuck norris")
-        coEvery {
-            favoriteMovieUseCase.invoke(
-                Movie.mockChuckNorrisVsVandammeMovie(),
-                toFavorite = false
-            )
-        }.returns(
-            DataOrException(data = false)
-        )
+        coEvery { favoriteMovieUseCase.invoke(any(), any()) }.returns(Unit)
+
         every { getFavoriteMoviesUseCase() }.returns(expected)
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             favoriteMovieUseCase = favoriteMovieUseCase,
-            resourcesProvider = resourcesProvider
+            resourcesProvider = resourcesProvider,
+            isFavoriteMovieUseCase = isFavoriteMovieUseCase
         )
 
         // act
