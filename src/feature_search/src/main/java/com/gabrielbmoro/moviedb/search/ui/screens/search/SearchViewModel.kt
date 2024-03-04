@@ -7,6 +7,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 class SearchViewModel(
     private val searchMovieUseCase: SearchMovieUseCase
 ) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
+    override suspend fun setup(): SearchUIState? = null
 
     override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 

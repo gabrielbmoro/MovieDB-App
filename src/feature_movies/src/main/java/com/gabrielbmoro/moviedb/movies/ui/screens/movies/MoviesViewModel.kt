@@ -8,7 +8,6 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.feature.movies.R
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarouselContent
-import kotlinx.coroutines.flow.emptyFlow
 
 class MoviesViewModel(
     private val resourcesProvider: ResourcesProvider,
@@ -18,30 +17,29 @@ class MoviesViewModel(
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
 ) : ViewModelMVI<Any, MoviesUIState>() {
 
-    init {
-        loadMovies()
-    }
+    override suspend fun setup(): MoviesUIState {
+        val nowPlaying = getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(1))
+        val topRated = getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(1))
+        val popular = getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(1))
+        val upComing = getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(1))
 
-    private fun loadMovies() {
-        updateState(
-            MoviesUIState(
-                carousels = listOf(
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.now_playing),
-                        movies = emptyList()//getNowPlayingMoviesUseCase().cachedIn(viewModelScope)
-                    ),
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.popular),
-                        movies = emptyList()//getPopularMoviesUseCase().cachedIn(viewModelScope)
-                    ),
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.top_rated),
-                        movies = emptyList()// getTopRatedMoviesUseCase().cachedIn(viewModelScope)
-                    ),
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.upcoming),
-                        movies = emptyList() // getUpcomingMoviesUseCase().cachedIn(viewModelScope)
-                    )
+        return uiState.value.copy(
+            carousels = listOf(
+                MoviesCarouselContent(
+                    sectionTitle = resourcesProvider.getString(R.string.now_playing),
+                    movies = nowPlaying
+                ),
+                MoviesCarouselContent(
+                    sectionTitle = resourcesProvider.getString(R.string.popular),
+                    movies = popular
+                ),
+                MoviesCarouselContent(
+                    sectionTitle = resourcesProvider.getString(R.string.top_rated),
+                    movies = topRated
+                ),
+                MoviesCarouselContent(
+                    sectionTitle = resourcesProvider.getString(R.string.upcoming),
+                    movies = upComing
                 )
             )
         )

@@ -14,6 +14,17 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            setup()?.let { state ->
+                _uiState.update { state }
+            }
+        }
+    }
+
+    protected abstract suspend fun setup(): ScreenState?
+
     protected abstract suspend fun execute(intent: UserIntent): ScreenState
 
     protected abstract fun defaultEmptyState(): ScreenState

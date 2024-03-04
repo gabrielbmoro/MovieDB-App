@@ -1,13 +1,11 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.feature.wishlist.R
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import kotlinx.coroutines.launch
 
 class WishlistViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
@@ -15,12 +13,11 @@ class WishlistViewModel(
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val resourcesProvider: ResourcesProvider
 ) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
-    fun load() = viewModelScope.launch {
+
+    override suspend fun setup(): WishlistUIState {
         val movies = getFavoriteMoviesUseCase.execute(Unit)
-        updateState(
-            getState().copy(
-                favoriteMovies = movies
-            )
+        return uiState.value.copy(
+            favoriteMovies = movies
         )
     }
 

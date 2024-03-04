@@ -79,11 +79,4 @@ fun WishlistScreen(
             }
         }
     )
-
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            viewModel.load()
-        }
-    )
 }
