@@ -7,7 +7,6 @@ import com.gabrielbmoro.moviedb.feature.wishlist.R
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class WishlistViewModel(
@@ -17,23 +16,31 @@ class WishlistViewModel(
     private val resourcesProvider: ResourcesProvider
 ) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
     fun load() = viewModelScope.launch {
-        getFavoriteMoviesUseCase().collect { movies ->
-            updateState(
-                getState().copy(
-                    favoriteMovies = movies
-                )
+        val movies = getFavoriteMoviesUseCase.execute(Unit)
+        updateState(
+            getState().copy(
+                favoriteMovies = movies
             )
-        }
+        )
     }
 
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
         return when (intent) {
             is WishlistUserIntent.DeleteMovie -> {
-                favoriteMovieUseCase(intent.movie, false)
-                val result = isFavoriteMovieUseCase(intent.movie.title)
+                favoriteMovieUseCase.execute(
+                    FavoriteMovieUseCase.Params(
+                        movieTitle = intent.movie.title,
+                        toFavorite = false
+                    )
+                )
+                val result = isFavoriteMovieUseCase.execute(
+                    IsFavoriteMovieUseCase.Params(
+                        movieTitle = intent.movie.title
+                    )
+                )
                 if (!result) {
                     uiState.value.copy(
-                        favoriteMovies = getFavoriteMoviesUseCase().first(),
+                        favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
                         resultMessage = resourcesProvider.getString(
                             R.string.delete_success_message
                         )

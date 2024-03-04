@@ -33,12 +33,10 @@ class IsFavoriteMovieUseCaseImplTest {
             true
         )
 
-        runTest {
-            // act
-            useCase.execute(IsFavoriteMovieUseCase.Params(movieTitle = movieTitle))
+        // act
+        useCase.execute(IsFavoriteMovieUseCase.Params(movieTitle = movieTitle))
 
-            // assert
-            coVerify(exactly = 1) { repository.checkIsAFavoriteMovie(movieTitle) }
-        }
+        // assert
+        coVerify(exactly = 1) { repository.checkIsAFavoriteMovie(movieTitle) }
     }
 }

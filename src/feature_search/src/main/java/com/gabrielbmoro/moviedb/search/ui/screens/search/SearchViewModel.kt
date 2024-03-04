@@ -14,7 +14,11 @@ class SearchViewModel(
         return when (intent) {
             is SearchUserIntent.SearchBy -> {
                 getState().copy(
-                    results = searchMovieUseCase(intent.query.text)
+                    results = searchMovieUseCase.execute(
+                        SearchMovieUseCase.Params(
+                            query = intent.query.text
+                        )
+                    )
                 )
             }
 

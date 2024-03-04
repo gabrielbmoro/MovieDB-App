@@ -2,7 +2,6 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.flow.first
 
 interface SearchMovieUseCase : UseCase<SearchMovieUseCase.Params, List<Movie>> {
     data class Params(
@@ -17,6 +16,6 @@ class SearchMovieUseCaseImpl(
     override suspend fun execute(input: SearchMovieUseCase.Params): List<Movie> {
         return repository.searchMovieBy(
             query = input.query
-        ).first()
+        )
     }
 }

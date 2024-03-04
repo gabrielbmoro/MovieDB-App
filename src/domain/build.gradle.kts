@@ -10,8 +10,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.paging.compose)
-
     // Test
     testImplementation(libs.bundles.test)
 

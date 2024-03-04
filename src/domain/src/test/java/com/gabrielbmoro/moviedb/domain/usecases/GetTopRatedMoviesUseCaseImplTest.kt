@@ -1,6 +1,8 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -28,12 +30,12 @@ class GetTopRatedMoviesUseCaseTest {
     @Test
     fun `should be able to get all top rated movies`() = runTest {
         // arrange
-        every { repository.getTopRatedMovies() }.returns(emptyFlow())
+        coEvery { repository.getTopRatedMovies(1) }.returns(emptyList())
 
         // act
-        useCase.execute(Unit)
+        useCase.execute(GetTopRatedMoviesUseCase.Params(1))
 
         // assert
-        verify(exactly = 1) { repository.getTopRatedMovies() }
+        coVerify(exactly = 1) { repository.getTopRatedMovies(1) }
     }
 }

@@ -46,8 +46,26 @@ class DetailsScreenViewModel(
             is DetailsUserIntent.FavoriteMovie -> {
                 val value = getState().isFavorite
                 val desiredValue = value.not()
-                favoriteMovieUseCase.invoke(movie, toFavorite = desiredValue)
-                val result = isFavoriteMovieUseCase(movie.title)
+
+                val params = FavoriteMovieUseCase.Params(
+                    movieTitle = movie.title,
+                    movieLanguage = movie.language,
+                    movieVotesAverage = movie.votesAverage,
+                    movieReleaseDate = movie.releaseDate,
+                    moviePosterImageUrl = movie.posterImageUrl,
+                    moviePopularity = movie.popularity,
+                    movieOverview = movie.overview,
+                    movieId = movie.id,
+                    movieBackdropImageUrl = movie.backdropImageUrl,
+                    toFavorite = desiredValue
+                )
+                favoriteMovieUseCase.execute(params)
+
+                val result = isFavoriteMovieUseCase.execute(
+                    IsFavoriteMovieUseCase.Params(
+                        movieTitle = movie.title
+                    )
+                )
                 getState().copy(
                     isFavorite = result
                 )
@@ -57,7 +75,11 @@ class DetailsScreenViewModel(
 
     private fun checkIfMovieIsFavorite(movieTitle: String) {
         viewModelScope.launch {
-            val data = isFavoriteMovieUseCase.invoke(movieTitle)
+            val data = isFavoriteMovieUseCase.execute(
+                IsFavoriteMovieUseCase.Params(
+                    movieTitle = movieTitle
+                )
+            )
             updateState(
                 getState().copy(
                     isFavorite = data
@@ -70,7 +92,11 @@ class DetailsScreenViewModel(
         viewModelScope.launch {
             updateLoadingState(true)
 
-            val movieDetails = getMovieDetailsUseCase(movieId = movie.id)
+            val movieDetails = getMovieDetailsUseCase.execute(
+                GetMovieDetailsUseCase.Params(
+                    movieId = movie.id
+                )
+            )
             updateState(
                 getState().copy(
                     videoId = movieDetails.videoId,

@@ -21,7 +21,7 @@ class FavoriteMovieUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to favorite a movie`() {
+    fun `should be able to favorite a movie`() = runTest {
         // arrange
         val movie = Movie.mockWhiteDragonNotFavorite()
         val params = FavoriteMovieUseCase.Params(
@@ -39,17 +39,15 @@ class FavoriteMovieUseCaseImplTest {
         coEvery { repository.favorite(movie) }.answers {}
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(false)
 
-        runTest {
-            // act
-            useCase.execute(params)
+        // act
+        useCase.execute(params)
 
-            // assert
-            coVerify(exactly = 1) { repository.favorite(movie) }
-        }
+        // assert
+        coVerify(exactly = 1) { repository.favorite(movie) }
     }
 
     @Test
-    fun `should be able to remove a movie from favorite list`() {
+    fun `should be able to remove a movie from favorite list`() = runTest {
         // arrange
         val movie = Movie.mockWhiteDragonNotFavorite()
         val params = FavoriteMovieUseCase.Params(
@@ -68,12 +66,10 @@ class FavoriteMovieUseCaseImplTest {
         coEvery { repository.unFavorite(movie.title) }.answers {}
         coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(true)
 
-        runTest {
-            // act
-            useCase.execute(params)
+        // act
+        useCase.execute(params)
 
-            // assert
-            coVerify(exactly = 1) { repository.unFavorite(movie.title) }
-        }
+        // assert
+        coVerify(exactly = 1) { repository.unFavorite(movie.title) }
     }
 }
