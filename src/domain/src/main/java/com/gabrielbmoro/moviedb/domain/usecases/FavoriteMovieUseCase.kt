@@ -2,8 +2,6 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 interface FavoriteMovieUseCase {
     suspend operator fun invoke(
@@ -20,15 +18,13 @@ open class FavoriteMovieUseCaseImpl(
         movie: Movie,
         toFavorite: Boolean
     ) {
-        return withContext(Dispatchers.IO) {
-            when {
-                (toFavorite && !repository.checkIsAFavoriteMovie(movie.title)) -> {
-                    repository.favorite(movie)
-                }
+        when {
+            (toFavorite && !repository.checkIsAFavoriteMovie(movie.title)) -> {
+                repository.favorite(movie)
+            }
 
-                (!toFavorite && repository.checkIsAFavoriteMovie(movie.title)) -> {
-                    repository.unFavorite(movie.title)
-                }
+            (!toFavorite && repository.checkIsAFavoriteMovie(movie.title)) -> {
+                repository.unFavorite(movie.title)
             }
         }
     }
