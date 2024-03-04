@@ -4,13 +4,12 @@ import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import kotlinx.coroutines.flow.Flow
 
-interface GetFavoriteMoviesUseCase {
-    operator fun invoke(): Flow<List<Movie>>
-}
+interface GetFavoriteMoviesUseCase : UseCase<Unit, Flow<List<Movie>>>
 
 class GetFavoriteMoviesUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetFavoriteMoviesUseCase {
-
-    override operator fun invoke(): Flow<List<Movie>> = repository.getFavoriteMovies()
+    override suspend fun execute(input: Unit): Flow<List<Movie>> {
+        return repository.getFavoriteMovies()
+    }
 }

@@ -5,13 +5,12 @@ import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import kotlinx.coroutines.flow.Flow
 
-interface GetUpcomingMoviesUseCase {
-    operator fun invoke(): Flow<PagingData<Movie>>
-}
+interface GetUpcomingMoviesUseCase : UseCase<Unit, Flow<PagingData<Movie>>>
 
 class GetUpcomingMoviesUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetUpcomingMoviesUseCase {
-
-    override operator fun invoke() = repository.getUpcomingMovies()
+    override suspend fun execute(input: Unit): Flow<PagingData<Movie>> {
+        return repository.getUpcomingMovies()
+    }
 }

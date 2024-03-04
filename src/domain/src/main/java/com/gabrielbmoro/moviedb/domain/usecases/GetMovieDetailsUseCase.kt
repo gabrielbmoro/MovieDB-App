@@ -3,19 +3,16 @@ package com.gabrielbmoro.moviedb.domain.usecases
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 
-interface GetMovieDetailsUseCase {
-    suspend operator fun invoke(movieId: Long): MovieDetail
-}
+interface GetMovieDetailsUseCase: UseCase<Long, MovieDetail>
 
 class GetMovieDetailsUseCaseImpl(
     private val repository: MoviesRepository,
 ) : GetMovieDetailsUseCase {
 
-    override suspend operator fun invoke(movieId: Long): MovieDetail {
+    override suspend fun execute(input: Long): MovieDetail {
+        val movieDetail = repository.getMovieDetail(input)
 
-        val movieDetail = repository.getMovieDetail(movieId)
-
-        val videoStream = repository.getVideoStreams(movieId).firstOrNull { videoStream ->
+        val videoStream = repository.getVideoStreams(input).firstOrNull { videoStream ->
             videoStream.site == SITE_KEY && videoStream.official && videoStream.type == TYPE_KEY
         }
 

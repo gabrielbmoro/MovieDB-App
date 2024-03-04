@@ -6,6 +6,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,12 +26,12 @@ class GetPopularMoviesUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to get all popular movies`() {
+    fun `should be able to get all popular movies`() = runTest {
         // arrange
         every { repository.getPopularMovies() }.returns(emptyFlow())
 
         // act
-        useCase()
+        useCase.execute(Unit)
 
         // assert
         verify(exactly = 1) { repository.getPopularMovies() }

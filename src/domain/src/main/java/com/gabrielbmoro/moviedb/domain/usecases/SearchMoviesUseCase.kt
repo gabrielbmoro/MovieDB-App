@@ -4,14 +4,19 @@ import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import kotlinx.coroutines.flow.first
 
-interface SearchMovieUseCase {
-    suspend operator fun invoke(query: String): List<Movie>
+interface SearchMovieUseCase : UseCase<SearchMovieUseCase.Params, List<Movie>> {
+    data class Params(
+        val query: String
+    )
 }
 
 class SearchMovieUseCaseImpl(
     private val repository: MoviesRepository
 ) : SearchMovieUseCase {
-    override suspend operator fun invoke(query: String): List<Movie> {
-        return repository.searchMovieBy(query).first()
+
+    override suspend fun execute(input: SearchMovieUseCase.Params): List<Movie> {
+        return repository.searchMovieBy(
+            query = input.query
+        ).first()
     }
 }

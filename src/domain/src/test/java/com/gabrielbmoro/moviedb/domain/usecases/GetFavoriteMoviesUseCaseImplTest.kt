@@ -35,7 +35,7 @@ class GetFavoriteMoviesUseCaseImplTest {
 
         runTest {
             // act
-            useCase().collect {
+            useCase.execute(Unit).collect {
                 // assert
                 verify(exactly = 1) { repository.getFavoriteMovies() }
             }
