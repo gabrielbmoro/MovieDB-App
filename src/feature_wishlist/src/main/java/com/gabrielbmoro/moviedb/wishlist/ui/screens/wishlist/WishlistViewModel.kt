@@ -14,13 +14,6 @@ class WishlistViewModel(
     private val resourcesProvider: ResourcesProvider
 ) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
 
-    override suspend fun setup(): WishlistUIState {
-        val movies = getFavoriteMoviesUseCase.execute(Unit)
-        return uiState.value.copy(
-            favoriteMovies = movies
-        )
-    }
-
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
         return when (intent) {
             is WishlistUserIntent.DeleteMovie -> {
@@ -46,11 +39,18 @@ class WishlistViewModel(
                     uiState.value
                 }
             }
-        }
-    }
 
-    fun onResultMessageReset() {
-        updateState(uiState.value.copy(resultMessage = null))
+            is WishlistUserIntent.LoadMovies -> {
+                val movies = getFavoriteMoviesUseCase.execute(Unit)
+                uiState.value.copy(
+                    favoriteMovies = movies
+                )
+            }
+
+            is WishlistUserIntent.ResultMessageReset -> {
+                uiState.value.copy(resultMessage = null)
+            }
+        }
     }
 
     override fun defaultEmptyState(): WishlistUIState = WishlistUIState()

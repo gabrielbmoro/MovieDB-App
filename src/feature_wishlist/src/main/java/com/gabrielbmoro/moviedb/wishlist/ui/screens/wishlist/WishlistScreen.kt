@@ -75,8 +75,10 @@ fun WishlistScreen(
         block = {
             uiState.value.resultMessage?.let { resultMessage ->
                 snackbarHostState.showSnackbar(resultMessage)
-                viewModel.onResultMessageReset()
+                viewModel.accept(WishlistUserIntent.ResultMessageReset)
             }
+
+            viewModel.accept(WishlistUserIntent.LoadMovies)
         }
     )
 }

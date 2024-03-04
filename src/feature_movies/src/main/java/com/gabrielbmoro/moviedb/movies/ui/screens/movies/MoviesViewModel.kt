@@ -48,8 +48,4 @@ class MoviesViewModel(
     override fun defaultEmptyState() = MoviesUIState(
         carousels = emptyList()
     )
-
-    override suspend fun execute(intent: Any): MoviesUIState {
-        TODO("Not yet implemented")
-    }
 }

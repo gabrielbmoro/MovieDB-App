@@ -9,11 +9,23 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel() {
+interface ModelViewIntent<in UserIntent : Any, ScreenState : Any> {
+    suspend fun setup(): ScreenState? {
+        return null
+    }
+
+    suspend fun execute(intent: UserIntent): ScreenState {
+        throw NotImplementedError("Method not implemented")
+    }
+
+    fun defaultEmptyState(): ScreenState
+}
+
+abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(),
+    ModelViewIntent<UserIntent, ScreenState> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
-
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -22,12 +34,6 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(
             }
         }
     }
-
-    protected abstract suspend fun setup(): ScreenState?
-
-    protected abstract suspend fun execute(intent: UserIntent): ScreenState
-
-    protected abstract fun defaultEmptyState(): ScreenState
 
     fun accept(intent: UserIntent) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -42,5 +48,9 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(
 
     protected fun getState(): ScreenState {
         return _uiState.value
+    }
+
+    override suspend fun setup(): ScreenState? {
+        return null
     }
 }
