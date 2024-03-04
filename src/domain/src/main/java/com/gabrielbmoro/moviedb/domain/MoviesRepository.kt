@@ -23,9 +23,9 @@ interface MoviesRepository {
 
     suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean
 
-    fun getVideoStreams(movieId: Long): Flow<List<VideoStream>>
+    suspend fun getVideoStreams(movieId: Long): List<VideoStream>
 
-    fun getMovieDetail(movieId: Long): Flow<MovieDetail>
+    suspend fun getMovieDetail(movieId: Long): MovieDetail
 
     fun searchMovieBy(query: String): Flow<List<Movie>>
 }

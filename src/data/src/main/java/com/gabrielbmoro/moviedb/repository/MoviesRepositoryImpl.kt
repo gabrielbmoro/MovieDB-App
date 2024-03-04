@@ -90,24 +90,18 @@ class MoviesRepositoryImpl(
         ).any()
     }
 
-    override fun getVideoStreams(movieId: Long): Flow<List<VideoStream>> {
-        return flow {
-            val result = api.getVideoStreams(
-                movieId = movieId
-            )
-            val data = videoStreamMapper.map(result)
-            emit(data)
-        }
+    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
+        val result = api.getVideoStreams(
+            movieId = movieId
+        )
+        return videoStreamMapper.map(result)
     }
 
-    override fun getMovieDetail(movieId: Long): Flow<MovieDetail> {
-        return flow {
-            val result = api.getMovieDetails(
-                movieId = movieId
-            )
-            val data = videoDetailsMapper.map(result)
-            emit(data)
-        }
+    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
+        val result = api.getMovieDetails(
+            movieId = movieId
+        )
+        return videoDetailsMapper.map(result)
     }
 
     override fun searchMovieBy(query: String): Flow<List<Movie>> = flow {

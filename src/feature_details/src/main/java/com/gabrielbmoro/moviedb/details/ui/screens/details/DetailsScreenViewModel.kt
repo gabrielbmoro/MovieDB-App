@@ -6,7 +6,6 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class DetailsScreenViewModel(
@@ -71,28 +70,18 @@ class DetailsScreenViewModel(
         viewModelScope.launch {
             updateLoadingState(true)
 
-            getMovieDetailsUseCase(movieId = movie.id)
-                .catch {
-                    updateState(
-                        getState().copy(
-                            isLoading = false,
-                            errorMessage = "Something went wrong"
-                        )
-                    )
-                }
-                .collect { movieDetails ->
-                    updateState(
-                        getState().copy(
-                            videoId = movieDetails.videoId,
-                            tagLine = movieDetails.tagline,
-                            status = movieDetails.status,
-                            genres = movieDetails.genres,
-                            homepage = movieDetails.homepage,
-                            productionCompanies = movieDetails.productionCompanies.reduceToText()
-                        )
-                    )
-                }
-        }.invokeOnCompletion {
+            val movieDetails = getMovieDetailsUseCase(movieId = movie.id)
+            updateState(
+                getState().copy(
+                    videoId = movieDetails.videoId,
+                    tagLine = movieDetails.tagline,
+                    status = movieDetails.status,
+                    genres = movieDetails.genres,
+                    homepage = movieDetails.homepage,
+                    productionCompanies = movieDetails.productionCompanies.reduceToText()
+                )
+            )
+
             updateLoadingState(false)
         }
     }

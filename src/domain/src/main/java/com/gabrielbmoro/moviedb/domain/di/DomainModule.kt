@@ -12,8 +12,6 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCaseImpl
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCaseImpl
-import com.gabrielbmoro.moviedb.domain.usecases.GetTrailersUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetTrailersUseCaseImpl
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCaseImpl
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
@@ -38,7 +36,6 @@ val domainModule = module {
     factory<GetMovieDetailsUseCase> {
         GetMovieDetailsUseCaseImpl(
             repository = get(),
-            getTrailersUseCase = get()
         )
     }
 
@@ -56,12 +53,6 @@ val domainModule = module {
 
     factory<GetTopRatedMoviesUseCase> {
         GetTopRatedMoviesUseCaseImpl(
-            repository = get()
-        )
-    }
-
-    factory<GetTrailersUseCase> {
-        GetTrailersUseCaseImpl(
             repository = get()
         )
     }
