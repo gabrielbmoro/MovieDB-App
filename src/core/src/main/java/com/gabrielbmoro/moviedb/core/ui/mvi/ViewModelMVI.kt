@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.core.ui.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -18,7 +19,7 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(
     protected abstract fun defaultEmptyState(): ScreenState
 
     fun accept(intent: UserIntent) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val state = execute(intent)
             _uiState.update { state }
         }
