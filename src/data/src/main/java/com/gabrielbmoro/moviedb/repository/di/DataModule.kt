@@ -8,10 +8,6 @@ import com.gabrielbmoro.moviedb.repository.datasources.retrofit.interceptors.Aut
 import com.gabrielbmoro.moviedb.repository.datasources.retrofit.interceptors.LoggedInterceptor
 import com.gabrielbmoro.moviedb.repository.datasources.room.DataBaseFactory
 import com.gabrielbmoro.moviedb.repository.datasources.room.MIGRATION_1_2
-import com.gabrielbmoro.moviedb.repository.mappers.FavoriteMovieMapper
-import com.gabrielbmoro.moviedb.repository.mappers.MovieMapper
-import com.gabrielbmoro.moviedb.repository.mappers.VideoDetailsMapper
-import com.gabrielbmoro.moviedb.repository.mappers.VideoStreamMapper
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
@@ -58,19 +54,7 @@ val dataModule = module {
     single {
         MoviesRepositoryImpl(
             api = get(),
-            favoriteMoviesDAO = get(),
-            favoriteMoviesMapper = get(),
-            movieMapper = get(),
-            videoDetailsMapper = get(),
-            videoStreamMapper = get()
+            favoriteMoviesDAO = get()
         )
     }.bind(MoviesRepository::class)
-
-    factory { FavoriteMovieMapper() }
-    
-    factory { MovieMapper() }
-
-    factory { VideoDetailsMapper() }
-
-    factory { VideoStreamMapper() }
 }
