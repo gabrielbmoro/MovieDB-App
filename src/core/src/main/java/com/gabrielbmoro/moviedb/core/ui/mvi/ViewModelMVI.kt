@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-interface ModelViewIntent<in UserIntent : Any, ScreenState : Any> {
+private interface ModelViewIntent<in UserIntent : Any, ScreenState : Any> {
     suspend fun setup(): ScreenState? {
         return null
     }
