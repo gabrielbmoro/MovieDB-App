@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
@@ -52,42 +53,50 @@ class MoviesViewModel(
 
     override suspend fun execute(intent: Intent): MoviesUIState {
         return when (intent) {
-            is Intent.RequestMoreUpComingMovies -> {
-                val movies = upComingMoviesPagingController.onRequestMore()
-                uiState.value.copy(
-                    upComingMovies = uiState.value.upComingMovies.toMutableList().apply {
-                        addAll(movies)
-                    }
-                )
-            }
+            is Intent.RequestMoreUpComingMovies -> processRequestMoreForUpcomingMoviesIntent()
 
-            is Intent.RequestMoreTopRatedMovies -> {
-                val movies = topRatedMoviesPageController.onRequestMore()
-                uiState.value.copy(
-                    topRatedMovies = uiState.value.topRatedMovies.toMutableList().apply {
-                        addAll(movies)
-                    }
-                )
-            }
+            is Intent.RequestMoreTopRatedMovies -> processRequestMoreForTopRatedMoviesIntent()
 
-            is Intent.RequestMorePopularMovies -> {
-                val movies = popularMoviesPageController.onRequestMore()
-                uiState.value.copy(
-                    popularMovies = uiState.value.popularMovies.toMutableList().apply {
-                        addAll(movies)
-                    }
-                )
-            }
+            is Intent.RequestMorePopularMovies -> processRequestMoreForPopularMoviesIntent()
 
-            is Intent.RequestMoreNowPlayingMovies -> {
-                val movies = nowPlayingMoviesPageController.onRequestMore()
-                uiState.value.copy(
-                    nowPlayingMovies = uiState.value.nowPlayingMovies.toMutableList().apply {
-                        addAll(movies)
-                    }
-                )
-            }
+            is Intent.RequestMoreNowPlayingMovies -> processRequestMoreForNowPlayingMoviesIntent()
         }
+    }
+
+    private suspend fun processRequestMoreForUpcomingMoviesIntent(): MoviesUIState {
+        val movies = upComingMoviesPagingController.onRequestMore()
+        return uiState.value.copy(
+            upComingMovies = uiState.value.upComingMovies.addAllDistinctly(
+                movies
+            )
+        )
+    }
+
+    private suspend fun processRequestMoreForTopRatedMoviesIntent(): MoviesUIState {
+        val movies = topRatedMoviesPageController.onRequestMore()
+        return uiState.value.copy(
+            topRatedMovies = uiState.value.topRatedMovies.addAllDistinctly(
+                movies
+            )
+        )
+    }
+
+    private suspend fun processRequestMoreForPopularMoviesIntent(): MoviesUIState {
+        val movies = popularMoviesPageController.onRequestMore()
+        return uiState.value.copy(
+            popularMovies = uiState.value.popularMovies.addAllDistinctly(
+                movies
+            )
+        )
+    }
+
+    private suspend fun processRequestMoreForNowPlayingMoviesIntent(): MoviesUIState {
+        val movies = nowPlayingMoviesPageController.onRequestMore()
+        return uiState.value.copy(
+            nowPlayingMovies = uiState.value.nowPlayingMovies.addAllDistinctly(
+                movies
+            )
+        )
     }
 
     override fun defaultEmptyState() = MoviesUIState(
@@ -96,4 +105,10 @@ class MoviesViewModel(
         topRatedMovies = emptyList(),
         upComingMovies = emptyList()
     )
+
+    private fun List<Movie>.addAllDistinctly(newMovies: List<Movie>): List<Movie> {
+        return toMutableList().apply {
+            addAll(newMovies)
+        }.distinctBy { it.id }
+    }
 }
