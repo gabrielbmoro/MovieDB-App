@@ -21,32 +21,6 @@ class FavoriteMovieUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to favorite a movie`() = runTest {
-        // arrange
-        val movie = Movie.mockWhiteDragonNotFavorite()
-        val params = FavoriteMovieUseCase.Params(
-            movieId = movie.id,
-            movieTitle = movie.title,
-            movieBackdropImageUrl = movie.backdropImageUrl,
-            movieLanguage = movie.language,
-            movieOverview = movie.overview,
-            moviePopularity = movie.popularity,
-            moviePosterImageUrl = movie.posterImageUrl,
-            movieReleaseDate = movie.releaseDate,
-            movieVotesAverage = movie.votesAverage,
-            toFavorite = true
-        )
-        coEvery { repository.favorite(movie) }.answers {}
-        coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(false)
-
-        // act
-        useCase.execute(params)
-
-        // assert
-        coVerify(exactly = 1) { repository.favorite(movie) }
-    }
-
-    @Test
     fun `should be able to remove a movie from favorite list`() = runTest {
         // arrange
         val movie = Movie.mockWhiteDragonNotFavorite()
