@@ -2,25 +2,31 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.zip
 
-interface GetMovieDetailsUseCase {
-    operator fun invoke(movieId: Long): Flow<MovieDetail>
+interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, MovieDetail> {
+    data class Params(
+        val movieId: Long
+    )
 }
 
 class GetMovieDetailsUseCaseImpl(
     private val repository: MoviesRepository,
-    private val getTrailersUseCase: GetTrailersUseCase
 ) : GetMovieDetailsUseCase {
 
-    override operator fun invoke(movieId: Long): Flow<MovieDetail> = repository.getMovieDetail(movieId)
-        .zip(
-            other = getTrailersUseCase(movieId),
-            transform = { f1, f2 ->
-                f1.copy(
-                    videoId = f2?.key
-                )
-            }
+    override suspend fun execute(input: GetMovieDetailsUseCase.Params): MovieDetail {
+        val movieDetail = repository.getMovieDetail(input.movieId)
+
+        val videoStream = repository.getVideoStreams(input.movieId).firstOrNull { videoStream ->
+            videoStream.site == SITE_KEY && videoStream.official && videoStream.type == TYPE_KEY
+        }
+
+        return movieDetail.copy(
+            videoId = videoStream?.key
         )
+    }
+
+    companion object {
+        private const val SITE_KEY = "YouTube"
+        private const val TYPE_KEY = "Trailer"
+    }
 }

@@ -1,7 +1,6 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -26,20 +25,18 @@ class IsFavoriteMovieUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to check if a movie is favorite`() {
+    fun `should be able to check if a movie is favorite`() = runTest {
         // arrange
         val movieTitle = "Dragão branco"
 
         coEvery { repository.checkIsAFavoriteMovie(movieTitle = movieTitle) }.returns(
-            DataOrException(true)
+            true
         )
 
-        runTest {
-            // act
-            useCase(movieTitle)
+        // act
+        useCase.execute(IsFavoriteMovieUseCase.Params(movieTitle = movieTitle))
 
-            // assert
-            coVerify(exactly = 1) { repository.checkIsAFavoriteMovie(movieTitle) }
-        }
+        // assert
+        coVerify(exactly = 1) { repository.checkIsAFavoriteMovie(movieTitle) }
     }
 }

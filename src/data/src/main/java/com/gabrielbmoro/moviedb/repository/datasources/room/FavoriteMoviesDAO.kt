@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteMoviesDAO {
 
     @Query("SELECT * FROM favorite_movies")
-    fun allFavoriteMovies(): Flow<List<FavoriteMovieDTO>>
+    suspend fun allFavoriteMovies(): List<FavoriteMovieDTO>
 
     @Query("SELECT * FROM favorite_movies WHERE title = :title")
     suspend fun isThereAMovie(title: String): List<FavoriteMovieDTO>

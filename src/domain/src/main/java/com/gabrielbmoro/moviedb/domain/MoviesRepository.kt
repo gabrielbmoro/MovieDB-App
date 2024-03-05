@@ -1,32 +1,29 @@
 package com.gabrielbmoro.moviedb.domain
 
-import androidx.paging.PagingData
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
-    fun getFavoriteMovies(): Flow<List<Movie>>
+    suspend fun getFavoriteMovies(): List<Movie>
 
-    fun getPopularMovies(): Flow<PagingData<Movie>>
+    suspend fun getPopularMovies(page: Int): List<Movie>
 
-    fun getTopRatedMovies(): Flow<PagingData<Movie>>
+    suspend fun getTopRatedMovies(page: Int): List<Movie>
 
-    fun getUpcomingMovies(): Flow<PagingData<Movie>>
+    suspend fun getUpcomingMovies(page: Int): List<Movie>
 
-    fun getNowPlayingMovies(): Flow<PagingData<Movie>>
+    suspend fun getNowPlayingMovies(page: Int): List<Movie>
 
-    suspend fun doAsFavorite(movie: Movie): DataOrException<Boolean, Exception>
+    suspend fun favorite(movie: Movie)
 
-    suspend fun unFavorite(movieTitle: String): DataOrException<Boolean, Exception>
+    suspend fun unFavorite(movieTitle: String)
 
-    suspend fun checkIsAFavoriteMovie(movieTitle: String): DataOrException<Boolean, Exception>
+    suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean
 
-    fun getVideoStreams(movieId: Long): Flow<List<VideoStream>>
+    suspend fun getVideoStreams(movieId: Long): List<VideoStream>
 
-    fun getMovieDetail(movieId: Long): Flow<MovieDetail>
+    suspend fun getMovieDetail(movieId: Long): MovieDetail
 
-    fun searchMovieBy(query: String): Flow<List<Movie>>
+    suspend fun searchMovieBy(query: String): List<Movie>
 }

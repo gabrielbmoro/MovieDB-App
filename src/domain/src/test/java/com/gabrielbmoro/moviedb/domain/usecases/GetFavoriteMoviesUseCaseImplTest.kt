@@ -2,11 +2,10 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -27,18 +26,16 @@ class GetFavoriteMoviesUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to get all favorite movies`() {
+    fun `should be able to get all favorite movies`() = runTest {
         // arrange
         val favoriteMovies = listOf(Movie.mockWhiteDragonNotFavorite())
 
-        every { repository.getFavoriteMovies() }.returns(flowOf(favoriteMovies))
+        coEvery { repository.getFavoriteMovies() }.returns(favoriteMovies)
 
-        runTest {
-            // act
-            useCase().collect {
-                // assert
-                verify(exactly = 1) { repository.getFavoriteMovies() }
-            }
-        }
+        // act
+        useCase.execute(Unit)
+
+        // assert
+        coVerify(exactly = 1) { repository.getFavoriteMovies() }
     }
 }

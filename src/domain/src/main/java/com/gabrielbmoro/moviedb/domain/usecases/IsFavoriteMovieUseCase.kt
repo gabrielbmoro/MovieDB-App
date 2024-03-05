@@ -1,17 +1,20 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 
-interface IsFavoriteMovieUseCase {
-    suspend operator fun invoke(movieTitle: String): DataOrException<Boolean, Exception>
+interface IsFavoriteMovieUseCase : UseCase<IsFavoriteMovieUseCase.Params, Boolean> {
+    data class Params(
+        val movieTitle: String
+    )
 }
 
 class IsFavoriteMovieUseCaseImpl(
     private val repository: MoviesRepository
 ) : IsFavoriteMovieUseCase {
 
-    override suspend operator fun invoke(movieTitle: String): DataOrException<Boolean, Exception> {
-        return repository.checkIsAFavoriteMovie(movieTitle)
+    override suspend fun execute(input: IsFavoriteMovieUseCase.Params): Boolean {
+        return repository.checkIsAFavoriteMovie(
+            movieTitle = input.movieTitle
+        )
     }
 }

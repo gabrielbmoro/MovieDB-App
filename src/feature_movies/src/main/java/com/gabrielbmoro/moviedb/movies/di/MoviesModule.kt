@@ -11,7 +11,6 @@ val featureMoviesModule = module {
             getNowPlayingMoviesUseCase = get(),
             getTopRatedMoviesUseCase = get(),
             getUpcomingMoviesUseCase = get(),
-            resourcesProvider = get()
         )
     }
 }

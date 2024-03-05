@@ -1,58 +1,114 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
-import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
-import com.gabrielbmoro.moviedb.feature.movies.R
-import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarouselContent
 
 class MoviesViewModel(
-    private val resourcesProvider: ResourcesProvider,
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
-) : ViewModelMVI<Any, MoviesUIState>() {
+) : ViewModelMVI<Intent, MoviesUIState>() {
 
-    init {
-        loadMovies()
+    private val nowPlayingMoviesPageController = PagingController(
+        tag = "nowPlayingPagingController",
+        requestMore = { pageIndex ->
+            getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
+        },
+    )
+
+    private val popularMoviesPageController = PagingController(
+        tag = "popularPagingController",
+        requestMore = { pageIndex ->
+            getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
+        },
+    )
+
+    private val topRatedMoviesPageController = PagingController(
+        tag = "topRatedPagingController",
+        requestMore = { pageIndex ->
+            getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
+        },
+    )
+
+    private val upComingMoviesPagingController = PagingController(
+        tag = "upcomingPagingController",
+        requestMore = { pageIndex ->
+            getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
+        },
+    )
+
+    override suspend fun setup(): MoviesUIState {
+        return uiState.value.copy(
+            nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
+            topRatedMovies = topRatedMoviesPageController.onRequestMore(),
+            popularMovies = popularMoviesPageController.onRequestMore(),
+            upComingMovies = upComingMoviesPagingController.onRequestMore()
+        )
     }
 
-    private fun loadMovies() {
-        updateState(
-            MoviesUIState(
-                carousels = listOf(
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.now_playing),
-                        movies = getNowPlayingMoviesUseCase().cachedIn(viewModelScope)
-                    ),
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.popular),
-                        movies = getPopularMoviesUseCase().cachedIn(viewModelScope)
-                    ),
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.top_rated),
-                        movies = getTopRatedMoviesUseCase().cachedIn(viewModelScope)
-                    ),
-                    MoviesCarouselContent(
-                        sectionTitle = resourcesProvider.getString(R.string.upcoming),
-                        movies = getUpcomingMoviesUseCase().cachedIn(viewModelScope)
-                    )
-                )
+    override suspend fun execute(intent: Intent): MoviesUIState {
+        return when (intent) {
+            is Intent.RequestMoreUpComingMovies -> processRequestMoreForUpcomingMoviesIntent()
+
+            is Intent.RequestMoreTopRatedMovies -> processRequestMoreForTopRatedMoviesIntent()
+
+            is Intent.RequestMorePopularMovies -> processRequestMoreForPopularMoviesIntent()
+
+            is Intent.RequestMoreNowPlayingMovies -> processRequestMoreForNowPlayingMoviesIntent()
+        }
+    }
+
+    private suspend fun processRequestMoreForUpcomingMoviesIntent(): MoviesUIState {
+        val movies = upComingMoviesPagingController.onRequestMore()
+        return uiState.value.copy(
+            upComingMovies = uiState.value.upComingMovies.addAllDistinctly(
+                movies
+            )
+        )
+    }
+
+    private suspend fun processRequestMoreForTopRatedMoviesIntent(): MoviesUIState {
+        val movies = topRatedMoviesPageController.onRequestMore()
+        return uiState.value.copy(
+            topRatedMovies = uiState.value.topRatedMovies.addAllDistinctly(
+                movies
+            )
+        )
+    }
+
+    private suspend fun processRequestMoreForPopularMoviesIntent(): MoviesUIState {
+        val movies = popularMoviesPageController.onRequestMore()
+        return uiState.value.copy(
+            popularMovies = uiState.value.popularMovies.addAllDistinctly(
+                movies
+            )
+        )
+    }
+
+    private suspend fun processRequestMoreForNowPlayingMoviesIntent(): MoviesUIState {
+        val movies = nowPlayingMoviesPageController.onRequestMore()
+        return uiState.value.copy(
+            nowPlayingMovies = uiState.value.nowPlayingMovies.addAllDistinctly(
+                movies
             )
         )
     }
 
     override fun defaultEmptyState() = MoviesUIState(
-        carousels = emptyList()
+        nowPlayingMovies = emptyList(),
+        popularMovies = emptyList(),
+        topRatedMovies = emptyList(),
+        upComingMovies = emptyList()
     )
 
-    override suspend fun execute(intent: Any): MoviesUIState {
-        TODO("Not yet implemented")
+    private fun List<Movie>.addAllDistinctly(newMovies: List<Movie>): List<Movie> {
+        return toMutableList().apply {
+            addAll(newMovies)
+        }.distinctBy { it.id }
     }
 }

@@ -1,9 +1,7 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -23,53 +21,29 @@ class FavoriteMovieUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to favorite a movie`() {
+    fun `should be able to remove a movie from favorite list`() = runTest {
         // arrange
         val movie = Movie.mockWhiteDragonNotFavorite()
+        val params = FavoriteMovieUseCase.Params(
+            movieId = movie.id,
+            movieTitle = movie.title,
+            movieBackdropImageUrl = movie.backdropImageUrl,
+            movieLanguage = movie.language,
+            movieOverview = movie.overview,
+            moviePopularity = movie.popularity,
+            moviePosterImageUrl = movie.posterImageUrl,
+            movieReleaseDate = movie.releaseDate,
+            movieVotesAverage = movie.votesAverage,
+            toFavorite = false
+        )
 
-        coEvery { repository.doAsFavorite(movie) }.returns(DataOrException(true))
-        coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(false))
+        coEvery { repository.unFavorite(movie.title) }.answers {}
+        coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(true)
 
-        runTest {
-            // act
-            useCase.invoke(movie, true)
+        // act
+        useCase.execute(params)
 
-            // assert
-            coVerify(exactly = 1) { repository.doAsFavorite(movie) }
-        }
-    }
-
-    @Test
-    fun `should be able to remove a movie from favorite list`() {
-        // arrange
-        val movie = Movie.mockWhiteDragonNotFavorite()
-
-        coEvery { repository.unFavorite(movie.title) }.returns(DataOrException(true))
-        coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(true))
-
-        runTest {
-            // act
-            useCase.invoke(movie, false)
-
-            // assert
-            coVerify(exactly = 1) { repository.unFavorite(movie.title) }
-        }
-    }
-
-    @Test
-    fun `should be able to avoid two favorite operations if movie is already a favorite one`() {
-        // arrange
-        val movie = Movie.mockWhiteDragonNotFavorite()
-
-        coEvery { repository.doAsFavorite(movie) }.returns(DataOrException(true))
-        coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(DataOrException(true))
-
-        runTest {
-            // act
-            val result = useCase.invoke(movie, true)
-
-            // assert
-            assertThat(result.exception).isInstanceOf(IllegalStateException::class.java)
-        }
+        // assert
+        coVerify(exactly = 1) { repository.unFavorite(movie.title) }
     }
 }

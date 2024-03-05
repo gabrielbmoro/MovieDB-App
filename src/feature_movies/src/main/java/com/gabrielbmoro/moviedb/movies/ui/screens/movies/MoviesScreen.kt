@@ -47,14 +47,60 @@ fun MovieScreen(
         LazyColumn(
             state = lazyListState,
             content = {
-                items(uiState.value.carousels.size) {
-                    val carousel = uiState.value.carousels[it]
+
+                item {
                     MoviesCarousel(
-                        content = carousel,
+                        movies = uiState.value.nowPlayingMovies,
                         onSelectMovie = navigateToDetailsScreen,
+                        onRequestMore = {
+                            viewModel.accept(Intent.RequestMoreNowPlayingMovies)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(320.dp)
+                            .height(320.dp),
+                        title = stringResource(id = R.string.now_playing)
+                    )
+                }
+
+                item {
+                    MoviesCarousel(
+                        movies = uiState.value.popularMovies,
+                        onSelectMovie = navigateToDetailsScreen,
+                        onRequestMore = {
+                            viewModel.accept(Intent.RequestMorePopularMovies)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(320.dp),
+                        title = stringResource(id = R.string.popular)
+                    )
+                }
+
+                item {
+                    MoviesCarousel(
+                        movies = uiState.value.topRatedMovies,
+                        onSelectMovie = navigateToDetailsScreen,
+                        onRequestMore = {
+                            viewModel.accept(Intent.RequestMoreTopRatedMovies)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(320.dp),
+                        title = stringResource(id = R.string.top_rated)
+                    )
+                }
+
+                item {
+                    MoviesCarousel(
+                        movies = uiState.value.upComingMovies,
+                        onSelectMovie = navigateToDetailsScreen,
+                        onRequestMore = {
+                            viewModel.accept(Intent.RequestMoreUpComingMovies)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(320.dp),
+                        title = stringResource(id = R.string.upcoming)
                     )
                 }
             },

@@ -1,39 +1,50 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.DataOrException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
-interface FavoriteMovieUseCase {
-    suspend operator fun invoke(
-        movie: Movie,
-        toFavorite: Boolean
-    ): DataOrException<Boolean, Exception>
+interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
+
+    data class Params(
+        val movieId: Long? = null,
+        val movieVotesAverage: Float? = null,
+        val moviePosterImageUrl: String? = null,
+        val movieBackdropImageUrl: String? = null,
+        val movieOverview: String? = null,
+        val movieReleaseDate: String? = null,
+        val movieLanguage: String? = null,
+        val moviePopularity: Float? = null,
+        val movieTitle: String,
+        val toFavorite: Boolean,
+    )
 }
 
 open class FavoriteMovieUseCaseImpl(
     private val repository: MoviesRepository
 ) : FavoriteMovieUseCase {
 
-    override suspend operator fun invoke(
-        movie: Movie,
-        toFavorite: Boolean
-    ): DataOrException<Boolean, Exception> {
-        return withContext(Dispatchers.IO) {
-            when {
-                (toFavorite && repository.checkIsAFavoriteMovie(movie.title).data == false) -> {
-                    repository.doAsFavorite(movie)
-                }
-
-                (!toFavorite && repository.checkIsAFavoriteMovie(movie.title).data == true) -> {
-                    repository.unFavorite(movie.title)
-                }
-
-                else -> DataOrException(
-                    exception = IllegalStateException("Not possible to perform this operation")
+    override suspend fun execute(input: FavoriteMovieUseCase.Params) {
+        val toFavorite = input.toFavorite
+        val movieTitle = input.movieTitle
+        when {
+            (toFavorite && !repository.checkIsAFavoriteMovie(movieTitle)) -> {
+                val movie = Movie(
+                    id = input.movieId!!,
+                    votesAverage = input.movieVotesAverage!!,
+                    title = input.movieTitle,
+                    posterImageUrl = input.moviePosterImageUrl!!,
+                    backdropImageUrl = input.movieBackdropImageUrl!!,
+                    overview = input.movieOverview!!,
+                    releaseDate = input.movieReleaseDate!!,
+                    isFavorite = true,
+                    language = input.movieLanguage!!,
+                    popularity = input.moviePopularity!!,
                 )
+                repository.favorite(movie = movie)
+            }
+
+            (!toFavorite && repository.checkIsAFavoriteMovie(movieTitle)) -> {
+                repository.unFavorite(movieTitle)
             }
         }
     }

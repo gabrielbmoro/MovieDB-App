@@ -1,17 +1,20 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
-import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.flow.Flow
 
-interface GetUpcomingMoviesUseCase {
-    operator fun invoke(): Flow<PagingData<Movie>>
+interface GetUpcomingMoviesUseCase : UseCase<GetUpcomingMoviesUseCase.Params, List<Movie>> {
+    data class Params(
+        val page: Int,
+    )
 }
 
 class GetUpcomingMoviesUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetUpcomingMoviesUseCase {
-
-    override operator fun invoke() = repository.getUpcomingMovies()
+    override suspend fun execute(input: GetUpcomingMoviesUseCase.Params): List<Movie> {
+        return repository.getUpcomingMovies(
+            page = input.page
+        )
+    }
 }

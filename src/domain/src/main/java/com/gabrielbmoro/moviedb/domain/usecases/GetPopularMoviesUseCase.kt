@@ -1,16 +1,18 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
-import androidx.paging.PagingData
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.flow.Flow
 
-interface GetPopularMoviesUseCase {
-    operator fun invoke(): Flow<PagingData<Movie>>
+interface GetPopularMoviesUseCase : UseCase<GetPopularMoviesUseCase.Params, List<Movie>> {
+    data class Params(
+        val page: Int,
+    )
 }
 
-class GetPopularMoviesUseCaseImpl constructor(
+class GetPopularMoviesUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetPopularMoviesUseCase {
-    override operator fun invoke() = repository.getPopularMovies()
+    override suspend fun execute(input: GetPopularMoviesUseCase.Params): List<Movie> {
+        return repository.getPopularMovies(input.page)
+    }
 }

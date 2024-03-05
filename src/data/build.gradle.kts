@@ -21,8 +21,6 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.bundles.room)
 
-    implementation(libs.paging.compose)
-
     // Test
     testImplementation(libs.bundles.test)
 

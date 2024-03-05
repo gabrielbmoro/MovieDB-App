@@ -1,11 +1,14 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,14 +28,14 @@ class GetPopularMoviesUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to get all popular movies`() {
+    fun `should be able to get all popular movies`() = runTest {
         // arrange
-        every { repository.getPopularMovies() }.returns(emptyFlow())
+        coEvery { repository.getPopularMovies(1) }.returns(emptyList())
 
         // act
-        useCase()
+        useCase.execute(GetPopularMoviesUseCase.Params(1))
 
         // assert
-        verify(exactly = 1) { repository.getPopularMovies() }
+        coVerify(exactly = 1) { repository.getPopularMovies(page = 1) }
     }
 }
