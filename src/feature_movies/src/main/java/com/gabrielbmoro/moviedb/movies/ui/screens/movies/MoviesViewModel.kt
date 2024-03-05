@@ -14,24 +14,28 @@ class MoviesViewModel(
 ) : ViewModelMVI<Intent, MoviesUIState>() {
 
     private val nowPlayingMoviesPageController = PagingController(
+        tag = "nowPlayingPagingController",
         requestMore = { pageIndex ->
             getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
         },
     )
 
     private val popularMoviesPageController = PagingController(
+        tag = "popularPagingController",
         requestMore = { pageIndex ->
             getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
         },
     )
 
     private val topRatedMoviesPageController = PagingController(
+        tag = "topRatedPagingController",
         requestMore = { pageIndex ->
             getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
         },
     )
 
     private val upComingMoviesPagingController = PagingController(
+        tag = "upcomingPagingController",
         requestMore = { pageIndex ->
             getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
         },
@@ -69,7 +73,7 @@ class MoviesViewModel(
             is Intent.RequestMorePopularMovies -> {
                 val movies = popularMoviesPageController.onRequestMore()
                 uiState.value.copy(
-                    topRatedMovies = uiState.value.popularMovies.toMutableList().apply {
+                    popularMovies = uiState.value.popularMovies.toMutableList().apply {
                         addAll(movies)
                     }
                 )
@@ -78,7 +82,7 @@ class MoviesViewModel(
             is Intent.RequestMoreNowPlayingMovies -> {
                 val movies = nowPlayingMoviesPageController.onRequestMore()
                 uiState.value.copy(
-                    topRatedMovies = uiState.value.nowPlayingMovies.toMutableList().apply {
+                    nowPlayingMovies = uiState.value.nowPlayingMovies.toMutableList().apply {
                         addAll(movies)
                     }
                 )

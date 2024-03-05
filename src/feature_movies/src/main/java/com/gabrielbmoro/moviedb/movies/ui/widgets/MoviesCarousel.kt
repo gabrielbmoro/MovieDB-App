@@ -34,12 +34,8 @@ fun MoviesCarousel(
     modifier: Modifier = Modifier
 ) {
     val lazyListState = rememberLazyListState()
-
-    val atEnd by remember {
-        derivedStateOf {
-            val lastIndex = movies.size - 2
-            lazyListState.firstVisibleItemIndex >= lastIndex
-        }
+    val firstVisibleItemIndex by remember {
+        derivedStateOf { lazyListState.firstVisibleItemIndex }
     }
 
     Text(
@@ -81,11 +77,12 @@ fun MoviesCarousel(
         }
     )
 
-    LaunchedEffect(
-        key1 = atEnd, block = {
-            if (atEnd) {
-                onRequestMore()
-            }
+
+    LaunchedEffect(key1 = firstVisibleItemIndex) {
+        val lastIndex = movies.size - 2
+        val atEnd = firstVisibleItemIndex == lastIndex
+        if (atEnd) {
+            onRequestMore()
         }
-    )
+    }
 }
