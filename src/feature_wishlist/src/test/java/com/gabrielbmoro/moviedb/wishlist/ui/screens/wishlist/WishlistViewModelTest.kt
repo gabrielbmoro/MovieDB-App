@@ -1,15 +1,7 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -21,14 +13,15 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class WishlistViewModelTest {
 
-    private lateinit var getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase
-    private lateinit var favoriteMovieUseCase: FavoriteMovieUseCase
-    private lateinit var isFavoriteMovieUseCase: IsFavoriteMovieUseCase
-    private lateinit var resourcesProvider: ResourcesProvider
+    private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
+    private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
+    private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
+    private lateinit var resourcesProvider: FakeResourcesProvider
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -37,10 +30,10 @@ class WishlistViewModelTest {
     fun before() {
         Dispatchers.setMain(StandardTestDispatcher())
 
-        getFavoriteMoviesUseCase = mockk()
-        favoriteMovieUseCase = mockk()
-        isFavoriteMovieUseCase = mockk()
-        resourcesProvider = mockk()
+        getFavoriteMoviesUseCase = FakeGetFavoriteMoviesUseCase()
+        favoriteMovieUseCase = FakeFavoriteMovieUseCase()
+        isFavoriteMovieUseCase = FakeIsFavoriteMovieUseCase()
+        resourcesProvider = FakeResourcesProvider()
     }
 
     @After
@@ -54,11 +47,9 @@ class WishlistViewModelTest {
         val expected = listOf(
                 Movie.mockChuckNorrisVsVandammeMovie()
             )
-        coEvery { isFavoriteMovieUseCase.execute(any()) }.returns(true)
-        every { resourcesProvider.getString(any()) }.returns("Chuck norris")
-        coEvery { favoriteMovieUseCase.execute(any()) }.returns(Unit)
-
-        coEvery { getFavoriteMoviesUseCase.execute(Unit) }.returns(expected)
+        isFavoriteMovieUseCase.result = true
+        resourcesProvider.stringResult = "Chuck norris"
+        getFavoriteMoviesUseCase.result = expected
 
         val viewModel = WishlistViewModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
@@ -72,6 +63,6 @@ class WishlistViewModelTest {
 
         // assert
         advanceUntilIdle()
-        coVerify(exactly = 1) { favoriteMovieUseCase.execute(any()) }
+        assertEquals(1, favoriteMovieUseCase.timesCalled)
     }
 }

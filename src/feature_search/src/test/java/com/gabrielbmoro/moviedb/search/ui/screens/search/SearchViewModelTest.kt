@@ -1,10 +1,6 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
-import com.google.common.truth.Truth
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -16,18 +12,19 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchViewModelTest {
 
-    private lateinit var searchMovieUseCase: SearchMovieUseCase
+    private lateinit var searchMovieUseCase: FakeSearchUseCase
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     fun before() {
-        searchMovieUseCase = mockk()
+        searchMovieUseCase = FakeSearchUseCase()
         Dispatchers.setMain(StandardTestDispatcher())
     }
 
@@ -39,7 +36,7 @@ class SearchViewModelTest {
     @Test
     fun `should be able to reset the search field - empty search`() = runTest {
         // arrange
-        coEvery { searchMovieUseCase.execute(any()) }.returns(emptyList())
+        searchMovieUseCase.searchResult = emptyList()
         val viewModel = SearchViewModel(searchMovieUseCase)
 
         // act
@@ -47,7 +44,7 @@ class SearchViewModelTest {
 
         // assert
         advanceUntilIdle()
-        Truth.assertThat(viewModel.uiState.value.searchQuery.text).isEmpty()
-        Truth.assertThat(viewModel.uiState.value.results).isNull()
+        assertEquals("", viewModel.uiState.value.searchQuery.text)
+        assertEquals(null, viewModel.uiState.value.results)
     }
 }
