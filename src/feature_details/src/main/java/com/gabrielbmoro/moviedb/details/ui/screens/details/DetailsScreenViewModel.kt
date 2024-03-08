@@ -33,7 +33,13 @@ class DetailsScreenViewModel(
             status = movieDetails.status,
             genres = movieDetails.genres,
             homepage = movieDetails.homepage,
-            productionCompanies = movieDetails.productionCompanies.reduceToText()
+            productionCompanies = movieDetails.productionCompanies.reduceToText(),
+            movieTitle = movie.title,
+            movieOverview = movie.overview,
+            movieLanguage = movie.language,
+            moviePopularity = movie.popularity,
+            movieVotesAverage = movie.votesAverage,
+            imageUrl = movie.backdropImageUrl
         )
     }
 

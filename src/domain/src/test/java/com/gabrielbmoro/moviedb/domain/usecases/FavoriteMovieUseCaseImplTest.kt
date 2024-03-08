@@ -1,22 +1,19 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
-import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class FavoriteMovieUseCaseImplTest {
 
-    private lateinit var repository: MoviesRepository
+    private lateinit var repository: FakeRepository
     private lateinit var useCase: FavoriteMovieUseCase
 
     @Before
     fun before() {
-        repository = mockk()
+        repository = FakeRepository()
         useCase = FavoriteMovieUseCaseImpl(repository)
     }
 
@@ -37,13 +34,12 @@ class FavoriteMovieUseCaseImplTest {
             toFavorite = false
         )
 
-        coEvery { repository.unFavorite(movie.title) }.answers {}
-        coEvery { repository.checkIsAFavoriteMovie(movie.title) }.returns(true)
+        repository.isFavoriteMovie = true
 
         // act
         useCase.execute(params)
 
         // assert
-        coVerify(exactly = 1) { repository.unFavorite(movie.title) }
+        assertEquals(1, repository.timesCallUnfavorite)
     }
 }

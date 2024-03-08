@@ -5,24 +5,24 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class GetPopularMoviesUseCaseImplTest {
+class GetNowPlayingMoviesUseCaseImplTest {
 
     private lateinit var repository: FakeRepository
-    private lateinit var useCase: GetPopularMoviesUseCase
+    private lateinit var useCase: GetNowPlayingMoviesUseCase
 
     @Before
     fun before() {
         repository = FakeRepository()
-        useCase = GetPopularMoviesUseCaseImpl(repository)
+        useCase = GetNowPlayingMoviesUseCaseImpl(repository)
     }
 
     @Test
-    fun `should be able to get all popular movies`() = runTest {
+    fun `should be able to get all now playing movies`() = runTest {
         // arrange
-        repository.popularMovies = emptyList()
+        repository.nowPlayingMovies = emptyList()
 
         // act
-        val result = useCase.execute(GetPopularMoviesUseCase.Params(1))
+        val result = useCase.execute(GetNowPlayingMoviesUseCase.Params(1))
 
         // assert
         assertEquals(emptyList(), result)

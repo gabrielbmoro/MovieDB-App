@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.domain.entities
 
-import com.google.common.truth.Truth
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class MoviesListTypeTest {
 
@@ -11,10 +11,10 @@ class MoviesListTypeTest {
         val topRatedMovieId = 1
 
         // act
-        val type = topRatedMovieId.convertToMovieListType()
+        val result = topRatedMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.TOP_RATED)
+        assertEquals(MovieListType.TOP_RATED, result)
     }
 
     @Test
@@ -23,10 +23,10 @@ class MoviesListTypeTest {
         val favoriteMovieId = 2
 
         // act
-        val type = favoriteMovieId.convertToMovieListType()
+        val result = favoriteMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.FAVORITE)
+        assertEquals(MovieListType.FAVORITE, result)
     }
 
     @Test
@@ -35,10 +35,10 @@ class MoviesListTypeTest {
         val favoriteMovieId = 4
 
         // act
-        val type = favoriteMovieId.convertToMovieListType()
+        val result = favoriteMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.UPCOMING)
+        assertEquals(MovieListType.UPCOMING, result)
     }
 
     @Test
@@ -47,10 +47,10 @@ class MoviesListTypeTest {
         val popularMovieId = 3
 
         // act
-        val type = popularMovieId.convertToMovieListType()
+        val result = popularMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isEqualTo(MovieListType.POPULAR)
+        assertEquals(MovieListType.POPULAR, result)
     }
 
     @Test
@@ -59,9 +59,9 @@ class MoviesListTypeTest {
         val popularMovieId = -1
 
         // act
-        val type = popularMovieId.convertToMovieListType()
+        val result = popularMovieId.convertToMovieListType()
 
         // assert
-        Truth.assertThat(type).isNull()
+        assertEquals(null, result)
     }
 }
