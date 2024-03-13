@@ -3,6 +3,7 @@ plugins {
     id("android-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.kover)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -15,7 +16,9 @@ dependencies {
 
     implementation(libs.preferences.ktx)
     implementation(libs.timber)
-    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ktor)
+
+    implementation(libs.kotlinx.serialization.json)
 
     // Room
     ksp(libs.room.compiler)

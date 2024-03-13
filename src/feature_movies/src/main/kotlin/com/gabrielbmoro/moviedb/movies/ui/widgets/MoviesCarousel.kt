@@ -24,6 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
 import com.gabrielbmoro.moviedb.domain.entities.Movie
+import timber.log.Timber
+import java.lang.StringBuilder
+
+private const val windowSize = 5
 
 @Composable
 fun MoviesCarousel(
@@ -35,7 +39,9 @@ fun MoviesCarousel(
 ) {
     val lazyListState = rememberLazyListState()
     val firstVisibleItemIndex by remember {
-        derivedStateOf { lazyListState.firstVisibleItemIndex }
+        derivedStateOf {
+            lazyListState.firstVisibleItemIndex
+        }
     }
 
     Text(
@@ -79,9 +85,17 @@ fun MoviesCarousel(
 
 
     LaunchedEffect(key1 = firstVisibleItemIndex) {
-        val lastIndex = movies.size - 2
-        val atEnd = firstVisibleItemIndex == lastIndex
-        if (atEnd) {
+        val firstItemIndexOfLastWindow = movies.lastIndex - windowSize
+        val reachTheBeginningOfTheLastWindow = firstVisibleItemIndex == firstItemIndexOfLastWindow
+
+        val logMessage = StringBuilder().append("firstVisibleItemIndex:$firstVisibleItemIndex, ")
+            .append("firstItemIndexOfLastWindow:${firstItemIndexOfLastWindow}, ")
+            .append("reachTheBeginningOfTheLastWindow:$reachTheBeginningOfTheLastWindow, ")
+            .toString()
+
+        Timber.tag("MoviesCarousel").d(logMessage)
+
+        if (reachTheBeginningOfTheLastWindow) {
             onRequestMore()
         }
     }

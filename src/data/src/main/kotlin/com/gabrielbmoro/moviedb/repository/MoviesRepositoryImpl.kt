@@ -4,11 +4,11 @@ import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.ApiService
 import com.gabrielbmoro.moviedb.repository.datasources.room.FavoriteMoviesDAO
 
 class MoviesRepositoryImpl(
-    private val api: ApiRepository,
+    private val api: ApiService,
     private val favoriteMoviesDAO: FavoriteMoviesDAO,
 ) : MoviesRepository {
 

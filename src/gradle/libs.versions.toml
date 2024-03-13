@@ -5,6 +5,7 @@ kotlin = "1.9.22"
 compose_bom = "2024.02.01"
 compose_compiler = "1.5.10"
 compose_material_3 = "1.2.0"
+kotlinx-serialization-json = "1.6.3"
 multidex = "2.0.1"
 nav_compose_integration = "2.7.7"
 coil = "2.3.0"
@@ -16,7 +17,6 @@ lifecycle = "2.7.0"
 preference = "1.2.1"
 timber = "5.0.1"
 gson = "2.10.1"
-retrofit = "2.9.0"
 junit = "4.13.2"
 test_core = "1.5.0"
 arch_core = "2.2.0"
@@ -34,6 +34,7 @@ ksp = "1.9.22-1.0.17"
 kover = "0.7.5"
 koin_bom = "3.6.0-wasm-alpha2"
 kotlin_test = "2.0.0-Beta4"
+ktor = "2.3.9"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -41,6 +42,7 @@ firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlyti
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card_view" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -50,15 +52,13 @@ lifecycle_viewmodel_ktx = { group = "androidx.lifecycle", name = "lifecycle-view
 lifecycle_compose_runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 preferences_ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit_converter_json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 arc_core_common = { group = "androidx.arch.core", name = "core-common", version.ref = "arch_core" }
 arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", version.ref = "arch_core" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 arc_core_testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch_core" }
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref= "kotlin_test"}
+kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin_test" }
 
 compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom" }
 compose_bom_ui = { module = "androidx.compose.ui:ui" }
@@ -86,6 +86,10 @@ core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor_client_okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor_client_content_negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
@@ -95,10 +99,10 @@ compose_extras = ["compose_material_3", "navigation_compose"]
 compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
 koin_impl = ["koin_core", "koin_android", "koin_androidx_compose"]
 compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
-
-retrofit = ["retrofit", "retrofit_converter_json", "gson"]
+ktor = ["ktor_client_core", "ktor_client_okhttp", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json"]
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

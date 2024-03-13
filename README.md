@@ -51,7 +51,7 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 - Jetpack Compose
 - [Koin](https://github.com/InsertKoinIO/koin)
 - Coroutines
-- Retrofit
+- [Ktor](https://ktor.io)
 - Room
 - Mockk
 - Gradle Catalogs

@@ -2,9 +2,9 @@ package com.gabrielbmoro.moviedb.repository
 
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieResponse
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponse
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponseItem
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.MovieResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.VideoStreamsResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.VideoStreamsResponseItem
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
 
 val movieAndFavoriteMovieDTO = Pair(
@@ -51,16 +51,16 @@ val movieAndMovieResponse = Pair(
         id = 12L,
         overview = "overview",
         title = "title",
-        votesAverage = 12f,
-        releaseDate = "10/02/1990",
+        vote_average = 12f,
+        release_date = "10/02/1990",
         popularity = 2f,
-        isAdult = null,
-        backdropPath = "backdropPath",
-        posterPath = "posterPath",
-        originalLanguage = "language",
-        originalTitle = "originalTitle",
-        isVideo = null,
-        votes = null
+        adult = null,
+        backdrop_path = "backdropPath",
+        poster_path = "posterPath",
+        original_language = "language",
+        original_title = "originalTitle",
+        video = null,
+        vote_count = null
     )
 )
 
