@@ -2,9 +2,9 @@ package com.gabrielbmoro.moviedb.repository
 
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieResponse
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponse
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponseItem
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.MovieResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.VideoStreamsResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.VideoStreamsResponseItem
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
 
 val movieAndFavoriteMovieDTO = Pair(

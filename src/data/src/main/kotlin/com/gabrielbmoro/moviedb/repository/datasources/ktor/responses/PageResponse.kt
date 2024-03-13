@@ -1,12 +1,13 @@
-package com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses
+package com.gabrielbmoro.moviedb.repository.datasources.ktor.responses
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PageResponse(
-    @SerializedName("page") val page: Int,
-    @SerializedName("total_results") var totalResults: Int,
-    @SerializedName("total_pages") var totalPages: Int,
-    @SerializedName("results") var results: List<MovieResponse>? = null
+    val page: Int,
+    var total_results: Int,
+    var total_pages: Int,
+    var results: List<MovieResponse>? = null
 ) {
 
     companion object {
@@ -16,21 +17,21 @@ data class PageResponse(
                     id = 12L,
                     overview = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various v",
                     title = "Why do we use it?",
-                    originalTitle = "Why do we use it?",
-                    releaseDate = "02-03-2020",
-                    backdropPath = "https://image/bucket/s3/ga.png",
+                    original_title = "Why do we use it?",
+                    release_date = "02-03-2020",
+                    backdrop_path = "https://image/bucket/s3/ga.png",
                     popularity = 10f,
-                    votesAverage = 5f,
-                    originalLanguage = "en-US",
-                    isAdult = false,
-                    votes = 2,
-                    isVideo = false,
-                    posterPath = "https://image/bucket/s3/ga.png"
+                    vote_average = 5f,
+                    original_language = "en-US",
+                    adult = false,
+                    vote_count = 2,
+                    video = false,
+                    poster_path = "https://image/bucket/s3/ga.png"
                 )
             ),
-            totalResults = 150,
+            total_results = 150,
             page = 2,
-            totalPages = 2
+            total_pages = 2
         )
     }
 }

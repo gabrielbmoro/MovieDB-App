@@ -3,20 +3,21 @@ package com.gabrielbmoro.moviedb.repository.di
 import androidx.room.Room
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.MoviesRepositoryImpl
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.ApiRepository
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.interceptors.AuthenticationInterceptor
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.interceptors.LoggedInterceptor
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.ApiService
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.interceptors.AuthenticationInterceptor
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.interceptors.LoggedInterceptor
 import com.gabrielbmoro.moviedb.repository.datasources.room.DataBaseFactory
 import com.gabrielbmoro.moviedb.repository.datasources.room.MIGRATION_1_2
-import okhttp3.OkHttpClient
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttpConfig
+import io.ktor.client.engine.okhttp.OkHttpEngine
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-
 
 val dataModule = module {
     single {
@@ -32,23 +33,29 @@ val dataModule = module {
     }
 
     single {
-        OkHttpClient.Builder()
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(
-                AuthenticationInterceptor(get(named("api_token")))
+        HttpClient(
+            engine = OkHttpEngine(
+                config = OkHttpConfig().apply {
+                    addInterceptor(AuthenticationInterceptor(get(named("api_token"))))
+                    addInterceptor(LoggedInterceptor())
+                }
             )
-            .addInterceptor(LoggedInterceptor())
-            .build()
+        ) {
+            install(ContentNegotiation) {
+                json(
+                    json = Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
+            }
+        }
     }
 
     single {
-        Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(get())
-            .build()
-            .create(ApiRepository::class.java)
+        ApiService(
+            httpClient = get(),
+            baseUrl = "https://api.themoviedb.org/3"
+        )
     }
 
     single {

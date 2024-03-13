@@ -3,9 +3,9 @@ package com.gabrielbmoro.moviedb.repository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieDetailResponse
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.MovieResponse
-import com.gabrielbmoro.moviedb.repository.datasources.retrofit.responses.VideoStreamsResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.MovieDetailResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.MovieResponse
+import com.gabrielbmoro.moviedb.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.repository.datasources.room.dto.FavoriteMovieDTO
 
 const val BIG_SIZE_IMAGE_ADDRESS = "https://image.tmdb.org/t/p/w780"
@@ -44,18 +44,18 @@ fun FavoriteMovieDTO.toMovie(): Movie {
 fun MovieResponse.toMovie(): Movie {
     return Movie(
         id = id,
-        votesAverage = votesAverage ?: 0f,
+        votesAverage = vote_average ?: 0f,
         title = title ?: "",
-        posterImageUrl = posterPath?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
-        backdropImageUrl = backdropPath?.let {
+        posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
+        backdropImageUrl = backdrop_path?.let {
             BIG_SIZE_IMAGE_ADDRESS.plus(
-                backdropPath
+                backdrop_path
             )
         },
         overview = overview ?: "",
-        releaseDate = releaseDate ?: "",
+        releaseDate = release_date ?: "",
         popularity = popularity ?: 0f,
-        language = originalLanguage ?: "",
+        language = original_language ?: "",
         isFavorite = false
     )
 }
@@ -66,10 +66,10 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         genres = genres.map { it.name },
         budget = budget,
         homepage = homepage,
-        imdbId = imdbId,
+        imdbId = imdb_id,
         status = status,
         tagline = tagline,
-        productionCompanies = productionCompanies.map { it.name }
+        productionCompanies = production_companies.map { it.name }
     )
 }
 
