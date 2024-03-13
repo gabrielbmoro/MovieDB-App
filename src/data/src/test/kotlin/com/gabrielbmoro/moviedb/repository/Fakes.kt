@@ -51,16 +51,16 @@ val movieAndMovieResponse = Pair(
         id = 12L,
         overview = "overview",
         title = "title",
-        votesAverage = 12f,
-        releaseDate = "10/02/1990",
+        vote_average = 12f,
+        release_date = "10/02/1990",
         popularity = 2f,
-        isAdult = null,
-        backdropPath = "backdropPath",
-        posterPath = "posterPath",
-        originalLanguage = "language",
-        originalTitle = "originalTitle",
-        isVideo = null,
-        votes = null
+        adult = null,
+        backdrop_path = "backdropPath",
+        poster_path = "posterPath",
+        original_language = "language",
+        original_title = "originalTitle",
+        video = null,
+        vote_count = null
     )
 )
 
