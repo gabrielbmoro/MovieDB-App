@@ -35,6 +35,7 @@ kover = "0.7.5"
 koin_bom = "3.6.0-wasm-alpha2"
 kotlin_test = "2.0.0-Beta4"
 ktor = "2.3.9"
+voyager = "1.0.0"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -90,6 +91,10 @@ ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref =
 ktor_client_okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor_client_content_negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+voyager_navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager_screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager_koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
+voyager_tab_navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
@@ -97,9 +102,10 @@ lifecycle = ["lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose"]
 compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
-koin_impl = ["koin_core", "koin_android", "koin_androidx_compose"]
+koin_impl = ["koin_core"]
 compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
 ktor = ["ktor_client_core", "ktor_client_okhttp", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json"]
+voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel", "voyager_tab_navigator"]
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
