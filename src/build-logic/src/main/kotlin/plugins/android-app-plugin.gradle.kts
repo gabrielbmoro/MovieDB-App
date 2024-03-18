@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import config.Config
 import ext.debugAPIAuth
 import ext.getVersionFromCatalogs
@@ -11,18 +13,18 @@ plugins {
 }
 
 android {
-    compileSdk = Config.compileSdk
+    compileSdk = Config.COMPILE_SDK
 
     defaultConfig {
-        minSdk = Config.minSdk
-        targetSdk = Config.targetSdk
+        minSdk = Config.MIN_SDK
+        targetSdk = Config.TARGET_SDK
         versionCode = Config.versionCode()
         versionName = Config.versionName()
 
-        testInstrumentationRunner = Config.testInstrumentationRunner
+        testInstrumentationRunner = Config.TEST_INSTRUMENTATION_RUNNER
         vectorDrawables.useSupportLibrary = true
 
-        applicationId = Config.applicationId
+        applicationId = Config.APPLICATION_ID
 
         vectorDrawables.useSupportLibrary = true
 
@@ -43,10 +45,10 @@ android {
     }
     buildFeatures.compose = true
 
-    namespace = Config.applicationId
+    namespace = Config.APPLICATION_ID
 
     kotlinOptions {
-        jvmTarget = Config.javaVMTarget
+        jvmTarget = Config.JAVA_VM_TARGET
     }
 
     signingConfigs {

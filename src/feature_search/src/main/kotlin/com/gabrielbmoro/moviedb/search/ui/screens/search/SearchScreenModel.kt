@@ -1,12 +1,12 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.core.ui.mvi.ScreenModelMVI
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 
-class SearchViewModel(
+class SearchScreenModel(
     private val searchMovieUseCase: SearchMovieUseCase
-) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
+) : ScreenModelMVI<SearchUserIntent, SearchUIState>() {
     override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 
     override suspend fun execute(intent: SearchUserIntent): SearchUIState {

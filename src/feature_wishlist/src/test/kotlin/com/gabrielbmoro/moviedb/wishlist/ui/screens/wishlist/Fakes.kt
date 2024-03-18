@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
@@ -28,19 +27,5 @@ class FakeIsFavoriteMovieUseCase : IsFavoriteMovieUseCase {
 
     override suspend fun execute(input: IsFavoriteMovieUseCase.Params): Boolean {
         return result
-    }
-}
-
-class FakeResourcesProvider : ResourcesProvider {
-    lateinit var stringResult: String
-
-    lateinit var arrayResult: Array<String>
-
-    override fun getArray(arrayRes: Int): Array<String> {
-        return arrayResult
-    }
-
-    override fun getString(stringRes: Int): String {
-        return stringResult
     }
 }

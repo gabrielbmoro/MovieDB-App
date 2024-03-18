@@ -49,6 +49,7 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 ### Tech stack summary 🛠️
 
 - Jetpack Compose
+- [Voyager](https://voyager.adriel.cafe)
 - [Koin](https://github.com/InsertKoinIO/koin)
 - Coroutines
 - [Ktor](https://ktor.io)

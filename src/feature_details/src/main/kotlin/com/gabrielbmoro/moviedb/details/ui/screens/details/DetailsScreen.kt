@@ -28,6 +28,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.gabrielbmoro.moviedb.core.ui.widgets.AppToolbarTitle
 import com.gabrielbmoro.moviedb.core.ui.widgets.BubbleLoader
 import com.gabrielbmoro.moviedb.core.ui.widgets.MovieImage
@@ -39,34 +43,39 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.feature.details.R
+import org.koin.core.parameter.parametersOf
 
-@Composable
-fun DetailsScreen(
-    viewModel: DetailsScreenViewModel,
-    onBackEvent: () -> Unit
-) {
-    val scrollState = rememberScrollState()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+class DetailsScreen(private val movie: Movie) : Screen {
+    @Composable
+    override fun Content() {
+        val viewModel = getScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movie) })
+        val navigator = LocalNavigator.currentOrThrow
 
-    val atTop by remember {
-        derivedStateOf {
-            scrollState.value == 0
+        val scrollState = rememberScrollState()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+        val atTop by remember {
+            derivedStateOf {
+                scrollState.value == 0
+            }
         }
+
+        DetailsScreenMain(
+            atTop = atTop,
+            uiState = uiState,
+            scrollState = scrollState,
+            onFavoriteMovie = {
+                viewModel.accept(DetailsUserIntent.FavoriteMovie)
+            },
+            onBackEvent = navigator::pop,
+            onHideVideo = {
+                viewModel.accept(DetailsUserIntent.HideVideo)
+            }
+        )
     }
 
-    DetailsScreenMain(
-        atTop = atTop,
-        uiState = uiState,
-        scrollState = scrollState,
-        onFavoriteMovie = {
-            viewModel.accept(DetailsUserIntent.FavoriteMovie)
-        },
-        onBackEvent = onBackEvent,
-        onHideVideo = {
-            viewModel.accept(DetailsUserIntent.HideVideo)
-        }
-    )
 }
 
 @Composable

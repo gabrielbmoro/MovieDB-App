@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import config.Config
 
 import org.gradle.kotlin.dsl.kotlin
@@ -11,10 +13,10 @@ plugins {
 }
 
 android {
-    compileSdk = Config.compileSdk
+    compileSdk = Config.COMPILE_SDK
 
     defaultConfig {
-        minSdk = Config.minSdk
+        minSdk = Config.MIN_SDK
     }
 
     compileOptions {
@@ -23,10 +25,10 @@ android {
     }
 
     testOptions {
-        unitTests.isReturnDefaultValues = Config.haveUnitTestsDefaultValues
+        unitTests.isReturnDefaultValues = Config.HAS_UNIT_TESTS_DEFAULT_VALUES
     }
 
     kotlinOptions {
-        jvmTarget = Config.javaVMTarget
+        jvmTarget = Config.JAVA_VM_TARGET
     }
 }

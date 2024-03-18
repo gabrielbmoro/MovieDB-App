@@ -16,12 +16,11 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class WishlistViewModelTest {
+class WishlistScreenModelTest {
 
     private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
-    private lateinit var resourcesProvider: FakeResourcesProvider
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -33,7 +32,6 @@ class WishlistViewModelTest {
         getFavoriteMoviesUseCase = FakeGetFavoriteMoviesUseCase()
         favoriteMovieUseCase = FakeFavoriteMovieUseCase()
         isFavoriteMovieUseCase = FakeIsFavoriteMovieUseCase()
-        resourcesProvider = FakeResourcesProvider()
     }
 
     @After
@@ -48,13 +46,11 @@ class WishlistViewModelTest {
                 Movie.mockChuckNorrisVsVandammeMovie()
             )
         isFavoriteMovieUseCase.result = true
-        resourcesProvider.stringResult = "Chuck norris"
         getFavoriteMoviesUseCase.result = expected
 
-        val viewModel = WishlistViewModel(
+        val viewModel = WishlistScreenModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             favoriteMovieUseCase = favoriteMovieUseCase,
-            resourcesProvider = resourcesProvider,
             isFavoriteMovieUseCase = isFavoriteMovieUseCase
         )
 

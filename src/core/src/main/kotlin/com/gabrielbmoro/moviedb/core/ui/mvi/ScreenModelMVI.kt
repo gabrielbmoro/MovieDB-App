@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.core.ui.mvi
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,14 +21,14 @@ private interface ModelViewIntent<in UserIntent : Any, ScreenState : Any> {
     fun defaultEmptyState(): ScreenState
 }
 
-abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(),
+abstract class ScreenModelMVI<in UserIntent : Any, ScreenState : Any> : ScreenModel,
     ModelViewIntent<UserIntent, ScreenState> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
-    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
+    val uiState = _uiState.stateIn(screenModelScope, SharingStarted.Eagerly, _uiState.value)
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        screenModelScope.launch(Dispatchers.IO) {
             setup()?.let { state ->
                 _uiState.update { state }
             }
@@ -36,7 +36,7 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ViewModel(
     }
 
     fun accept(intent: UserIntent) {
-        viewModelScope.launch(Dispatchers.IO) {
+        screenModelScope.launch(Dispatchers.IO) {
             val state = execute(intent)
             _uiState.update { state }
         }

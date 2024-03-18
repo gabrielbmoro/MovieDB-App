@@ -1,45 +1,4 @@
 <resources>
     <string name="app_name">MovieDB App</string>
-    <string name="search">Search</string>
-    <string name="filter_by">Filter by</string>
     <string name="token_value">755e0c67ac2fa886e775fb9057f0a32f</string>
-    <string name="movies">Movies</string>
-    <string name="favorite">Favorite</string>
-    <string name="release_date">Release Date:</string>
-    <string name="expand">Expand</string>
-    <string name="hide">Hide</string>
-    <string name="favorite_movies_screen_title">Favorite Movies</string>
-    <string name="offline_now">You are offline now.</string>
-    <string name="grande_dragao_branco">O Grande Dragão Branco</string>
-    <string name="release_date_example">10/02/2019</string>
-    <string name="star">star</string>
-    <string name="description_example">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas, purus sit amet placerat congue, arcu augue aliquet enim, a aliquam quam velit eu odio. Curabitur lectus risus, interdum quis diam a, pulvinar finibus dolor. Nulla nec nibh et nulla lobortis dignissim vel in risus. Vivamus ligula elit, efficitur at sollicitudin in, gravida quis dolor. Etiam finibus mollis lacinia. Quisque suscipit ornare enim bibendum fringilla. Nullam rhoncus ut sem non consequat. Vivamus non dui dolor. Aliquam et viverra justo. Sed dictum nisi vitae justo blandit varius. Ut placerat euismod pharetra. Integer interdum, arcu gravida pulvinar fringilla, lectus lectus viverra libero, et tristique magna orci sed augue. Cras et erat condimentum, suscipit orci ac, semper augue. Ut ac ornare nunc. Nam pharetra elementum est, eu malesuada mauris dignissim in. Nullam pretium tellus mi, congue tincidunt dolor varius et.</string>
-    <string name="original_title">Original Title</string>
-    <string name="vote_average">Vote Average</string>
-    <string name="favorite_option">Favorite option</string>
-    <string name="transition_name">movie card</string>
-    <string name="unfavorite">Unfavorite</string>
-    <string name="error_message">Alguma coisa deu errado</string>
-    <string name="background">Background</string>
-    <string name="home_title">Movie DB API</string>
-    <string name="save">Save</string>
-    <string name="theme">Theme:</string>
-    <string name="automatic_theme_option">Automatic</string>
-    <string name="night_theme_option">Night</string>
-    <string name="day_theme_option">Day</string>
-    <string-array name="themes">
-        <item>@string/automatic_theme_option</item>
-        <item>@string/night_theme_option</item>
-        <item>@string/day_theme_option</item>
-    </string-array>
-
-    <string name="set_theme_message">The theme will be applied after you restart the app.</string>
-    <string name="alert">Alert</string>
-
-    <!-- alternative_texts -->
-    <string name="alt_votes_average">The vote average to this movie is %1$.2f</string>
-
-    <!-- endregion -->
-
-    <string name="preferences_id">movieDB-preferences-file</string>
 </resources>

@@ -3,12 +3,13 @@ package com.gabrielbmoro.moviedb
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.gabrielbmoro.moviedb.core.ui.syncTopBarsColors
 import com.gabrielbmoro.moviedb.core.ui.theme.MovieDBAppTheme
-import com.gabrielbmoro.moviedb.navigation.MovieDBNavHost
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
+
 
 class MainActivity : ComponentActivity() {
 
@@ -18,15 +19,9 @@ class MainActivity : ComponentActivity() {
         syncTopBarsColors()
 
         setContent {
-            val navController = rememberNavController()
             MovieDBAppTheme {
-                MainScreen(navController)
+               Navigator(screen = MoviesScreen())
             }
         }
-    }
-
-    @Composable
-    private fun MainScreen(navController: NavHostController) {
-        MovieDBNavHost(navController)
     }
 }
