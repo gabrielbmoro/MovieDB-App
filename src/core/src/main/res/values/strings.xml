@@ -6,4 +6,6 @@
     <string name="alt_sad_emoji">Sad emoji</string>
     <string name="poster">Poster</string>
     <string name="delete">Delete</string>
+    <string name="movies">Movies</string>
+    <string name="favorite">Favorite</string>
 </resources>

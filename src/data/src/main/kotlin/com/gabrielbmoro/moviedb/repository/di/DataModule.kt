@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.repository.di
 
+import android.app.Application
 import androidx.room.Room
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.repository.MoviesRepositoryImpl
@@ -14,15 +15,14 @@ import io.ktor.client.engine.okhttp.OkHttpEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val dataModule = module {
+fun dataModule(application: Application) = module {
     single {
         Room.databaseBuilder(
-            androidApplication(),
+            application,
             DataBaseFactory::class.java,
             "MovieDBAppDataBase"
         )
@@ -31,7 +31,6 @@ val dataModule = module {
             .build()
             .favoriteMoviesDAO()
     }
-
     single {
         HttpClient(
             engine = OkHttpEngine(

@@ -39,4 +39,6 @@ dependencies {
     androidTestImplementation(libs.ui.compose.test)
 
     implementation(libs.bundles.voyager)
+
+    implementation(projects.domain)
 }

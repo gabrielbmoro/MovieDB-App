@@ -105,7 +105,7 @@ compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
 koin_impl = ["koin_core"]
 compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
 ktor = ["ktor_client_core", "ktor_client_okhttp", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json"]
-voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel", "voyager_tab_navigator"]
+voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel"]
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }

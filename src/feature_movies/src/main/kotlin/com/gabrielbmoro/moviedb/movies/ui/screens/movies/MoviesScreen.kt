@@ -18,20 +18,27 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import com.gabrielbmoro.moviedb.core.ui.navigation.MovieDBNavDestinations
+import com.gabrielbmoro.moviedb.core.ui.navigation.MoviesTabIndex
+import com.gabrielbmoro.moviedb.core.ui.navigation.NavigationBottomBar
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
-import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.feature.movies.R
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarousel
+import org.koin.mp.KoinPlatform
 
-class MoviesScreen(
-    private val navigateToSearchScreen: () -> Unit,
-    private val navigateToDetailsScreen: (Movie) -> Unit,
-    private val bottomBar: @Composable () -> Unit
-) : Screen{
+class MoviesScreen : Screen {
+
     @Composable
     override fun Content() {
         val viewModel = getScreenModel<MoviesViewModel>()
         val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+        val navigator = LocalNavigator.currentOrThrow
+        val navDestinations = remember {
+            KoinPlatform.getKoin().get<MovieDBNavDestinations>()
+        }
 
         val lazyListState = rememberLazyListState()
         val showTopBar by remember {
@@ -39,21 +46,33 @@ class MoviesScreen(
                 lazyListState.firstVisibleItemIndex == 0
             }
         }
-
         ScreenScaffold(
             showTopBar = showTopBar,
             appBarTitle = stringResource(id = R.string.movies),
-            searchEvent = navigateToSearchScreen,
-            bottomBar = bottomBar
+            searchEvent = {
+                navigator.push(navDestinations.searchScreen())
+            },
+            bottomBar = {
+                NavigationBottomBar(
+                    currentTabIndex = MoviesTabIndex,
+                    onSelectMoviesTab = {
+                        // TODO - Scroll to top
+                    },
+                    onSelectFavoriteTab = {
+                        navigator.push(navDestinations.wishListScreen())
+                    }
+                )
+            }
         ) {
             LazyColumn(
                 state = lazyListState,
                 content = {
-
                     item {
                         MoviesCarousel(
                             movies = uiState.value.nowPlayingMovies,
-                            onSelectMovie = navigateToDetailsScreen,
+                            onSelectMovie = {
+                                navigator.push(navDestinations.detailsScreen(it))
+                            },
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMoreNowPlayingMovies)
                             },
@@ -67,7 +86,9 @@ class MoviesScreen(
                     item {
                         MoviesCarousel(
                             movies = uiState.value.popularMovies,
-                            onSelectMovie = navigateToDetailsScreen,
+                            onSelectMovie = {
+                                navigator.push(navDestinations.detailsScreen(it))
+                            },
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMorePopularMovies)
                             },
@@ -81,7 +102,9 @@ class MoviesScreen(
                     item {
                         MoviesCarousel(
                             movies = uiState.value.topRatedMovies,
-                            onSelectMovie = navigateToDetailsScreen,
+                            onSelectMovie = {
+                                navigator.push(navDestinations.detailsScreen(it))
+                            },
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMoreTopRatedMovies)
                             },
@@ -95,7 +118,9 @@ class MoviesScreen(
                     item {
                         MoviesCarousel(
                             movies = uiState.value.upComingMovies,
-                            onSelectMovie = navigateToDetailsScreen,
+                            onSelectMovie = {
+                                navigator.push(navDestinations.detailsScreen(it))
+                            },
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMoreUpComingMovies)
                             },

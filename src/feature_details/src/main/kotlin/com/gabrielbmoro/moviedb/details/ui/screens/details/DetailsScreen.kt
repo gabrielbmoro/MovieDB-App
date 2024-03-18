@@ -43,12 +43,14 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.feature.details.R
+import org.koin.core.parameter.parametersOf
 
-class DetailsScreen : Screen {
+class DetailsScreen(private val movie: Movie) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<DetailsScreenViewModel>()
+        val viewModel = getScreenModel<DetailsScreenViewModel>(parameters = { parametersOf(movie) })
         val navigator = LocalNavigator.currentOrThrow
 
         val scrollState = rememberScrollState()

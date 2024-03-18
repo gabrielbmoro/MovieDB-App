@@ -63,6 +63,8 @@ dependencies {
     testImplementation(libs.bundles.test)
     androidTestImplementation(libs.bundles.test)
     androidTestImplementation(libs.ui.compose.test)
+
+    implementation(libs.bundles.voyager)
 }
 
 android {

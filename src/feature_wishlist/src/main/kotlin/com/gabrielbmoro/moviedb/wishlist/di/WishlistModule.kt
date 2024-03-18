@@ -8,7 +8,6 @@ val featureWishlistModule = module {
         WishlistViewModel(
             favoriteMovieUseCase = get(),
             getFavoriteMoviesUseCase = get(),
-            resourcesProvider = get(),
             isFavoriteMovieUseCase = get()
         )
     }

@@ -1,8 +1,6 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import com.gabrielbmoro.moviedb.core.providers.resources.ResourcesProvider
 import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
-import com.gabrielbmoro.moviedb.feature.wishlist.R
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
@@ -11,7 +9,6 @@ class WishlistViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val resourcesProvider: ResourcesProvider
 ) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
 
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
@@ -31,9 +28,7 @@ class WishlistViewModel(
                 if (!result) {
                     uiState.value.copy(
                         favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
-                        resultMessage = resourcesProvider.getString(
-                            R.string.delete_success_message
-                        )
+                        isSuccessResult = true
                     )
                 } else {
                     uiState.value
@@ -48,7 +43,7 @@ class WishlistViewModel(
             }
 
             is WishlistUserIntent.ResultMessageReset -> {
-                uiState.value.copy(resultMessage = null)
+                uiState.value.copy(isSuccessResult = null)
             }
         }
     }
