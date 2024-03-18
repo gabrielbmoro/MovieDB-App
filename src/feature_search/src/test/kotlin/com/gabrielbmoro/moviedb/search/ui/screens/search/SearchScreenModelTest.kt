@@ -15,7 +15,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SearchViewModelTest {
+class SearchScreenModelTest {
 
     private lateinit var searchMovieUseCase: FakeSearchUseCase
 
@@ -37,7 +37,7 @@ class SearchViewModelTest {
     fun `should be able to reset the search field - empty search`() = runTest {
         // arrange
         searchMovieUseCase.searchResult = emptyList()
-        val viewModel = SearchViewModel(searchMovieUseCase)
+        val viewModel = SearchScreenModel(searchMovieUseCase)
 
         // act
         viewModel.accept(SearchUserIntent.ClearSearchField)

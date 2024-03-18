@@ -1,18 +1,18 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.core.ui.mvi.ScreenModelMVI
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 
-class DetailsScreenViewModel(
+class DetailsScreenScreenModel(
     private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
+) : ScreenModelMVI<DetailsUserIntent, DetailsUIState>() {
 
     override suspend fun setup(): DetailsUIState {
         updateState(

@@ -34,7 +34,7 @@ class MoviesScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<MoviesViewModel>()
+        val viewModel = getScreenModel<MoviesScreenModel>()
         val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
         val navigator = LocalNavigator.currentOrThrow

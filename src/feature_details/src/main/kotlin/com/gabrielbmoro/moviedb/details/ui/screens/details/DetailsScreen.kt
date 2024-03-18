@@ -50,7 +50,7 @@ import org.koin.core.parameter.parametersOf
 class DetailsScreen(private val movie: Movie) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<DetailsScreenViewModel>(parameters = { parametersOf(movie) })
+        val viewModel = getScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movie) })
         val navigator = LocalNavigator.currentOrThrow
 
         val scrollState = rememberScrollState()

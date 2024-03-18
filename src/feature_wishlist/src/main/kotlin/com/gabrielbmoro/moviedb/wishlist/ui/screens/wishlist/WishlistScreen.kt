@@ -32,7 +32,7 @@ class WishlistScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<WishlistViewModel>()
+        val viewModel = getScreenModel<WishlistScreenModel>()
         val uiState = viewModel.uiState.collectAsStateWithLifecycle()
         val snackbarHostState = remember { SnackbarHostState() }
         val lazyListState = rememberLazyListState()

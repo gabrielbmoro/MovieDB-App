@@ -21,7 +21,7 @@ private interface ModelViewIntent<in UserIntent : Any, ScreenState : Any> {
     fun defaultEmptyState(): ScreenState
 }
 
-abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> : ScreenModel,
+abstract class ScreenModelMVI<in UserIntent : Any, ScreenState : Any> : ScreenModel,
     ModelViewIntent<UserIntent, ScreenState> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())

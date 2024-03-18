@@ -1,15 +1,15 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.core.ui.mvi.ScreenModelMVI
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 
-class WishlistViewModel(
+class WishlistScreenModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-) : ViewModelMVI<WishlistUserIntent, WishlistUIState>() {
+) : ScreenModelMVI<WishlistUserIntent, WishlistUIState>() {
 
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
         return when (intent) {

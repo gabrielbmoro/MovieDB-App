@@ -16,7 +16,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class WishlistViewModelTest {
+class WishlistScreenModelTest {
 
     private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
@@ -48,7 +48,7 @@ class WishlistViewModelTest {
         isFavoriteMovieUseCase.result = true
         getFavoriteMoviesUseCase.result = expected
 
-        val viewModel = WishlistViewModel(
+        val viewModel = WishlistScreenModel(
             getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
             favoriteMovieUseCase = favoriteMovieUseCase,
             isFavoriteMovieUseCase = isFavoriteMovieUseCase

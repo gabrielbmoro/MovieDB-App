@@ -1,18 +1,18 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import com.gabrielbmoro.moviedb.core.ui.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.core.ui.mvi.ScreenModelMVI
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 
-class MoviesViewModel(
+class MoviesScreenModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
-) : ViewModelMVI<Intent, MoviesUIState>() {
+) : ScreenModelMVI<Intent, MoviesUIState>() {
 
     private val nowPlayingMoviesPageController = PagingController(
         tag = "nowPlayingPagingController",

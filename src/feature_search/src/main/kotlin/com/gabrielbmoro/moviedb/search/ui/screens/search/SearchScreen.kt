@@ -28,7 +28,7 @@ import org.koin.mp.KoinPlatform
 class SearchScreen : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<SearchViewModel>()
+        val viewModel = getScreenModel<SearchScreenModel>()
 
         val navigator = LocalNavigator.currentOrThrow
         val navDestinations = remember {
