@@ -3,16 +3,16 @@ package config
 import org.gradle.api.JavaVersion
 
 object Config {
-    const val applicationId = "com.gabrielbmoro.moviedb"
-    const val minSdk = 22
-    const val targetSdk = 34
-    const val compileSdk = 34
-    private const val localVersionCode = 10
-    private const val localVersionName = "1.0.0"
+    const val APPLICATION_ID = "com.gabrielbmoro.moviedb"
+    const val MIN_SDK = 22
+    const val TARGET_SDK = 34
+    const val COMPILE_SDK = 34
+    private const val LOCAL_VERSION_CODE = 10
+    private const val LOCAL_VERSION_NAME = "1.0.0"
     val javaCompatibilityVersion = JavaVersion.VERSION_17
-    const val javaVMTarget = "17"
-    const val haveUnitTestsDefaultValues = true
-    const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val JAVA_VM_TARGET = "17"
+    const val HAS_UNIT_TESTS_DEFAULT_VALUES = true
+    const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
     fun versionCode(): Int {
         val versionCode = try {
@@ -20,7 +20,7 @@ object Config {
         } catch (nullPointerException: NullPointerException) {
             null
         }
-        return versionCode ?: localVersionCode
+        return versionCode ?: LOCAL_VERSION_CODE
     }
 
     fun versionName(): String {
@@ -30,6 +30,6 @@ object Config {
             null
         }
 
-        return versionName?.ifEmpty { localVersionName } ?: localVersionName
+        return versionName?.ifEmpty { LOCAL_VERSION_NAME } ?: LOCAL_VERSION_NAME
     }
 }

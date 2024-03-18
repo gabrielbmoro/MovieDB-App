@@ -8,6 +8,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +25,7 @@ import com.gabrielbmoro.moviedb.core.ui.widgets.EmptyState
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
 import com.gabrielbmoro.moviedb.feature.wishlist.R
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
+import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform
 
 class WishlistScreen : Screen {
@@ -43,6 +45,8 @@ class WishlistScreen : Screen {
             KoinPlatform.getKoin().get<MovieDBNavDestinations>()
         }
 
+        val coroutineScope = rememberCoroutineScope()
+
         ScreenScaffold(
             showTopBar = true,
             appBarTitle = stringResource(id = R.string.wishlist),
@@ -50,7 +54,9 @@ class WishlistScreen : Screen {
                 NavigationBottomBar(
                     currentTabIndex = FavoriteTabIndex,
                     onSelectFavoriteTab = {
-                        // TODO - Scroll to top
+                        coroutineScope.launch {
+                            lazyListState.scrollToItem(0)
+                        }
                     },
                     onSelectMoviesTab = {
                         navigator.push(

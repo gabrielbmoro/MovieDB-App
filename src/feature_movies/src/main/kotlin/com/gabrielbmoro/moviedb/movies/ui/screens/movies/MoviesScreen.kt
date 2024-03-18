@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import com.gabrielbmoro.moviedb.core.ui.navigation.NavigationBottomBar
 import com.gabrielbmoro.moviedb.core.ui.widgets.ScreenScaffold
 import com.gabrielbmoro.moviedb.feature.movies.R
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesCarousel
+import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform
 
 class MoviesScreen : Screen {
@@ -41,6 +43,8 @@ class MoviesScreen : Screen {
         }
 
         val lazyListState = rememberLazyListState()
+        val coroutineScope = rememberCoroutineScope()
+
         val showTopBar by remember {
             derivedStateOf {
                 lazyListState.firstVisibleItemIndex == 0
@@ -56,7 +60,9 @@ class MoviesScreen : Screen {
                 NavigationBottomBar(
                     currentTabIndex = MoviesTabIndex,
                     onSelectMoviesTab = {
-                        // TODO - Scroll to top
+                        coroutineScope.launch {
+                            lazyListState.scrollToItem(0)
+                        }
                     },
                     onSelectFavoriteTab = {
                         navigator.push(navDestinations.wishListScreen())
