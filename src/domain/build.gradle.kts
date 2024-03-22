@@ -11,10 +11,7 @@ android {
 dependencies {
     commonTestImplementation(libs.bundles.test.multiplatform)
 
-    // Test
-    testImplementation(libs.bundles.test)
-
     // Koin
-    implementation(platform(libs.koin.bom))
-    implementation(libs.bundles.koin.impl)
+    commonMainImplementation(platform(libs.koin.bom))
+    commonMainImplementation(libs.bundles.koin.impl)
 }
