@@ -1,9 +1,5 @@
 package com.gabrielbmoro.moviedb.domain.entities
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class MovieDetail(
     val adult: Boolean,
     val budget: Int,
@@ -14,4 +10,4 @@ data class MovieDetail(
     val tagline: String,
     val productionCompanies: List<String>,
     var videoId: String? = null
-) : Parcelable
+)

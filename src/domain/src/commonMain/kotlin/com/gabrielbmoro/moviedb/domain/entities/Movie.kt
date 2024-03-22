@@ -1,9 +1,6 @@
 package com.gabrielbmoro.moviedb.domain.entities
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class Movie(
     val id: Long,
     val votesAverage: Float,
@@ -15,7 +12,7 @@ data class Movie(
     var isFavorite: Boolean,
     val language: String,
     val popularity: Float
-) : Parcelable {
+) {
 
     companion object {
         fun mockWhiteDragonNotFavorite() = Movie(
