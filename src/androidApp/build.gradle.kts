@@ -58,6 +58,7 @@ dependencies {
     // Koin
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin.impl)
+    implementation(libs.koin.android)
 
     // Test
     testImplementation(libs.bundles.test)

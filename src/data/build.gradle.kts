@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("android-library-plugin")
+    id("kmp-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
@@ -12,22 +12,23 @@ android {
 
 dependencies {
 
-    implementation(projects.domain)
+    commonMainImplementation(projects.domain)
 
-    implementation(libs.preferences.ktx)
-    implementation(libs.timber)
-    implementation(libs.bundles.ktor)
-
-    implementation(libs.kotlinx.serialization.json)
+    androidMainImplementation(libs.preferences.ktx)
+    androidMainImplementation(libs.bundles.ktor)
+    androidMainImplementation(libs.kotlinx.serialization.json)
 
     // Room
     ksp(libs.room.compiler)
-    implementation(libs.bundles.room)
+    androidMainImplementation(libs.bundles.room)
 
     // Test
-    testImplementation(libs.bundles.test)
+    commonTestImplementation(libs.bundles.test.multiplatform)
+    androidTestImplementation(libs.bundles.test)
+    androidMainImplementation(libs.timber)
 
     // Koin
-    implementation(platform(libs.koin.bom))
-    implementation(libs.bundles.koin.impl)
+    commonMainImplementation(platform(libs.koin.bom))
+    commonMainImplementation(libs.bundles.koin.impl)
+    androidMainImplementation(libs.koin.android)
 }
