@@ -1,15 +1,15 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class SearchMoviesUseCaseImplTest {
     private lateinit var repository: FakeRepository
     private lateinit var useCase: SearchMovieUseCase
 
-    @Before
+    @BeforeTest
     fun before() {
         repository = FakeRepository()
         useCase = SearchMovieUseCaseImpl(repository)

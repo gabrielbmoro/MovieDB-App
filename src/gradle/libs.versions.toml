@@ -33,7 +33,6 @@ ktlint_plugin = "11.5.1"
 ksp = "1.9.22-1.0.17"
 kover = "0.7.5"
 koin_bom = "3.6.0-wasm-alpha2"
-kotlin_test = "2.0.0-Beta4"
 ktor = "2.3.9"
 voyager = "1.0.0"
 
@@ -59,7 +58,8 @@ arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", versio
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 arc_core_testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch_core" }
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin_test" }
+kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlin_test_common = { group = "org.jetbrains.kotlin", name = "kotlin-test-common", version.ref = "kotlin" }
 
 compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom" }
 compose_bom_ui = { module = "androidx.compose.ui:ui" }
@@ -100,6 +100,7 @@ voyager_tab_navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", 
 room = ["room_ktx", "room_runtime"]
 lifecycle = ["lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
+test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose"]
 compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
 koin_impl = ["koin_core"]
@@ -112,3 +113,4 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

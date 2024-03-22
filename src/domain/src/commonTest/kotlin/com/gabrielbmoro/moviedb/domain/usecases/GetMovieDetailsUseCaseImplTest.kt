@@ -2,11 +2,13 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class GetMovieDetailsUseCaseImplTest {
     private lateinit var repository: FakeRepository
     private lateinit var useCase: GetMovieDetailsUseCase
@@ -33,7 +35,7 @@ class GetMovieDetailsUseCaseImplTest {
         )
     )
 
-    @Before
+    @BeforeTest
     fun before() {
         repository = FakeRepository()
         useCase = GetMovieDetailsUseCaseImpl(repository)

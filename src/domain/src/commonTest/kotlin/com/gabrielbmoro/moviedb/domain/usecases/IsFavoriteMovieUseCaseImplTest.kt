@@ -1,8 +1,8 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class IsFavoriteMovieUseCaseImplTest {
@@ -10,7 +10,7 @@ class IsFavoriteMovieUseCaseImplTest {
     private lateinit var repository: FakeRepository
     private lateinit var useCase: IsFavoriteMovieUseCase
 
-    @Before
+    @BeforeTest
     fun before() {
         repository = FakeRepository()
         useCase = IsFavoriteMovieUseCaseImpl(repository)

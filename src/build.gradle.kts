@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kover) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
 }
 
 buildscript {

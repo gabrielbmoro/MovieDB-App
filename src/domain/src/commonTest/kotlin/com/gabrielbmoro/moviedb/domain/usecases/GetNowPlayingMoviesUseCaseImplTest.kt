@@ -1,16 +1,18 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class GetNowPlayingMoviesUseCaseImplTest {
 
     private lateinit var repository: FakeRepository
     private lateinit var useCase: GetNowPlayingMoviesUseCase
 
-    @Before
+    @BeforeTest
     fun before() {
         repository = FakeRepository()
         useCase = GetNowPlayingMoviesUseCaseImpl(repository)

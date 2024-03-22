@@ -1,6 +1,6 @@
 package com.gabrielbmoro.moviedb.domain.entities
 
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MoviesListTypeTest {

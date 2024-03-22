@@ -1,7 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("android-library-plugin")
-    alias(libs.plugins.ksp)
+    id("kmp-library-plugin")
     alias(libs.plugins.kover)
 }
 
@@ -10,6 +9,8 @@ android {
 }
 
 dependencies {
+    commonTestImplementation(libs.bundles.test.multiplatform)
+
     // Test
     testImplementation(libs.bundles.test)
 

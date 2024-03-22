@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":domain")
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -22,13 +20,14 @@ dependencyResolutionManagement {
 }
 
 include(
-    ":app",
+    ":androidApp",
     ":data",
     ":core",
     ":feature_movies",
     ":feature_details",
     ":feature_wishlist",
-    ":feature_search"
+    ":feature_search",
+    ":domain",
 )
 
 rootProject.name = "MovieDB-Android"
