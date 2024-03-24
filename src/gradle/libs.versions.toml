@@ -35,6 +35,7 @@ kover = "0.7.5"
 koin_bom = "3.6.0-wasm-alpha2"
 ktor = "2.3.9"
 voyager = "1.0.0"
+compose_plugin = "1.6.1"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -93,7 +94,7 @@ ktor_client_darwin = { group = "io.ktor", name = "ktor-client-darwin", version.r
 ktor_client_content_negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor_auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
-ktor_logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor"}
+ktor_logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 voyager_navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager_screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager_koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
@@ -117,3 +118,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
