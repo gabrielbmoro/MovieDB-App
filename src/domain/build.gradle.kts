@@ -8,10 +8,15 @@ android {
     namespace = "com.gabrielbmoro.moviedb.domain"
 }
 
-dependencies {
-    commonTestImplementation(libs.bundles.test.multiplatform)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.bundles.koin.impl)
+        }
 
-    // Koin
-    commonMainImplementation(platform(libs.koin.bom))
-    commonMainImplementation(libs.bundles.koin.impl)
+        commonTest.dependencies {
+            implementation(libs.bundles.test.multiplatform)
+        }
+    }
 }
