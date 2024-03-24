@@ -27,7 +27,7 @@ include(
     ":feature_details",
     ":feature_wishlist",
     ":feature_search",
-    ":domain",
+    ":domain"
 )
 
 rootProject.name = "MovieDB-Android"

@@ -35,7 +35,12 @@ class ApiService(
         return httpClient.get("$baseUrl/movie/$movieId").body()
     }
 
-    suspend fun searchMovieBy(query: String, includeAdult: Boolean = false, language: String = "en-US"): PageResponse {
-        return httpClient.get("$baseUrl/search/movie?query=$query&include_adult=$includeAdult&language=$language").body()
+    suspend fun searchMovieBy(
+        query: String,
+        includeAdult: Boolean = false,
+        language: String = "en-US"
+    ): PageResponse {
+        return httpClient.get("$baseUrl/search/movie?query=$query&include_adult=$includeAdult&language=$language")
+            .body()
     }
 }

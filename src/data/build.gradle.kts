@@ -10,25 +10,36 @@ android {
     namespace = "com.gabrielbmoro.moviedb.data"
 }
 
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.domain)
+            implementation(libs.bundles.ktor)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.bundles.koin.impl)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.bundles.test.multiplatform)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.bundles.room)
+            implementation(libs.koin.android)
+        }
+
+        androidUnitTest.dependencies {
+            implementation(libs.bundles.test)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+    }
+}
+
 dependencies {
-
-    commonMainImplementation(projects.domain)
-
-    androidMainImplementation(libs.preferences.ktx)
-    androidMainImplementation(libs.bundles.ktor)
-    androidMainImplementation(libs.kotlinx.serialization.json)
-
     // Room
     ksp(libs.room.compiler)
-    androidMainImplementation(libs.bundles.room)
-
-    // Test
-    commonTestImplementation(libs.bundles.test.multiplatform)
-    androidTestImplementation(libs.bundles.test)
-    androidMainImplementation(libs.timber)
-
-    // Koin
-    commonMainImplementation(platform(libs.koin.bom))
-    commonMainImplementation(libs.bundles.koin.impl)
-    androidMainImplementation(libs.koin.android)
 }
