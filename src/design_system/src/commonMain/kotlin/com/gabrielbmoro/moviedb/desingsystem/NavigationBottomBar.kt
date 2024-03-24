@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.navigation
+package com.gabrielbmoro.moviedb.desingsystem
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -6,11 +6,11 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import moviedb_android.navigation.generated.resources.Res
-import moviedb_android.navigation.generated.resources.favorite
-import moviedb_android.navigation.generated.resources.ic_stars
-import moviedb_android.navigation.generated.resources.ic_theaters
-import moviedb_android.navigation.generated.resources.movies
+import moviedb_android.design_system.generated.resources.Res
+import moviedb_android.design_system.generated.resources.favorite
+import moviedb_android.design_system.generated.resources.ic_stars
+import moviedb_android.design_system.generated.resources.ic_theaters
+import moviedb_android.design_system.generated.resources.movies
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

@@ -2,18 +2,19 @@
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.kover)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.compose)
 }
 
 android {
-    namespace = "com.gabrielbmoro.moviedb.navigation"
+    namespace = "com.gabrielbmoro.moviedb.designsystem"
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(compose.ui)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.components.resources)
 
