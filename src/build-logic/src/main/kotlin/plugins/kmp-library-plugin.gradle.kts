@@ -1,7 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 import config.Config
-import gradle.kotlin.dsl.accessors._a1701e0b1f6976f26ab7e509b39e9c83.kotlinOptions
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -29,8 +28,7 @@ android {
 kotlin {
     applyDefaultHierarchyTemplate()
 
-    iosX64()
-    iosArm64()
+    iosSimulatorArm64()
 
     androidTarget {
         compilations.all {
