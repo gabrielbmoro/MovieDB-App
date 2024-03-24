@@ -1,19 +1,15 @@
-package com.gabrielbmoro.moviedb.desingsystem.toolbars
-
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.style.TextOverflow
 import com.gabrielbmoro.moviedb.desingsystem.icons.BackNavigationIcon
 import com.gabrielbmoro.moviedb.desingsystem.icons.SearchNavigationIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppToolbarTitle(
-    title: String,
+fun CustomAppToolbar(
+    title: @Composable () -> Unit,
     backEvent: (() -> Unit)? = null,
     searchEvent: (() -> Unit)? = null
 ) {
@@ -27,11 +23,7 @@ fun AppToolbarTitle(
 
     TopAppBar(
         title = {
-            Text(
-                title,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            title()
         },
         navigationIcon = backNavigationIcon,
         colors = TopAppBarDefaults.topAppBarColors(
