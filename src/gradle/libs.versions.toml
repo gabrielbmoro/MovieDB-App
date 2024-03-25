@@ -5,6 +5,7 @@ kotlin = "1.9.22"
 compose_bom = "2024.02.01"
 compose_compiler = "1.5.10"
 compose_material_3 = "1.2.0"
+kotlinx-coroutines-core = "1.8.1-Beta"
 kotlinx-serialization-json = "1.6.3"
 multidex = "2.0.1"
 nav_compose_integration = "2.7.7"
@@ -36,6 +37,7 @@ koin_bom = "3.6.0-wasm-alpha2"
 ktor = "2.3.9"
 voyager = "1.0.0"
 compose_plugin = "1.6.1"
+kamel_image = "0.9.3"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -43,6 +45,7 @@ firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlyti
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card_view" }
@@ -99,6 +102,7 @@ voyager_navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.
 voyager_screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager_koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager_tab_navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+kamel = { group = "media.kamel", name = "kamel-image", version.ref = "kamel_image" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]

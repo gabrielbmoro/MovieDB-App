@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.gabrielbmoro.moviedb.designsystem"
+    namespace = "com.gabrielbmoro.moviedb.feature.wishlist"
 }
 
 kotlin {
@@ -28,6 +28,9 @@ kotlin {
             implementation(libs.bundles.koin.impl)
             
             implementation(projects.domain)
+            implementation(projects.designSystem)
+            implementation(projects.platform)
+            implementation(libs.kotlinx.coroutines.core)
         }
     }
 }
