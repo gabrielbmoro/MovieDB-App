@@ -30,6 +30,7 @@ include(
     ":domain",
     ":design_system",
     ":feature:wishlist",
+    ":feature:search",
     ":platform"
 )
 
