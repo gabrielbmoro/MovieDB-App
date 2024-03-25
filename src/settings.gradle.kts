@@ -31,6 +31,8 @@ include(
     ":design_system",
     ":feature:wishlist",
     ":feature:search",
+    ":feature:details",
+    ":feature:movies",
     ":platform"
 )
 

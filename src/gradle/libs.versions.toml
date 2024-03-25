@@ -38,6 +38,9 @@ ktor = "2.3.9"
 voyager = "1.0.0"
 compose_plugin = "1.6.1"
 kamel_image = "0.9.3"
+kotlin_stdlib = "2.0.0-Beta5"
+compose = "1.6.2"
+androidx_activity_compose = "1.8.2"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -103,6 +106,10 @@ voyager_screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", vers
 voyager_koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager_tab_navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 kamel = { group = "media.kamel", name = "kamel-image", version.ref = "kamel_image" }
+kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin_stdlib" }
+androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
+compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]

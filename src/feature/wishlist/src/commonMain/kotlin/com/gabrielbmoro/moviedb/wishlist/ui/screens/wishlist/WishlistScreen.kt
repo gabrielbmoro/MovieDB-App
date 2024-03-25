@@ -21,6 +21,7 @@ import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
+import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 import kotlinx.coroutines.launch
 import moviedb_android.feature.wishlist.generated.resources.Res
@@ -29,6 +30,9 @@ import moviedb_android.feature.wishlist.generated.resources.delete_success_messa
 import moviedb_android.feature.wishlist.generated.resources.wishlist
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
+import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
+import org.koin.mp.KoinPlatform
 
 @OptIn(ExperimentalResourceApi::class)
 class WishlistScreen : Screen {
@@ -59,9 +63,10 @@ class WishlistScreen : Screen {
                         }
                     },
                     onSelectMoviesTab = {
-                        /*navigator.push(
-                            navDestinations.moviesScreen()
-                        )*/
+                        val moviesScreen = KoinPlatform.getKoin().get<Screen>(
+                            qualifier = named(NavigationDestinations.MOVIES)
+                        )
+                        navigator.push(moviesScreen)
                     }
                 )
             },
@@ -88,9 +93,11 @@ class WishlistScreen : Screen {
                         MovieList(
                             moviesList = uiState.value.favoriteMovies!!,
                             onSelectMovie = {
-                                /*navigator.push(
-                                    navDestinations.detailsScreen(it)
-                                )*/
+                                val detailsScreen = KoinPlatform.getKoin().get<Screen>(
+                                    qualifier = named(NavigationDestinations.DETAILS),
+                                    parameters = { parametersOf(it) }
+                                )
+                                navigator.push(detailsScreen)
                             },
                             lazyListState = lazyListState,
                             onDeleteMovie = { movie ->

@@ -1,71 +1,48 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("android-app-plugin")
+    id("kmp-app-plugin")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     alias(libs.plugins.kover)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.jetbrains.compose)
 }
 
-dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+kotlin {
+    sourceSets {
+        sourceSets {
+            androidMain.dependencies {
+                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.koin.android)
+            }
+            commonMain.dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
 
-    implementation(libs.kotlin)
+                implementation(libs.voyager.navigator)
+                implementation(projects.platform)
+                implementation(projects.designSystem)
+                implementation(projects.feature.wishlist)
+                implementation(projects.feature.search)
+                implementation(projects.feature.details)
+                implementation(projects.feature.movies)
+                implementation(projects.data)
+                implementation(projects.domain)
 
-    implementation(projects.data)
-    implementation(projects.core)
-    implementation(projects.domain)
-    implementation(projects.featureWishlist)
-    implementation(projects.featureMovies)
-    implementation(projects.featureDetails)
-    implementation(projects.featureSearch)
-
-    implementation(libs.gson)
-
-    implementation(libs.swipe.refresh.layout)
-
-    implementation(libs.cardview)
-    implementation(libs.firebase.crashlytics.ktx)
-    implementation(libs.firebase.analytics.ktx)
-
-    implementation(libs.bundles.lifecycle)
-
-    implementation(libs.preferences.ktx)
-
-    implementation(libs.timber)
-
-    // Navigation
-    implementation(libs.navigation.compose)
-
-    // Kover
-    rootProject.subprojects.forEach { kover(it) }
-
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-
-    implementation(libs.bundles.lifecycle)
-
-    // Compose
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.compose.impl)
-    debugImplementation(libs.bundles.compose.debug.impl)
-    implementation(libs.bundles.compose.extras)
-
-    // Koin
-    implementation(platform(libs.koin.bom))
-    implementation(libs.bundles.koin.impl)
-    implementation(libs.koin.android)
-
-    // Test
-    testImplementation(libs.bundles.test)
-    androidTestImplementation(libs.bundles.test)
-    androidTestImplementation(libs.ui.compose.test)
-
-    implementation(libs.bundles.voyager)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.bundles.koin.impl)
+            }
+        }
+    }
 }
 
 android {

@@ -19,9 +19,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
 import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
 import kotlinx.coroutines.delay
+import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
+import org.koin.mp.KoinPlatform
 
 class SearchScreen : Screen {
     @Composable
@@ -29,9 +33,6 @@ class SearchScreen : Screen {
         val viewModel = getScreenModel<SearchScreenModel>()
 
         val navigator = LocalNavigator.currentOrThrow
-        /*val navDestinations = remember {
-            KoinPlatform.getKoin().get<MovieDBNavDestinations>()
-        }*/
 
         val uiState = viewModel.uiState.collectAsState()
 
@@ -72,9 +73,11 @@ class SearchScreen : Screen {
                         movies = uiState.value.results!!,
                         modifier = Modifier.fillMaxWidth(),
                         navigateToDetailsScreen = { movie ->
-                            /*navigator.push(
-                                navDestinations.detailsScreen(movie)
-                            )*/
+                            val detailsScreen = KoinPlatform.getKoin().get<Screen>(
+                                qualifier = named(NavigationDestinations.DETAILS),
+                                parameters = { parametersOf(it) }
+                            )
+                            navigator.push(detailsScreen)
                         }
                     )
                 }
