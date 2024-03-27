@@ -23,11 +23,19 @@ fun MovieImage(
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
             contentDescription = contentDescription,
-            modifier = modifier
+            modifier = modifier,
+            onLoading = {
+                Image(
+                    painter = painterResource(MR.images.ic_movie_media_player),
+                    contentScale = ContentScale.Inside,
+                    contentDescription = contentDescription,
+                    modifier = modifier
+                )
+            }
         )
     } else {
         Image(
-            painter = painterResource(MR.images.ic_sad_emoji),
+            painter = painterResource(MR.images.ic_movie_media_player),
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
             contentDescription = contentDescription,
