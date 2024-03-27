@@ -30,7 +30,7 @@ fun ErrorMessage(
         )
 
         Image(
-            painter = painterResource(MR.images.ic_sad_emoji),
+            painter = painterResource(MR.images.ic_dino_error),
             modifier = Modifier
                 .fillMaxWidth(),
             contentDescription = stringResource(MR.strings.error_message)
