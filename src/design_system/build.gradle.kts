@@ -16,7 +16,9 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(compose.components.resources)
+
+            implementation(libs.bundles.moko)
+
             implementation(compose.animation)
             implementation(compose.uiUtil)
 
@@ -28,6 +30,7 @@ kotlin {
             implementation(libs.bundles.koin.impl)
             
             implementation(projects.domain)
+            implementation(projects.resources)
         }
     }
 }

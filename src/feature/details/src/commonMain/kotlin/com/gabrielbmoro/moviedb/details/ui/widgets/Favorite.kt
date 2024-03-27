@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.details.ui.widgets
 
+import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,16 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import moviedb_android.feature.details.generated.resources.Res
-import moviedb_android.feature.details.generated.resources.alt_is_favorite
-import moviedb_android.feature.details.generated.resources.alt_is_not_favorite
-import moviedb_android.feature.details.generated.resources.ic_heart_border
-import moviedb_android.feature.details.generated.resources.ic_heart_filled
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> Unit)) {
     Card(
@@ -35,15 +29,15 @@ fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> 
             Icon(
                 painter = painterResource(
                     if (!isFavorite) {
-                        Res.drawable.ic_heart_border
+                        MR.images.ic_heart_border
                     } else {
-                        Res.drawable.ic_heart_filled
+                        MR.images.ic_heart_filled
                     }
                 ),
                 contentDescription = if (!isFavorite) {
-                    stringResource(Res.string.alt_is_not_favorite)
+                    stringResource(MR.strings.alt_is_not_favorite)
                 } else {
-                    stringResource(Res.string.alt_is_favorite)
+                    stringResource(MR.strings.alt_is_favorite)
                 },
                 modifier = Modifier.align(Center),
                 tint = Color.Red

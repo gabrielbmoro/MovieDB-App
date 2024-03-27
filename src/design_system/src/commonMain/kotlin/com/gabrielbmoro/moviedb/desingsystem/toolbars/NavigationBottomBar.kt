@@ -1,24 +1,18 @@
 package com.gabrielbmoro.moviedb.desingsystem.toolbars
 
+import `MovieDB-Android`.resources.MR
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import moviedb_android.design_system.generated.resources.Res
-import moviedb_android.design_system.generated.resources.favorite
-import moviedb_android.design_system.generated.resources.ic_stars
-import moviedb_android.design_system.generated.resources.ic_theaters
-import moviedb_android.design_system.generated.resources.movies
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 const val MoviesTabIndex = 0
 const val FavoriteTabIndex = 1
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun NavigationBottomBar(
     currentTabIndex: Int,
@@ -32,12 +26,12 @@ fun NavigationBottomBar(
             onClick = onSelectMoviesTab,
             icon = {
                 Icon(
-                    painter = painterResource(Res.drawable.ic_theaters),
+                    painter = painterResource(MR.images.ic_sad_emoji),
                     contentDescription = null
                 )
             },
             label = {
-                Text(stringResource(Res.string.movies))
+                Text(stringResource(MR.strings.movies))
             }
         )
 
@@ -46,12 +40,12 @@ fun NavigationBottomBar(
             onClick = onSelectFavoriteTab,
             icon = {
                 Icon(
-                    painter = painterResource(Res.drawable.ic_stars),
+                    painter = painterResource(MR.images.ic_sad_emoji),
                     contentDescription = null
                 )
             },
             label = {
-                Text(stringResource(Res.string.favorite))
+                Text(stringResource(MR.strings.favorite))
             }
         )
     }

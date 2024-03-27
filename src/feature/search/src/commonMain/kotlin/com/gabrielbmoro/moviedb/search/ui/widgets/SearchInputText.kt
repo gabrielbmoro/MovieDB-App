@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.search.ui.widgets
 
+import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -19,19 +20,15 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import moviedb_android.feature.search.generated.resources.Res
-import moviedb_android.feature.search.generated.resources.cancel
-import moviedb_android.feature.search.generated.resources.search_movie_placeholder
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 
 private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
 
-@OptIn(FlowPreview::class, ExperimentalResourceApi::class)
+@OptIn(FlowPreview::class)
 @Composable
 fun SearchInputText(
     currentValue: TextFieldValue,
@@ -55,7 +52,7 @@ fun SearchInputText(
             ) {
                 Image(
                     imageVector = Icons.Filled.Close,
-                    contentDescription = stringResource(Res.string.cancel),
+                    contentDescription = stringResource(MR.strings.cancel),
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
                 )
             }
@@ -76,7 +73,7 @@ fun SearchInputText(
         },
         placeholder = {
             Text(
-                stringResource(Res.string.search_movie_placeholder),
+                stringResource(MR.strings.search_movie_placeholder),
                 style = MaterialTheme.typography.titleMedium
             )
         },

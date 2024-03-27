@@ -113,7 +113,6 @@ compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }
 moko_compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko_resources" }
-moko_resources_generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "moko_resources" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]

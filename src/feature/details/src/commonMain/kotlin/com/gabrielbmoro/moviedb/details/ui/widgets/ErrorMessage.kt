@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.details.ui.widgets
 
+import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,15 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import moviedb_android.feature.details.generated.resources.Res
-import moviedb_android.feature.details.generated.resources.dino_error
-import moviedb_android.feature.details.generated.resources.error_message
-import moviedb_android.feature.details.generated.resources.error_title
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ErrorMessage(
     modifier: Modifier = Modifier
@@ -28,17 +23,17 @@ fun ErrorMessage(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = stringResource(Res.string.error_title),
+            text = stringResource(MR.strings.error_title),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
 
         Image(
-            painter = painterResource(Res.drawable.dino_error),
+            painter = painterResource(MR.images.ic_sad_emoji),
             modifier = Modifier
                 .fillMaxWidth(),
-            contentDescription = stringResource(Res.string.error_message)
+            contentDescription = stringResource(MR.strings.error_message)
         )
     }
 }

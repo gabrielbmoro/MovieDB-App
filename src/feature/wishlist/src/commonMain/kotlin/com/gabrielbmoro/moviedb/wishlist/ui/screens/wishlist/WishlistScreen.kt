@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
+import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
@@ -23,18 +24,12 @@ import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
 import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
+import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
-import moviedb_android.feature.wishlist.generated.resources.Res
-import moviedb_android.feature.wishlist.generated.resources.delete_fail_message
-import moviedb_android.feature.wishlist.generated.resources.delete_success_message
-import moviedb_android.feature.wishlist.generated.resources.wishlist
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
-@OptIn(ExperimentalResourceApi::class)
 class WishlistScreen : Screen {
 
     @Composable
@@ -44,8 +39,8 @@ class WishlistScreen : Screen {
         val snackbarHostState = remember { SnackbarHostState() }
         val lazyListState = rememberLazyListState()
 
-        val successDeleteMessage = stringResource(Res.string.delete_success_message)
-        val errorDeleteMessage = stringResource(Res.string.delete_fail_message)
+        val successDeleteMessage = stringResource(MR.strings.delete_success_message)
+        val errorDeleteMessage = stringResource(MR.strings.delete_fail_message)
 
         val navigator = LocalNavigator.currentOrThrow
 
@@ -53,7 +48,7 @@ class WishlistScreen : Screen {
 
         ScreenScaffold(
             showTopBar = true,
-            appBarTitle = stringResource(Res.string.wishlist),
+            appBarTitle = stringResource(MR.strings.wishlist),
             bottomBar = {
                 NavigationBottomBar(
                     currentTabIndex = FavoriteTabIndex,

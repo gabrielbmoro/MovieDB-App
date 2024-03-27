@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.desingsystem.cards
 
+import `MovieDB-Android`.resources.MR
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -26,10 +27,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.buttons.DeleteButton
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
-import moviedb_android.design_system.generated.resources.Res
-import moviedb_android.design_system.generated.resources.poster
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
 
 private const val THRESHOLD_VALUE = -100
 
@@ -38,7 +36,7 @@ val PosterCardWidth = 120.dp
 
 enum class DragValue { Start, None }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieCard(
     imageUrl: String?,
@@ -104,7 +102,7 @@ fun MovieCard(
                     modifier = Modifier
                         .width(PosterCardWidth)
                         .fillMaxHeight(),
-                    contentDescription = stringResource(Res.string.poster)
+                    contentDescription = stringResource(MR.strings.poster)
                 )
                 MovieCardInformation(
                     title = title,
