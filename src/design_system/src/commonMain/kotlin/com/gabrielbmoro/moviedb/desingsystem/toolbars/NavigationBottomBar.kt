@@ -26,7 +26,7 @@ fun NavigationBottomBar(
             onClick = onSelectMoviesTab,
             icon = {
                 Icon(
-                    painter = painterResource(MR.images.ic_sad_emoji),
+                    painter = painterResource(MR.images.ic_movies),
                     contentDescription = null
                 )
             },
@@ -40,7 +40,7 @@ fun NavigationBottomBar(
             onClick = onSelectFavoriteTab,
             icon = {
                 Icon(
-                    painter = painterResource(MR.images.ic_sad_emoji),
+                    painter = painterResource(MR.images.ic_wishlist),
                     contentDescription = null
                 )
             },
