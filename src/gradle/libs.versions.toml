@@ -41,6 +41,7 @@ kamel_image = "0.9.3"
 kotlin_stdlib = "2.0.0-Beta5"
 compose = "1.6.2"
 androidx_activity_compose = "1.8.2"
+moko_resources = "0.23.0"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -110,6 +111,9 @@ kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
 compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }
+moko_compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko_resources" }
+moko_resources_generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "moko_resources" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
@@ -122,6 +126,7 @@ koin_impl = ["koin_core"]
 compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
 ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
 voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel"]
+moko = ["moko_compose", "moko_core"]
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
@@ -130,3 +135,4 @@ kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
+moko_plugin = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko_resources" }
