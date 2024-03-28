@@ -10,11 +10,14 @@ import androidx.compose.ui.Modifier
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
-fun SearchNavigationIcon(event: () -> Unit, modifier: Modifier = Modifier) {
+fun SearchNavigationIcon(
+    event: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     IconButton(onClick = event, modifier = modifier) {
         Icon(
             imageVector = Icons.Filled.Search,
-            contentDescription = stringResource(MR.strings.search)
+            contentDescription = stringResource(MR.strings.search),
         )
     }
 }

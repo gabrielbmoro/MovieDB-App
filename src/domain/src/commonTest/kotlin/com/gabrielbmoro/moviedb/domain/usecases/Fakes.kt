@@ -6,7 +6,6 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 
 class FakeRepository : MoviesRepository {
-
     var isFavoriteMovie: Boolean = false
 
     var timesCallUnfavorite: Int = 0
@@ -75,5 +74,4 @@ class FakeRepository : MoviesRepository {
     override suspend fun searchMovieBy(query: String): List<Movie> {
         return searchMovies
     }
-
 }

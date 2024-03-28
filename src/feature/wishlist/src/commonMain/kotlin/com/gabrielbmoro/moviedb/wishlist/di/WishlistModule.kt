@@ -7,16 +7,17 @@ import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreenModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureWishlistModule = module {
-    factory {
-        WishlistScreenModel(
-            favoriteMovieUseCase = get(),
-            getFavoriteMoviesUseCase = get(),
-            isFavoriteMovieUseCase = get()
-        )
-    }
+val featureWishlistModule =
+    module {
+        factory {
+            WishlistScreenModel(
+                favoriteMovieUseCase = get(),
+                getFavoriteMoviesUseCase = get(),
+                isFavoriteMovieUseCase = get(),
+            )
+        }
 
-    factory<Screen>(named(NavigationDestinations.WISHLIST)) {
-        WishlistScreen()
+        factory<Screen>(named(NavigationDestinations.WISHLIST)) {
+            WishlistScreen()
+        }
     }
-}

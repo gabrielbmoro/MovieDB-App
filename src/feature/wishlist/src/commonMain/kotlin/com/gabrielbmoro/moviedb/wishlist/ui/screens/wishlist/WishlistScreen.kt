@@ -31,7 +31,6 @@ import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
 class WishlistScreen : Screen {
-
     @Composable
     override fun Content() {
         val viewModel = getScreenModel<WishlistScreenModel>()
@@ -58,28 +57,29 @@ class WishlistScreen : Screen {
                         }
                     },
                     onSelectMoviesTab = {
-                        val moviesScreen = KoinPlatform.getKoin().get<Screen>(
-                            qualifier = named(NavigationDestinations.MOVIES)
-                        )
+                        val moviesScreen =
+                            KoinPlatform.getKoin().get<Screen>(
+                                qualifier = named(NavigationDestinations.MOVIES),
+                            )
                         navigator.push(moviesScreen)
-                    }
+                    },
                 )
             },
             snackBarHost = {
                 SnackbarHost(snackbarHostState)
-            }
+            },
         ) {
             when {
                 uiState.value.isLoading -> {
                     BubbleLoader(
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
                 }
 
                 uiState.value.favoriteMovies?.isEmpty() == true -> {
                     EmptyState(
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
                 }
 
@@ -88,19 +88,21 @@ class WishlistScreen : Screen {
                         MovieList(
                             moviesList = uiState.value.favoriteMovies!!,
                             onSelectMovie = {
-                                val detailsScreen = KoinPlatform.getKoin().get<Screen>(
-                                    qualifier = named(NavigationDestinations.DETAILS),
-                                    parameters = { parametersOf(it) }
-                                )
+                                val detailsScreen =
+                                    KoinPlatform.getKoin().get<Screen>(
+                                        qualifier = named(NavigationDestinations.DETAILS),
+                                        parameters = { parametersOf(it) },
+                                    )
                                 navigator.push(detailsScreen)
                             },
                             lazyListState = lazyListState,
                             onDeleteMovie = { movie ->
                                 viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
                             },
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .align(Alignment.TopCenter)
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .align(Alignment.TopCenter),
                         )
                     }
                 }
@@ -111,21 +113,21 @@ class WishlistScreen : Screen {
             key1 = uiState.value,
             block = {
                 if (uiState.value.isSuccessResult != null) {
-                    val resultMessage = if (uiState.value.isSuccessResult == true) {
-                        successDeleteMessage
-                    } else {
-                        errorDeleteMessage
-                    }
+                    val resultMessage =
+                        if (uiState.value.isSuccessResult == true) {
+                            successDeleteMessage
+                        } else {
+                            errorDeleteMessage
+                        }
                     snackbarHostState.showSnackbar(resultMessage)
                     viewModel.accept(WishlistUserIntent.ResultMessageReset)
                     viewModel.accept(WishlistUserIntent.LoadMovies)
                 }
-            }
+            },
         )
 
         LaunchedEffect(Unit) {
             viewModel.accept(WishlistUserIntent.LoadMovies)
         }
     }
-
 }

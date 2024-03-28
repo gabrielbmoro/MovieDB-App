@@ -9,7 +9,7 @@ import io.ktor.client.request.get
 
 class ApiService(
     private val baseUrl: String,
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
 ) {
     suspend fun getPopularMovies(pageNumber: Int): PageResponse {
         return httpClient.get("$baseUrl/movie/popular?page=$pageNumber").body()
@@ -38,7 +38,7 @@ class ApiService(
     suspend fun searchMovieBy(
         query: String,
         includeAdult: Boolean = false,
-        language: String = "en-US"
+        language: String = "en-US",
     ): PageResponse {
         return httpClient.get("$baseUrl/search/movie?query=$query&include_adult=$includeAdult&language=$language")
             .body()

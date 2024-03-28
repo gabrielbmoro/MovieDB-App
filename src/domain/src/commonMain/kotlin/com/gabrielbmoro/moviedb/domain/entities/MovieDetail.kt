@@ -9,5 +9,5 @@ data class MovieDetail(
     val status: String,
     val tagline: String,
     val productionCompanies: List<String>,
-    var videoId: String? = null
+    var videoId: String? = null,
 )

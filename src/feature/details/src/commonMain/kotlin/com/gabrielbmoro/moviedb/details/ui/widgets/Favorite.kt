@@ -18,29 +18,36 @@ import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
-fun Favorite(isFavorite: Boolean, modifier: Modifier = Modifier, action: (() -> Unit)) {
+fun Favorite(
+    isFavorite: Boolean,
+    modifier: Modifier = Modifier,
+    action: (() -> Unit),
+) {
     Card(
-        modifier = modifier
-            .size(56.dp)
-            .clip(CircleShape)
-            .clickable(onClick = action)
+        modifier =
+            modifier
+                .size(56.dp)
+                .clip(CircleShape)
+                .clickable(onClick = action),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(
-                painter = painterResource(
+                painter =
+                    painterResource(
+                        if (!isFavorite) {
+                            MR.images.ic_heart_border
+                        } else {
+                            MR.images.ic_heart_filled
+                        },
+                    ),
+                contentDescription =
                     if (!isFavorite) {
-                        MR.images.ic_heart_border
+                        stringResource(MR.strings.alt_is_not_favorite)
                     } else {
-                        MR.images.ic_heart_filled
-                    }
-                ),
-                contentDescription = if (!isFavorite) {
-                    stringResource(MR.strings.alt_is_not_favorite)
-                } else {
-                    stringResource(MR.strings.alt_is_favorite)
-                },
+                        stringResource(MR.strings.alt_is_favorite)
+                    },
                 modifier = Modifier.align(Center),
-                tint = Color.Red
+                tint = Color.Red,
             )
         }
     }

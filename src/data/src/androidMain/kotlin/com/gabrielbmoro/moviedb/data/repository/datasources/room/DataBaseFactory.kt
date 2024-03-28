@@ -6,6 +6,5 @@ import com.gabrielbmoro.moviedb.data.repository.datasources.room.dto.FavoriteMov
 
 @Database(entities = [FavoriteMovieDTO::class], version = 2, exportSchema = false)
 abstract class DataBaseFactory : RoomDatabase() {
-
     abstract fun favoriteMoviesDAO(): FavoriteMoviesDAO
 }

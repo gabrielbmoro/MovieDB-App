@@ -16,14 +16,15 @@ class SearchMoviesUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to search for movies`() = runTest {
-        // arrange
-        repository.searchMovies = emptyList()
+    fun `should be able to search for movies`() =
+        runTest {
+            // arrange
+            repository.searchMovies = emptyList()
 
-        // act
-        val result = useCase.execute(SearchMovieUseCase.Params("query"))
+            // act
+            val result = useCase.execute(SearchMovieUseCase.Params("query"))
 
-        // assert
-        assertEquals(emptyList(), result)
-    }
+            // assert
+            assertEquals(emptyList(), result)
+        }
 }

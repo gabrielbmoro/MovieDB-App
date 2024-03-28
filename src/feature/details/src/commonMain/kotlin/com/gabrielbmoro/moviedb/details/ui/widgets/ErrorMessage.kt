@@ -15,25 +15,24 @@ import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
-fun ErrorMessage(
-    modifier: Modifier = Modifier
-) {
+fun ErrorMessage(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
             text = stringResource(MR.strings.error_title),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Image(
             painter = painterResource(MR.images.ic_dino_error),
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentDescription = stringResource(MR.strings.error_message)
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            contentDescription = stringResource(MR.strings.error_message),
         )
     }
 }

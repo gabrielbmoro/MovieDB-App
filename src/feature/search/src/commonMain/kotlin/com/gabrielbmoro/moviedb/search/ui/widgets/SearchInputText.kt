@@ -36,30 +36,33 @@ fun SearchInputText(
     onSearchBy: (TextFieldValue) -> Unit,
     onClearText: (() -> Unit),
     focusRequester: FocusRequester,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val searchFlow = remember {
-        MutableSharedFlow<TextFieldValue>()
-    }
+    val searchFlow =
+        remember {
+            MutableSharedFlow<TextFieldValue>()
+        }
     val coroutineScope = rememberCoroutineScope()
 
-    val trailingIcon: @Composable (() -> Unit)? = if (currentValue.text != "") {
-        {
-            IconButton(
-                onClick = onClearText,
-                modifier = Modifier
-                    .size(48.dp)
-            ) {
-                Image(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = stringResource(MR.strings.cancel),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
-                )
+    val trailingIcon: @Composable (() -> Unit)? =
+        if (currentValue.text != "") {
+            {
+                IconButton(
+                    onClick = onClearText,
+                    modifier =
+                        Modifier
+                            .size(48.dp),
+                ) {
+                    Image(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = stringResource(MR.strings.cancel),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                    )
+                }
             }
+        } else {
+            null
         }
-    } else {
-        null
-    }
 
     TextField(
         value = currentValue,
@@ -74,16 +77,17 @@ fun SearchInputText(
         placeholder = {
             Text(
                 stringResource(MR.strings.search_movie_placeholder),
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
         },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer
-        ),
+        colors =
+            TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
         trailingIcon = trailingIcon,
         maxLines = 1,
-        modifier = modifier.focusRequester(focusRequester)
+        modifier = modifier.focusRequester(focusRequester),
     )
 
     LaunchedEffect(

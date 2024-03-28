@@ -23,45 +23,50 @@ fun MovieCardInformation(
     title: String,
     description: String,
     votes: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(vertical = 8.dp, horizontal = 4.dp)
+        modifier = modifier.padding(vertical = 8.dp, horizontal = 4.dp),
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.Start),
+            style =
+                MaterialTheme.typography.titleSmall.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.Start),
             maxLines = 4,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(4.dp))
 
         FiveStars(
             votes = votes,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(32.dp),
         )
 
         Spacer(modifier = Modifier.height(14.dp))
 
         Text(
             text = description,
-            style = MaterialTheme.typography.bodySmall.copy(
-                fontStyle = FontStyle.Italic,
-                fontSize = 12.sp
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.Start),
+            style =
+                MaterialTheme.typography.bodySmall.copy(
+                    fontStyle = FontStyle.Italic,
+                    fontSize = 12.sp,
+                ),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.Start),
             maxLines = 6,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }

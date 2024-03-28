@@ -70,7 +70,6 @@ class DetailsScreen(private val movie: Movie) : Screen {
             onBackEvent = navigator::pop,
         )
     }
-
 }
 
 @Composable
@@ -79,25 +78,26 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: () -> Unit,
-    onBackEvent: (() -> Unit)
+    onBackEvent: (() -> Unit),
 ) {
     Scaffold(
         topBar = {
             AnimatedVisibility(
                 visible = atTop,
                 enter = fadeIn(),
-                exit = fadeOut()
+                exit = fadeOut(),
             ) {
                 AppToolbarTitle(
                     title = uiState.movieTitle,
-                    backEvent = onBackEvent
+                    backEvent = onBackEvent,
                 )
             }
-        }
+        },
     ) {
-        val modifier = Modifier
-            .padding(top = it.calculateTopPadding())
-            .fillMaxSize()
+        val modifier =
+            Modifier
+                .padding(top = it.calculateTopPadding())
+                .fillMaxSize()
 
         when {
             uiState.isLoading -> DetailsScreenLoading(modifier)
@@ -107,10 +107,11 @@ private fun DetailsScreenMain(
             else -> {
                 DetailsScreenContent(
                     uiState = uiState,
-                    modifier = Modifier
-                        .then(modifier)
-                        .verticalScroll(scrollState),
-                    onFavoriteMovie = onFavoriteMovie
+                    modifier =
+                        Modifier
+                            .then(modifier)
+                            .verticalScroll(scrollState),
+                    onFavoriteMovie = onFavoriteMovie,
                 )
             }
         }
@@ -121,7 +122,7 @@ private fun DetailsScreenMain(
 private fun DetailsScreenError(modifier: Modifier) {
     Box(modifier = modifier) {
         ErrorMessage(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }
@@ -131,8 +132,9 @@ private fun DetailsScreenLoading(modifier: Modifier) {
     Box(modifier = modifier) {
         BubbleLoader(
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .align(Alignment.Center)
+            modifier =
+                Modifier
+                    .align(Alignment.Center),
         )
     }
 }
@@ -141,26 +143,27 @@ private fun DetailsScreenLoading(modifier: Modifier) {
 private fun DetailsScreenContent(
     uiState: DetailsUIState,
     modifier: Modifier = Modifier,
-    onFavoriteMovie: () -> Unit
+    onFavoriteMovie: () -> Unit,
 ) {
-
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Box(
-            modifier = Modifier
-                .height(280.dp)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .height(280.dp)
+                    .fillMaxWidth(),
         ) {
             when {
                 uiState.showVideo && uiState.videoId != null -> {
                     VideoPlayer(
                         videoId = uiState.videoId,
                         shouldStartMuted = true,
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxSize()
+                        modifier =
+                            Modifier
+                                .align(Alignment.TopCenter)
+                                .fillMaxSize(),
                     )
                 }
 
@@ -168,10 +171,11 @@ private fun DetailsScreenContent(
                     MovieImage(
                         imageUrl = uiState.imageUrl,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxSize(),
-                        contentDescription = stringResource(MR.strings.poster)
+                        modifier =
+                            Modifier
+                                .align(Alignment.TopCenter)
+                                .fillMaxSize(),
+                        contentDescription = stringResource(MR.strings.poster),
                     )
                 }
             }
@@ -181,85 +185,85 @@ private fun DetailsScreenContent(
             isFavorite = uiState.isFavorite,
             votesAverage = uiState.movieVotesAverage,
             onFavoriteMovie = onFavoriteMovie,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
-        if(uiState.genres != null) {
+        if (uiState.genres != null) {
             GenresCard(
                 genres = uiState.genres,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
         SectionTitle(
             title = stringResource(MR.strings.overview),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
             body = uiState.movieOverview,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
-
 
         SectionTitle(
             title = stringResource(MR.strings.popularity),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
             body = uiState.moviePopularity.toString(),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         SectionTitle(
             title = stringResource(MR.strings.language),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
             body = uiState.movieLanguage,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
-        if(uiState.tagLine!= null) {
+        if (uiState.tagLine != null) {
             SectionTitle(
                 title = stringResource(MR.strings.tagline),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             SectionBody(
                 body = uiState.tagLine,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
-        if(uiState.productionCompanies!=null) {
+        if (uiState.productionCompanies != null) {
             SectionTitle(
                 title = stringResource(MR.strings.production_companies),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             SectionBody(
                 body = uiState.productionCompanies,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
-        if(uiState.homepage != null) {
+        if (uiState.homepage != null) {
             SectionTitle(
                 title = stringResource(MR.strings.homepage),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             TextUrl(
                 url = uiState.homepage,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
         Spacer(
-            modifier = Modifier
-                .height(240.dp)
-                .padding(horizontal = 16.dp)
+            modifier =
+                Modifier
+                    .height(240.dp)
+                    .padding(horizontal = 16.dp),
         )
     }
 }

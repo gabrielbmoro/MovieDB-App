@@ -4,7 +4,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 
 sealed class SearchUserIntent {
-    data class SearchBy(val query: TextFieldValue): SearchUserIntent()
+    data class SearchBy(val query: TextFieldValue) : SearchUserIntent()
 
     data object ClearSearchField : SearchUserIntent()
 
@@ -13,5 +13,5 @@ sealed class SearchUserIntent {
 
 data class SearchUIState(
     val searchQuery: TextFieldValue,
-    val results: List<Movie>? = null
+    val results: List<Movie>? = null,
 )

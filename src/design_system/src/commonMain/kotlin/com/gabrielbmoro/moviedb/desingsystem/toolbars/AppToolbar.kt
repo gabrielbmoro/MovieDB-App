@@ -15,32 +15,34 @@ import com.gabrielbmoro.moviedb.desingsystem.icons.SearchNavigationIcon
 fun AppToolbarTitle(
     title: String,
     backEvent: (() -> Unit)? = null,
-    searchEvent: (() -> Unit)? = null
+    searchEvent: (() -> Unit)? = null,
 ) {
-    val backNavigationIcon: @Composable (() -> Unit) = if (backEvent != null) {
-        {
-            BackNavigationIcon(backEvent)
+    val backNavigationIcon: @Composable (() -> Unit) =
+        if (backEvent != null) {
+            {
+                BackNavigationIcon(backEvent)
+            }
+        } else {
+            {}
         }
-    } else {
-        {}
-    }
 
     TopAppBar(
         title = {
             Text(
                 title,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         },
         navigationIcon = backNavigationIcon,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        ),
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ),
         actions = {
             if (searchEvent != null) {
                 SearchNavigationIcon(event = searchEvent)
             }
-        }
+        },
     )
 }

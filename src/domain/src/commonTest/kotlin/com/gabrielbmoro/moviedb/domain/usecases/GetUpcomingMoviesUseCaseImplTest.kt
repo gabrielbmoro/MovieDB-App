@@ -18,14 +18,15 @@ class GetUpcomingMoviesUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to get all up coming movies`() = runTest {
-        // arrange
-        repository.upComingMovies = emptyList()
+    fun `should be able to get all up coming movies`() =
+        runTest {
+            // arrange
+            repository.upComingMovies = emptyList()
 
-        // act
-        val result = useCase.execute(GetUpcomingMoviesUseCase.Params(1))
+            // act
+            val result = useCase.execute(GetUpcomingMoviesUseCase.Params(1))
 
-        // assert
-        assertEquals(emptyList(), result)
-    }
+            // assert
+            assertEquals(emptyList(), result)
+        }
 }

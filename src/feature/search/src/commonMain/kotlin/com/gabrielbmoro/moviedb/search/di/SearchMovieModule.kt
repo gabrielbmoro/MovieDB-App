@@ -7,14 +7,15 @@ import com.gabrielbmoro.moviedb.search.ui.screens.search.SearchScreenModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureSearchMovieModule = module {
-    factory {
-        SearchScreenModel(
-            searchMovieUseCase = get()
-        )
-    }
+val featureSearchMovieModule =
+    module {
+        factory {
+            SearchScreenModel(
+                searchMovieUseCase = get(),
+            )
+        }
 
-    factory<Screen>(named(NavigationDestinations.SEARCH)) {
-        SearchScreen()
+        factory<Screen>(named(NavigationDestinations.SEARCH)) {
+            SearchScreen()
+        }
     }
-}

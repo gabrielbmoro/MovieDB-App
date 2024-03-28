@@ -12,39 +12,42 @@ class MoviesScreenModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
+    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
 ) : ScreenModelMVI<Intent, MoviesUIState>() {
+    private val nowPlayingMoviesPageController =
+        PagingController(
+            requestMore = { pageIndex ->
+                getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
+            },
+        )
 
-    private val nowPlayingMoviesPageController = PagingController(
-        requestMore = { pageIndex ->
-            getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
-        },
-    )
+    private val popularMoviesPageController =
+        PagingController(
+            requestMore = { pageIndex ->
+                getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
+            },
+        )
 
-    private val popularMoviesPageController = PagingController(
-        requestMore = { pageIndex ->
-            getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
-        },
-    )
+    private val topRatedMoviesPageController =
+        PagingController(
+            requestMore = { pageIndex ->
+                getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
+            },
+        )
 
-    private val topRatedMoviesPageController = PagingController(
-        requestMore = { pageIndex ->
-            getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
-        },
-    )
-
-    private val upComingMoviesPagingController = PagingController(
-        requestMore = { pageIndex ->
-            getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
-        },
-    )
+    private val upComingMoviesPagingController =
+        PagingController(
+            requestMore = { pageIndex ->
+                getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
+            },
+        )
 
     override suspend fun setup(): MoviesUIState {
         return uiState.value.copy(
             nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
             topRatedMovies = topRatedMoviesPageController.onRequestMore(),
             popularMovies = popularMoviesPageController.onRequestMore(),
-            upComingMovies = upComingMoviesPagingController.onRequestMore()
+            upComingMovies = upComingMoviesPagingController.onRequestMore(),
         )
     }
 
@@ -63,45 +66,50 @@ class MoviesScreenModel(
     private suspend fun processRequestMoreForUpcomingMoviesIntent(): MoviesUIState {
         val movies = upComingMoviesPagingController.onRequestMore()
         return uiState.value.copy(
-            upComingMovies = uiState.value.upComingMovies.addAllDistinctly(
-                movies
-            )
+            upComingMovies =
+                uiState.value.upComingMovies.addAllDistinctly(
+                    movies,
+                ),
         )
     }
 
     private suspend fun processRequestMoreForTopRatedMoviesIntent(): MoviesUIState {
         val movies = topRatedMoviesPageController.onRequestMore()
         return uiState.value.copy(
-            topRatedMovies = uiState.value.topRatedMovies.addAllDistinctly(
-                movies
-            )
+            topRatedMovies =
+                uiState.value.topRatedMovies.addAllDistinctly(
+                    movies,
+                ),
         )
     }
 
     private suspend fun processRequestMoreForPopularMoviesIntent(): MoviesUIState {
         val movies = popularMoviesPageController.onRequestMore()
         return uiState.value.copy(
-            popularMovies = uiState.value.popularMovies.addAllDistinctly(
-                movies
-            )
+            popularMovies =
+                uiState.value.popularMovies.addAllDistinctly(
+                    movies,
+                ),
         )
     }
 
     private suspend fun processRequestMoreForNowPlayingMoviesIntent(): MoviesUIState {
         val movies = nowPlayingMoviesPageController.onRequestMore()
         return uiState.value.copy(
-            nowPlayingMovies = uiState.value.nowPlayingMovies.addAllDistinctly(
-                movies
-            )
+            nowPlayingMovies =
+                uiState.value.nowPlayingMovies.addAllDistinctly(
+                    movies,
+                ),
         )
     }
 
-    override fun defaultEmptyState() = MoviesUIState(
-        nowPlayingMovies = emptyList(),
-        popularMovies = emptyList(),
-        topRatedMovies = emptyList(),
-        upComingMovies = emptyList()
-    )
+    override fun defaultEmptyState() =
+        MoviesUIState(
+            nowPlayingMovies = emptyList(),
+            popularMovies = emptyList(),
+            topRatedMovies = emptyList(),
+            upComingMovies = emptyList(),
+        )
 
     private fun List<Movie>.addAllDistinctly(newMovies: List<Movie>): List<Movie> {
         return toMutableList().apply {

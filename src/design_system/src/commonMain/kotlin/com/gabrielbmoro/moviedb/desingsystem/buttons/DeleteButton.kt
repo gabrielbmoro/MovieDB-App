@@ -21,13 +21,17 @@ private val deleteCardContainerColor = Color(0xFFFFDAD4L)
 private val deleteCardTextColor = Color(0xFF851300L)
 
 @Composable
-fun DeleteButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun DeleteButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Card(
         modifier = modifier,
         onClick = onClick,
-        colors = CardDefaults.cardColors(
-            containerColor = deleteCardContainerColor
-        ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = deleteCardContainerColor,
+            ),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

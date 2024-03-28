@@ -9,5 +9,5 @@ data class PageResponse(
     val page: Int,
     var total_results: Int,
     var total_pages: Int,
-    var results: List<MovieResponse>? = null
+    var results: List<MovieResponse>? = null,
 )

@@ -33,7 +33,7 @@ fun MoviesCarousel(
     movies: List<Movie>,
     onSelectMovie: ((Movie) -> Unit),
     onRequestMore: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val lazyListState = rememberLazyListState()
     val firstVisibleItemIndex by remember {
@@ -44,15 +44,17 @@ fun MoviesCarousel(
 
     Text(
         text = title,
-        style = MaterialTheme.typography.titleMedium.copy(
-            fontSize = 18.sp
-        )
+        style =
+            MaterialTheme.typography.titleMedium.copy(
+                fontSize = 18.sp,
+            ),
     )
 
     Spacer(
-        modifier = Modifier
-            .height(8.dp)
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .height(8.dp)
+                .fillMaxWidth(),
     )
 
     LazyRow(
@@ -71,16 +73,16 @@ fun MoviesCarousel(
                     imageUrl = movie.posterImageUrl,
                     contentScale = ContentScale.FillHeight,
                     contentDescription = movie.title,
-                    modifier = Modifier
-                        .width(180.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .clickable { onSelectMovie(movie) }
-                        .fillMaxHeight()
+                    modifier =
+                        Modifier
+                            .width(180.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { onSelectMovie(movie) }
+                            .fillMaxHeight(),
                 )
             }
-        }
+        },
     )
-
 
     LaunchedEffect(key1 = firstVisibleItemIndex) {
         val firstItemIndexOfLastWindow = movies.lastIndex - windowSize

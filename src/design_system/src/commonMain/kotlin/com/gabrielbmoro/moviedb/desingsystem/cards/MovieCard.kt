@@ -46,25 +46,28 @@ fun MovieCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit),
     enableSwipeToDelete: Boolean = false,
-    onDeleteClick: (() -> Unit) = {}
+    onDeleteClick: (() -> Unit) = {},
 ) {
-    val anchors = DraggableAnchors {
-        DragValue.Start at THRESHOLD_VALUE.dp.value
-        DragValue.None at 0f
-    }
+    val anchors =
+        DraggableAnchors {
+            DragValue.Start at THRESHOLD_VALUE.dp.value
+            DragValue.None at 0f
+        }
 
-    val anchoredDraggableState = remember {
-        AnchoredDraggableState(
-            initialValue = DragValue.None,
-            anchors = anchors,
-            velocityThreshold = { THRESHOLD_VALUE.times(-1).dp.value },
-            positionalThreshold = { totalDistance -> totalDistance * 0.5f },
-            animationSpec = spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessMediumLow,
-            ),
-        )
-    }
+    val anchoredDraggableState =
+        remember {
+            AnchoredDraggableState(
+                initialValue = DragValue.None,
+                anchors = anchors,
+                velocityThreshold = { THRESHOLD_VALUE.times(-1).dp.value },
+                positionalThreshold = { totalDistance -> totalDistance * 0.5f },
+                animationSpec =
+                    spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessMediumLow,
+                    ),
+            )
+        }
 
     LaunchedEffect(Unit) {
         anchoredDraggableState.updateAnchors(anchors)
@@ -73,43 +76,47 @@ fun MovieCard(
     Box(modifier = modifier) {
         DeleteButton(
             onClick = onDeleteClick,
-            modifier = Modifier.align(Alignment.CenterEnd)
+            modifier = Modifier.align(Alignment.CenterEnd),
         )
 
         Card(
-            modifier = Modifier
-                .height(CardViewImageHeight)
-                .offset {
-                    IntOffset(
-                        x = anchoredDraggableState
-                            .requireOffset()
-                            .toInt(),
-                        y = 0
-                    )
-                }
-                .anchoredDraggable(
-                    state = anchoredDraggableState,
-                    enabled = enableSwipeToDelete,
-                    orientation = Orientation.Horizontal
-                ),
+            modifier =
+                Modifier
+                    .height(CardViewImageHeight)
+                    .offset {
+                        IntOffset(
+                            x =
+                                anchoredDraggableState
+                                    .requireOffset()
+                                    .toInt(),
+                            y = 0,
+                        )
+                    }
+                    .anchoredDraggable(
+                        state = anchoredDraggableState,
+                        enabled = enableSwipeToDelete,
+                        orientation = Orientation.Horizontal,
+                    ),
             shape = RoundedCornerShape(12.dp),
-            onClick = onClick
+            onClick = onClick,
         ) {
             Row {
                 MovieImage(
                     imageUrl = imageUrl,
                     contentScale = ContentScale.FillHeight,
-                    modifier = Modifier
-                        .width(PosterCardWidth)
-                        .fillMaxHeight(),
-                    contentDescription = stringResource(MR.strings.poster)
+                    modifier =
+                        Modifier
+                            .width(PosterCardWidth)
+                            .fillMaxHeight(),
+                    contentDescription = stringResource(MR.strings.poster),
                 )
                 MovieCardInformation(
                     title = title,
                     votes = votes,
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    description = description
+                    modifier =
+                        Modifier
+                            .fillMaxSize(),
+                    description = description,
                 )
             }
         }

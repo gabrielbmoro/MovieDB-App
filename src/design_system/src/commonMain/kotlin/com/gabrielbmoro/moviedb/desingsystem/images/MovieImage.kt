@@ -15,7 +15,7 @@ fun MovieImage(
     imageUrl: String?,
     contentDescription: String,
     contentScale: ContentScale,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (imageUrl != null) {
         KamelImage(
@@ -29,9 +29,9 @@ fun MovieImage(
                     painter = painterResource(MR.images.ic_movie_media_player),
                     contentScale = ContentScale.Inside,
                     contentDescription = contentDescription,
-                    modifier = modifier
+                    modifier = modifier,
                 )
-            }
+            },
         )
     } else {
         Image(
@@ -39,7 +39,7 @@ fun MovieImage(
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
             contentDescription = contentDescription,
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }

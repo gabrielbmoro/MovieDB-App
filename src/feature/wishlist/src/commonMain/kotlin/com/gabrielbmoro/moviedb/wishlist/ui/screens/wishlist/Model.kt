@@ -5,7 +5,7 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 sealed class WishlistUserIntent {
     data class DeleteMovie(val movie: Movie) : WishlistUserIntent()
 
-    data object LoadMovies: WishlistUserIntent()
+    data object LoadMovies : WishlistUserIntent()
 
     data object ResultMessageReset : WishlistUserIntent()
 }

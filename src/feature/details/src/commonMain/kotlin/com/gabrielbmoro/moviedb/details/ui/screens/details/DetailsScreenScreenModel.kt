@@ -1,24 +1,23 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
+import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
 
 class DetailsScreenScreenModel(
     private val movie: Movie,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
 ) : ScreenModelMVI<DetailsUserIntent, DetailsUIState>() {
-
     override suspend fun setup(): DetailsUIState {
         updateState(
             uiState.value.copy(
-                isLoading = true
-            )
+                isLoading = true,
+            ),
         )
 
         val isMovieFavorite = isMovieFavorite(movieTitle = movie.title)
@@ -39,7 +38,7 @@ class DetailsScreenScreenModel(
             movieLanguage = movie.language,
             moviePopularity = movie.popularity,
             movieVotesAverage = movie.votesAverage,
-            imageUrl = movie.backdropImageUrl
+            imageUrl = movie.backdropImageUrl,
         )
     }
 
@@ -49,7 +48,7 @@ class DetailsScreenScreenModel(
         return when (intent) {
             is DetailsUserIntent.HideVideo -> {
                 getState().copy(
-                    showVideo = false
+                    showVideo = false,
                 )
             }
 
@@ -57,27 +56,29 @@ class DetailsScreenScreenModel(
                 val value = getState().isFavorite
                 val desiredValue = value.not()
 
-                val params = FavoriteMovieUseCase.Params(
-                    movieTitle = movie.title,
-                    movieLanguage = movie.language,
-                    movieVotesAverage = movie.votesAverage,
-                    movieReleaseDate = movie.releaseDate,
-                    moviePosterImageUrl = movie.posterImageUrl,
-                    moviePopularity = movie.popularity,
-                    movieOverview = movie.overview,
-                    movieId = movie.id,
-                    movieBackdropImageUrl = movie.backdropImageUrl,
-                    toFavorite = desiredValue
-                )
+                val params =
+                    FavoriteMovieUseCase.Params(
+                        movieTitle = movie.title,
+                        movieLanguage = movie.language,
+                        movieVotesAverage = movie.votesAverage,
+                        movieReleaseDate = movie.releaseDate,
+                        moviePosterImageUrl = movie.posterImageUrl,
+                        moviePopularity = movie.popularity,
+                        movieOverview = movie.overview,
+                        movieId = movie.id,
+                        movieBackdropImageUrl = movie.backdropImageUrl,
+                        toFavorite = desiredValue,
+                    )
                 favoriteMovieUseCase.execute(params)
 
-                val result = isFavoriteMovieUseCase.execute(
-                    IsFavoriteMovieUseCase.Params(
-                        movieTitle = movie.title
+                val result =
+                    isFavoriteMovieUseCase.execute(
+                        IsFavoriteMovieUseCase.Params(
+                            movieTitle = movie.title,
+                        ),
                     )
-                )
                 getState().copy(
-                    isFavorite = result
+                    isFavorite = result,
                 )
             }
         }
@@ -86,16 +87,16 @@ class DetailsScreenScreenModel(
     private suspend fun isMovieFavorite(movieTitle: String): Boolean {
         return isFavoriteMovieUseCase.execute(
             IsFavoriteMovieUseCase.Params(
-                movieTitle = movieTitle
-            )
+                movieTitle = movieTitle,
+            ),
         )
     }
 
     private suspend fun fetchMoviesDetails(): MovieDetail {
         return getMovieDetailsUseCase.execute(
             GetMovieDetailsUseCase.Params(
-                movieId = movie.id
-            )
+                movieId = movie.id,
+            ),
         )
     }
 

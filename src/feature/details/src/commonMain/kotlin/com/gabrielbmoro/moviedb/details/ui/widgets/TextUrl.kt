@@ -10,21 +10,26 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
 
 @Composable
-fun TextUrl(url: String, modifier: Modifier = Modifier) {
+fun TextUrl(
+    url: String,
+    modifier: Modifier = Modifier,
+) {
     val uriHandler = LocalUriHandler.current
 
     ClickableText(
         modifier = modifier,
-        style = MaterialTheme.typography.bodyMedium.copy(
-            color = MaterialTheme.colorScheme.tertiary,
-            fontStyle = FontStyle.Italic,
-            textDecoration = TextDecoration.Underline
-        ),
-        text = buildAnnotatedString {
-            append(url)
-        },
+        style =
+            MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.tertiary,
+                fontStyle = FontStyle.Italic,
+                textDecoration = TextDecoration.Underline,
+            ),
+        text =
+            buildAnnotatedString {
+                append(url)
+            },
         onClick = {
             uriHandler.openUri(url)
-        }
+        },
     )
 }

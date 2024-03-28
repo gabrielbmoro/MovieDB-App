@@ -8,7 +8,6 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetTopRatedMoviesUseCaseTest {
-
     private lateinit var repository: FakeRepository
     private lateinit var useCase: GetTopRatedMoviesUseCase
 
@@ -19,14 +18,15 @@ class GetTopRatedMoviesUseCaseTest {
     }
 
     @Test
-    fun `should be able to get all top rated movies`() = runTest {
-        // arrange
-        repository.topRatedMovies = emptyList()
+    fun `should be able to get all top rated movies`() =
+        runTest {
+            // arrange
+            repository.topRatedMovies = emptyList()
 
-        // act
-        val result = useCase.execute(GetTopRatedMoviesUseCase.Params(1))
+            // act
+            val result = useCase.execute(GetTopRatedMoviesUseCase.Params(1))
 
-        // assert
-        assertEquals(emptyList(), result)
-    }
+            // assert
+            assertEquals(emptyList(), result)
+        }
 }

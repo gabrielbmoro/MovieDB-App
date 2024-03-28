@@ -7,7 +7,6 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class MappersExtTest {
-
     @Test
     fun `should be able to convert a movie to a dto`() {
         // arrange

@@ -12,5 +12,5 @@ data class MovieDetailResponse(
     val imdb_id: String,
     val status: String,
     val tagline: String,
-    val production_companies: List<ProductionCompanyResponse>
+    val production_companies: List<ProductionCompanyResponse>,
 )

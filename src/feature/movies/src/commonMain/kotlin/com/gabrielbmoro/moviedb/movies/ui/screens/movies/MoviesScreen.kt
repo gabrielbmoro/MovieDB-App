@@ -34,7 +34,6 @@ import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
 class MoviesScreen : Screen {
-
     @Composable
     override fun Content() {
         val viewModel = getScreenModel<MoviesScreenModel>()
@@ -42,10 +41,11 @@ class MoviesScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val navigateToDetails: ((Movie) -> Unit) = {
-            val detailsScreen = KoinPlatform.getKoin().get<Screen>(
-                qualifier = named(NavigationDestinations.DETAILS),
-                parameters = { parametersOf(it) }
-            )
+            val detailsScreen =
+                KoinPlatform.getKoin().get<Screen>(
+                    qualifier = named(NavigationDestinations.DETAILS),
+                    parameters = { parametersOf(it) },
+                )
             navigator.push(detailsScreen)
         }
 
@@ -74,12 +74,13 @@ class MoviesScreen : Screen {
                         }
                     },
                     onSelectFavoriteTab = {
-                        val wishListScreen = KoinPlatform.getKoin()
-                            .get<Screen>(named(NavigationDestinations.WISHLIST))
+                        val wishListScreen =
+                            KoinPlatform.getKoin()
+                                .get<Screen>(named(NavigationDestinations.WISHLIST))
                         navigator.push(wishListScreen)
-                    }
+                    },
                 )
-            }
+            },
         ) {
             LazyColumn(
                 state = lazyListState,
@@ -93,10 +94,11 @@ class MoviesScreen : Screen {
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMoreNowPlayingMovies)
                             },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(320.dp),
-                            title = stringResource(MR.strings.now_playing)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(320.dp),
+                            title = stringResource(MR.strings.now_playing),
                         )
                     }
 
@@ -109,10 +111,11 @@ class MoviesScreen : Screen {
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMorePopularMovies)
                             },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(320.dp),
-                            title = stringResource(MR.strings.popular)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(320.dp),
+                            title = stringResource(MR.strings.popular),
                         )
                     }
 
@@ -125,10 +128,11 @@ class MoviesScreen : Screen {
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMoreTopRatedMovies)
                             },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(320.dp),
-                            title = stringResource(MR.strings.top_rated)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(320.dp),
+                            title = stringResource(MR.strings.top_rated),
                         )
                     }
 
@@ -141,18 +145,20 @@ class MoviesScreen : Screen {
                             onRequestMore = {
                                 viewModel.accept(Intent.RequestMoreUpComingMovies)
                             },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(320.dp),
-                            title = stringResource(MR.strings.upcoming)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(320.dp),
+                            title = stringResource(MR.strings.upcoming),
                         )
                     }
                 },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .align(Alignment.TopCenter),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .align(Alignment.TopCenter),
                 contentPadding = PaddingValues(vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp, alignment = Alignment.Top)
+                verticalArrangement = Arrangement.spacedBy(18.dp, alignment = Alignment.Top),
             )
         }
     }

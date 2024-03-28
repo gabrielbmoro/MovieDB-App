@@ -15,11 +15,9 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetailsScreenModelTest {
-
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
     private lateinit var getMovieDetailsUseCase: FakeGetMovieDetailsUseCase
-
 
     @BeforeTest
     fun before() {
@@ -36,59 +34,63 @@ class DetailsScreenModelTest {
     }
 
     @Test
-    fun `should be able to fetch movie details on launch`() = runTest {
-        // arrange, act
-        val isFavorite = false
-        isFavoriteMovieUseCase.result = isFavorite
-        val adult = false
-        val budget = 12000
-        val genres = listOf("genre1")
-        val homePage = "homePage"
-        val imdbId = "imdbId"
-        val status = "status"
-        val tagLine = "tagline"
-        val productionCompanies = listOf("productionCompany1")
-        val videoId = "videoId"
+    fun `should be able to fetch movie details on launch`() =
+        runTest {
+            // arrange, act
+            val isFavorite = false
+            isFavoriteMovieUseCase.result = isFavorite
+            val adult = false
+            val budget = 12000
+            val genres = listOf("genre1")
+            val homePage = "homePage"
+            val imdbId = "imdbId"
+            val status = "status"
+            val tagLine = "tagline"
+            val productionCompanies = listOf("productionCompany1")
+            val videoId = "videoId"
 
-        val expected = DetailsUIState(
-            movieOverview = fakeMovie.overview,
-            isFavorite = isFavorite,
-            movieVotesAverage = fakeMovie.votesAverage,
-            imageUrl = fakeMovie.backdropImageUrl,
-            isLoading = false,
-            moviePopularity = fakeMovie.popularity,
-            movieLanguage = fakeMovie.language,
-            videoId = videoId,
-            errorMessage = null,
-            homepage = homePage,
-            productionCompanies = "productionCompany1",
-            status = status,
-            tagLine = tagLine,
-            genres = genres,
-            movieTitle = fakeMovie.title
-        )
+            val expected =
+                DetailsUIState(
+                    movieOverview = fakeMovie.overview,
+                    isFavorite = isFavorite,
+                    movieVotesAverage = fakeMovie.votesAverage,
+                    imageUrl = fakeMovie.backdropImageUrl,
+                    isLoading = false,
+                    moviePopularity = fakeMovie.popularity,
+                    movieLanguage = fakeMovie.language,
+                    videoId = videoId,
+                    errorMessage = null,
+                    homepage = homePage,
+                    productionCompanies = "productionCompany1",
+                    status = status,
+                    tagLine = tagLine,
+                    genres = genres,
+                    movieTitle = fakeMovie.title,
+                )
 
-        getMovieDetailsUseCase.result = MovieDetail(
-            adult = adult,
-            budget = budget,
-            genres = genres,
-            homepage = homePage,
-            imdbId = imdbId,
-            status = status,
-            tagline = tagLine,
-            productionCompanies = productionCompanies,
-            videoId = videoId,
-        )
-        val viewModel = DetailsScreenScreenModel(
-            movie = fakeMovie,
-            favoriteMovieUseCase = favoriteMovieUseCase,
-            isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-            getMovieDetailsUseCase = getMovieDetailsUseCase
-        )
+            getMovieDetailsUseCase.result =
+                MovieDetail(
+                    adult = adult,
+                    budget = budget,
+                    genres = genres,
+                    homepage = homePage,
+                    imdbId = imdbId,
+                    status = status,
+                    tagline = tagLine,
+                    productionCompanies = productionCompanies,
+                    videoId = videoId,
+                )
+            val viewModel =
+                DetailsScreenScreenModel(
+                    movie = fakeMovie,
+                    favoriteMovieUseCase = favoriteMovieUseCase,
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                    getMovieDetailsUseCase = getMovieDetailsUseCase,
+                )
 
-        // assert
-        advanceUntilIdle()
-        val result = viewModel.uiState.value
-        assertEquals(expected, result)
-    }
+            // assert
+            advanceUntilIdle()
+            val result = viewModel.uiState.value
+            assertEquals(expected, result)
+        }
 }

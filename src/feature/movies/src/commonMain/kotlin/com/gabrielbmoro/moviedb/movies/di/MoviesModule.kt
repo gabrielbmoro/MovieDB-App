@@ -7,17 +7,18 @@ import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val featureMoviesModule = module {
-    factory {
-        MoviesScreenModel(
-            getPopularMoviesUseCase = get(),
-            getNowPlayingMoviesUseCase = get(),
-            getTopRatedMoviesUseCase = get(),
-            getUpcomingMoviesUseCase = get(),
-        )
-    }
+val featureMoviesModule =
+    module {
+        factory {
+            MoviesScreenModel(
+                getPopularMoviesUseCase = get(),
+                getNowPlayingMoviesUseCase = get(),
+                getTopRatedMoviesUseCase = get(),
+                getUpcomingMoviesUseCase = get(),
+            )
+        }
 
-    factory<Screen>(named(NavigationDestinations.MOVIES)) {
-        MoviesScreen()
+        factory<Screen>(named(NavigationDestinations.MOVIES)) {
+            MoviesScreen()
+        }
     }
-}

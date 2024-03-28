@@ -20,58 +20,59 @@ import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCaseImpl
 import org.koin.dsl.module
 
-val domainModule = module {
-    factory<FavoriteMovieUseCase> {
-        FavoriteMovieUseCaseImpl(
-            repository = get()
-        )
-    }
+val domainModule =
+    module {
+        factory<FavoriteMovieUseCase> {
+            FavoriteMovieUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<GetFavoriteMoviesUseCase> {
-        GetFavoriteMoviesUseCaseImpl(
-            repository = get()
-        )
-    }
+        factory<GetFavoriteMoviesUseCase> {
+            GetFavoriteMoviesUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<GetMovieDetailsUseCase> {
-        GetMovieDetailsUseCaseImpl(
-            repository = get(),
-        )
-    }
+        factory<GetMovieDetailsUseCase> {
+            GetMovieDetailsUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<GetNowPlayingMoviesUseCase> {
-        GetNowPlayingMoviesUseCaseImpl(
-            repository = get()
-        )
-    }
+        factory<GetNowPlayingMoviesUseCase> {
+            GetNowPlayingMoviesUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<GetPopularMoviesUseCase> {
-        GetPopularMoviesUseCaseImpl(
-            repository = get()
-        )
-    }
+        factory<GetPopularMoviesUseCase> {
+            GetPopularMoviesUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<GetTopRatedMoviesUseCase> {
-        GetTopRatedMoviesUseCaseImpl(
-            repository = get()
-        )
-    }
+        factory<GetTopRatedMoviesUseCase> {
+            GetTopRatedMoviesUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<GetUpcomingMoviesUseCase> {
-        GetUpcomingMoviesUseCaseImpl(
-            repository = get()
-        )
-    }
+        factory<GetUpcomingMoviesUseCase> {
+            GetUpcomingMoviesUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<IsFavoriteMovieUseCase> {
-        IsFavoriteMovieUseCaseImpl(
-            repository = get()
-        )
-    }
+        factory<IsFavoriteMovieUseCase> {
+            IsFavoriteMovieUseCaseImpl(
+                repository = get(),
+            )
+        }
 
-    factory<SearchMovieUseCase> {
-        SearchMovieUseCaseImpl(
-            repository = get()
-        )
+        factory<SearchMovieUseCase> {
+            SearchMovieUseCaseImpl(
+                repository = get(),
+            )
+        }
     }
-}

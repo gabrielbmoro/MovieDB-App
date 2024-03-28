@@ -15,7 +15,6 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class WishlistScreenModelTest {
-
     private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
@@ -35,25 +34,28 @@ class WishlistScreenModelTest {
     }
 
     @Test
-    fun `should be able to process delete movie intent`() = runTest {
-        // arrange
-        val expected = listOf(
-                Movie.mockChuckNorrisVsVandammeMovie()
-            )
-        isFavoriteMovieUseCase.result = true
-        getFavoriteMoviesUseCase.result = expected
+    fun `should be able to process delete movie intent`() =
+        runTest {
+            // arrange
+            val expected =
+                listOf(
+                    Movie.mockChuckNorrisVsVandammeMovie(),
+                )
+            isFavoriteMovieUseCase.result = true
+            getFavoriteMoviesUseCase.result = expected
 
-        val viewModel = WishlistScreenModel(
-            getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
-            favoriteMovieUseCase = favoriteMovieUseCase,
-            isFavoriteMovieUseCase = isFavoriteMovieUseCase
-        )
+            val viewModel =
+                WishlistScreenModel(
+                    getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+                    favoriteMovieUseCase = favoriteMovieUseCase,
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                )
 
-        // act
-        viewModel.accept(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            // act
+            viewModel.accept(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
 
-        // assert
-        advanceUntilIdle()
-        assertEquals(1, favoriteMovieUseCase.timesCalled)
-    }
+            // assert
+            advanceUntilIdle()
+            assertEquals(1, favoriteMovieUseCase.timesCalled)
+        }
 }

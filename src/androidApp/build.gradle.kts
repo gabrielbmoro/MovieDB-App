@@ -64,7 +64,7 @@ koverReport {
                 "*.dto",
                 "*.core.ui.*",
                 "*.widgets",
-                "*.navigation"
+                "*.navigation",
             )
 
             classes(
@@ -74,7 +74,7 @@ koverReport {
                 "*_Factory*",
                 "*Activity",
                 "*ScreenKt*",
-                "*_HiltModules*"
+                "*_HiltModules*",
             )
             annotatedBy("Generated")
         }

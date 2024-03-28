@@ -18,19 +18,19 @@ fun MovieList(
     onSelectMovie: (Movie) -> Unit,
     onDeleteMovie: (Movie) -> Unit,
     lazyListState: LazyListState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         state = lazyListState,
         modifier = modifier.background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(vertical = 8.dp)
+        contentPadding = PaddingValues(vertical = 8.dp),
     ) {
         items(
             count = moviesList.size,
             key = { index ->
                 moviesList[index].id
-            }
+            },
         ) { index ->
             val movie = moviesList[index]
             MovieCard(
@@ -40,7 +40,7 @@ fun MovieList(
                 description = movie.overview,
                 onClick = { onSelectMovie(movie) },
                 enableSwipeToDelete = true,
-                onDeleteClick = { onDeleteMovie(movie) }
+                onDeleteClick = { onDeleteMovie(movie) },
             )
         }
     }

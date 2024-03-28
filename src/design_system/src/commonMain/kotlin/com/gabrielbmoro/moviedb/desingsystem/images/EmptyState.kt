@@ -21,18 +21,19 @@ fun EmptyState(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = painterResource(MR.images.ic_sad_emoji),
-            contentDescription = stringResource(MR.strings.alt_sad_emoji)
+            contentDescription = stringResource(MR.strings.alt_sad_emoji),
         )
         Text(
             text = stringResource(MR.strings.empty_view_title),
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
-                .padding(horizontal = 24.dp, vertical = 4.dp)
-                .wrapContentWidth(Alignment.CenterHorizontally)
+            modifier =
+                Modifier
+                    .padding(horizontal = 24.dp, vertical = 4.dp)
+                    .wrapContentWidth(Alignment.CenterHorizontally),
         )
     }
 }

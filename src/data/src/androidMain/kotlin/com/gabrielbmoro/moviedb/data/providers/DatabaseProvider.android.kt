@@ -8,7 +8,7 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 import org.koin.mp.KoinPlatform
 
 class DataBaseImpl(
-    private val favoriteMoviesDAO: FavoriteMoviesDAO
+    private val favoriteMoviesDAO: FavoriteMoviesDAO,
 ) : Database {
     override suspend fun allFavoriteMovies(): List<Movie> {
         return favoriteMoviesDAO.allFavoriteMovies().map { it.toMovie() }
@@ -25,7 +25,6 @@ class DataBaseImpl(
     override suspend fun saveFavorite(movie: Movie) {
         favoriteMoviesDAO.saveFavorite(movie.toFavoriteMovieDTO())
     }
-
 }
 
 actual fun databaseInstance(): Database {

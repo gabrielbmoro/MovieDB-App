@@ -16,16 +16,17 @@ fun MovieResponse.toMovie(): Movie {
         votesAverage = vote_average ?: 0f,
         title = title ?: "",
         posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
-        backdropImageUrl = backdrop_path?.let {
-            BIG_SIZE_IMAGE_ADDRESS.plus(
-                backdrop_path
-            )
-        },
+        backdropImageUrl =
+            backdrop_path?.let {
+                BIG_SIZE_IMAGE_ADDRESS.plus(
+                    backdrop_path,
+                )
+            },
         overview = overview ?: "",
         releaseDate = release_date ?: "",
         popularity = popularity ?: 0f,
         language = original_language ?: "",
-        isFavorite = false
+        isFavorite = false,
     )
 }
 
@@ -38,7 +39,7 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         imdbId = imdb_id,
         status = status,
         tagline = tagline,
-        productionCompanies = production_companies.map { it.name }
+        productionCompanies = production_companies.map { it.name },
     )
 }
 
@@ -51,7 +52,7 @@ fun VideoStreamsResponse.toVideoStreams(): List<VideoStream> {
             type = it.type,
             official = it.official,
             name = it.name,
-            id = it.id
+            id = it.id,
         )
     }
 }

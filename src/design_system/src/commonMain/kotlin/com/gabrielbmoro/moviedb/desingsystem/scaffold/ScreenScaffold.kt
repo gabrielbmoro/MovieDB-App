@@ -22,36 +22,38 @@ fun ScreenScaffold(
     searchEvent: (() -> Unit)? = null,
     bottomBar: @Composable () -> Unit,
     snackBarHost: @Composable () -> Unit = {},
-    screenContent: @Composable BoxScope.() -> Unit
+    screenContent: @Composable BoxScope.() -> Unit,
 ) {
     Scaffold(
         topBar = {
             AnimatedVisibility(
                 visible = showTopBar,
-                enter = expandVertically(
-                    tween(delayMillis = 200, durationMillis = 500)
-                ),
-                exit = shrinkVertically()
+                enter =
+                    expandVertically(
+                        tween(delayMillis = 200, durationMillis = 500),
+                    ),
+                exit = shrinkVertically(),
             ) {
                 AppToolbarTitle(
                     title = appBarTitle,
                     backEvent = null,
-                    searchEvent = searchEvent
+                    searchEvent = searchEvent,
                 )
             }
         },
         snackbarHost = snackBarHost,
-        bottomBar = bottomBar
+        bottomBar = bottomBar,
     ) {
         Box(
-            modifier = modifier
-                .padding(
-                    top = it.calculateTopPadding(),
-                    bottom = it.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
-                )
-                .fillMaxSize()
+            modifier =
+                modifier
+                    .padding(
+                        top = it.calculateTopPadding(),
+                        bottom = it.calculateBottomPadding(),
+                        start = 16.dp,
+                        end = 16.dp,
+                    )
+                    .fillMaxSize(),
         ) {
             screenContent()
         }

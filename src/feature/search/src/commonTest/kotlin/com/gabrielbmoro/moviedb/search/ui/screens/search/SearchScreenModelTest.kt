@@ -14,7 +14,6 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchScreenModelTest {
-
     private lateinit var searchMovieUseCase: FakeSearchUseCase
 
     @BeforeTest
@@ -29,17 +28,18 @@ class SearchScreenModelTest {
     }
 
     @Test
-    fun `should be able to reset the search field - empty search`() = runTest {
-        // arrange
-        searchMovieUseCase.searchResult = emptyList()
-        val viewModel = SearchScreenModel(searchMovieUseCase)
+    fun `should be able to reset the search field - empty search`() =
+        runTest {
+            // arrange
+            searchMovieUseCase.searchResult = emptyList()
+            val viewModel = SearchScreenModel(searchMovieUseCase)
 
-        // act
-        viewModel.accept(SearchUserIntent.ClearSearchField)
+            // act
+            viewModel.accept(SearchUserIntent.ClearSearchField)
 
-        // assert
-        advanceUntilIdle()
-        assertEquals("", viewModel.uiState.value.searchQuery.text)
-        assertEquals(null, viewModel.uiState.value.results)
-    }
+            // assert
+            advanceUntilIdle()
+            assertEquals("", viewModel.uiState.value.searchQuery.text)
+            assertEquals(null, viewModel.uiState.value.results)
+        }
 }

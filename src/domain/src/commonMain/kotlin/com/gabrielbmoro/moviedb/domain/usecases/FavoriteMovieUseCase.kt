@@ -4,7 +4,6 @@ import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 
 interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
-
     data class Params(
         val movieId: Long? = null,
         val movieVotesAverage: Float? = null,
@@ -20,26 +19,26 @@ interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
 }
 
 open class FavoriteMovieUseCaseImpl(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
 ) : FavoriteMovieUseCase {
-
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {
         val toFavorite = input.toFavorite
         val movieTitle = input.movieTitle
         when {
             (toFavorite && !repository.checkIsAFavoriteMovie(movieTitle)) -> {
-                val movie = Movie(
-                    id = input.movieId!!,
-                    votesAverage = input.movieVotesAverage!!,
-                    title = input.movieTitle,
-                    posterImageUrl = input.moviePosterImageUrl!!,
-                    backdropImageUrl = input.movieBackdropImageUrl!!,
-                    overview = input.movieOverview!!,
-                    releaseDate = input.movieReleaseDate!!,
-                    isFavorite = true,
-                    language = input.movieLanguage!!,
-                    popularity = input.moviePopularity!!,
-                )
+                val movie =
+                    Movie(
+                        id = input.movieId!!,
+                        votesAverage = input.movieVotesAverage!!,
+                        title = input.movieTitle,
+                        posterImageUrl = input.moviePosterImageUrl!!,
+                        backdropImageUrl = input.movieBackdropImageUrl!!,
+                        overview = input.movieOverview!!,
+                        releaseDate = input.movieReleaseDate!!,
+                        isFavorite = true,
+                        language = input.movieLanguage!!,
+                        popularity = input.moviePopularity!!,
+                    )
                 repository.favorite(movie = movie)
             }
 

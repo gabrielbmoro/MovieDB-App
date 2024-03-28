@@ -6,10 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SectionBody(body: String, modifier: Modifier = Modifier) {
+fun SectionBody(
+    body: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = body,
         modifier = modifier,
-        style = MaterialTheme.typography.bodyMedium
+        style = MaterialTheme.typography.bodyMedium,
     )
 }

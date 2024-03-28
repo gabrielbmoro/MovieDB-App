@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class ScreenModelMVI<in UserIntent : Any, ScreenState : Any> : ScreenModel,
+abstract class ScreenModelMVI<in UserIntent : Any, ScreenState : Any> :
+    ScreenModel,
     ModelViewIntent<UserIntent, ScreenState> {
-
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(screenModelScope, SharingStarted.Eagerly, _uiState.value)
 

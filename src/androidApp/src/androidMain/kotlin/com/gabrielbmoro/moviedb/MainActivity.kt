@@ -15,7 +15,6 @@ import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
 import ext.syncTopBarsColors
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,13 +34,19 @@ fun DynamicColorApp(content: @Composable () -> Unit) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
     val hasDynamicColorsFeature = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
 
-    val dynamicColorScheme = if (hasDynamicColorsFeature) {
-        if (isSystemInDarkTheme) dynamicDarkColorScheme(context)
-        else dynamicLightColorScheme(context)
-    } else null
+    val dynamicColorScheme =
+        if (hasDynamicColorsFeature) {
+            if (isSystemInDarkTheme) {
+                dynamicDarkColorScheme(context)
+            } else {
+                dynamicLightColorScheme(context)
+            }
+        } else {
+            null
+        }
 
     MovieDBAppTheme(
         dynamicColorScheme = dynamicColorScheme,
-        content = content
+        content = content,
     )
 }

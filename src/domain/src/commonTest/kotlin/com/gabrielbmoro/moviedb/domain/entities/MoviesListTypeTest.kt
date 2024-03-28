@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MoviesListTypeTest {
-
     @Test
     fun `should be able to identify a top rated movie`() {
         // arrange

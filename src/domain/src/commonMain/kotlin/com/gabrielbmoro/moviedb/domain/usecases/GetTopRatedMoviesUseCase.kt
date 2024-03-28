@@ -10,11 +10,11 @@ interface GetTopRatedMoviesUseCase : UseCase<GetTopRatedMoviesUseCase.Params, Li
 }
 
 class GetTopRatedMoviesUseCaseImpl(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
 ) : GetTopRatedMoviesUseCase {
     override suspend fun execute(input: GetTopRatedMoviesUseCase.Params): List<Movie> {
         return repository.getTopRatedMovies(
-            page = input.page
+            page = input.page,
         )
     }
 }

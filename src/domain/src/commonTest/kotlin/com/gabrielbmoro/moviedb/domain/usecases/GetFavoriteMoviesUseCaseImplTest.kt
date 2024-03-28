@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetFavoriteMoviesUseCaseImplTest {
-
     private lateinit var repository: FakeRepository
     private lateinit var useCase: GetFavoriteMoviesUseCase
 
@@ -20,16 +19,17 @@ class GetFavoriteMoviesUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to get all favorite movies`() = runTest {
-        // arrange
-        val favoriteMovies = listOf(Movie.mockWhiteDragonNotFavorite())
+    fun `should be able to get all favorite movies`() =
+        runTest {
+            // arrange
+            val favoriteMovies = listOf(Movie.mockWhiteDragonNotFavorite())
 
-        repository.favoriteMovies = favoriteMovies
+            repository.favoriteMovies = favoriteMovies
 
-        // act
-        val result = useCase.execute(Unit)
+            // act
+            val result = useCase.execute(Unit)
 
-        // assert
-        assertEquals(favoriteMovies, result)
-    }
+            // assert
+            assertEquals(favoriteMovies, result)
+        }
 }

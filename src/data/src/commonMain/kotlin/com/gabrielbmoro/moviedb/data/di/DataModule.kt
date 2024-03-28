@@ -19,48 +19,50 @@ import kotlinx.serialization.json.Json
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val dataModule = module {
-    single {
-        HttpClient(
-            engine = httpClientEngine()
-        ) {
-            install(Logging) {
-                logger = Logger.SIMPLE
-                level = LogLevel.HEADERS
-            }
+val dataModule =
+    module {
+        single {
+            HttpClient(
+                engine = httpClientEngine(),
+            ) {
+                install(Logging) {
+                    logger = Logger.SIMPLE
+                    level = LogLevel.HEADERS
+                }
 
-            install(ContentNegotiation) {
-                json(
-                    json = Json {
-                        ignoreUnknownKeys = true
-                    }
-                )
-            }
+                install(ContentNegotiation) {
+                    json(
+                        json =
+                            Json {
+                                ignoreUnknownKeys = true
+                            },
+                    )
+                }
 
-            install(Auth) {
-                bearer {
-                    loadTokens {
-                        BearerTokens(
-                            get(named("api_token")),
-                            ""
-                        )
+                install(Auth) {
+                    bearer {
+                        loadTokens {
+                            BearerTokens(
+                                get(named("api_token")),
+                                "",
+                            )
+                        }
                     }
                 }
             }
         }
-    }
 
-    single {
-        ApiService(
-            baseUrl = "https://api.themoviedb.org/3",
-            httpClient = get()
-        )
-    }
+        single {
+            ApiService(
+                baseUrl = "https://api.themoviedb.org/3",
+                httpClient = get(),
+            )
+        }
 
-    single<MoviesRepository> {
-        MoviesRepositoryImpl(
-            api = get(),
-            database = databaseInstance()
-        )
+        single<MoviesRepository> {
+            MoviesRepositoryImpl(
+                api = get(),
+                database = databaseInstance(),
+            )
+        }
     }
-}

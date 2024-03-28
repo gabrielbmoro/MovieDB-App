@@ -15,11 +15,14 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun GenresCard(genres: List<String>, modifier: Modifier = Modifier) {
+fun GenresCard(
+    genres: List<String>,
+    modifier: Modifier = Modifier,
+) {
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        maxItemsInEachRow = 4
+        maxItemsInEachRow = 4,
     ) {
         var i = 0
         while (i < genres.size) {
@@ -27,17 +30,19 @@ fun GenresCard(genres: List<String>, modifier: Modifier = Modifier) {
             Card(
                 shape = CircleShape,
                 modifier = Modifier.padding(vertical = 4.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
             ) {
                 Text(
                     text = genre,
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.secondaryContainer
-                    ),
-                    modifier = Modifier.padding(
-                        horizontal = 8.dp,
-                        vertical = 4.dp
-                    )
+                    style =
+                        MaterialTheme.typography.labelLarge.copy(
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                        ),
+                    modifier =
+                        Modifier.padding(
+                            horizontal = 8.dp,
+                            vertical = 4.dp,
+                        ),
                 )
             }
             i++

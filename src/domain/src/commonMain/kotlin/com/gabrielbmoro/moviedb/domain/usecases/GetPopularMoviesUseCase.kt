@@ -10,7 +10,7 @@ interface GetPopularMoviesUseCase : UseCase<GetPopularMoviesUseCase.Params, List
 }
 
 class GetPopularMoviesUseCaseImpl(
-    private val repository: MoviesRepository
+    private val repository: MoviesRepository,
 ) : GetPopularMoviesUseCase {
     override suspend fun execute(input: GetPopularMoviesUseCase.Params): List<Movie> {
         return repository.getPopularMovies(input.page)

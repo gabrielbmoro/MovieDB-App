@@ -6,10 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SectionTitle(title: String, modifier: Modifier = Modifier) {
+fun SectionTitle(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium,
-        modifier = modifier
+        modifier = modifier,
     )
 }

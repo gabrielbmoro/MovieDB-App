@@ -6,18 +6,19 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 
-val fakeMovie = Movie(
-    id = 12L,
-    overview = "overview",
-    title = "title",
-    isFavorite = true,
-    votesAverage = 12f,
-    releaseDate = "10/02/1990",
-    backdropImageUrl = "backgropImageUrl",
-    language = "language",
-    popularity = 2f,
-    posterImageUrl = "posterImageUrl"
-)
+val fakeMovie =
+    Movie(
+        id = 12L,
+        overview = "overview",
+        title = "title",
+        isFavorite = true,
+        votesAverage = 12f,
+        releaseDate = "10/02/1990",
+        backdropImageUrl = "backgropImageUrl",
+        language = "language",
+        popularity = 2f,
+        posterImageUrl = "posterImageUrl",
+    )
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {

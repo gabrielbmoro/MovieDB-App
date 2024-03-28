@@ -14,7 +14,10 @@ private const val STARS_AVAILABLE = 5
 private const val AVERAGE_TOTAL = 10
 private const val INVALID_NUMBER = -1f
 
-private fun getDrawableAccordingToStarPosition(votes: Float, position: Int): ImageResource {
+private fun getDrawableAccordingToStarPosition(
+    votes: Float,
+    position: Int,
+): ImageResource {
     return when {
         votes >= position -> MR.images.ic_star
         votes < position -> {
@@ -30,54 +33,62 @@ private fun getDrawableAccordingToStarPosition(votes: Float, position: Int): Ima
 }
 
 @Composable
-fun FiveStars(votes: Float, modifier: Modifier = Modifier) {
+fun FiveStars(
+    votes: Float,
+    modifier: Modifier = Modifier,
+) {
     val numberOfStars = (votes / AVERAGE_TOTAL) * STARS_AVAILABLE
     if (votes != INVALID_NUMBER) {
         Row(modifier = modifier.heightIn(max = 56.dp)) {
             Image(
-                painter = painterResource(
-                    getDrawableAccordingToStarPosition(
-                        numberOfStars,
-                        0
-                    )
-                ),
-                contentDescription = ""
+                painter =
+                    painterResource(
+                        getDrawableAccordingToStarPosition(
+                            numberOfStars,
+                            0,
+                        ),
+                    ),
+                contentDescription = "",
             )
             Image(
-                painter = painterResource(
-                    getDrawableAccordingToStarPosition(
-                        numberOfStars,
-                        1
-                    )
-                ),
-                contentDescription = ""
+                painter =
+                    painterResource(
+                        getDrawableAccordingToStarPosition(
+                            numberOfStars,
+                            1,
+                        ),
+                    ),
+                contentDescription = "",
             )
             Image(
-                painter = painterResource(
-                    getDrawableAccordingToStarPosition(
-                        numberOfStars,
-                        2
-                    )
-                ),
-                contentDescription = ""
+                painter =
+                    painterResource(
+                        getDrawableAccordingToStarPosition(
+                            numberOfStars,
+                            2,
+                        ),
+                    ),
+                contentDescription = "",
             )
             Image(
-                painter = painterResource(
-                    getDrawableAccordingToStarPosition(
-                        numberOfStars,
-                        3
-                    )
-                ),
-                contentDescription = ""
+                painter =
+                    painterResource(
+                        getDrawableAccordingToStarPosition(
+                            numberOfStars,
+                            3,
+                        ),
+                    ),
+                contentDescription = "",
             )
             Image(
-                painter = painterResource(
-                    getDrawableAccordingToStarPosition(
-                        numberOfStars,
-                        4
-                    )
-                ),
-                contentDescription = ""
+                painter =
+                    painterResource(
+                        getDrawableAccordingToStarPosition(
+                            numberOfStars,
+                            4,
+                        ),
+                    ),
+                contentDescription = "",
             )
         }
     }

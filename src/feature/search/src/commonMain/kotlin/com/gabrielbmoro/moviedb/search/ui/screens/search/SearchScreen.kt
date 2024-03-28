@@ -56,29 +56,31 @@ class SearchScreen : Screen {
                                 viewModel.accept(SearchUserIntent.ClearSearchField)
                             },
                             modifier = Modifier.fillMaxWidth(),
-                            focusRequester = focusRequester
+                            focusRequester = focusRequester,
                         )
                     },
-                    backEvent = navigator::pop
+                    backEvent = navigator::pop,
                 )
-            }
+            },
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp),
             ) {
-                if(uiState.value.results!=null) {
+                if (uiState.value.results != null) {
                     MoviesResult(
                         movies = uiState.value.results!!,
                         modifier = Modifier.fillMaxWidth(),
                         navigateToDetailsScreen = { movie ->
-                            val detailsScreen = KoinPlatform.getKoin().get<Screen>(
-                                qualifier = named(NavigationDestinations.DETAILS),
-                                parameters = { parametersOf(movie) }
-                            )
+                            val detailsScreen =
+                                KoinPlatform.getKoin().get<Screen>(
+                                    qualifier = named(NavigationDestinations.DETAILS),
+                                    parameters = { parametersOf(movie) },
+                                )
                             navigator.push(detailsScreen)
-                        }
+                        },
                     )
                 }
             }
@@ -92,7 +94,7 @@ class SearchScreen : Screen {
                     delay(500)
                     keyboard?.show()
                 }
-            }
+            },
         )
     }
 }

@@ -6,7 +6,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class IsFavoriteMovieUseCaseImplTest {
-
     private lateinit var repository: FakeRepository
     private lateinit var useCase: IsFavoriteMovieUseCase
 
@@ -17,16 +16,17 @@ class IsFavoriteMovieUseCaseImplTest {
     }
 
     @Test
-    fun `should be able to check if a movie is favorite`() = runTest {
-        // arrange
-        val movieTitle = "Dragão branco"
+    fun `should be able to check if a movie is favorite`() =
+        runTest {
+            // arrange
+            val movieTitle = "Dragão branco"
 
-        repository.isFavoriteMovie = true
+            repository.isFavoriteMovie = true
 
-        // act
-        useCase.execute(IsFavoriteMovieUseCase.Params(movieTitle = movieTitle))
+            // act
+            useCase.execute(IsFavoriteMovieUseCase.Params(movieTitle = movieTitle))
 
-        // assert
-        assertEquals(1, repository.timesCallCheckFavorite)
-    }
+            // assert
+            assertEquals(1, repository.timesCallCheckFavorite)
+        }
 }

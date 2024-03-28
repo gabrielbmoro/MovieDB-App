@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 sealed class DetailsUserIntent {
     data object HideVideo : DetailsUserIntent()
+
     data object FavoriteMovie : DetailsUserIntent()
 }
 
@@ -21,17 +22,18 @@ data class DetailsUIState(
     val homepage: String? = null,
     val videoId: String? = null,
     val showVideo: Boolean = true,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 ) {
     companion object {
-        fun empty() = DetailsUIState(
-            isFavorite = false,
-            movieTitle = "",
-            moviePopularity = 0f,
-            movieLanguage = "",
-            movieVotesAverage = 0f,
-            movieOverview = "",
-            imageUrl = ""
-        )
+        fun empty() =
+            DetailsUIState(
+                isFavorite = false,
+                movieTitle = "",
+                moviePopularity = 0f,
+                movieLanguage = "",
+                movieVotesAverage = 0f,
+                movieOverview = "",
+                imageUrl = "",
+            )
     }
 }
