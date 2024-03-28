@@ -18,6 +18,7 @@ kotlin {
                 implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.koin.android)
+                implementation(projects.platform)
             }
             commonMain.dependencies {
                 implementation(compose.runtime)

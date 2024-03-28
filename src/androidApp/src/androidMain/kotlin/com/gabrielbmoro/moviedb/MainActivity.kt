@@ -12,13 +12,14 @@ import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.navigator.Navigator
 import com.gabrielbmoro.moviedb.desingsystem.theme.MovieDBAppTheme
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
+import ext.syncTopBarsColors
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //syncTopBarsColors()
+        syncTopBarsColors()
 
         setContent {
             DynamicColorApp {

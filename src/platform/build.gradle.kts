@@ -15,15 +15,17 @@ kotlin {
             implementation(libs.bundles.voyager)
             implementation(libs.kotlinx.coroutines.core)
 
-            commonMain.dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
-            }
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.material)
         }
     }
 }
