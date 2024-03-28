@@ -75,7 +75,7 @@ class SearchScreen : Screen {
                         navigateToDetailsScreen = { movie ->
                             val detailsScreen = KoinPlatform.getKoin().get<Screen>(
                                 qualifier = named(NavigationDestinations.DETAILS),
-                                parameters = { parametersOf(it) }
+                                parameters = { parametersOf(movie) }
                             )
                             navigator.push(detailsScreen)
                         }
