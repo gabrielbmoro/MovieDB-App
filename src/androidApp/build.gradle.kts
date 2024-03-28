@@ -12,6 +12,8 @@ plugins {
 }
 
 kotlin {
+    androidTarget()
+
     sourceSets {
         sourceSets {
             androidMain.dependencies {
