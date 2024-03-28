@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 actual fun VideoPlayer(
     videoId: String,
     shouldStartMuted: Boolean,
-    onFullScreenEvent: ((String) -> Unit)?,
     modifier: Modifier
 ) {
 }

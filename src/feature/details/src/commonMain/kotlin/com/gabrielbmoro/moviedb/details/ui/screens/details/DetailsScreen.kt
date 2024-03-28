@@ -68,9 +68,6 @@ class DetailsScreen(private val movie: Movie) : Screen {
                 viewModel.accept(DetailsUserIntent.FavoriteMovie)
             },
             onBackEvent = navigator::pop,
-            onHideVideo = {
-                viewModel.accept(DetailsUserIntent.HideVideo)
-            }
         )
     }
 
@@ -82,7 +79,6 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: () -> Unit,
-    onHideVideo: () -> Unit,
     onBackEvent: (() -> Unit)
 ) {
     Scaffold(
@@ -114,7 +110,6 @@ private fun DetailsScreenMain(
                     modifier = Modifier
                         .then(modifier)
                         .verticalScroll(scrollState),
-                    onHideVideo = onHideVideo,
                     onFavoriteMovie = onFavoriteMovie
                 )
             }
@@ -145,7 +140,6 @@ private fun DetailsScreenLoading(modifier: Modifier) {
 @Composable
 private fun DetailsScreenContent(
     uiState: DetailsUIState,
-    onHideVideo: () -> Unit,
     modifier: Modifier = Modifier,
     onFavoriteMovie: () -> Unit
 ) {
@@ -163,12 +157,6 @@ private fun DetailsScreenContent(
                 uiState.showVideo && uiState.videoId != null -> {
                     VideoPlayer(
                         videoId = uiState.videoId,
-                        onFullScreenEvent = { videoId ->
-                            onHideVideo()
-                            /*context.startActivity(
-                                FullScreenActivity.launchIntent(context, videoId)
-                            )*/
-                        },
                         shouldStartMuted = true,
                         modifier = Modifier
                             .align(Alignment.TopCenter)
