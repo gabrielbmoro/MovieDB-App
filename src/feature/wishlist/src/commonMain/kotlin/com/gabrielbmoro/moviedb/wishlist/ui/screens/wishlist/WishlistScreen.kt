@@ -122,6 +122,10 @@ class WishlistScreen : Screen {
                 }
             }
         )
+
+        LaunchedEffect(Unit) {
+            viewModel.accept(WishlistUserIntent.LoadMovies)
+        }
     }
 
 }

@@ -11,13 +11,6 @@ class WishlistScreenModel(
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
 ) : ScreenModelMVI<WishlistUserIntent, WishlistUIState>() {
 
-    override suspend fun setup(): WishlistUIState {
-        val favoriteMovies = getFavoriteMoviesUseCase.execute(Unit)
-        return uiState.value.copy(
-            favoriteMovies = favoriteMovies
-        )
-    }
-
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
         return when (intent) {
             is WishlistUserIntent.DeleteMovie -> {
