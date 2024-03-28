@@ -21,6 +21,9 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
+      working-directory: src
       run: chmod +x gradlew
+      
     - name: Build with Gradle
+      working-directory: src
       run: ./gradlew build
