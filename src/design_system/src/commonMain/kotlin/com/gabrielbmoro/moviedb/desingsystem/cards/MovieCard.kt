@@ -29,7 +29,7 @@ import com.gabrielbmoro.moviedb.desingsystem.buttons.DeleteButton
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import dev.icerock.moko.resources.compose.stringResource
 
-private const val THRESHOLD_VALUE = -100
+private const val THRESHOLD_VALUE = -230
 
 val CardViewImageHeight = 200.dp
 val PosterCardWidth = 120.dp
