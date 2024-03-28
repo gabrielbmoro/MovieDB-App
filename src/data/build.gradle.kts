@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("android-library-plugin")
+    id("kmp-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
@@ -10,24 +10,36 @@ android {
     namespace = "com.gabrielbmoro.moviedb.data"
 }
 
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.domain)
+            implementation(libs.bundles.ktor)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.bundles.koin.impl)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.bundles.test.multiplatform)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.bundles.room)
+            implementation(libs.koin.android)
+        }
+
+        androidUnitTest.dependencies {
+            implementation(libs.bundles.test)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+    }
+}
+
 dependencies {
-
-    implementation(projects.domain)
-
-    implementation(libs.preferences.ktx)
-    implementation(libs.timber)
-    implementation(libs.bundles.ktor)
-
-    implementation(libs.kotlinx.serialization.json)
-
     // Room
     ksp(libs.room.compiler)
-    implementation(libs.bundles.room)
-
-    // Test
-    testImplementation(libs.bundles.test)
-
-    // Koin
-    implementation(platform(libs.koin.bom))
-    implementation(libs.bundles.koin.impl)
 }

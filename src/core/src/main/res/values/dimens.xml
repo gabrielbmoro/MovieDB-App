@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="poster_card_width">120dp</dimen>
-    <dimen name="card_view_image_height">200dp</dimen>
-    <dimen name="default_margin_space">20dp</dimen>
-</resources>

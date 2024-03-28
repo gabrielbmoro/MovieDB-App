@@ -15,20 +15,22 @@ object Config {
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 
     fun versionCode(): Int {
-        val versionCode = try {
-            System.getenv("BITRISE_BUILD_NUMBER").toIntOrNull()
-        } catch (nullPointerException: NullPointerException) {
-            null
-        }
+        val versionCode =
+            try {
+                System.getenv("BITRISE_BUILD_NUMBER").toIntOrNull()
+            } catch (nullPointerException: NullPointerException) {
+                null
+            }
         return versionCode ?: LOCAL_VERSION_CODE
     }
 
     fun versionName(): String {
-        val versionName = try {
-            "1.8.${System.getenv("BITRISE_BUILD_NUMBER")}"
-        } catch (nullPointerException: NullPointerException) {
-            null
-        }
+        val versionName =
+            try {
+                "1.8.${System.getenv("BITRISE_BUILD_NUMBER")}"
+            } catch (nullPointerException: NullPointerException) {
+                null
+            }
 
         return versionName?.ifEmpty { LOCAL_VERSION_NAME } ?: LOCAL_VERSION_NAME
     }

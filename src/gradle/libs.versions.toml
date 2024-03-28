@@ -5,6 +5,7 @@ kotlin = "1.9.22"
 compose_bom = "2024.02.01"
 compose_compiler = "1.5.10"
 compose_material_3 = "1.2.0"
+kotlinx-coroutines-core = "1.8.1-Beta"
 kotlinx-serialization-json = "1.6.3"
 multidex = "2.0.1"
 nav_compose_integration = "2.7.7"
@@ -33,9 +34,14 @@ ktlint_plugin = "11.5.1"
 ksp = "1.9.22-1.0.17"
 kover = "0.7.5"
 koin_bom = "3.6.0-wasm-alpha2"
-kotlin_test = "2.0.0-Beta4"
 ktor = "2.3.9"
 voyager = "1.0.0"
+compose_plugin = "1.6.1"
+kamel_image = "0.9.3"
+kotlin_stdlib = "2.0.0-Beta5"
+compose = "1.6.2"
+androidx_activity_compose = "1.8.2"
+moko_resources = "0.23.0"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -43,6 +49,7 @@ firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlyti
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card_view" }
@@ -59,7 +66,8 @@ arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", versio
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 arc_core_testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "arch_core" }
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin_test" }
+kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlin_test_common = { group = "org.jetbrains.kotlin", name = "kotlin-test-common", version.ref = "kotlin" }
 
 compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom" }
 compose_bom_ui = { module = "androidx.compose.ui:ui" }
@@ -89,26 +97,41 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor_client_okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor_client_darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 ktor_client_content_negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor_auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
+ktor_logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 voyager_navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager_screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager_koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager_tab_navigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+kamel = { group = "media.kamel", name = "kamel-image", version.ref = "kamel_image" }
+kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin_stdlib" }
+androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
+compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }
+moko_compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko_resources" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
 lifecycle = ["lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
+test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose"]
 compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
 koin_impl = ["koin_core"]
 compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
-ktor = ["ktor_client_core", "ktor_client_okhttp", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json"]
+ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
 voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel"]
+moko = ["moko_compose", "moko_core"]
 
 [plugins]
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
+moko_plugin = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko_resources" }
