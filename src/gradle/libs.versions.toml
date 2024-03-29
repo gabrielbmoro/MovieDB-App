@@ -1,7 +1,7 @@
 [versions]
 firebase-crashlytics-gradle = "2.9.9"
 google-services = "4.4.0"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 compose_bom = "2024.02.01"
 compose_compiler = "1.5.10"
 compose_material_3 = "1.2.0"
