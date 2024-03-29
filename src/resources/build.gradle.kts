@@ -15,5 +15,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.moko)
         }
+
+        androidMain.get().dependsOn(commonMain.get())
     }
 }
