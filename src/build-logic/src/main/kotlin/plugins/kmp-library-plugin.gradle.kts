@@ -26,6 +26,8 @@ android {
 }
 
 kotlin {
+    iosSimulatorArm64()
+
     androidTarget {
         compilations.all {
             kotlinOptions {
