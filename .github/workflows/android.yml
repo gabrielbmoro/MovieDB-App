@@ -24,6 +24,6 @@ jobs:
       working-directory: src
       run: chmod +x gradlew
       
-    - name: Build with Gradle
+    - name: Unit tests
       working-directory: src
-      run: ./gradlew build
+      run: ./gradlew testDebugUnitTest
