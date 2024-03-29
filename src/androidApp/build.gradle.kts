@@ -82,3 +82,9 @@ koverReport {
         }
     }
 }
+
+ktlint {
+    filter {
+        exclude("**/generated/**")
+    }
+}

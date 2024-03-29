@@ -33,7 +33,7 @@ include(
     ":feature:details",
     ":feature:movies",
     ":platform",
-    ":resources",
+    ":resources"
 )
 
 rootProject.name = "MovieDB-Android"
