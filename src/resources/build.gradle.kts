@@ -15,13 +15,5 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.moko)
         }
-
-        androidMain {
-            dependsOn(commonMain.get())
-        }
-
-        nativeMain {
-            dependsOn(commonMain.get())
-        }
     }
 }
