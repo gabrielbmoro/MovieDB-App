@@ -26,10 +26,6 @@ android {
 }
 
 kotlin {
-    applyDefaultHierarchyTemplate()
-
-    iosSimulatorArm64()
-
     androidTarget {
         compilations.all {
             kotlinOptions {
