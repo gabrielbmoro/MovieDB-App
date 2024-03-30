@@ -54,6 +54,7 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 - Coroutines
 - [Ktor](https://ktor.io)
 - [Moko Resources](https://github.com/icerockdev/moko-resources)
+- [Kamel](https://github.com/Kamel-Media/Kamel)
 - Room
 - Gradle Catalogs
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
