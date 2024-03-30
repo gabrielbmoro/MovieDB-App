@@ -48,13 +48,14 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 
 ### Tech stack summary 🛠️
 
-- Jetpack Compose
+- [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform)
 - [Voyager](https://voyager.adriel.cafe)
 - [Koin](https://github.com/InsertKoinIO/koin)
 - Coroutines
 - [Ktor](https://ktor.io)
+- [Moko Resources](https://github.com/icerockdev/moko-resources)
+- [Kamel](https://github.com/Kamel-Media/Kamel)
 - Room
-- Mockk
 - Gradle Catalogs
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
 
