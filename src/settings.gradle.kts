@@ -12,7 +12,6 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
@@ -34,7 +33,7 @@ include(
     ":feature:details",
     ":feature:movies",
     ":platform",
-    ":resources",
+    ":resources"
 )
 
 rootProject.name = "MovieDB-Android"

@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -39,15 +38,7 @@ class DetailsScreenModelTest {
             // arrange, act
             val isFavorite = false
             isFavoriteMovieUseCase.result = isFavorite
-            val adult = false
-            val budget = 12000
-            val genres = listOf("genre1")
-            val homePage = "homePage"
-            val imdbId = "imdbId"
-            val status = "status"
-            val tagLine = "tagline"
-            val productionCompanies = listOf("productionCompany1")
-            val videoId = "videoId"
+            getMovieDetailsUseCase.result = fakeMovieDetail
 
             val expected =
                 DetailsUIState(
@@ -58,38 +49,26 @@ class DetailsScreenModelTest {
                     isLoading = false,
                     moviePopularity = fakeMovie.popularity,
                     movieLanguage = fakeMovie.language,
-                    videoId = videoId,
+                    videoId = fakeMovieDetail.videoId,
                     errorMessage = null,
-                    homepage = homePage,
+                    homepage = fakeMovieDetail.homepage,
                     productionCompanies = "productionCompany1",
-                    status = status,
-                    tagLine = tagLine,
-                    genres = genres,
+                    status = fakeMovieDetail.status,
+                    tagLine = fakeMovieDetail.tagline,
+                    genres = fakeMovieDetail.genres,
                     movieTitle = fakeMovie.title,
                 )
 
-            getMovieDetailsUseCase.result =
-                MovieDetail(
-                    adult = adult,
-                    budget = budget,
-                    genres = genres,
-                    homepage = homePage,
-                    imdbId = imdbId,
-                    status = status,
-                    tagline = tagLine,
-                    productionCompanies = productionCompanies,
-                    videoId = videoId,
-                )
-            val viewModel =
-                DetailsScreenScreenModel(
-                    movie = fakeMovie,
-                    favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-                    getMovieDetailsUseCase = getMovieDetailsUseCase,
-                )
+            val viewModel = DetailsScreenScreenModel(
+                movie = fakeMovie,
+                favoriteMovieUseCase = favoriteMovieUseCase,
+                isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                getMovieDetailsUseCase = getMovieDetailsUseCase,
+            )
+            viewModel.setup()
+            advanceUntilIdle()
 
             // assert
-            advanceUntilIdle()
             val result = viewModel.uiState.value
             assertEquals(expected, result)
         }

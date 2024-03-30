@@ -12,6 +12,8 @@ plugins {
 }
 
 kotlin {
+    androidTarget()
+
     sourceSets {
         sourceSets {
             androidMain.dependencies {
@@ -26,7 +28,6 @@ kotlin {
                 implementation(compose.material)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
 
                 implementation(libs.voyager.navigator)
@@ -64,7 +65,7 @@ koverReport {
                 "*.dto",
                 "*.core.ui.*",
                 "*.widgets",
-                "*.navigation",
+                "*.navigation"
             )
 
             classes(
@@ -74,9 +75,15 @@ koverReport {
                 "*_Factory*",
                 "*Activity",
                 "*ScreenKt*",
-                "*_HiltModules*",
+                "*_HiltModules*"
             )
             annotatedBy("Generated")
         }
+    }
+}
+
+ktlint {
+    filter {
+        exclude("**/generated/**")
     }
 }

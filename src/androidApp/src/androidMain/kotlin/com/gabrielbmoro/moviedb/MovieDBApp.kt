@@ -27,7 +27,7 @@ class MovieDBApp : Application() {
                 featureDetailsModule,
                 featureMoviesModule,
                 featureSearchMovieModule,
-                featureWishlistModule,
+                featureWishlistModule
             )
         }
     }

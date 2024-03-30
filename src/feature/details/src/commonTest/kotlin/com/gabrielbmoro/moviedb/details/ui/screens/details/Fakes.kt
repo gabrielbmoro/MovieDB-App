@@ -20,6 +20,18 @@ val fakeMovie =
         posterImageUrl = "posterImageUrl",
     )
 
+val fakeMovieDetail = MovieDetail(
+    adult = false,
+    budget = 1200,
+    genres = listOf("genre1"),
+    homepage = "homePage",
+    imdbId = "imdbId",
+    status = "status",
+    tagline = "tagline",
+    productionCompanies = listOf("productionCompany1"),
+    videoId = "120"
+)
+
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {
     }

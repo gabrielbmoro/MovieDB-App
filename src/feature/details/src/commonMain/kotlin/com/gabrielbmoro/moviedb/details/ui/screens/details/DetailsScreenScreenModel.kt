@@ -100,13 +100,7 @@ class DetailsScreenScreenModel(
         )
     }
 
-    private fun List<String>.reduceToText(): String {
-        var acc = ""
-        var i = 0
-        while (i < size) {
-            acc += "$acc, ${get(i)}"
-            i++
-        }
-        return acc
+    private fun List<String>.reduceToText() = reduce { acc, s ->
+        "$acc, $s"
     }
 }
