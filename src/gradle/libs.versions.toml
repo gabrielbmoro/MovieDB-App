@@ -2,7 +2,6 @@
 firebase-crashlytics-gradle = "2.9.9"
 google-services = "4.4.0"
 kotlin = "1.9.23"
-compose_bom = "2024.02.01"
 compose_compiler = "1.5.10"
 compose_material_3 = "1.2.0"
 kotlinx-coroutines-core = "1.8.1-Beta"
@@ -31,7 +30,7 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 material = "1.11.0"
 ktlint_plugin = "11.5.1"
-ksp = "1.9.22-1.0.17"
+ksp = "1.9.23-1.0.19"
 kover = "0.7.5"
 koin_bom = "3.6.0-wasm-alpha2"
 ktor = "2.3.9"
@@ -68,13 +67,6 @@ arc_core_testing = { group = "androidx.arch.core", name = "core-testing", versio
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlin_test_common = { group = "org.jetbrains.kotlin", name = "kotlin-test-common", version.ref = "kotlin" }
-
-compose_bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom" }
-compose_bom_ui = { module = "androidx.compose.ui:ui" }
-compose_bom_preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-compose_bom_activity = { module = "androidx.activity:activity-compose" }
-compose_bom_ui_tooling = { module = "androidx.compose.ui:ui-tooling" }
-compose_bom_ui_test_manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
 koin_bom = { module = "io.insert-koin:koin-bom", version.ref = "koin_bom" }
 koin_core = { module = "io.insert-koin:koin-core" }
@@ -120,9 +112,7 @@ lifecycle = ["lifecycle_viewmodel_ktx", "lifecycle_compose_runtime"]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
 test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 compose_extras = ["compose_material_3", "navigation_compose"]
-compose_impl = ["compose_bom_ui", "compose_bom_preview", "compose_bom_activity"]
 koin_impl = ["koin_core"]
-compose_debug_impl = ["compose_bom_ui_tooling", "compose_bom_ui_test_manifest"]
 ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
 voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel"]
 moko = ["moko_compose", "moko_core"]
