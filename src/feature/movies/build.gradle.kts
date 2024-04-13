@@ -19,6 +19,8 @@ kotlin {
             implementation(compose.animation)
             implementation(compose.uiUtil)
 
+            implementation(libs.rinku.core)
+            implementation(libs.rinku.compose.ext)
             implementation(libs.kotlinx.coroutines.core)
 
             implementation(libs.bundles.moko)

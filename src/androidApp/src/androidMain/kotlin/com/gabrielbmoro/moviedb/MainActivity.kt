@@ -9,9 +9,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import cafe.adriel.voyager.navigator.Navigator
 import com.gabrielbmoro.moviedb.desingsystem.theme.MovieDBAppTheme
-import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
+import com.gabrielbmoro.moviedb.movies.ui.screens.RootApp
+import dev.theolm.rinku.compose.ext.Rinku
 import ext.syncTopBarsColors
 
 class MainActivity : ComponentActivity() {
@@ -21,8 +21,10 @@ class MainActivity : ComponentActivity() {
         syncTopBarsColors()
 
         setContent {
-            DynamicColorApp {
-                Navigator(screen = MoviesScreen())
+            Rinku {
+                DynamicColorApp {
+                    RootApp()
+                }
             }
         }
     }
