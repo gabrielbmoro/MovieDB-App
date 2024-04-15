@@ -27,10 +27,12 @@ import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
-class SearchScreen : Screen {
+class SearchScreen(private val query: String?) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<SearchScreenModel>()
+        val viewModel = getScreenModel<SearchScreenModel>() {
+            parametersOf(query)
+        }
 
         val navigator = LocalNavigator.currentOrThrow
 

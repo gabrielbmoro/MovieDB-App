@@ -4,6 +4,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
 import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
 import dev.theolm.rinku.DeepLink
+import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
@@ -22,7 +23,12 @@ fun DeepLink.toScreenStack() : List<Screen> {
             DefaultStack + wishListScreen
         }
         "search" -> {
-            val searchScreen = KoinPlatform.getKoin().get<Screen>(named(NavigationDestinations.SEARCH))
+            val query = this.parameters["query"]
+            val searchScreen = KoinPlatform.getKoin().get<Screen>(
+                qualifier = named(NavigationDestinations.SEARCH),
+                parameters = { parametersOf(query) }
+            )
+
             DefaultStack + searchScreen
         }
         else -> DefaultStack

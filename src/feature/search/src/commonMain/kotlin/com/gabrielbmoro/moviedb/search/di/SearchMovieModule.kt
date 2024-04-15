@@ -11,11 +11,12 @@ val featureSearchMovieModule =
     module {
         factory {
             SearchScreenModel(
+                query = it.getOrNull(),
                 searchMovieUseCase = get(),
             )
         }
 
         factory<Screen>(named(NavigationDestinations.SEARCH)) {
-            SearchScreen()
+            SearchScreen(query = it.getOrNull())
         }
     }
