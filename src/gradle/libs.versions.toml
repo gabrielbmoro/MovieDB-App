@@ -41,7 +41,7 @@ kotlin_stdlib = "2.0.0-Beta5"
 compose = "1.6.2"
 androidx_activity_compose = "1.8.2"
 moko_resources = "0.23.0"
-rinku = "0.0.2"
+rinku = "0.1.0"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
