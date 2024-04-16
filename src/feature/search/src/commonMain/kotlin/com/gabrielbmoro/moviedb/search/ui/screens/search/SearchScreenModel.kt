@@ -7,7 +7,7 @@ import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
 import kotlinx.coroutines.launch
 
 class SearchScreenModel(
-    private val query: String?,
+    private val query: String? = null,
     private val searchMovieUseCase: SearchMovieUseCase,
 ) : ScreenModelMVI<SearchUserIntent, SearchUIState>() {
     init {
