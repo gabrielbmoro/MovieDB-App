@@ -23,6 +23,21 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:label="Deeplink">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="themoviedb.org" />
+                <data android:host="www.themoviedb.org" />
+                <data android:path="/movies" />
+                <data android:path="/favorite" />
+                <data android:path="/search" />
+            </intent-filter>
         </activity>
     </application>
 

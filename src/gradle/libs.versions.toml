@@ -41,6 +41,7 @@ kotlin_stdlib = "2.0.0-Beta5"
 compose = "1.6.2"
 androidx_activity_compose = "1.8.2"
 moko_resources = "0.23.0"
+rinku = "0.1.0"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -105,6 +106,8 @@ compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }
 moko_compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko_resources" }
+rinku-core = { module= "dev.theolm:rinku", version.ref = "rinku" }
+rinku-compose-ext = { module= "dev.theolm:rinku-compose-ext", version.ref = "rinku" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
