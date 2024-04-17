@@ -49,15 +49,16 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 ### Tech stack summary 🛠️
 
 - [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform)
-- [Voyager](https://voyager.adriel.cafe)
-- [Koin](https://github.com/InsertKoinIO/koin)
+- [Voyager](https://voyager.adriel.cafe) - MVVM & navigation
+- [Koin](https://github.com/InsertKoinIO/koin) - Dependency injection
+- [Rinku](https://github.com/theolm/Rinku) - Deep links
 - Coroutines
-- [Ktor](https://ktor.io)
-- [Moko Resources](https://github.com/icerockdev/moko-resources)
-- [Kamel](https://github.com/Kamel-Media/Kamel)
-- Room
-- Gradle Catalogs
-- [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player)
+- [Ktor](https://ktor.io) - Network requests
+- [Moko Resources](https://github.com/icerockdev/moko-resources) - Multiplatform resources
+- [Kamel](https://github.com/Kamel-Media/Kamel) - Image loader
+- Room - Android Database
+- Gradle Catalogs - Dependency management
+- [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - Android video player
 
 ---
 
