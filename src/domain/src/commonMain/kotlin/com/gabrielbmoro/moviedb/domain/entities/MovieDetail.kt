@@ -10,4 +10,12 @@ data class MovieDetail(
     val tagline: String,
     val productionCompanies: List<String>,
     var videoId: String? = null,
+    val votesAverage: Float,
+    val title: String,
+    val posterImageUrl: String?,
+    val backdropImageUrl: String?,
+    val overview: String,
+    val releaseDate: String,
+    val language: String,
+    val popularity: Float,
 )

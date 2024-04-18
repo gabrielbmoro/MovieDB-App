@@ -58,6 +58,14 @@ class GetMovieDetailsUseCaseImplTest {
                     "",
                     emptyList(),
                     validVideoStream.key,
+                    0f,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    0f,
                 )
             repository.movieDetails =
                 MovieDetail(
@@ -70,6 +78,14 @@ class GetMovieDetailsUseCaseImplTest {
                     "",
                     emptyList(),
                     null,
+                    0f,
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    0f,
                 )
             repository.videoStreams = validStreamsList
 

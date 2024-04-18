@@ -1,24 +1,9 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-
-val fakeMovie =
-    Movie(
-        id = 12L,
-        overview = "overview",
-        title = "title",
-        isFavorite = true,
-        votesAverage = 12f,
-        releaseDate = "10/02/1990",
-        backdropImageUrl = "backgropImageUrl",
-        language = "language",
-        popularity = 2f,
-        posterImageUrl = "posterImageUrl",
-    )
 
 val fakeMovieDetail = MovieDetail(
     adult = false,
@@ -29,7 +14,14 @@ val fakeMovieDetail = MovieDetail(
     status = "status",
     tagline = "tagline",
     productionCompanies = listOf("productionCompany1"),
-    videoId = "120"
+    overview = "overview",
+    title = "title",
+    votesAverage = 12f,
+    releaseDate = "10/02/1990",
+    backdropImageUrl = "backgropImageUrl",
+    language = "language",
+    popularity = 2f,
+    posterImageUrl = "posterImageUrl",
 )
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {

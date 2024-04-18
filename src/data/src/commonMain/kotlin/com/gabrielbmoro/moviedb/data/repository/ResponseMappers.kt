@@ -40,6 +40,19 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         status = status,
         tagline = tagline,
         productionCompanies = production_companies.map { it.name },
+        votesAverage = vote_average ?: 0f,
+        title = title ?: "",
+        posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
+        backdropImageUrl =
+        backdrop_path?.let {
+            BIG_SIZE_IMAGE_ADDRESS.plus(
+                backdrop_path,
+            )
+        },
+        overview = overview ?: "",
+        releaseDate = release_date ?: "",
+        popularity = popularity ?: 0f,
+        language = original_language ?: "",
     )
 }
 

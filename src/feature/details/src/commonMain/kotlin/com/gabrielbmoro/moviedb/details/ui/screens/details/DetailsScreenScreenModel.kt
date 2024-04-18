@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
@@ -8,11 +7,14 @@ import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
 
 class DetailsScreenScreenModel(
-    private val movie: Movie,
+    private val movieId: Long,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
 ) : ScreenModelMVI<DetailsUserIntent, DetailsUIState>() {
+
+    lateinit var movieDetails: MovieDetail
+
     override suspend fun setup(): DetailsUIState {
         updateState(
             uiState.value.copy(
@@ -20,9 +22,10 @@ class DetailsScreenScreenModel(
             ),
         )
 
-        val isMovieFavorite = isMovieFavorite(movieTitle = movie.title)
+        movieDetails = fetchMoviesDetails()
 
-        val movieDetails = fetchMoviesDetails()
+        val isMovieFavorite = isMovieFavorite(movieTitle = movieDetails.title)
+
 
         return uiState.value.copy(
             isLoading = false,
@@ -33,12 +36,12 @@ class DetailsScreenScreenModel(
             genres = movieDetails.genres,
             homepage = movieDetails.homepage,
             productionCompanies = movieDetails.productionCompanies.reduceToText(),
-            movieTitle = movie.title,
-            movieOverview = movie.overview,
-            movieLanguage = movie.language,
-            moviePopularity = movie.popularity,
-            movieVotesAverage = movie.votesAverage,
-            imageUrl = movie.backdropImageUrl,
+            movieTitle = movieDetails.title,
+            movieOverview = movieDetails.overview,
+            movieLanguage = movieDetails.language,
+            moviePopularity = movieDetails.popularity,
+            movieVotesAverage = movieDetails.votesAverage,
+            imageUrl = movieDetails.backdropImageUrl,
         )
     }
 
@@ -58,15 +61,15 @@ class DetailsScreenScreenModel(
 
                 val params =
                     FavoriteMovieUseCase.Params(
-                        movieTitle = movie.title,
-                        movieLanguage = movie.language,
-                        movieVotesAverage = movie.votesAverage,
-                        movieReleaseDate = movie.releaseDate,
-                        moviePosterImageUrl = movie.posterImageUrl,
-                        moviePopularity = movie.popularity,
-                        movieOverview = movie.overview,
-                        movieId = movie.id,
-                        movieBackdropImageUrl = movie.backdropImageUrl,
+                        movieTitle = movieDetails.title,
+                        movieLanguage = movieDetails.language,
+                        movieVotesAverage = movieDetails.votesAverage,
+                        movieReleaseDate = movieDetails.releaseDate,
+                        moviePosterImageUrl = movieDetails.posterImageUrl,
+                        moviePopularity = movieDetails.popularity,
+                        movieOverview = movieDetails.overview,
+                        movieId = movieId,
+                        movieBackdropImageUrl = movieDetails.backdropImageUrl,
                         toFavorite = desiredValue,
                     )
                 favoriteMovieUseCase.execute(params)
@@ -74,7 +77,7 @@ class DetailsScreenScreenModel(
                 val result =
                     isFavoriteMovieUseCase.execute(
                         IsFavoriteMovieUseCase.Params(
-                            movieTitle = movie.title,
+                            movieTitle = movieDetails.title,
                         ),
                     )
                 getState().copy(
@@ -95,7 +98,7 @@ class DetailsScreenScreenModel(
     private suspend fun fetchMoviesDetails(): MovieDetail {
         return getMovieDetailsUseCase.execute(
             GetMovieDetailsUseCase.Params(
-                movieId = movie.id,
+                movieId = movieId,
             ),
         )
     }

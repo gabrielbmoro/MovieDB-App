@@ -14,7 +14,7 @@ val featureDetailsModule =
                 favoriteMovieUseCase = get(),
                 isFavoriteMovieUseCase = get(),
                 getMovieDetailsUseCase = get(),
-                movie = params.get(),
+                movieId = params.get(),
             )
         }
 

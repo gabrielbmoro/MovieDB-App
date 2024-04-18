@@ -91,7 +91,7 @@ class WishlistScreen : Screen {
                                 val detailsScreen =
                                     KoinPlatform.getKoin().get<Screen>(
                                         qualifier = named(NavigationDestinations.DETAILS),
-                                        parameters = { parametersOf(it) },
+                                        parameters = { parametersOf(it.id) },
                                     )
                                 navigator.push(detailsScreen)
                             },
