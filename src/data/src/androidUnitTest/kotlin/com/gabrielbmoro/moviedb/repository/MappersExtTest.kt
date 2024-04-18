@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.repository
 
 import com.gabrielbmoro.moviedb.data.repository.toFavoriteMovieDTO
 import com.gabrielbmoro.moviedb.data.repository.toMovie
+import com.gabrielbmoro.moviedb.data.repository.toMovieDetail
 import com.gabrielbmoro.moviedb.data.repository.toVideoStreams
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -38,6 +39,18 @@ class MappersExtTest {
 
         // act
         val result = parameter.toMovie()
+
+        // assert
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `should be able to convert a response to details object`() {
+        // arrange
+        val (expected, parameter) = movieDetailsAndMovieDetailsResponse
+
+        // act
+        val result = parameter.toMovieDetail()
 
         // assert
         assertEquals(expected, result)

@@ -41,14 +41,13 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
-import com.gabrielbmoro.moviedb.domain.entities.Movie
 import dev.icerock.moko.resources.compose.stringResource
 import org.koin.core.parameter.parametersOf
 
-class DetailsScreen(private val movie: Movie) : Screen {
+class DetailsScreen(private val movieId: Long) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movie) })
+        val viewModel = getScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movieId) })
         val navigator = LocalNavigator.currentOrThrow
 
         val scrollState = rememberScrollState()

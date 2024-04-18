@@ -42,13 +42,13 @@ class DetailsScreenModelTest {
 
             val expected =
                 DetailsUIState(
-                    movieOverview = fakeMovie.overview,
+                    movieOverview = fakeMovieDetail.overview,
                     isFavorite = isFavorite,
-                    movieVotesAverage = fakeMovie.votesAverage,
-                    imageUrl = fakeMovie.backdropImageUrl,
+                    movieVotesAverage = fakeMovieDetail.votesAverage,
+                    imageUrl = fakeMovieDetail.backdropImageUrl,
                     isLoading = false,
-                    moviePopularity = fakeMovie.popularity,
-                    movieLanguage = fakeMovie.language,
+                    moviePopularity = fakeMovieDetail.popularity,
+                    movieLanguage = fakeMovieDetail.language,
                     videoId = fakeMovieDetail.videoId,
                     errorMessage = null,
                     homepage = fakeMovieDetail.homepage,
@@ -56,11 +56,11 @@ class DetailsScreenModelTest {
                     status = fakeMovieDetail.status,
                     tagLine = fakeMovieDetail.tagline,
                     genres = fakeMovieDetail.genres,
-                    movieTitle = fakeMovie.title,
+                    movieTitle = fakeMovieDetail.title,
                 )
 
             val viewModel = DetailsScreenScreenModel(
-                movie = fakeMovie,
+                movieId = 12,
                 favoriteMovieUseCase = favoriteMovieUseCase,
                 isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                 getMovieDetailsUseCase = getMovieDetailsUseCase,
