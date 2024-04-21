@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
@@ -47,7 +47,7 @@ import com.gabrielbmoro.moviedb.SharedRes
 class DetailsScreen(private val movieId: Long) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movieId) })
+        val viewModel = koinScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movieId) })
         val navigator = LocalNavigator.currentOrThrow
 
         val scrollState = rememberScrollState()

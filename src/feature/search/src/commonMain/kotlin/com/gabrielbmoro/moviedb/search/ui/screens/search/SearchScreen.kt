@@ -16,7 +16,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
@@ -30,7 +30,7 @@ import org.koin.mp.KoinPlatform
 class SearchScreen(private val query: String?) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<SearchScreenModel>() {
+        val viewModel = koinScreenModel<SearchScreenModel>() {
             parametersOf(query)
         }
 

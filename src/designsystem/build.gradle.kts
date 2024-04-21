@@ -24,8 +24,6 @@ kotlin {
 
             implementation(libs.kamel)
 
-            implementation(libs.bundles.voyager)
-
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.bundles.koin.impl)
 

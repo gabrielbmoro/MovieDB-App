@@ -13,7 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
@@ -33,7 +33,7 @@ import com.gabrielbmoro.moviedb.SharedRes
 class WishlistScreen : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<WishlistScreenModel>()
+        val viewModel = koinScreenModel<WishlistScreenModel>()
         val uiState = viewModel.uiState.collectAsState()
         val snackbarHostState = remember { SnackbarHostState() }
         val lazyListState = rememberLazyListState()

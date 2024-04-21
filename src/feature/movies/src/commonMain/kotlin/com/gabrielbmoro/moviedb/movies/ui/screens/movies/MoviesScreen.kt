@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
@@ -36,7 +36,7 @@ import com.gabrielbmoro.moviedb.SharedRes
 class MoviesScreen : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<MoviesScreenModel>()
+        val viewModel = koinScreenModel<MoviesScreenModel>()
         val uiState = viewModel.uiState.collectAsState()
 
         val navigator = LocalNavigator.currentOrThrow
