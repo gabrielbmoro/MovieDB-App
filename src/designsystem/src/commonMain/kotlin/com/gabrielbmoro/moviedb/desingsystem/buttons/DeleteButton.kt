@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.desingsystem.buttons
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.stringResource
+import com.gabrielbmoro.moviedb.SharedRes
 
 private val deleteCardContainerColor = Color(0xFFFFDAD4L)
 private val deleteCardTextColor = Color(0xFF851300L)
@@ -46,7 +46,7 @@ fun DeleteButton(
             Text(
                 style = MaterialTheme.typography.titleSmall,
                 color = deleteCardTextColor,
-                text = stringResource(MR.strings.delete),
+                text = stringResource(SharedRes.strings.delete),
             )
         }
     }

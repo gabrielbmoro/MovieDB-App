@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.details.ui.widgets
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
+import com.gabrielbmoro.moviedb.SharedRes
 
 @Composable
 fun Favorite(
@@ -35,16 +35,16 @@ fun Favorite(
                 painter =
                     painterResource(
                         if (!isFavorite) {
-                            MR.images.ic_heart_border
+                            SharedRes.images.ic_heart_border
                         } else {
-                            MR.images.ic_heart_filled
+                            SharedRes.images.ic_heart_filled
                         },
                     ),
                 contentDescription =
                     if (!isFavorite) {
-                        stringResource(MR.strings.alt_is_not_favorite)
+                        stringResource(SharedRes.strings.alt_is_not_favorite)
                     } else {
-                        stringResource(MR.strings.alt_is_favorite)
+                        stringResource(SharedRes.strings.alt_is_favorite)
                     },
                 modifier = Modifier.align(Center),
                 tint = Color.Red,

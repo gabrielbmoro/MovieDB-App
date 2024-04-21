@@ -36,4 +36,4 @@ include(
     ":resources"
 )
 
-rootProject.name = "MovieDB-Android"
+rootProject.name = "MovieDBApp"

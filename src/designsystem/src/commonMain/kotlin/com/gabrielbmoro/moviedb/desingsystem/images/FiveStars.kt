@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.desingsystem.images
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.heightIn
@@ -9,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.ImageResource
 import dev.icerock.moko.resources.compose.painterResource
+import com.gabrielbmoro.moviedb.SharedRes
 
 private const val STARS_AVAILABLE = 5
 private const val AVERAGE_TOTAL = 10
@@ -19,16 +19,16 @@ private fun getDrawableAccordingToStarPosition(
     position: Int,
 ): ImageResource {
     return when {
-        votes >= position -> MR.images.ic_star
+        votes >= position -> SharedRes.images.ic_star
         votes < position -> {
             if (votes.toInt() == position) {
-                MR.images.ic_star_half
+                SharedRes.images.ic_star_half
             } else {
-                MR.images.ic_star_border
+                SharedRes.images.ic_star_border
             }
         }
 
-        else -> MR.images.ic_star_border
+        else -> SharedRes.images.ic_star_border
     }
 }
 

@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.desingsystem.cards
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.buttons.DeleteButton
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import dev.icerock.moko.resources.compose.stringResource
+import com.gabrielbmoro.moviedb.SharedRes
 
 private const val THRESHOLD_VALUE = -230
 
@@ -108,7 +108,7 @@ fun MovieCard(
                         Modifier
                             .width(PosterCardWidth)
                             .fillMaxHeight(),
-                    contentDescription = stringResource(MR.strings.poster),
+                    contentDescription = stringResource(SharedRes.strings.poster),
                 )
                 MovieCardInformation(
                     title = title,

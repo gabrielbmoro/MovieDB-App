@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +31,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
+import com.gabrielbmoro.moviedb.SharedRes
 
 class MoviesScreen : Screen {
     @Composable
@@ -59,7 +59,7 @@ class MoviesScreen : Screen {
         }
         ScreenScaffold(
             showTopBar = showTopBar,
-            appBarTitle = stringResource(MR.strings.movies),
+            appBarTitle = stringResource(SharedRes.strings.movies),
             searchEvent = {
                 val searchScreen =
                     KoinPlatform.getKoin().get<Screen>(named(NavigationDestinations.SEARCH))
@@ -98,7 +98,7 @@ class MoviesScreen : Screen {
                                 Modifier
                                     .fillMaxWidth()
                                     .height(320.dp),
-                            title = stringResource(MR.strings.now_playing),
+                            title = stringResource(SharedRes.strings.now_playing),
                         )
                     }
 
@@ -115,7 +115,7 @@ class MoviesScreen : Screen {
                                 Modifier
                                     .fillMaxWidth()
                                     .height(320.dp),
-                            title = stringResource(MR.strings.popular),
+                            title = stringResource(SharedRes.strings.popular),
                         )
                     }
 
@@ -132,7 +132,7 @@ class MoviesScreen : Screen {
                                 Modifier
                                     .fillMaxWidth()
                                     .height(320.dp),
-                            title = stringResource(MR.strings.top_rated),
+                            title = stringResource(SharedRes.strings.top_rated),
                         )
                     }
 
@@ -149,7 +149,7 @@ class MoviesScreen : Screen {
                                 Modifier
                                     .fillMaxWidth()
                                     .height(320.dp),
-                            title = stringResource(MR.strings.upcoming),
+                            title = stringResource(SharedRes.strings.upcoming),
                         )
                     }
                 },

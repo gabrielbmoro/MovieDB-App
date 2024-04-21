@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +28,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
+import com.gabrielbmoro.moviedb.SharedRes
 
 class WishlistScreen : Screen {
     @Composable
@@ -38,8 +38,8 @@ class WishlistScreen : Screen {
         val snackbarHostState = remember { SnackbarHostState() }
         val lazyListState = rememberLazyListState()
 
-        val successDeleteMessage = stringResource(MR.strings.delete_success_message)
-        val errorDeleteMessage = stringResource(MR.strings.delete_fail_message)
+        val successDeleteMessage = stringResource(SharedRes.strings.delete_success_message)
+        val errorDeleteMessage = stringResource(SharedRes.strings.delete_fail_message)
 
         val navigator = LocalNavigator.currentOrThrow
 
@@ -47,7 +47,7 @@ class WishlistScreen : Screen {
 
         ScreenScaffold(
             showTopBar = true,
-            appBarTitle = stringResource(MR.strings.wishlist),
+            appBarTitle = stringResource(SharedRes.strings.wishlist),
             bottomBar = {
                 NavigationBottomBar(
                     currentTabIndex = FavoriteTabIndex,

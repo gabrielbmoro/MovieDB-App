@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.desingsystem.images
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
+import com.gabrielbmoro.moviedb.SharedRes
 
 @Composable
 fun EmptyState(modifier: Modifier = Modifier) {
@@ -24,11 +24,11 @@ fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(MR.images.ic_sad_emoji),
-            contentDescription = stringResource(MR.strings.alt_sad_emoji),
+            painter = painterResource(SharedRes.images.ic_sad_emoji),
+            contentDescription = stringResource(SharedRes.strings.alt_sad_emoji),
         )
         Text(
-            text = stringResource(MR.strings.empty_view_title),
+            text = stringResource(SharedRes.strings.empty_view_title),
             style = MaterialTheme.typography.headlineSmall,
             modifier =
                 Modifier

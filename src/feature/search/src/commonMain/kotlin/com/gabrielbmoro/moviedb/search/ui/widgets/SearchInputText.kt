@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.search.ui.widgets
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -25,6 +24,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import com.gabrielbmoro.moviedb.SharedRes
 
 private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
 
@@ -55,7 +55,7 @@ fun SearchInputText(
                 ) {
                     Image(
                         imageVector = Icons.Filled.Close,
-                        contentDescription = stringResource(MR.strings.cancel),
+                        contentDescription = stringResource(SharedRes.strings.cancel),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                     )
                 }
@@ -76,7 +76,7 @@ fun SearchInputText(
         },
         placeholder = {
             Text(
-                stringResource(MR.strings.search_movie_placeholder),
+                stringResource(SharedRes.strings.search_movie_placeholder),
                 style = MaterialTheme.typography.titleMedium,
             )
         },
