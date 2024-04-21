@@ -34,7 +34,7 @@ kotlin {
                 implementation(libs.rinku.core)
                 implementation(libs.rinku.compose.ext)
                 implementation(projects.platform)
-                implementation(projects.designSystem)
+                implementation(projects.designsystem)
                 implementation(projects.feature.wishlist)
                 implementation(projects.feature.search)
                 implementation(projects.feature.details)

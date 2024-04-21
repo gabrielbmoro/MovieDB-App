@@ -40,6 +40,6 @@ kotlin {
 }
 
 dependencies {
-    // Room
-    ksp(libs.room.compiler)
+    // Room for Android
+    kspAndroid(libs.room.compiler)
 }

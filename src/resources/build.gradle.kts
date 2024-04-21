@@ -16,6 +16,6 @@ kotlin {
             implementation(libs.bundles.moko)
         }
 
-        androidMain.get().dependsOn(commonMain.get())
+        //androidMain.get().dependsOn(commonMain.get())
     }
 }

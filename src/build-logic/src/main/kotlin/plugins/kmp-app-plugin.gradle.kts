@@ -60,9 +60,16 @@ android {
 }
 
 kotlin {
-    applyDefaultHierarchyTemplate()
-
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "MovieDB"
+            isStatic = true
+        }
+    }
 
     androidTarget {
         compilations.all {

@@ -31,7 +31,7 @@ kotlin {
             implementation(libs.bundles.koin.impl)
 
             implementation(projects.domain)
-            implementation(projects.designSystem)
+            implementation(projects.designsystem)
             implementation(projects.platform)
             implementation(projects.resources)
         }
