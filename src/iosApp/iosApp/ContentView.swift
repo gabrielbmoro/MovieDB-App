@@ -1,3 +1,10 @@
+//
+//  ContentView.swift
+//  iosApp
+//
+//  Created by Gabriel Bronzatti Moro on 25/04/24.
+//
+
 import UIKit
 import SwiftUI
 import ComposeApp
@@ -16,6 +23,3 @@ struct ContentView: View {
                 .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }
-
-
-

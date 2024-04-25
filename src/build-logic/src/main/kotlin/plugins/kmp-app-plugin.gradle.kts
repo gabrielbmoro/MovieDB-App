@@ -66,7 +66,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "MovieDB"
+            baseName = "ComposeApp"
             isStatic = true
         }
     }
