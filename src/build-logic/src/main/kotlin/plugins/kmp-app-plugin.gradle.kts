@@ -1,7 +1,5 @@
 
 import config.Config
-import ext.debugAPIAuth
-import ext.releaseAPIAuth
 
 plugins {
     id("com.android.application")
@@ -44,16 +42,12 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String", "API_TOKEN", "\"${debugAPIAuth()}\"")
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            buildConfigField("String", "API_TOKEN", "\"${releaseAPIAuth()}\"")
             signingConfig = signingConfigs.getByName("release")
         }
     }

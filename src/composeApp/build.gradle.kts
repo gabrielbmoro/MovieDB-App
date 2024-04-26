@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+
+
 plugins {
     id("kmp-app-plugin")
     id("kotlin-parcelize")
@@ -9,6 +12,7 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.buildkonfig.plugin)
 }
 
 kotlin {
@@ -21,6 +25,10 @@ kotlin {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.koin.android)
                 implementation(projects.platform)
+            }
+            iosMain.dependencies {
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.bundles.koin.impl)
             }
             commonMain.dependencies {
                 implementation(compose.runtime)
@@ -87,5 +95,15 @@ koverReport {
 ktlint {
     filter {
         exclude("**/generated/**")
+    }
+}
+
+buildkonfig {
+    packageName = "com.gabrielbmoro.moviedb"
+
+    defaultConfigs {
+        val apiToken = findProperty("MOVIE_DB_API_TOKEN") as? String
+            ?: System.getenv("MOVIE_DB_API_TOKEN")
+        buildConfigField(FieldSpec.Type.STRING, "API_TOKEN", apiToken)
     }
 }
