@@ -34,8 +34,7 @@ Bearer cHuckNoRRisIsAWarRior
 Your `gradle.properties` file (_Global properties_) should looks like:
 
 ```
-MOVIE_DB_API_TOKEN_DEBUG=cHuckNoRRisIsAWarRior
-MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
+MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 ```
 
 ---
@@ -59,6 +58,7 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 - Room - Android Database
 - Gradle Catalogs - Dependency management
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - Android video player
+- [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) - Gradle variables
 
 ---
 
