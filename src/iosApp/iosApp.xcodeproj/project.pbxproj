@@ -74,10 +74,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8C99F83E2BDA01F5003405EF /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
-				8C99F8412BDA0235003405EF /* ShellScript */,
+				8C99F8412BDA0235003405EF /* Compile Kotlin */,
 				8C99F82C2BDA01F4003405EF /* Sources */,
 				8C99F82D2BDA01F4003405EF /* Frameworks */,
 				8C99F82E2BDA01F4003405EF /* Resources */,
+				8CDEA3FC2BDF049D00300FA1 /* Copy Moko Resources */,
 			);
 			buildRules = (
 			);
@@ -134,7 +135,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8C99F8412BDA0235003405EF /* ShellScript */ = {
+		8C99F8412BDA0235003405EF /* Compile Kotlin */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -143,6 +144,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Compile Kotlin";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -150,6 +152,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+		};
+		8CDEA3FC2BDF049D00300FA1 /* Copy Moko Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Moko Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/../gradlew\" -p \"$SRCROOT/../\" :resources:copyFrameworkResourcesToApp \\\n    -Pmoko.resources.PLATFORM_NAME=\"$PLATFORM_NAME\" \\\n    -Pmoko.resources.CONFIGURATION=\"$CONFIGURATION\" \\\n    -Pmoko.resources.ARCHS=\"$ARCHS\" \\\n    -Pmoko.resources.BUILT_PRODUCTS_DIR=\"$BUILT_PRODUCTS_DIR\" \\\n    -Pmoko.resources.CONTENTS_FOLDER_PATH=\"$CONTENTS_FOLDER_PATH\" \n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
