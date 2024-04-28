@@ -52,6 +52,8 @@ kotlin {
 
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.bundles.koin.impl)
+
+                implementation(projects.resources)
             }
         }
     }

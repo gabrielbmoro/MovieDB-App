@@ -52,6 +52,7 @@ kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card_view" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
