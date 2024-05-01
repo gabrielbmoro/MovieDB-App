@@ -2,10 +2,9 @@
 //  ContentView.swift
 //  iosApp
 //
-//  Created by Gabriel Bronzatti Moro on 25/04/24.
+//  Created by Gabriel Bronzatti Moro on 01/05/24.
 //
 
-import UIKit
 import SwiftUI
 import ComposeApp
 
