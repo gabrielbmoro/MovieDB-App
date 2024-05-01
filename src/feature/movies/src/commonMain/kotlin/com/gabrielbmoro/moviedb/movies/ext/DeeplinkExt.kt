@@ -10,7 +10,7 @@ import org.koin.mp.KoinPlatform
 
 private val DefaultStack = listOf(MoviesScreen())
 
-fun DeepLink.toScreenStack() : List<Screen> {
+fun DeepLink.toScreenStack(): List<Screen> {
     if (this.pathSegments.isEmpty()) {
         return DefaultStack
     }
@@ -31,6 +31,23 @@ fun DeepLink.toScreenStack() : List<Screen> {
 
             DefaultStack + searchScreen
         }
+
+        "movie" -> {
+            val movieId = this.pathSegments.tryGetMovieId()
+            if (movieId != null) {
+                val detailsScreen = KoinPlatform.getKoin().get<Screen>(
+                    qualifier = named(NavigationDestinations.DETAILS),
+                    parameters = { parametersOf(movieId) }
+                )
+                DefaultStack + detailsScreen
+            } else {
+                DefaultStack
+            }
+        }
+
         else -> DefaultStack
     }
 }
+
+private fun List<String>.tryGetMovieId() =
+    this.getOrNull(1)?.split("-")?.firstOrNull()?.toLongOrNull()
