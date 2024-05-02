@@ -35,6 +35,7 @@
                 <data android:host="themoviedb.org" />
                 <data android:host="www.themoviedb.org" />
                 <data android:path="/movies" />
+                <data android:pathPrefix="/movie" />
                 <data android:path="/favorite" />
                 <data android:path="/search" />
             </intent-filter>
