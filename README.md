@@ -12,7 +12,7 @@
 
 # Welcome! 👋
 
-Welcome to the MovieDB-Android app! If you like movies, you will like this app, because you can access the most popular and top rated movies 🤩
+Welcome to the MovieDB-App! If you like movies, you will like this app, because you can access the most popular and top rated movies 🤩
 
 ---
 
