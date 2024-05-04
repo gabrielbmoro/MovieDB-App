@@ -14,5 +14,5 @@ data class WishlistUIState(
     val favoriteMovies: List<Movie>? = null,
     val isLoading: Boolean = false,
     val areBarsVisible: Boolean = true,
-    val isSuccessResult: Boolean? = null,
+    val isSuccessResult: Boolean? = null
 )

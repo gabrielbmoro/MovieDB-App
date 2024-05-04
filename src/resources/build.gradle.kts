@@ -1,8 +1,6 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.kover)
-    alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.moko.plugin)
 }
 
@@ -13,9 +11,14 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.bundles.moko)
+            implementation(libs.moko.core)
         }
-
         androidMain.get().dependsOn(commonMain.get())
+        iosMain.get().dependsOn(commonMain.get())
     }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.gabrielbmoro.moviedb" // required
+    multiplatformResourcesClassName = "SharedRes" // optional, default MR
 }

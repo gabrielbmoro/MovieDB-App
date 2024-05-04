@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class SearchScreenModel(
     private val query: String? = null,
-    private val searchMovieUseCase: SearchMovieUseCase,
+    private val searchMovieUseCase: SearchMovieUseCase
 ) : ScreenModelMVI<SearchUserIntent, SearchUIState>() {
     init {
         query?.let {
@@ -24,23 +24,23 @@ class SearchScreenModel(
             is SearchUserIntent.SearchBy -> {
                 getState().copy(
                     results =
-                        searchMovieUseCase.execute(
-                            SearchMovieUseCase.Params(
-                                query = intent.query.text,
-                            ),
-                        ),
+                    searchMovieUseCase.execute(
+                        SearchMovieUseCase.Params(
+                            query = intent.query.text
+                        )
+                    )
                 )
             }
 
             is SearchUserIntent.ClearSearchField -> {
                 getState().copy(
-                    searchQuery = TextFieldValue(""),
+                    searchQuery = TextFieldValue("")
                 )
             }
 
             is SearchUserIntent.SearchInputFieldChanged -> {
                 getState().copy(
-                    searchQuery = intent.query,
+                    searchQuery = intent.query
                 )
             }
         }

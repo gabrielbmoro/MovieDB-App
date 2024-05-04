@@ -14,12 +14,12 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 fun MoviesResult(
     movies: List<Movie>,
     navigateToDetailsScreen: (Movie) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(vertical = 8.dp),
+        contentPadding = PaddingValues(vertical = 8.dp)
     ) {
         items(movies.size) {
             val movie = movies[it]
@@ -32,7 +32,7 @@ fun MoviesResult(
                 onClick = {
                     navigateToDetailsScreen(movie)
                 },
-                votes = movie.votesAverage,
+                votes = movie.votesAverage
             )
         }
     }

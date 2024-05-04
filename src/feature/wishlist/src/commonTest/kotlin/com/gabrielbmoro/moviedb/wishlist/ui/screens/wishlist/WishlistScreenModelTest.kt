@@ -39,7 +39,7 @@ class WishlistScreenModelTest {
             // arrange
             val expected =
                 listOf(
-                    Movie.mockChuckNorrisVsVandammeMovie(),
+                    Movie.mockChuckNorrisVsVandammeMovie()
                 )
             isFavoriteMovieUseCase.result = true
             getFavoriteMoviesUseCase.result = expected
@@ -48,7 +48,7 @@ class WishlistScreenModelTest {
                 WishlistScreenModel(
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase
                 )
 
             // act

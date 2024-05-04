@@ -12,7 +12,7 @@ val featureSearchMovieModule =
         factory {
             SearchScreenModel(
                 query = it.getOrNull(),
-                searchMovieUseCase = get(),
+                searchMovieUseCase = get()
             )
         }
 

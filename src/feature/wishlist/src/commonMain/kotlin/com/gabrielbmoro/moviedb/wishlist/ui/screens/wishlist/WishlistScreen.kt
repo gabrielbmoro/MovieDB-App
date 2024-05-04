@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
@@ -14,9 +13,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
@@ -33,13 +33,13 @@ import org.koin.mp.KoinPlatform
 class WishlistScreen : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<WishlistScreenModel>()
+        val viewModel = koinScreenModel<WishlistScreenModel>()
         val uiState = viewModel.uiState.collectAsState()
         val snackbarHostState = remember { SnackbarHostState() }
         val lazyListState = rememberLazyListState()
 
-        val successDeleteMessage = stringResource(MR.strings.delete_success_message)
-        val errorDeleteMessage = stringResource(MR.strings.delete_fail_message)
+        val successDeleteMessage = stringResource(SharedRes.strings.delete_success_message)
+        val errorDeleteMessage = stringResource(SharedRes.strings.delete_fail_message)
 
         val navigator = LocalNavigator.currentOrThrow
 
@@ -47,7 +47,7 @@ class WishlistScreen : Screen {
 
         ScreenScaffold(
             showTopBar = true,
-            appBarTitle = stringResource(MR.strings.wishlist),
+            appBarTitle = stringResource(SharedRes.strings.wishlist),
             bottomBar = {
                 NavigationBottomBar(
                     currentTabIndex = FavoriteTabIndex,
@@ -59,27 +59,27 @@ class WishlistScreen : Screen {
                     onSelectMoviesTab = {
                         val moviesScreen =
                             KoinPlatform.getKoin().get<Screen>(
-                                qualifier = named(NavigationDestinations.MOVIES),
+                                qualifier = named(NavigationDestinations.MOVIES)
                             )
                         navigator.push(moviesScreen)
-                    },
+                    }
                 )
             },
             snackBarHost = {
                 SnackbarHost(snackbarHostState)
-            },
+            }
         ) {
             when {
                 uiState.value.isLoading -> {
                     BubbleLoader(
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
                 uiState.value.favoriteMovies?.isEmpty() == true -> {
                     EmptyState(
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
@@ -91,7 +91,7 @@ class WishlistScreen : Screen {
                                 val detailsScreen =
                                     KoinPlatform.getKoin().get<Screen>(
                                         qualifier = named(NavigationDestinations.DETAILS),
-                                        parameters = { parametersOf(it.id) },
+                                        parameters = { parametersOf(it.id) }
                                     )
                                 navigator.push(detailsScreen)
                             },
@@ -100,9 +100,9 @@ class WishlistScreen : Screen {
                                 viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
                             },
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .align(Alignment.TopCenter),
+                            Modifier
+                                .fillMaxSize()
+                                .align(Alignment.TopCenter)
                         )
                     }
                 }
@@ -123,7 +123,7 @@ class WishlistScreen : Screen {
                     viewModel.accept(WishlistUserIntent.ResultMessageReset)
                     viewModel.accept(WishlistUserIntent.LoadMovies)
                 }
-            },
+            }
         )
 
         LaunchedEffect(Unit) {

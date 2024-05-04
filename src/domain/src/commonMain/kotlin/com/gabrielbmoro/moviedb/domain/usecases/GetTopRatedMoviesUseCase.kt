@@ -5,16 +5,16 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 
 interface GetTopRatedMoviesUseCase : UseCase<GetTopRatedMoviesUseCase.Params, List<Movie>> {
     data class Params(
-        val page: Int,
+        val page: Int
     )
 }
 
 class GetTopRatedMoviesUseCaseImpl(
-    private val repository: MoviesRepository,
+    private val repository: MoviesRepository
 ) : GetTopRatedMoviesUseCase {
     override suspend fun execute(input: GetTopRatedMoviesUseCase.Params): List<Movie> {
         return repository.getTopRatedMovies(
-            page = input.page,
+            page = input.page
         )
     }
 }

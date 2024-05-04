@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,9 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
@@ -36,7 +36,7 @@ import org.koin.mp.KoinPlatform
 class MoviesScreen : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<MoviesScreenModel>()
+        val viewModel = koinScreenModel<MoviesScreenModel>()
         val uiState = viewModel.uiState.collectAsState()
 
         val navigator = LocalNavigator.currentOrThrow
@@ -44,7 +44,7 @@ class MoviesScreen : Screen {
             val detailsScreen =
                 KoinPlatform.getKoin().get<Screen>(
                     qualifier = named(NavigationDestinations.DETAILS),
-                    parameters = { parametersOf(it.id) },
+                    parameters = { parametersOf(it.id) }
                 )
             navigator.push(detailsScreen)
         }
@@ -59,7 +59,7 @@ class MoviesScreen : Screen {
         }
         ScreenScaffold(
             showTopBar = showTopBar,
-            appBarTitle = stringResource(MR.strings.movies),
+            appBarTitle = stringResource(SharedRes.strings.movies),
             searchEvent = {
                 val searchScreen =
                     KoinPlatform.getKoin().get<Screen>(named(NavigationDestinations.SEARCH))
@@ -78,9 +78,9 @@ class MoviesScreen : Screen {
                             KoinPlatform.getKoin()
                                 .get<Screen>(named(NavigationDestinations.WISHLIST))
                         navigator.push(wishListScreen)
-                    },
+                    }
                 )
-            },
+            }
         ) {
             LazyColumn(
                 state = lazyListState,
@@ -95,10 +95,10 @@ class MoviesScreen : Screen {
                                 viewModel.accept(Intent.RequestMoreNowPlayingMovies)
                             },
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(320.dp),
-                            title = stringResource(MR.strings.now_playing),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(320.dp),
+                            title = stringResource(SharedRes.strings.now_playing)
                         )
                     }
 
@@ -112,10 +112,10 @@ class MoviesScreen : Screen {
                                 viewModel.accept(Intent.RequestMorePopularMovies)
                             },
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(320.dp),
-                            title = stringResource(MR.strings.popular),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(320.dp),
+                            title = stringResource(SharedRes.strings.popular)
                         )
                     }
 
@@ -129,10 +129,10 @@ class MoviesScreen : Screen {
                                 viewModel.accept(Intent.RequestMoreTopRatedMovies)
                             },
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(320.dp),
-                            title = stringResource(MR.strings.top_rated),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(320.dp),
+                            title = stringResource(SharedRes.strings.top_rated)
                         )
                     }
 
@@ -146,19 +146,19 @@ class MoviesScreen : Screen {
                                 viewModel.accept(Intent.RequestMoreUpComingMovies)
                             },
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(320.dp),
-                            title = stringResource(MR.strings.upcoming),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(320.dp),
+                            title = stringResource(SharedRes.strings.upcoming)
                         )
                     }
                 },
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .align(Alignment.TopCenter),
+                Modifier
+                    .fillMaxSize()
+                    .align(Alignment.TopCenter),
                 contentPadding = PaddingValues(vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp, alignment = Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy(18.dp, alignment = Alignment.Top)
             )
         }
     }

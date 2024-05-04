@@ -5,12 +5,12 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 
 interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, MovieDetail> {
     data class Params(
-        val movieId: Long,
+        val movieId: Long
     )
 }
 
 class GetMovieDetailsUseCaseImpl(
-    private val repository: MoviesRepository,
+    private val repository: MoviesRepository
 ) : GetMovieDetailsUseCase {
     override suspend fun execute(input: GetMovieDetailsUseCase.Params): MovieDetail {
         val movieDetail = repository.getMovieDetail(input.movieId)
@@ -21,7 +21,7 @@ class GetMovieDetailsUseCaseImpl(
             }
 
         return movieDetail.copy(
-            videoId = videoStream?.key,
+            videoId = videoStream?.key
         )
     }
 

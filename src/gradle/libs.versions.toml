@@ -32,16 +32,17 @@ material = "1.11.0"
 ktlint_plugin = "11.5.1"
 ksp = "1.9.23-1.0.19"
 kover = "0.7.5"
-koin_bom = "3.6.0-wasm-alpha2"
+koin_bom = "3.5.1"
 ktor = "2.3.9"
-voyager = "1.0.0"
+voyager = "1.1.0-alpha04"
 compose_plugin = "1.6.1"
 kamel_image = "0.9.3"
 kotlin_stdlib = "2.0.0-Beta5"
-compose = "1.6.2"
+compose = "1.6.5"
 androidx_activity_compose = "1.8.2"
 moko_resources = "0.23.0"
 rinku = "0.1.0"
+buildkonfig = "0.15.1"
 
 [libraries]
 androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
@@ -51,6 +52,7 @@ kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
 swipe_refresh_layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe_refresh" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card_view" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -106,8 +108,8 @@ compose_ui_tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }
 moko_compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko_resources" }
-rinku-core = { module= "dev.theolm:rinku", version.ref = "rinku" }
-rinku-compose-ext = { module= "dev.theolm:rinku-compose-ext", version.ref = "rinku" }
+rinku-core = { module = "dev.theolm:rinku", version.ref = "rinku" }
+rinku-compose-ext = { module = "dev.theolm:rinku-compose-ext", version.ref = "rinku" }
 
 [bundles]
 room = ["room_ktx", "room_runtime"]
@@ -128,3 +130,4 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
 moko_plugin = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko_resources" }
+buildkonfig_plugin = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }

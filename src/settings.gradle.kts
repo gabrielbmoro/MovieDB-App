@@ -19,7 +19,7 @@ dependencyResolutionManagement {
 }
 
 include(
-    ":androidApp",
+    ":composeApp",
     ":data",
     ":core",
     ":feature_movies",
@@ -27,7 +27,7 @@ include(
     ":feature_wishlist",
     ":feature_search",
     ":domain",
-    ":design_system",
+    ":designsystem",
     ":feature:wishlist",
     ":feature:search",
     ":feature:details",
@@ -36,4 +36,4 @@ include(
     ":resources"
 )
 
-rootProject.name = "MovieDB-Android"
+rootProject.name = "MovieDBApp"

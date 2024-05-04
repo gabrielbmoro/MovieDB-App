@@ -10,7 +10,7 @@ class DetailsScreenScreenModel(
     private val movieId: Long,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
 ) : ScreenModelMVI<DetailsUserIntent, DetailsUIState>() {
 
     lateinit var movieDetails: MovieDetail
@@ -18,14 +18,13 @@ class DetailsScreenScreenModel(
     override suspend fun setup(): DetailsUIState {
         updateState(
             uiState.value.copy(
-                isLoading = true,
-            ),
+                isLoading = true
+            )
         )
 
         movieDetails = fetchMoviesDetails()
 
         val isMovieFavorite = isMovieFavorite(movieTitle = movieDetails.title)
-
 
         return uiState.value.copy(
             isLoading = false,
@@ -41,7 +40,7 @@ class DetailsScreenScreenModel(
             movieLanguage = movieDetails.language,
             moviePopularity = movieDetails.popularity,
             movieVotesAverage = movieDetails.votesAverage,
-            imageUrl = movieDetails.backdropImageUrl,
+            imageUrl = movieDetails.backdropImageUrl
         )
     }
 
@@ -51,7 +50,7 @@ class DetailsScreenScreenModel(
         return when (intent) {
             is DetailsUserIntent.HideVideo -> {
                 getState().copy(
-                    showVideo = false,
+                    showVideo = false
                 )
             }
 
@@ -70,18 +69,18 @@ class DetailsScreenScreenModel(
                         movieOverview = movieDetails.overview,
                         movieId = movieId,
                         movieBackdropImageUrl = movieDetails.backdropImageUrl,
-                        toFavorite = desiredValue,
+                        toFavorite = desiredValue
                     )
                 favoriteMovieUseCase.execute(params)
 
                 val result =
                     isFavoriteMovieUseCase.execute(
                         IsFavoriteMovieUseCase.Params(
-                            movieTitle = movieDetails.title,
-                        ),
+                            movieTitle = movieDetails.title
+                        )
                     )
                 getState().copy(
-                    isFavorite = result,
+                    isFavorite = result
                 )
             }
         }
@@ -90,16 +89,16 @@ class DetailsScreenScreenModel(
     private suspend fun isMovieFavorite(movieTitle: String): Boolean {
         return isFavoriteMovieUseCase.execute(
             IsFavoriteMovieUseCase.Params(
-                movieTitle = movieTitle,
-            ),
+                movieTitle = movieTitle
+            )
         )
     }
 
     private suspend fun fetchMoviesDetails(): MovieDetail {
         return getMovieDetailsUseCase.execute(
             GetMovieDetailsUseCase.Params(
-                movieId = movieId,
-            ),
+                movieId = movieId
+            )
         )
     }
 

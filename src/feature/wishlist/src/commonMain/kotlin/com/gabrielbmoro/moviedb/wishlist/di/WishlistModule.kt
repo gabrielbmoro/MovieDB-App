@@ -13,7 +13,7 @@ val featureWishlistModule =
             WishlistScreenModel(
                 favoriteMovieUseCase = get(),
                 getFavoriteMoviesUseCase = get(),
-                isFavoriteMovieUseCase = get(),
+                isFavoriteMovieUseCase = get()
             )
         }
 

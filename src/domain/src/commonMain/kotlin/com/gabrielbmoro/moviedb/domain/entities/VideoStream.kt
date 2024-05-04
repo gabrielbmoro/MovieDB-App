@@ -7,5 +7,5 @@ data class VideoStream(
     val site: String,
     val size: Int,
     val official: Boolean,
-    val type: String,
+    val type: String
 )

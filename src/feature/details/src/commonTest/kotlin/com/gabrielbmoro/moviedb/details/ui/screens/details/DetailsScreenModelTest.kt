@@ -56,14 +56,14 @@ class DetailsScreenModelTest {
                     status = fakeMovieDetail.status,
                     tagLine = fakeMovieDetail.tagline,
                     genres = fakeMovieDetail.genres,
-                    movieTitle = fakeMovieDetail.title,
+                    movieTitle = fakeMovieDetail.title
                 )
 
             val viewModel = DetailsScreenScreenModel(
                 movieId = 12,
                 favoriteMovieUseCase = favoriteMovieUseCase,
                 isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-                getMovieDetailsUseCase = getMovieDetailsUseCase,
+                getMovieDetailsUseCase = getMovieDetailsUseCase
             )
             viewModel.setup()
             advanceUntilIdle()

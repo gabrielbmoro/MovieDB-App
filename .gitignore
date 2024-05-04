@@ -9,3 +9,17 @@ src/gradle.properties
 
 src/buildSrc/.gradle/
 src/buildSrc/build/
+
+*.iml
+src/xcuserdata
+!src/**/build/
+Src/local.properties
+src/.DS_Store
+.externalNativeBuild
+.cxx
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings

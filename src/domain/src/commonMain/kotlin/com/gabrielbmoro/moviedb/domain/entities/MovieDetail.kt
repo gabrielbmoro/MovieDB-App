@@ -17,5 +17,5 @@ data class MovieDetail(
     val overview: String,
     val releaseDate: String,
     val language: String,
-    val popularity: Float,
+    val popularity: Float
 )

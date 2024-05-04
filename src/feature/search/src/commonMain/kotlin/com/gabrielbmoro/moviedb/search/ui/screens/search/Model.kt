@@ -13,5 +13,5 @@ sealed class SearchUserIntent {
 
 data class SearchUIState(
     val searchQuery: TextFieldValue,
-    val results: List<Movie>? = null,
+    val results: List<Movie>? = null
 )

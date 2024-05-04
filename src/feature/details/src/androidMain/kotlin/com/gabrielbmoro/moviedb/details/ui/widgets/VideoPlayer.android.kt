@@ -17,14 +17,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 actual fun VideoPlayer(
     videoId: String,
     shouldStartMuted: Boolean,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     val context = LocalContext.current
 
     var youtubePlayer: YouTubePlayerView? =
         remember {
             YouTubePlayerView(
-                context,
+                context
             ).apply {
                 enableAutomaticInitialization = false
 
@@ -34,32 +34,32 @@ actual fun VideoPlayer(
 
                         override fun onCurrentSecond(
                             youTubePlayer: YouTubePlayer,
-                            second: Float,
+                            second: Float
                         ) {
                         }
 
                         override fun onError(
                             youTubePlayer: YouTubePlayer,
-                            error: PlayerConstants.PlayerError,
+                            error: PlayerConstants.PlayerError
                         ) {
                         }
 
                         override fun onPlaybackQualityChange(
                             youTubePlayer: YouTubePlayer,
-                            playbackQuality: PlayerConstants.PlaybackQuality,
+                            playbackQuality: PlayerConstants.PlaybackQuality
                         ) {
                         }
 
                         override fun onPlaybackRateChange(
                             youTubePlayer: YouTubePlayer,
-                            playbackRate: PlayerConstants.PlaybackRate,
+                            playbackRate: PlayerConstants.PlaybackRate
                         ) {
                         }
 
                         override fun onReady(youTubePlayer: YouTubePlayer) {
                             youTubePlayer.loadVideo(
                                 videoId = videoId,
-                                0f,
+                                0f
                             )
                             if (shouldStartMuted) {
                                 youTubePlayer.mute()
@@ -68,37 +68,37 @@ actual fun VideoPlayer(
 
                         override fun onStateChange(
                             youTubePlayer: YouTubePlayer,
-                            state: PlayerConstants.PlayerState,
+                            state: PlayerConstants.PlayerState
                         ) {
                         }
 
                         override fun onVideoDuration(
                             youTubePlayer: YouTubePlayer,
-                            duration: Float,
+                            duration: Float
                         ) {
                         }
 
                         override fun onVideoId(
                             youTubePlayer: YouTubePlayer,
-                            videoId: String,
+                            videoId: String
                         ) {
                         }
 
                         override fun onVideoLoadedFraction(
                             youTubePlayer: YouTubePlayer,
-                            loadedFraction: Float,
+                            loadedFraction: Float
                         ) {
                         }
                     },
                     IFramePlayerOptions
                         .Builder()
                         .controls(1)
-                        .build(),
+                        .build()
                 )
                 layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
                     )
             }
         }
@@ -106,7 +106,7 @@ actual fun VideoPlayer(
     youtubePlayer?.let { viewPlayer ->
         AndroidView(
             factory = { viewPlayer },
-            modifier = modifier,
+            modifier = modifier
         )
     }
 
@@ -117,6 +117,6 @@ actual fun VideoPlayer(
                 youtubePlayer?.release()
                 youtubePlayer = null
             }
-        },
+        }
     )
 }

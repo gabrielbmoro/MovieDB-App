@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import `MovieDB-Android`.resources.MR
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -28,9 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
@@ -47,7 +47,7 @@ import org.koin.core.parameter.parametersOf
 class DetailsScreen(private val movieId: Long) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movieId) })
+        val viewModel = koinScreenModel<DetailsScreenScreenModel>(parameters = { parametersOf(movieId) })
         val navigator = LocalNavigator.currentOrThrow
 
         val scrollState = rememberScrollState()
@@ -66,7 +66,7 @@ class DetailsScreen(private val movieId: Long) : Screen {
             onFavoriteMovie = {
                 viewModel.accept(DetailsUserIntent.FavoriteMovie)
             },
-            onBackEvent = navigator::pop,
+            onBackEvent = navigator::pop
         )
     }
 }
@@ -77,21 +77,21 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: () -> Unit,
-    onBackEvent: (() -> Unit),
+    onBackEvent: (() -> Unit)
 ) {
     Scaffold(
         topBar = {
             AnimatedVisibility(
                 visible = atTop,
                 enter = fadeIn(),
-                exit = fadeOut(),
+                exit = fadeOut()
             ) {
                 AppToolbarTitle(
                     title = uiState.movieTitle,
-                    backEvent = onBackEvent,
+                    backEvent = onBackEvent
                 )
             }
-        },
+        }
     ) {
         val modifier =
             Modifier
@@ -107,10 +107,10 @@ private fun DetailsScreenMain(
                 DetailsScreenContent(
                     uiState = uiState,
                     modifier =
-                        Modifier
-                            .then(modifier)
-                            .verticalScroll(scrollState),
-                    onFavoriteMovie = onFavoriteMovie,
+                    Modifier
+                        .then(modifier)
+                        .verticalScroll(scrollState),
+                    onFavoriteMovie = onFavoriteMovie
                 )
             }
         }
@@ -121,7 +121,7 @@ private fun DetailsScreenMain(
 private fun DetailsScreenError(modifier: Modifier) {
     Box(modifier = modifier) {
         ErrorMessage(
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center)
         )
     }
 }
@@ -132,8 +132,8 @@ private fun DetailsScreenLoading(modifier: Modifier) {
         BubbleLoader(
             color = MaterialTheme.colorScheme.primary,
             modifier =
-                Modifier
-                    .align(Alignment.Center),
+            Modifier
+                .align(Alignment.Center)
         )
     }
 }
@@ -142,17 +142,17 @@ private fun DetailsScreenLoading(modifier: Modifier) {
 private fun DetailsScreenContent(
     uiState: DetailsUIState,
     modifier: Modifier = Modifier,
-    onFavoriteMovie: () -> Unit,
+    onFavoriteMovie: () -> Unit
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Box(
             modifier =
-                Modifier
-                    .height(280.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .height(280.dp)
+                .fillMaxWidth()
         ) {
             when {
                 uiState.showVideo && uiState.videoId != null -> {
@@ -160,9 +160,9 @@ private fun DetailsScreenContent(
                         videoId = uiState.videoId,
                         shouldStartMuted = true,
                         modifier =
-                            Modifier
-                                .align(Alignment.TopCenter)
-                                .fillMaxSize(),
+                        Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize()
                     )
                 }
 
@@ -171,10 +171,10 @@ private fun DetailsScreenContent(
                         imageUrl = uiState.imageUrl,
                         contentScale = ContentScale.Fit,
                         modifier =
-                            Modifier
-                                .align(Alignment.TopCenter)
-                                .fillMaxSize(),
-                        contentDescription = stringResource(MR.strings.poster),
+                        Modifier
+                            .align(Alignment.TopCenter)
+                            .fillMaxSize(),
+                        contentDescription = stringResource(SharedRes.strings.poster)
                     )
                 }
             }
@@ -184,85 +184,85 @@ private fun DetailsScreenContent(
             isFavorite = uiState.isFavorite,
             votesAverage = uiState.movieVotesAverage,
             onFavoriteMovie = onFavoriteMovie,
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         if (uiState.genres != null) {
             GenresCard(
                 genres = uiState.genres,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         SectionTitle(
-            title = stringResource(MR.strings.overview),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            title = stringResource(SharedRes.strings.overview),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
         SectionBody(
             body = uiState.movieOverview,
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         SectionTitle(
-            title = stringResource(MR.strings.popularity),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            title = stringResource(SharedRes.strings.popularity),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
         SectionBody(
             body = uiState.moviePopularity.toString(),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         SectionTitle(
-            title = stringResource(MR.strings.language),
-            modifier = Modifier.padding(horizontal = 16.dp),
+            title = stringResource(SharedRes.strings.language),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
         SectionBody(
             body = uiState.movieLanguage,
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         if (uiState.tagLine != null) {
             SectionTitle(
-                title = stringResource(MR.strings.tagline),
-                modifier = Modifier.padding(horizontal = 16.dp),
+                title = stringResource(SharedRes.strings.tagline),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
             SectionBody(
                 body = uiState.tagLine,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         if (uiState.productionCompanies != null) {
             SectionTitle(
-                title = stringResource(MR.strings.production_companies),
-                modifier = Modifier.padding(horizontal = 16.dp),
+                title = stringResource(SharedRes.strings.production_companies),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
             SectionBody(
                 body = uiState.productionCompanies,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         if (uiState.homepage != null) {
             SectionTitle(
-                title = stringResource(MR.strings.homepage),
-                modifier = Modifier.padding(horizontal = 16.dp),
+                title = stringResource(SharedRes.strings.homepage),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
             TextUrl(
                 url = uiState.homepage,
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         Spacer(
             modifier =
-                Modifier
-                    .height(240.dp)
-                    .padding(horizontal = 16.dp),
+            Modifier
+                .height(240.dp)
+                .padding(horizontal = 16.dp)
         )
     }
 }

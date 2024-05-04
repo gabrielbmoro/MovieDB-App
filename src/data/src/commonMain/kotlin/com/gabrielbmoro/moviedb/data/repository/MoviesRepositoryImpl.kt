@@ -9,7 +9,7 @@ import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 
 class MoviesRepositoryImpl(
     private val api: ApiService,
-    private val database: Database,
+    private val database: Database
 ) : MoviesRepository {
     override suspend fun getFavoriteMovies(): List<Movie> {
         return database.allFavoriteMovies()
@@ -53,14 +53,14 @@ class MoviesRepositoryImpl(
 
     override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
         return database.isThereAMovie(
-            title = movieTitle,
+            title = movieTitle
         ).any()
     }
 
     override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
         val result =
             api.getVideoStreams(
-                movieId = movieId,
+                movieId = movieId
             )
         return result.toVideoStreams()
     }
@@ -68,7 +68,7 @@ class MoviesRepositoryImpl(
     override suspend fun getMovieDetail(movieId: Long): MovieDetail {
         val result =
             api.getMovieDetails(
-                movieId = movieId,
+                movieId = movieId
             )
         return result.toMovieDetail()
     }

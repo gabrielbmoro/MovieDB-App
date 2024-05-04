@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -40,6 +41,6 @@ kotlin {
 }
 
 dependencies {
-    // Room
-    ksp(libs.room.compiler)
+    // Room for Android
+    kspAndroid(libs.room.compiler)
 }

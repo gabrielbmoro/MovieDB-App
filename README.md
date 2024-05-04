@@ -4,6 +4,10 @@
 
 [![Build Status](https://app.bitrise.io/app/4aa44eea-43cf-4a4d-8996-5ed6f48d9512/status.svg?token=C6RzgrGuhGeDARNPMAqxuw&branch=main)](https://app.bitrise.io/app/4aa44eea-43cf-4a4d-8996-5ed6f48d9512)
 [![Kotlin](https://img.shields.io/badge/kotlin-1.9.23-blue.svg?logo=kotlin)](http://kotlinlang.org)
+![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
+![badge-iosX64](https://img.shields.io/badge/platform-iosX64-CDCDCD?style=flat)
+![badge-iosArm64](https://img.shields.io/badge/platform-iosArm64-CDCDCD?style=flat)
+![badge-iosSimulatorArm64](https://img.shields.io/badge/platform-iosSimulatorArm64-CDCDCD?style=flat)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/gabrielbmoro/MovieDB-Android/issues)
 
 # Welcome! 👋
@@ -12,11 +16,15 @@ Welcome to the MovieDB-Android app! If you like movies, you will like this app, 
 
 ---
 
-## How to run the project? 📦
+## How to run the project 📦
 
 1. Install Android Studio (latest version);
 2. Select the option to open a project;
-3. Select the project -> ⚠️ The Android project is inside of the `src` directory ⚠️ 
+3. Select the project -> ⚠️ The project is inside of the `src` directory ⚠️
+
+🍎 If you wants to run the iOS app, you should open the file `iosApp/iosApp.xcodeproj` using Xcode (latest version).
+
+🤖 Otherwise, you can run the Android app opening the src file using the Android Studio.
 
 ---
 
@@ -34,15 +42,20 @@ Bearer cHuckNoRRisIsAWarRior
 Your `gradle.properties` file (_Global properties_) should looks like:
 
 ```
-MOVIE_DB_API_TOKEN_DEBUG=cHuckNoRRisIsAWarRior
-MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
+MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 ```
 
 ---
 
 ## Teaser 🎬
 
+- 🤖 **Android**
+
 <img src="img/teaser.gif" height="500" />
+
+- 🍎 **iOS**
+
+<img src="img/iOS.png" height="500" />
 
 ---
 
@@ -59,6 +72,7 @@ MOVIE_DB_API_TOKEN_RELEASE=cHuckNoRRisIsAWarRior
 - Room - Android Database
 - Gradle Catalogs - Dependency management
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - Android video player
+- [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) - Gradle variables
 
 ---
 
