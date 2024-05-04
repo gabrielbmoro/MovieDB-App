@@ -2,7 +2,7 @@ package com.gabrielbmoro.moviedb
 
 import org.koin.core.context.startKoin
 
-fun initKoin(){
+fun initKoin() {
     startKoin {
         modules(di.appModules)
     }
