@@ -31,6 +31,23 @@ fun DeepLink.toScreenStack(): List<Screen> {
 
             DefaultStack + searchScreen
         }
+
+        "movie" -> {
+            val movieId = this.pathSegments.tryGetMovieId()
+            if (movieId != null) {
+                val detailsScreen = KoinPlatform.getKoin().get<Screen>(
+                    qualifier = named(NavigationDestinations.DETAILS),
+                    parameters = { parametersOf(movieId) }
+                )
+                DefaultStack + detailsScreen
+            } else {
+                DefaultStack
+            }
+        }
+
         else -> DefaultStack
     }
 }
+
+private fun List<String>.tryGetMovieId() =
+    this.getOrNull(1)?.split("-")?.firstOrNull()?.toLongOrNull()
