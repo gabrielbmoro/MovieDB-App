@@ -88,7 +88,7 @@ val movieDBDarkColorScheme =
         outline = DarkOutline,
         outlineVariant = Color.Gray,
         scrim = Color.Gray,
-        surfaceTint = Color.White,
+        surfaceTint = Color.White
     )
 
 val movieDBLightColorScheme =
@@ -121,5 +121,5 @@ val movieDBLightColorScheme =
         outline = LightOutline,
         outlineVariant = Color.White,
         scrim = Color.White,
-        surfaceTint = Color.Gray,
+        surfaceTint = Color.Gray
     )

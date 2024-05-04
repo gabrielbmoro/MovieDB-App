@@ -14,7 +14,7 @@ class DataBaseImpl(application: Application) : Database {
     private val favoriteMoviesDAO = Room.databaseBuilder(
         application,
         DataBaseFactory::class.java,
-        "MovieDBAppDataBase",
+        "MovieDBAppDataBase"
     )
         .addMigrations(MIGRATION_1_2)
         .fallbackToDestructiveMigration()

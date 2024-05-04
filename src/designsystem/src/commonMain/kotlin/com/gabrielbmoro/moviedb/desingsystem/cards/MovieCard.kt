@@ -24,10 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.buttons.DeleteButton
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import dev.icerock.moko.resources.compose.stringResource
-import com.gabrielbmoro.moviedb.SharedRes
 
 private const val THRESHOLD_VALUE = -230
 
@@ -46,7 +46,7 @@ fun MovieCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit),
     enableSwipeToDelete: Boolean = false,
-    onDeleteClick: (() -> Unit) = {},
+    onDeleteClick: (() -> Unit) = {}
 ) {
     val anchors =
         DraggableAnchors {
@@ -62,10 +62,10 @@ fun MovieCard(
                 velocityThreshold = { THRESHOLD_VALUE.times(-1).dp.value },
                 positionalThreshold = { totalDistance -> totalDistance * 0.5f },
                 animationSpec =
-                    spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessMediumLow,
-                    ),
+                spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessMediumLow
+                )
             )
         }
 
@@ -76,47 +76,47 @@ fun MovieCard(
     Box(modifier = modifier) {
         DeleteButton(
             onClick = onDeleteClick,
-            modifier = Modifier.align(Alignment.CenterEnd),
+            modifier = Modifier.align(Alignment.CenterEnd)
         )
 
         Card(
             modifier =
-                Modifier
-                    .height(CardViewImageHeight)
-                    .offset {
-                        IntOffset(
-                            x =
-                                anchoredDraggableState
-                                    .requireOffset()
-                                    .toInt(),
-                            y = 0,
-                        )
-                    }
-                    .anchoredDraggable(
-                        state = anchoredDraggableState,
-                        enabled = enableSwipeToDelete,
-                        orientation = Orientation.Horizontal,
-                    ),
+            Modifier
+                .height(CardViewImageHeight)
+                .offset {
+                    IntOffset(
+                        x =
+                        anchoredDraggableState
+                            .requireOffset()
+                            .toInt(),
+                        y = 0
+                    )
+                }
+                .anchoredDraggable(
+                    state = anchoredDraggableState,
+                    enabled = enableSwipeToDelete,
+                    orientation = Orientation.Horizontal
+                ),
             shape = RoundedCornerShape(12.dp),
-            onClick = onClick,
+            onClick = onClick
         ) {
             Row {
                 MovieImage(
                     imageUrl = imageUrl,
                     contentScale = ContentScale.FillHeight,
                     modifier =
-                        Modifier
-                            .width(PosterCardWidth)
-                            .fillMaxHeight(),
-                    contentDescription = stringResource(SharedRes.strings.poster),
+                    Modifier
+                        .width(PosterCardWidth)
+                        .fillMaxHeight(),
+                    contentDescription = stringResource(SharedRes.strings.poster)
                 )
                 MovieCardInformation(
                     title = title,
                     votes = votes,
                     modifier =
-                        Modifier
-                            .fillMaxSize(),
-                    description = description,
+                    Modifier
+                        .fillMaxSize(),
+                    description = description
                 )
             }
         }

@@ -10,10 +10,10 @@ data class VideoStreamsResponseItem(
     val site: String,
     val size: Int,
     val official: Boolean,
-    val type: String,
+    val type: String
 )
 
 @Serializable
 data class VideoStreamsResponse(
-    val results: List<VideoStreamsResponseItem>,
+    val results: List<VideoStreamsResponseItem>
 )

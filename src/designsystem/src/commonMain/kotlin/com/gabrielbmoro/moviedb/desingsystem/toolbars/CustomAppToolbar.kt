@@ -11,7 +11,7 @@ import com.gabrielbmoro.moviedb.desingsystem.icons.SearchNavigationIcon
 fun CustomAppToolbar(
     title: @Composable () -> Unit,
     backEvent: (() -> Unit)? = null,
-    searchEvent: (() -> Unit)? = null,
+    searchEvent: (() -> Unit)? = null
 ) {
     val backNavigationIcon: @Composable (() -> Unit) =
         if (backEvent != null) {
@@ -28,13 +28,13 @@ fun CustomAppToolbar(
         },
         navigationIcon = backNavigationIcon,
         colors =
-            TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
+        TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
         actions = {
             if (searchEvent != null) {
                 SearchNavigationIcon(event = searchEvent)
             }
-        },
+        }
     )
 }

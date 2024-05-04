@@ -24,7 +24,7 @@ private fun Bubble(
     startFractionValue: Float,
     targetFractionValue: Float,
     delayTimeMillis: Int,
-    durationTimeMillis: Int,
+    durationTimeMillis: Int
 ) {
     val animatedValue = remember { Animatable(startFractionValue) }
 
@@ -35,7 +35,7 @@ private fun Bubble(
         drawCircle(
             color = color,
             center = Offset(bubbleRadius.toPx(), 0f),
-            radius = bubbleRadius.toPx(),
+            radius = bubbleRadius.toPx()
         )
     }
 
@@ -43,14 +43,14 @@ private fun Bubble(
         animatedValue.animateTo(
             targetFractionValue,
             animationSpec =
-                infiniteRepeatable(
-                    animation =
-                        tween(
-                            delayMillis = delayTimeMillis,
-                            durationMillis = durationTimeMillis,
-                            easing = FastOutSlowInEasing,
-                        ),
-                ),
+            infiniteRepeatable(
+                animation =
+                tween(
+                    delayMillis = delayTimeMillis,
+                    durationMillis = durationTimeMillis,
+                    easing = FastOutSlowInEasing
+                )
+            )
         )
     }
 }
@@ -58,7 +58,7 @@ private fun Bubble(
 @Composable
 fun BubbleLoader(
     modifier: Modifier = Modifier,
-    color: Color,
+    color: Color
 ) {
     Row(modifier) {
         Bubble(
@@ -66,7 +66,7 @@ fun BubbleLoader(
             durationTimeMillis = 1200,
             delayTimeMillis = 0,
             startFractionValue = 0f,
-            targetFractionValue = 1f,
+            targetFractionValue = 1f
         )
         Bubble(
             modifier = Modifier.padding(horizontal = 8.dp),
@@ -74,14 +74,14 @@ fun BubbleLoader(
             durationTimeMillis = 900,
             delayTimeMillis = 300,
             startFractionValue = 0f,
-            targetFractionValue = 1f,
+            targetFractionValue = 1f
         )
         Bubble(
             color = color,
             durationTimeMillis = 600,
             delayTimeMillis = 600,
             startFractionValue = 0f,
-            targetFractionValue = 1f,
+            targetFractionValue = 1f
         )
     }
 }

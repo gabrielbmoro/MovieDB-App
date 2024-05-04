@@ -14,7 +14,7 @@ val featureMoviesModule =
                 getPopularMoviesUseCase = get(),
                 getNowPlayingMoviesUseCase = get(),
                 getTopRatedMoviesUseCase = get(),
-                getUpcomingMoviesUseCase = get(),
+                getUpcomingMoviesUseCase = get()
             )
         }
 

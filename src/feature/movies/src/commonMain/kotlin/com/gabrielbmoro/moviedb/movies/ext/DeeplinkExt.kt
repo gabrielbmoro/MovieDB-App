@@ -10,7 +10,7 @@ import org.koin.mp.KoinPlatform
 
 private val DefaultStack = listOf(MoviesScreen())
 
-fun DeepLink.toScreenStack() : List<Screen> {
+fun DeepLink.toScreenStack(): List<Screen> {
     if (this.pathSegments.isEmpty()) {
         return DefaultStack
     }

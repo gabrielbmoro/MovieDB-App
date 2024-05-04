@@ -15,5 +15,5 @@ data class FavoriteMovieDTO(
     val releaseDate: String,
     val language: String,
     val popularity: Float,
-    val movieId: Long,
+    val movieId: Long
 )

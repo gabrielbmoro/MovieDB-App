@@ -19,12 +19,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.SharedRes
 import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import com.gabrielbmoro.moviedb.SharedRes
 
 private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
 
@@ -36,7 +36,7 @@ fun SearchInputText(
     onSearchBy: (TextFieldValue) -> Unit,
     onClearText: (() -> Unit),
     focusRequester: FocusRequester,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val searchFlow =
         remember {
@@ -50,13 +50,13 @@ fun SearchInputText(
                 IconButton(
                     onClick = onClearText,
                     modifier =
-                        Modifier
-                            .size(48.dp),
+                    Modifier
+                        .size(48.dp)
                 ) {
                     Image(
                         imageVector = Icons.Filled.Close,
                         contentDescription = stringResource(SharedRes.strings.cancel),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
                     )
                 }
             }
@@ -77,17 +77,17 @@ fun SearchInputText(
         placeholder = {
             Text(
                 stringResource(SharedRes.strings.search_movie_placeholder),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium
             )
         },
         colors =
-            TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
+        TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
         trailingIcon = trailingIcon,
         maxLines = 1,
-        modifier = modifier.focusRequester(focusRequester),
+        modifier = modifier.focusRequester(focusRequester)
     )
 
     LaunchedEffect(
@@ -96,6 +96,6 @@ fun SearchInputText(
             searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { query ->
                 onSearchBy(query)
             }
-        },
+        }
     )
 }

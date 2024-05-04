@@ -10,29 +10,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.SharedRes
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
-import com.gabrielbmoro.moviedb.SharedRes
 
 @Composable
 fun ErrorMessage(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
             text = stringResource(SharedRes.strings.error_title),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
 
         Image(
             painter = painterResource(SharedRes.images.ic_dino_error),
             modifier =
-                Modifier
-                    .fillMaxWidth(),
-            contentDescription = stringResource(SharedRes.strings.error_message),
+            Modifier
+                .fillMaxWidth(),
+            contentDescription = stringResource(SharedRes.strings.error_message)
         )
     }
 }

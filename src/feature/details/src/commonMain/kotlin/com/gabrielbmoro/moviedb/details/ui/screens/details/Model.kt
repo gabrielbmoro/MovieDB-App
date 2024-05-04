@@ -22,7 +22,7 @@ data class DetailsUIState(
     val homepage: String? = null,
     val videoId: String? = null,
     val showVideo: Boolean = true,
-    val errorMessage: String? = null,
+    val errorMessage: String? = null
 ) {
     companion object {
         fun empty() =
@@ -33,7 +33,7 @@ data class DetailsUIState(
                 movieLanguage = "",
                 movieVotesAverage = 0f,
                 movieOverview = "",
-                imageUrl = "",
+                imageUrl = ""
             )
     }
 }

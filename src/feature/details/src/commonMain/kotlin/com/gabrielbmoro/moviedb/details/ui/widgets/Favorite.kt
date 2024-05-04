@@ -13,41 +13,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.SharedRes
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
-import com.gabrielbmoro.moviedb.SharedRes
 
 @Composable
 fun Favorite(
     isFavorite: Boolean,
     modifier: Modifier = Modifier,
-    action: (() -> Unit),
+    action: (() -> Unit)
 ) {
     Card(
         modifier =
-            modifier
-                .size(56.dp)
-                .clip(CircleShape)
-                .clickable(onClick = action),
+        modifier
+            .size(56.dp)
+            .clip(CircleShape)
+            .clickable(onClick = action)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(
                 painter =
-                    painterResource(
-                        if (!isFavorite) {
-                            SharedRes.images.ic_heart_border
-                        } else {
-                            SharedRes.images.ic_heart_filled
-                        },
-                    ),
-                contentDescription =
+                painterResource(
                     if (!isFavorite) {
-                        stringResource(SharedRes.strings.alt_is_not_favorite)
+                        SharedRes.images.ic_heart_border
                     } else {
-                        stringResource(SharedRes.strings.alt_is_favorite)
-                    },
+                        SharedRes.images.ic_heart_filled
+                    }
+                ),
+                contentDescription =
+                if (!isFavorite) {
+                    stringResource(SharedRes.strings.alt_is_not_favorite)
+                } else {
+                    stringResource(SharedRes.strings.alt_is_favorite)
+                },
                 modifier = Modifier.align(Center),
-                tint = Color.Red,
+                tint = Color.Red
             )
         }
     }

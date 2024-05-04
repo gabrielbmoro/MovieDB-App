@@ -8,7 +8,7 @@ import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
 class WishlistScreenModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
-    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
+    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase
 ) : ScreenModelMVI<WishlistUserIntent, WishlistUIState>() {
     override suspend fun execute(intent: WishlistUserIntent): WishlistUIState {
         return when (intent) {
@@ -16,19 +16,19 @@ class WishlistScreenModel(
                 favoriteMovieUseCase.execute(
                     FavoriteMovieUseCase.Params(
                         movieTitle = intent.movie.title,
-                        toFavorite = false,
-                    ),
+                        toFavorite = false
+                    )
                 )
                 val result =
                     isFavoriteMovieUseCase.execute(
                         IsFavoriteMovieUseCase.Params(
-                            movieTitle = intent.movie.title,
-                        ),
+                            movieTitle = intent.movie.title
+                        )
                     )
                 if (!result) {
                     uiState.value.copy(
                         favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
-                        isSuccessResult = true,
+                        isSuccessResult = true
                     )
                 } else {
                     uiState.value
@@ -38,7 +38,7 @@ class WishlistScreenModel(
             is WishlistUserIntent.LoadMovies -> {
                 val movies = getFavoriteMoviesUseCase.execute(Unit)
                 uiState.value.copy(
-                    favoriteMovies = movies,
+                    favoriteMovies = movies
                 )
             }
 

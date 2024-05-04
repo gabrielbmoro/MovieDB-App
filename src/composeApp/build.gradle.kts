@@ -2,7 +2,6 @@
 
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 
-
 plugins {
     id("kmp-app-plugin")
     id("kotlin-parcelize")
@@ -96,7 +95,9 @@ koverReport {
 
 ktlint {
     filter {
-        exclude("**/generated/**")
+        exclude { entry ->
+            entry.file.toString().contains("BuildKonfig")
+        }
     }
 }
 

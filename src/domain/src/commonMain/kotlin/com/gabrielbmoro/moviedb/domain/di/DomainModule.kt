@@ -24,55 +24,55 @@ val domainModule =
     module {
         factory<FavoriteMovieUseCase> {
             FavoriteMovieUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<GetFavoriteMoviesUseCase> {
             GetFavoriteMoviesUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<GetMovieDetailsUseCase> {
             GetMovieDetailsUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<GetNowPlayingMoviesUseCase> {
             GetNowPlayingMoviesUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<GetPopularMoviesUseCase> {
             GetPopularMoviesUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<GetTopRatedMoviesUseCase> {
             GetTopRatedMoviesUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<GetUpcomingMoviesUseCase> {
             GetUpcomingMoviesUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<IsFavoriteMovieUseCase> {
             IsFavoriteMovieUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
 
         factory<SearchMovieUseCase> {
             SearchMovieUseCaseImpl(
-                repository = get(),
+                repository = get()
             )
         }
     }

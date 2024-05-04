@@ -6,7 +6,7 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 interface GetFavoriteMoviesUseCase : UseCase<Unit, List<Movie>>
 
 class GetFavoriteMoviesUseCaseImpl(
-    private val repository: MoviesRepository,
+    private val repository: MoviesRepository
 ) : GetFavoriteMoviesUseCase {
     override suspend fun execute(input: Unit): List<Movie> {
         return repository.getFavoriteMovies()

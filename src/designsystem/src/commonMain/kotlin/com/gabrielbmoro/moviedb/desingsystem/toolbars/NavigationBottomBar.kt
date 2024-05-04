@@ -6,9 +6,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.gabrielbmoro.moviedb.SharedRes
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
-import com.gabrielbmoro.moviedb.SharedRes
 
 const val MoviesTabIndex = 0
 const val FavoriteTabIndex = 1
@@ -18,7 +18,7 @@ fun NavigationBottomBar(
     currentTabIndex: Int,
     onSelectMoviesTab: () -> Unit,
     onSelectFavoriteTab: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationBar(modifier = modifier) {
         NavigationBarItem(
@@ -27,12 +27,12 @@ fun NavigationBottomBar(
             icon = {
                 Icon(
                     painter = painterResource(SharedRes.images.ic_movies),
-                    contentDescription = null,
+                    contentDescription = null
                 )
             },
             label = {
                 Text(stringResource(SharedRes.strings.movies))
-            },
+            }
         )
 
         NavigationBarItem(
@@ -41,12 +41,12 @@ fun NavigationBottomBar(
             icon = {
                 Icon(
                     painter = painterResource(SharedRes.images.ic_wishlist),
-                    contentDescription = null,
+                    contentDescription = null
                 )
             },
             label = {
                 Text(stringResource(SharedRes.strings.favorite))
-            },
+            }
         )
     }
 }

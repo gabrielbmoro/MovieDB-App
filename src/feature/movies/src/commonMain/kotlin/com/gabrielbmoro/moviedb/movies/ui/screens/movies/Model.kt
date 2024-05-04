@@ -6,7 +6,7 @@ data class MoviesUIState(
     val nowPlayingMovies: List<Movie>,
     val popularMovies: List<Movie>,
     val topRatedMovies: List<Movie>,
-    val upComingMovies: List<Movie>,
+    val upComingMovies: List<Movie>
 )
 
 sealed class Intent {

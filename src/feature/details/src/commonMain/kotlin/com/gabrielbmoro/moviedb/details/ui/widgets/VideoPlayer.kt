@@ -7,5 +7,5 @@ import androidx.compose.ui.Modifier
 expect fun VideoPlayer(
     videoId: String,
     shouldStartMuted: Boolean,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 )

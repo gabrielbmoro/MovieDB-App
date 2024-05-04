@@ -16,6 +16,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
@@ -28,7 +29,6 @@ import kotlinx.coroutines.launch
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
-import com.gabrielbmoro.moviedb.SharedRes
 
 class WishlistScreen : Screen {
     @Composable
@@ -59,27 +59,27 @@ class WishlistScreen : Screen {
                     onSelectMoviesTab = {
                         val moviesScreen =
                             KoinPlatform.getKoin().get<Screen>(
-                                qualifier = named(NavigationDestinations.MOVIES),
+                                qualifier = named(NavigationDestinations.MOVIES)
                             )
                         navigator.push(moviesScreen)
-                    },
+                    }
                 )
             },
             snackBarHost = {
                 SnackbarHost(snackbarHostState)
-            },
+            }
         ) {
             when {
                 uiState.value.isLoading -> {
                     BubbleLoader(
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
                 uiState.value.favoriteMovies?.isEmpty() == true -> {
                     EmptyState(
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
@@ -91,7 +91,7 @@ class WishlistScreen : Screen {
                                 val detailsScreen =
                                     KoinPlatform.getKoin().get<Screen>(
                                         qualifier = named(NavigationDestinations.DETAILS),
-                                        parameters = { parametersOf(it.id) },
+                                        parameters = { parametersOf(it.id) }
                                     )
                                 navigator.push(detailsScreen)
                             },
@@ -100,9 +100,9 @@ class WishlistScreen : Screen {
                                 viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
                             },
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .align(Alignment.TopCenter),
+                            Modifier
+                                .fillMaxSize()
+                                .align(Alignment.TopCenter)
                         )
                     }
                 }
@@ -123,7 +123,7 @@ class WishlistScreen : Screen {
                     viewModel.accept(WishlistUserIntent.ResultMessageReset)
                     viewModel.accept(WishlistUserIntent.LoadMovies)
                 }
-            },
+            }
         )
 
         LaunchedEffect(Unit) {

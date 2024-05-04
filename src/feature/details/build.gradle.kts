@@ -2,6 +2,7 @@
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.kover)
+    alias(libs.plugins.ktlint)
     alias(libs.plugins.jetbrains.compose)
 }
 

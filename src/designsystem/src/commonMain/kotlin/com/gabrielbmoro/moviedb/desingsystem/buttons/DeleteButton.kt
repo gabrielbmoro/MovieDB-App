@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.icerock.moko.resources.compose.stringResource
 import com.gabrielbmoro.moviedb.SharedRes
+import dev.icerock.moko.resources.compose.stringResource
 
 private val deleteCardContainerColor = Color(0xFFFFDAD4L)
 private val deleteCardTextColor = Color(0xFF851300L)
@@ -23,30 +23,30 @@ private val deleteCardTextColor = Color(0xFF851300L)
 @Composable
 fun DeleteButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier,
         onClick = onClick,
         colors =
-            CardDefaults.cardColors(
-                containerColor = deleteCardContainerColor,
-            ),
+        CardDefaults.cardColors(
+            containerColor = deleteCardContainerColor
+        )
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
                 imageVector = Icons.Outlined.Delete,
                 tint = Color.Red,
-                contentDescription = null,
+                contentDescription = null
             )
 
             Text(
                 style = MaterialTheme.typography.titleSmall,
                 color = deleteCardTextColor,
-                text = stringResource(SharedRes.strings.delete),
+                text = stringResource(SharedRes.strings.delete)
             )
         }
     }
