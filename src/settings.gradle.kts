@@ -21,11 +21,6 @@ dependencyResolutionManagement {
 include(
     ":composeApp",
     ":data",
-    ":core",
-    ":feature_movies",
-    ":feature_details",
-    ":feature_wishlist",
-    ":feature_search",
     ":domain",
     ":designsystem",
     ":feature:wishlist",
