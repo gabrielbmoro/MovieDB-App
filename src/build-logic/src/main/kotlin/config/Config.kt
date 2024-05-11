@@ -4,6 +4,7 @@ import org.gradle.api.JavaVersion
 
 object Config {
     const val APPLICATION_ID = "com.gabrielbmoro.moviedb"
+    const val APP_NAME = "ComposeApp"
     const val MIN_SDK = 22
     const val TARGET_SDK = 34
     const val COMPILE_SDK = 34

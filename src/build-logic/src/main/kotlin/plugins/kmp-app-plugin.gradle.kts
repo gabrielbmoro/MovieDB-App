@@ -1,5 +1,10 @@
-
 import config.Config
+import ext.configureBuildTypes
+import ext.configureCompileOptions
+import ext.configureDefaultConfig
+import ext.configurePlatformTargets
+import ext.configureSigning
+import ext.configureTestOptions
 
 plugins {
     id("com.android.application")
@@ -8,68 +13,19 @@ plugins {
 
 android {
     compileSdk = Config.COMPILE_SDK
+    namespace = Config.APPLICATION_ID
 
     defaultConfig {
-        minSdk = Config.MIN_SDK
-        targetSdk = Config.TARGET_SDK
-        versionCode = Config.versionCode()
-        versionName = Config.versionName()
-
         applicationId = Config.APPLICATION_ID
     }
 
-    compileOptions {
-        sourceCompatibility = Config.javaCompatibilityVersion
-        targetCompatibility = Config.javaCompatibilityVersion
-    }
-
-    testOptions {
-        unitTests.isReturnDefaultValues = Config.HAS_UNIT_TESTS_DEFAULT_VALUES
-    }
-
-    namespace = Config.APPLICATION_ID
-}
-
-android {
-    signingConfigs {
-        create("release") {
-            keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
-            keyPassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
-
-            storeFile = file(System.getenv("HOME").plus("/moviedb-keystore"))
-            storePassword = System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
-        }
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-            signingConfig = signingConfigs.getByName("release")
-        }
-    }
+    configureDefaultConfig()
+    configureCompileOptions()
+    configureTestOptions()
+    configureSigning()
+    configureBuildTypes()
 }
 
 kotlin {
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = Config.JAVA_VM_TARGET
-            }
-        }
-    }
+    configurePlatformTargets()
 }
