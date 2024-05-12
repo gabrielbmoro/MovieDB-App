@@ -5,10 +5,6 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
 }
 
-android {
-    namespace = "com.gabrielbmoro.moviedb.platform"
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

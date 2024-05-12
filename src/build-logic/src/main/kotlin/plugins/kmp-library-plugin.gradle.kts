@@ -1,6 +1,10 @@
 @file:Suppress("UnstableApiUsage")
 
-import config.Config
+import config.ConfigurationKeys
+import ext.configureCompileOptions
+import ext.configureDefaultConfig
+import ext.configurePlatformTargets
+import ext.configureTestOptions
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -9,39 +13,15 @@ plugins {
 }
 
 android {
-    compileSdk = Config.COMPILE_SDK
+    compileSdk = ConfigurationKeys.sdkConfiguration.compileSdk
 
-    defaultConfig {
-        minSdk = Config.MIN_SDK
-    }
+    configureDefaultConfig()
+    configureCompileOptions()
+    configureTestOptions()
 
-    compileOptions {
-        sourceCompatibility = Config.javaCompatibilityVersion
-        targetCompatibility = Config.javaCompatibilityVersion
-    }
-
-    testOptions {
-        unitTests.isReturnDefaultValues = Config.HAS_UNIT_TESTS_DEFAULT_VALUES
-    }
+    namespace = ConfigurationKeys.APPLICATION_ID.plus(name)
 }
 
 kotlin {
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = Config.JAVA_VM_TARGET
-            }
-        }
-    }
+    configurePlatformTargets()
 }

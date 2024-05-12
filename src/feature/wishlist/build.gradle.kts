@@ -6,10 +6,6 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
 }
 
-android {
-    namespace = "com.gabrielbmoro.moviedb.feature.wishlist"
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

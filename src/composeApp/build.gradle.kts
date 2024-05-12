@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import ext.configureKover
 
 plugins {
     id("kmp-app-plugin")
@@ -15,53 +16,47 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
-
     sourceSets {
-        sourceSets {
-            androidMain.dependencies {
-                implementation(libs.compose.ui.tooling.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.koin.android)
-                implementation(projects.platform)
-            }
-            iosMain.dependencies {
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.bundles.koin.impl)
-            }
-            commonMain.dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(compose.components.uiToolingPreview)
+        androidMain.dependencies {
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.koin.android)
+            implementation(projects.platform)
+        }
+        iosMain.dependencies {
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.bundles.koin.impl)
+        }
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.uiToolingPreview)
 
-                implementation(libs.voyager.navigator)
-                implementation(libs.rinku.core)
-                implementation(libs.rinku.compose.ext)
-                implementation(projects.platform)
-                implementation(projects.designsystem)
-                implementation(projects.feature.wishlist)
-                implementation(projects.feature.search)
-                implementation(projects.feature.details)
-                implementation(projects.feature.movies)
-                implementation(projects.data)
-                implementation(projects.domain)
+            implementation(libs.voyager.navigator)
+            implementation(libs.rinku.core)
+            implementation(libs.rinku.compose.ext)
+            implementation(projects.platform)
+            implementation(projects.designsystem)
+            implementation(projects.feature.wishlist)
+            implementation(projects.feature.search)
+            implementation(projects.feature.details)
+            implementation(projects.feature.movies)
+            implementation(projects.data)
+            implementation(projects.domain)
 
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.bundles.koin.impl)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.bundles.koin.impl)
 
-                implementation(projects.resources)
-            }
+            implementation(projects.resources)
         }
     }
 }
 
-android {
-    buildFeatures {
-        buildConfig = true
-    }
+dependencies {
+    configureKover { targetModule -> kover(targetModule) }
 }
 
 koverReport {
