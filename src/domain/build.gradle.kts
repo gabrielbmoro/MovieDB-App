@@ -5,10 +5,6 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-android {
-    namespace = "com.gabrielbmoro.moviedb.domain"
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

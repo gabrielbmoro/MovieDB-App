@@ -1,6 +1,5 @@
 plugins {
     id("kmp-library-plugin")
-    alias(libs.plugins.kover)
     alias(libs.plugins.moko.plugin)
 }
 

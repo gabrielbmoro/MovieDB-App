@@ -3,7 +3,7 @@ package ext
 import config.Config
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-fun KotlinMultiplatformExtension.configurePlatformTargets() {
+internal fun KotlinMultiplatformExtension.configurePlatformTargets() {
     listOf(
         iosX64(),
         iosArm64(),

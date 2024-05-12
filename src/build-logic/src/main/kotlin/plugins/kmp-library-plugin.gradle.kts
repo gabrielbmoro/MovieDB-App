@@ -18,6 +18,8 @@ android {
     configureDefaultConfig()
     configureCompileOptions()
     configureTestOptions()
+
+    namespace = Config.APPLICATION_ID.plus(name)
 }
 
 kotlin {

@@ -3,7 +3,7 @@ package ext
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import java.io.File
 
-fun BaseAppModuleExtension.configureSigning() {
+internal fun BaseAppModuleExtension.configureSigning() {
     signingConfigs {
         create("release") {
             keyAlias = System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
@@ -16,7 +16,7 @@ fun BaseAppModuleExtension.configureSigning() {
     }
 }
 
-fun BaseAppModuleExtension.configureBuildTypes() {
+internal fun BaseAppModuleExtension.configureBuildTypes() {
     buildTypes {
         release {
             isMinifyEnabled = false

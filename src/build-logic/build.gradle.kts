@@ -1,7 +1,6 @@
 plugins {
     `kotlin-dsl`
     `kotlin-dsl-precompiled-script-plugins`
-    libs.plugins.kover
 }
 
 repositories {

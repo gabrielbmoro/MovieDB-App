@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import ext.configureKover
 
 plugins {
     id("kmp-app-plugin")
@@ -52,6 +53,10 @@ kotlin {
             implementation(projects.resources)
         }
     }
+}
+
+dependencies {
+    configureKover { targetModule -> kover(targetModule) }
 }
 
 koverReport {

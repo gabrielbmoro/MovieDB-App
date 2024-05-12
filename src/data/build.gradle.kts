@@ -1,3 +1,5 @@
+import config.Config
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
@@ -5,10 +7,6 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ktlint)
-}
-
-android {
-    namespace = "com.gabrielbmoro.moviedb.data"
 }
 
 kotlin {

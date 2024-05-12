@@ -1,13 +1,11 @@
+import config.Config
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.kover)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.jetbrains.compose)
-}
-
-android {
-    namespace = "com.gabrielbmoro.moviedb.feature.wishlist"
 }
 
 kotlin {
