@@ -6,8 +6,8 @@ import config.Versioning
 
 internal fun BaseExtension.configureCompileOptions() {
     compileOptions {
-        sourceCompatibility = ConfigurationKeys.Java.javaCompatibilityVersion
-        targetCompatibility = ConfigurationKeys.Java.javaCompatibilityVersion
+        sourceCompatibility = ConfigurationKeys.javaConfiguration.version
+        targetCompatibility = ConfigurationKeys.javaConfiguration.version
     }
 }
 
@@ -19,8 +19,8 @@ internal fun BaseExtension.configureTestOptions() {
 
 internal fun BaseExtension.configureDefaultConfig() {
     defaultConfig {
-        minSdk = ConfigurationKeys.Sdk.MIN_SDK
-        targetSdk = ConfigurationKeys.Sdk.TARGET_SDK
+        minSdk = ConfigurationKeys.sdkConfiguration.minSdk
+        targetSdk = ConfigurationKeys.sdkConfiguration.targetSdk
         versionCode = Versioning.versionCode()
         versionName = Versioning.versionName()
     }

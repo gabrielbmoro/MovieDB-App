@@ -13,7 +13,7 @@ plugins {
 }
 
 android {
-    compileSdk = ConfigurationKeys.Sdk.COMPILE_SDK
+    compileSdk = ConfigurationKeys.sdkConfiguration.compileSdk
 
     configureDefaultConfig()
     configureCompileOptions()

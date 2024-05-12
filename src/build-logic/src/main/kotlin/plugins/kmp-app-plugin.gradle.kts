@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    compileSdk = ConfigurationKeys.Sdk.COMPILE_SDK
+    compileSdk = ConfigurationKeys.sdkConfiguration.compileSdk
     namespace = ConfigurationKeys.APPLICATION_ID
 
     defaultConfig {

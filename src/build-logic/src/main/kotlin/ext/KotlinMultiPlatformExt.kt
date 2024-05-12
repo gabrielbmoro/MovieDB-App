@@ -18,7 +18,7 @@ internal fun KotlinMultiplatformExtension.configurePlatformTargets() {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = ConfigurationKeys.Java.JAVA_VM_TARGET
+                jvmTarget = ConfigurationKeys.javaConfiguration.javaVmTarget
             }
         }
     }
