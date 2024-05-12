@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-import config.Config
+import config.ConfigurationKeys
 import ext.configureCompileOptions
 import ext.configureDefaultConfig
 import ext.configurePlatformTargets
@@ -13,13 +13,13 @@ plugins {
 }
 
 android {
-    compileSdk = Config.COMPILE_SDK
+    compileSdk = ConfigurationKeys.Sdk.COMPILE_SDK
 
     configureDefaultConfig()
     configureCompileOptions()
     configureTestOptions()
 
-    namespace = Config.APPLICATION_ID.plus(name)
+    namespace = ConfigurationKeys.APPLICATION_ID.plus(name)
 }
 
 kotlin {

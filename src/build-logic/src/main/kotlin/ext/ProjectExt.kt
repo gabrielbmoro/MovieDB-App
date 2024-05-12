@@ -1,10 +1,10 @@
 package ext
 
-import config.Config
+import config.ConfigurationKeys
 import org.gradle.api.Project
 
 private fun Project.isEligibleForCoverage(): Boolean {
-    return Config.ELIGIBLE_MODULES_FOR_COVERAGE.contains(name)
+    return ConfigurationKeys.ELIGIBLE_MODULES_FOR_COVERAGE.contains(name)
 }
 
 fun Project.configureKover(kover: (Project) -> Unit) {

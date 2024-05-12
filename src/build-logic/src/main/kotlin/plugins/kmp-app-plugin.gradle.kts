@@ -1,4 +1,4 @@
-import config.Config
+import config.ConfigurationKeys
 import ext.configureBuildTypes
 import ext.configureCompileOptions
 import ext.configureDefaultConfig
@@ -12,11 +12,11 @@ plugins {
 }
 
 android {
-    compileSdk = Config.COMPILE_SDK
-    namespace = Config.APPLICATION_ID
+    compileSdk = ConfigurationKeys.Sdk.COMPILE_SDK
+    namespace = ConfigurationKeys.APPLICATION_ID
 
     defaultConfig {
-        applicationId = Config.APPLICATION_ID
+        applicationId = ConfigurationKeys.APPLICATION_ID
     }
 
     configureDefaultConfig()

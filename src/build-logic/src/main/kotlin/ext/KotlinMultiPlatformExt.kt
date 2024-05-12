@@ -1,6 +1,6 @@
 package ext
 
-import config.Config
+import config.ConfigurationKeys
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun KotlinMultiplatformExtension.configurePlatformTargets() {
@@ -10,7 +10,7 @@ internal fun KotlinMultiplatformExtension.configurePlatformTargets() {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = Config.APP_NAME
+            baseName = ConfigurationKeys.APP_NAME
             isStatic = true
         }
     }
@@ -18,7 +18,7 @@ internal fun KotlinMultiplatformExtension.configurePlatformTargets() {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = Config.JAVA_VM_TARGET
+                jvmTarget = ConfigurationKeys.Java.JAVA_VM_TARGET
             }
         }
     }
