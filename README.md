@@ -14,6 +14,8 @@
 
 Welcome to the MovieDB-App! If you like movies, you will like this app, because you can access the most popular and top rated movies 🤩
 
+More details about the project you can take a look in our [Wiki](https://github.com/gabrielbmoro/MovieDB-App/wiki) 📚
+
 ---
 
 ## How to run the project 📦
