@@ -2,8 +2,6 @@ package com.gabrielbmoro.moviedb.data.providers
 
 import androidx.room.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.DataBaseFactory
-import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dbFileName
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -24,11 +22,11 @@ private fun fileDirectory(): String {
     return requireNotNull(documentDirectory).path!!
 }
 
-actual fun databaseInstance(): DataBaseFactory {
+actual fun databaseInstance(): AppDatabase {
     val dbFile = "${fileDirectory()}/$dbFileName"
-    return Room.databaseBuilder<DataBaseFactory>(
+    return Room.databaseBuilder<AppDatabase>(
         name = dbFile,
-        factory =  { DataBaseFactory::class.instantiateImpl() }
+        factory = { AppDatabase::class.instantiateImpl() }
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
