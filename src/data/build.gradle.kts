@@ -22,7 +22,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.bundles.room)
+            implementation(libs.room.runtime)
             implementation(libs.koin.android)
         }
 
