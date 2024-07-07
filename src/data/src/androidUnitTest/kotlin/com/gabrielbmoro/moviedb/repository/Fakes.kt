@@ -8,7 +8,7 @@ import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.Movie
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.ProductionCompanyResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponseItem
-import com.gabrielbmoro.moviedb.data.repository.datasources.room.dto.FavoriteMovieDTO
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dto.FavoriteMovieDTO
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream

@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.data.repository.datasources.room.dto
+package com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dto
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

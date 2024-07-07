@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.repository
 
-import com.gabrielbmoro.moviedb.data.repository.toFavoriteMovieDTO
-import com.gabrielbmoro.moviedb.data.repository.toMovie
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.toFavoriteMovieDTO
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.toMovie
 import com.gabrielbmoro.moviedb.data.repository.toMovieDetail
 import com.gabrielbmoro.moviedb.data.repository.toVideoStreams
 import org.junit.Test

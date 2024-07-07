@@ -1,10 +1,10 @@
-package com.gabrielbmoro.moviedb.data.repository.datasources.room
+package com.gabrielbmoro.moviedb.data.repository.datasources.database.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.gabrielbmoro.moviedb.data.repository.datasources.room.dto.FavoriteMovieDTO
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dto.FavoriteMovieDTO
 
 @Dao
 interface FavoriteMoviesDAO {

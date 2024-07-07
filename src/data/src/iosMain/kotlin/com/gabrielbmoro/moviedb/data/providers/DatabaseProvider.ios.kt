@@ -1,20 +1,35 @@
 package com.gabrielbmoro.moviedb.data.providers
 
-import com.gabrielbmoro.moviedb.data.repository.datasources.database.Database
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import androidx.room.Room
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.DataBaseFactory
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dbFileName
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSFileManager
+import platform.Foundation.NSURL
+import platform.Foundation.NSUserDomainMask
 
-actual fun databaseInstance(): Database {
-    return object : Database {
-        override suspend fun allFavoriteMovies(): List<Movie> {
-            return emptyList()
-        }
+@OptIn(ExperimentalForeignApi::class)
+private fun fileDirectory(): String {
+    val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
+        directory = NSDocumentDirectory,
+        inDomain = NSUserDomainMask,
+        appropriateForURL = null,
+        create = false,
+        error = null,
+    )
+    return requireNotNull(documentDirectory).path!!
+}
 
-        override suspend fun isThereAMovie(title: String): List<Movie> {
-            return emptyList()
-        }
-
-        override suspend fun removeFavorite(movieTitle: String) = Unit
-
-        override suspend fun saveFavorite(movie: Movie) = Unit
-    }
+actual fun databaseInstance(): DataBaseFactory {
+    val dbFile = "${fileDirectory()}/$dbFileName"
+    return Room.databaseBuilder<DataBaseFactory>(
+        name = dbFile,
+        factory =  { DataBaseFactory::class.instantiateImpl() }
+    ).setDriver(BundledSQLiteDriver())
+        .setQueryCoroutineContext(Dispatchers.IO)
+        .build()
 }

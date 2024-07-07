@@ -14,6 +14,8 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.bundles.koin.impl)
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
 
         commonTest.dependencies {
@@ -22,7 +24,6 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.room.runtime)
             implementation(libs.koin.android)
         }
 
@@ -37,6 +38,5 @@ kotlin {
 }
 
 dependencies {
-    // Room for Android
-    kspAndroid(libs.room.compiler)
+    ksp(libs.room.compiler)
 }

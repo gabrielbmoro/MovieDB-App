@@ -24,6 +24,7 @@ androidx_activity_compose = "1.8.2"
 moko_resources = "0.23.0"
 rinku = "0.1.0"
 buildkonfig = "0.15.1"
+sqlite = "2.5.0-SNAPSHOT"
 
 [libraries]
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
@@ -32,6 +33,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 arc_core_common = { group = "androidx.arch.core", name = "core-common", version.ref = "arch_core" }
 arc_core_runtime = { group = "androidx.arch.core", name = "core-runtime", version.ref = "arch_core" }

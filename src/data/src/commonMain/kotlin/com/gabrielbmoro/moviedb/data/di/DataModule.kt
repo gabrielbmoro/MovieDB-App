@@ -3,6 +3,7 @@ package com.gabrielbmoro.moviedb.data.di
 import com.gabrielbmoro.moviedb.data.providers.databaseInstance
 import com.gabrielbmoro.moviedb.data.providers.httpClientEngine
 import com.gabrielbmoro.moviedb.data.repository.MoviesRepositoryImpl
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.FavoriteMoviesDAO
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.ApiService
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import io.ktor.client.HttpClient
@@ -59,10 +60,14 @@ val dataModule =
             )
         }
 
+        single<FavoriteMoviesDAO> {
+            databaseInstance().favoriteMoviesDAO()
+        }
+
         single<MoviesRepository> {
             MoviesRepositoryImpl(
                 api = get(),
-                database = databaseInstance()
+                favoriteMoviesDAO = get()
             )
         }
     }
