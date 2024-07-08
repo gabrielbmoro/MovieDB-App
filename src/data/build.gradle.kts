@@ -48,3 +48,9 @@ dependencies {
 room {
     schemaDirectory("$projectDir/schemas")
 }
+
+ktlint {
+    filter {
+        exclude { element -> element.file.path.contains("generated/") }
+    }
+}
