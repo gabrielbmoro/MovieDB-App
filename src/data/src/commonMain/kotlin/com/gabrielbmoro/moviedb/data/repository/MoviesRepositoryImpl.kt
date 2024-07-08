@@ -1,6 +1,8 @@
 package com.gabrielbmoro.moviedb.data.repository
 
-import com.gabrielbmoro.moviedb.data.repository.datasources.database.Database
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.FavoriteMoviesDAO
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.toFavoriteMovieDTO
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.toMovie
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.ApiService
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
@@ -9,10 +11,11 @@ import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 
 class MoviesRepositoryImpl(
     private val api: ApiService,
-    private val database: Database
+    private val favoriteMoviesDAO: FavoriteMoviesDAO
 ) : MoviesRepository {
+
     override suspend fun getFavoriteMovies(): List<Movie> {
-        return database.allFavoriteMovies()
+        return favoriteMoviesDAO.allFavoriteMovies().map { it.toMovie() }
     }
 
     override suspend fun getPopularMovies(page: Int): List<Movie> {
@@ -44,15 +47,15 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun favorite(movie: Movie) {
-        database.saveFavorite(movie)
+        favoriteMoviesDAO.saveFavorite(movie.toFavoriteMovieDTO())
     }
 
     override suspend fun unFavorite(movieTitle: String) {
-        database.removeFavorite(movieTitle)
+        favoriteMoviesDAO.removeFavorite(movieTitle)
     }
 
     override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
-        return database.isThereAMovie(
+        return favoriteMoviesDAO.isThereAMovie(
             title = movieTitle
         ).any()
     }

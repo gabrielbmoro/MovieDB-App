@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.room.plugin)
 }
 
 kotlin {
@@ -14,6 +15,8 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.bundles.koin.impl)
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
 
         commonTest.dependencies {
@@ -22,7 +25,6 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.bundles.room)
             implementation(libs.koin.android)
         }
 
@@ -37,6 +39,18 @@ kotlin {
 }
 
 dependencies {
-    // Room for Android
-    kspAndroid(libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+ktlint {
+    filter {
+        exclude { element -> element.file.path.contains("generated/") }
+    }
 }

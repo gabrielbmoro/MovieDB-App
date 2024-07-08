@@ -1,6 +1,6 @@
-package com.gabrielbmoro.moviedb.data.repository
+package com.gabrielbmoro.moviedb.data.repository.datasources.database
 
-import com.gabrielbmoro.moviedb.data.repository.datasources.room.dto.FavoriteMovieDTO
+import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dto.FavoriteMovieDTO
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 
 fun Movie.toFavoriteMovieDTO(customId: Int? = null): FavoriteMovieDTO {
