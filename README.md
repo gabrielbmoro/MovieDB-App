@@ -71,7 +71,7 @@ MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 - [Ktor](https://ktor.io) - Network requests
 - [Moko Resources](https://github.com/icerockdev/moko-resources) - Multiplatform resources
 - [Kamel](https://github.com/Kamel-Media/Kamel) - Image loader
-- Room - Android Database
+- [Room](https://developer.android.com/kotlin/multiplatform/room) - Multiplatform database
 - Gradle Catalogs - Dependency management
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - Android video player
 - [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) - Gradle variables
