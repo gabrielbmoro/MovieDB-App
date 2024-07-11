@@ -31,6 +31,7 @@ firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlyti
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
+ktlint-gradle-plugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlint_plugin" }
 moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

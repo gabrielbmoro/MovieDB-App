@@ -41,3 +41,7 @@ koverReport {
 tasks.register("coverageReport") {
     dependsOn(":composeApp:koverHtmlReportDebug")
 }
+
+tasks.register("lintCheck") {
+    dependsOn("ktlintCheck")
+}

@@ -7,7 +7,6 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.buildkonfig.plugin)
@@ -49,14 +48,6 @@ kotlin {
             implementation(libs.bundles.koin.impl)
 
             implementation(projects.resources)
-        }
-    }
-}
-
-ktlint {
-    filter {
-        exclude { entry ->
-            entry.file.toString().contains("BuildKonfig")
         }
     }
 }
