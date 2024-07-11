@@ -1,14 +1,12 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.codingfeline.buildkonfig.compiler.FieldSpec
-import ext.configureKover
 
 plugins {
     id("kmp-app-plugin")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-    alias(libs.plugins.kover)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.compose)
@@ -51,39 +49,6 @@ kotlin {
             implementation(libs.bundles.koin.impl)
 
             implementation(projects.resources)
-        }
-    }
-}
-
-dependencies {
-    configureKover { targetModule -> kover(targetModule) }
-}
-
-koverReport {
-    filters {
-        excludes {
-            packages(
-                "*.di",
-                "*.datasources",
-                "*.providers",
-                "dagger.hilt.internal.aggregatedroot.codegen",
-                "hilt_aggregated_deps",
-                "*.dto",
-                "*.core.ui.*",
-                "*.widgets",
-                "*.navigation"
-            )
-
-            classes(
-                "*.BuildConfig",
-                "*.ComposableSingletons",
-                "*.Hilt_MainActivity",
-                "*_Factory*",
-                "*Activity",
-                "*ScreenKt*",
-                "*_HiltModules*"
-            )
-            annotatedBy("Generated")
         }
     }
 }

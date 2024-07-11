@@ -7,7 +7,7 @@ private fun Project.isEligibleForCoverage(): Boolean {
     return ConfigurationKeys.ELIGIBLE_MODULES_FOR_COVERAGE.contains(name)
 }
 
-fun Project.configureKover(kover: (Project) -> Unit) {
+internal fun Project.configureKover(kover: (Project) -> Unit) {
     rootProject.subprojects.forEach { module ->
         when {
             module.subprojects.isEmpty() -> {
