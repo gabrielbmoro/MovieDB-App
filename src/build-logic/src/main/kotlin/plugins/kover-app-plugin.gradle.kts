@@ -37,3 +37,7 @@ koverReport {
         }
     }
 }
+
+tasks.register("coverageReport") {
+    dependsOn(":composeApp:koverHtmlReportDebug")
+}
