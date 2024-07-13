@@ -2,9 +2,7 @@
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kover)
     alias(libs.plugins.serialization)
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.room.plugin)
 }
 
@@ -47,10 +45,4 @@ dependencies {
 
 room {
     schemaDirectory("$projectDir/schemas")
-}
-
-ktlint {
-    filter {
-        exclude { element -> element.file.path.contains("generated/") }
-    }
 }
