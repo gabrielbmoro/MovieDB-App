@@ -9,3 +9,7 @@ ktlint {
         }
     }
 }
+
+tasks.register("lintCheck") {
+    dependsOn("ktlintCheck")
+}
