@@ -15,4 +15,5 @@ dependencies {
     implementation(libs.gradle)
     implementation(libs.kover.gradle.plugin)
     implementation(libs.ktlint.gradle.plugin)
+    implementation(libs.com.google.devtools.ksp.gradle.plugin)
 }
