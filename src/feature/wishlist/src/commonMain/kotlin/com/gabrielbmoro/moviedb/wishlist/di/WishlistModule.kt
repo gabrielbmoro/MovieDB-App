@@ -12,7 +12,7 @@ import org.koin.ksp.generated.module
 val featureWishlistModule = WishlistModule().module
 
 @Module
-@ComponentScan("com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist")
+@ComponentScan("com.gabrielbmoro.moviedb.wishlist.ui")
 class WishlistModule {
 
     @Factory

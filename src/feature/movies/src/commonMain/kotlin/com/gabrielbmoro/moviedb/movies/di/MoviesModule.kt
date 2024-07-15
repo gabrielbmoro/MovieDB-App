@@ -2,23 +2,22 @@ package com.gabrielbmoro.moviedb.movies.di
 
 import cafe.adriel.voyager.core.screen.Screen
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
-import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreenModel
 import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Named
+import org.koin.ksp.generated.module
 
-val featureMoviesModule =
-    module {
-        factory {
-            MoviesScreenModel(
-                getPopularMoviesUseCase = get(),
-                getNowPlayingMoviesUseCase = get(),
-                getTopRatedMoviesUseCase = get(),
-                getUpcomingMoviesUseCase = get()
-            )
-        }
+val featureMoviesModule = MoviesModule().module
 
-        factory<Screen>(named(NavigationDestinations.MOVIES)) {
-            MoviesScreen()
-        }
+@Module
+@ComponentScan("com.gabrielbmoro.moviedb.movies.ui")
+class MoviesModule {
+
+    @Factory
+    @Named(NavigationDestinations.MOVIES)
+    fun moviesScreen(): Screen {
+        return MoviesScreen()
     }
+}
