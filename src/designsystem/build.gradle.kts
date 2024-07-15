@@ -19,8 +19,7 @@ kotlin {
 
             implementation(libs.kamel)
 
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.bundles.koin.impl)
+            implementation(libs.koin.core)
 
             implementation(projects.domain)
             implementation(projects.resources)
