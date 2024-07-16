@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList", "LongMethod")
+
 package com.gabrielbmoro.moviedb.desingsystem.scaffold
 
 import androidx.compose.animation.AnimatedVisibility

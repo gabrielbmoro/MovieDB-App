@@ -1,3 +1,5 @@
+@file:Suppress("TopLevelPropertyNaming", "MagicNumber")
+
 package com.gabrielbmoro.moviedb.desingsystem.toolbars
 
 import androidx.compose.material3.Icon

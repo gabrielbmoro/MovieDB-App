@@ -11,8 +11,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.domain)
             implementation(libs.bundles.ktor)
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.bundles.koin.impl)
+            implementation(libs.koin.core)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
         }

@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
+import org.koin.core.annotation.Factory
 
 interface GetUpcomingMoviesUseCase : UseCase<GetUpcomingMoviesUseCase.Params, List<Movie>> {
     data class Params(
@@ -9,6 +10,7 @@ interface GetUpcomingMoviesUseCase : UseCase<GetUpcomingMoviesUseCase.Params, Li
     )
 }
 
+@Factory
 class GetUpcomingMoviesUseCaseImpl(
     private val repository: MoviesRepository
 ) : GetUpcomingMoviesUseCase {

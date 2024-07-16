@@ -21,8 +21,7 @@ kotlin {
             implementation(projects.platform)
         }
         iosMain.dependencies {
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.bundles.koin.impl)
+            implementation(libs.koin.core)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,9 +42,7 @@ kotlin {
             implementation(projects.feature.movies)
             implementation(projects.data)
             implementation(projects.domain)
-
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.bundles.koin.impl)
+            implementation(libs.koin.core)
 
             implementation(projects.resources)
         }

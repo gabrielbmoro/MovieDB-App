@@ -3,21 +3,21 @@ package com.gabrielbmoro.moviedb.wishlist.di
 import cafe.adriel.voyager.core.screen.Screen
 import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
 import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreen
-import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreenModel
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Named
+import org.koin.ksp.generated.module
 
-val featureWishlistModule =
-    module {
-        factory {
-            WishlistScreenModel(
-                favoriteMovieUseCase = get(),
-                getFavoriteMoviesUseCase = get(),
-                isFavoriteMovieUseCase = get()
-            )
-        }
+val featureWishlistModule = WishlistModule().module
 
-        factory<Screen>(named(NavigationDestinations.WISHLIST)) {
-            WishlistScreen()
-        }
+@Module
+@ComponentScan("com.gabrielbmoro.moviedb.wishlist.ui")
+class WishlistModule {
+
+    @Factory
+    @Named(NavigationDestinations.WISHLIST)
+    fun wishlistScreen(): Screen {
+        return WishlistScreen()
     }
+}

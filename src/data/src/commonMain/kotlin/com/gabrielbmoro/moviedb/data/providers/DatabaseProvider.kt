@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.gabrielbmoro.moviedb.data.providers
 
 import androidx.room.Database
@@ -10,6 +12,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteMoviesDAO(): FavoriteMoviesDAO
 }
 
+@Suppress("TopLevelPropertyNaming")
 internal const val dbFileName = "movieDBApp.db"
 
+@Suppress("TopLevelPropertyNaming")
 expect fun databaseInstance(): AppDatabase

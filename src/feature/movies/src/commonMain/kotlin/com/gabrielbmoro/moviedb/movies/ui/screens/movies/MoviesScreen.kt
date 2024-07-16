@@ -1,3 +1,5 @@
+@file:Suppress("LongMethod")
+
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import androidx.compose.foundation.layout.Arrangement

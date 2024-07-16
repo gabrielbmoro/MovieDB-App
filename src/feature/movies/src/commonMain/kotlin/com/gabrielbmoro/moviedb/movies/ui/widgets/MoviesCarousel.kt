@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 
-private const val windowSize = 5
+private const val WINDOW_SIZE = 5
 
 @Composable
 fun MoviesCarousel(
@@ -85,7 +85,7 @@ fun MoviesCarousel(
     )
 
     LaunchedEffect(key1 = firstVisibleItemIndex) {
-        val firstItemIndexOfLastWindow = movies.lastIndex - windowSize
+        val firstItemIndexOfLastWindow = movies.lastIndex - WINDOW_SIZE
         val reachTheBeginningOfTheLastWindow = firstVisibleItemIndex == firstItemIndexOfLastWindow
 
         if (reachTheBeginningOfTheLastWindow) {

@@ -2,6 +2,7 @@
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
+    id("koin-annotations-plugin-setup")
 }
 
 kotlin {
@@ -23,9 +24,6 @@ kotlin {
             implementation(libs.kamel)
 
             implementation(libs.bundles.voyager)
-
-            implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.bundles.koin.impl)
 
             implementation(projects.domain)
             implementation(projects.designsystem)

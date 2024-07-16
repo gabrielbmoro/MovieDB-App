@@ -7,7 +7,9 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
+import org.koin.core.annotation.Factory
 
+@Factory
 class MoviesScreenModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
