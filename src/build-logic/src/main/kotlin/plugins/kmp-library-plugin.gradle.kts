@@ -11,7 +11,6 @@ plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
     id("org.jetbrains.kotlinx.kover")
-    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -26,10 +25,4 @@ android {
 
 kotlin {
     configurePlatformTargets()
-}
-
-ktlint {
-    filter {
-        exclude { element -> element.file.path.contains("generated/") }
-    }
 }
