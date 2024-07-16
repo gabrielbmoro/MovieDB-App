@@ -1,3 +1,5 @@
+@file:Suppress("LongMethod")
+
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +33,7 @@ import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
 class WishlistScreen : Screen {
+
     @Composable
     override fun Content() {
         val viewModel = koinScreenModel<WishlistScreenModel>()

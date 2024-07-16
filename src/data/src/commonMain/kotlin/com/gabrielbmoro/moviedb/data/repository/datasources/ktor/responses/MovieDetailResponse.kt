@@ -2,7 +2,7 @@ package com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses
 
 import kotlinx.serialization.Serializable
 
-@Suppress("PropertyName")
+@Suppress("PropertyName", "ConstructorParameterNaming")
 @Serializable
 data class MovieDetailResponse(
     val adult: Boolean,

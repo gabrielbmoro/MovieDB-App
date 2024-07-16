@@ -1,3 +1,5 @@
+@file:Suppress("LongMethod")
+
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 import androidx.compose.animation.AnimatedVisibility

@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList")
+
 package com.gabrielbmoro.moviedb.search.ui.widgets
 
 import androidx.compose.foundation.Image

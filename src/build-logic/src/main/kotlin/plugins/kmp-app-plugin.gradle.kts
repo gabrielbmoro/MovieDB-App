@@ -10,7 +10,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.multiplatform")
     id("kover-app-plugin")
-    id("ktlint-app-plugin")
+    id("detekt-plugin-setup")
 }
 
 android {

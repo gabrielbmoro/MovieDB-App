@@ -10,7 +10,6 @@ coroutines = "1.6.4"
 gradle = "8.2.2"
 android_youtube_player_version = "12.0.0"
 material = "1.11.0"
-ktlint_plugin = "11.5.1"
 ksp = "1.9.23-1.0.19"
 kover = "0.7.5"
 koin = "3.5.6"
@@ -26,6 +25,7 @@ moko_resources = "0.23.0"
 rinku = "0.1.0"
 buildkonfig = "0.15.1"
 sqlite = "2.5.0-SNAPSHOT"
+detekt = "1.23.6"
 
 [libraries]
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
@@ -33,7 +33,7 @@ firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlyti
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
-ktlint-gradle-plugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlint_plugin" }
+detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -81,7 +81,6 @@ voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel"]
 moko = ["moko_compose", "moko_core"]
 
 [plugins]
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint_plugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
@@ -90,3 +89,4 @@ jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugi
 moko_plugin = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko_resources" }
 buildkonfig_plugin = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 room_plugin = { id = "androidx.room", version.ref = "room" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

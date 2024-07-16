@@ -25,8 +25,7 @@ val fakeMovieDetail = MovieDetail(
 )
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
-    override suspend fun execute(input: FavoriteMovieUseCase.Params) {
-    }
+    override suspend fun execute(input: FavoriteMovieUseCase.Params) = Unit
 }
 
 class FakeIsFavoriteMovieUseCase : IsFavoriteMovieUseCase {
