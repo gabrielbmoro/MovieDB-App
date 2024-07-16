@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList", "LongMethod")
+
 package com.gabrielbmoro.moviedb.desingsystem.cards
 
 import androidx.compose.animation.core.Spring

@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.gabrielbmoro.moviedb.desingsystem.theme
 
 import androidx.compose.material3.ColorScheme

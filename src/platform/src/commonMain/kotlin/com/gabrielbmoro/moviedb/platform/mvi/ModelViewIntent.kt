@@ -3,6 +3,7 @@ internal interface ModelViewIntent<in UserIntent : Any, ScreenState : Any> {
         return null
     }
 
+    @Suppress("TooGenericExceptionThrown")
     suspend fun execute(intent: UserIntent): ScreenState {
         throw Throwable("Method not implemented")
     }

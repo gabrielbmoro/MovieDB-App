@@ -1,3 +1,5 @@
+@file:Suppress("TopLevelPropertyNaming", "MagicNumber")
+
 package com.gabrielbmoro.moviedb.desingsystem.images
 
 import androidx.compose.foundation.Image

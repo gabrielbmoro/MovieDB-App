@@ -11,6 +11,7 @@ plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
     id("org.jetbrains.kotlinx.kover")
+    id("detekt-plugin-setup")
 }
 
 android {

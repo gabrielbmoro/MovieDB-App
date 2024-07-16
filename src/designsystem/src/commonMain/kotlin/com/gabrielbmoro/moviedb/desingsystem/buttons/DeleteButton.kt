@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.gabrielbmoro.moviedb.desingsystem.buttons
 
 import androidx.compose.foundation.layout.Column

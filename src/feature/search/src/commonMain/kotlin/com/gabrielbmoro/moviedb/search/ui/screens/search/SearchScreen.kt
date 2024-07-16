@@ -1,3 +1,5 @@
+@file:Suppress("LongMethod")
+
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import CustomAppToolbar
@@ -26,6 +28,8 @@ import kotlinx.coroutines.delay
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
+
+private const val DELAY_IN_MILLIS = 500L
 
 class SearchScreen(private val query: String?) : Screen {
     @Composable
@@ -93,7 +97,7 @@ class SearchScreen(private val query: String?) : Screen {
             block = {
                 if (showKeyboard.value) {
                     focusRequester.requestFocus()
-                    delay(500)
+                    delay(DELAY_IN_MILLIS)
                     keyboard?.show()
                 }
             }

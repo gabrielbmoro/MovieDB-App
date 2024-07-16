@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList", "LongMethod")
+
 package com.gabrielbmoro.moviedb.desingsystem.loaders
 
 import androidx.compose.animation.core.Animatable
