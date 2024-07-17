@@ -10,7 +10,7 @@ interface SearchMovieUseCase : UseCase<SearchMovieUseCase.Params, List<Movie>> {
     )
 }
 
-@Factory
+// @Factory
 class SearchMovieUseCaseImpl(
     private val repository: MoviesRepository
 ) : SearchMovieUseCase {
