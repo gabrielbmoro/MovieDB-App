@@ -3,9 +3,7 @@ package com.gabrielbmoro.moviedb.domain
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import org.koin.core.annotation.Provided
 
-@Provided
 interface MoviesRepository {
     suspend fun getFavoriteMovies(): List<Movie>
 
