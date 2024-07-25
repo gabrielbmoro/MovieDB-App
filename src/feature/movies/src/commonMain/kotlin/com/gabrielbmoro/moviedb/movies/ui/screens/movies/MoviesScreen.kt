@@ -38,7 +38,7 @@ import org.koin.mp.KoinPlatform
 class MoviesScreen : Screen {
     @Composable
     override fun Content() {
-        val viewModel = koinScreenModel<MoviesScreenModel>()
+        val viewModel = koinScreenModel<MoviesViewModel>()
         val uiState = viewModel.uiState.collectAsState()
 
         val navigator = LocalNavigator.currentOrThrow

@@ -3,6 +3,7 @@ package com.gabrielbmoro.moviedb.domain.usecases
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Provided
 
 interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, MovieDetail> {
     data class Params(
@@ -12,7 +13,7 @@ interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, MovieD
 
 @Factory
 class GetMovieDetailsUseCaseImpl(
-    private val repository: MoviesRepository
+    @Provided private val repository: MoviesRepository
 ) : GetMovieDetailsUseCase {
     override suspend fun execute(input: GetMovieDetailsUseCase.Params): MovieDetail {
         val movieDetail = repository.getMovieDetail(input.movieId)

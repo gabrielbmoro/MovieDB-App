@@ -5,17 +5,17 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
-import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
+import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import org.koin.core.annotation.Factory
 
 @Factory
-class MoviesScreenModel(
+class MoviesViewModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
-) : ScreenModelMVI<Intent, MoviesUIState>() {
+) : ViewModelMVI<Intent, MoviesUIState>() {
     private val nowPlayingMoviesPageController =
         PagingController(
             requestMore = { pageIndex ->
