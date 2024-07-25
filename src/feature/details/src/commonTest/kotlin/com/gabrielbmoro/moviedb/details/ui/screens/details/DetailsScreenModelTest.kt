@@ -59,7 +59,7 @@ class DetailsScreenModelTest {
                     movieTitle = fakeMovieDetail.title
                 )
 
-            val viewModel = DetailsScreenScreenModel(
+            val viewModel = DetailsScreenViewModel(
                 movieId = 12,
                 favoriteMovieUseCase = favoriteMovieUseCase,
                 isFavoriteMovieUseCase = isFavoriteMovieUseCase,

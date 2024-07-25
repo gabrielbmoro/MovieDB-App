@@ -32,7 +32,7 @@ class SearchScreenModelTest {
         runTest {
             // arrange
             searchMovieUseCase.searchResult = emptyList()
-            val viewModel = SearchScreenModel(searchMovieUseCase = searchMovieUseCase)
+            val viewModel = SearchViewModel(searchMovieUseCase = searchMovieUseCase)
 
             // act
             viewModel.accept(SearchUserIntent.ClearSearchField)

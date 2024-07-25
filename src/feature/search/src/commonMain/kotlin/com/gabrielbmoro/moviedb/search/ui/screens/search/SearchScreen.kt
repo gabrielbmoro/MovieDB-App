@@ -34,7 +34,7 @@ private const val DELAY_IN_MILLIS = 500L
 class SearchScreen(private val query: String?) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = koinScreenModel<SearchScreenModel>() {
+        val viewModel = koinScreenModel<SearchViewModel>() {
             parametersOf(query)
         }
 

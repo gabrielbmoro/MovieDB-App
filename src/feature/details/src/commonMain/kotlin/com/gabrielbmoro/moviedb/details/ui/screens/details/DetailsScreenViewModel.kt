@@ -4,14 +4,14 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.platform.mvi.ScreenModelMVI
+import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
 
-class DetailsScreenScreenModel(
+class DetailsScreenViewModel(
     private val movieId: Long,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ScreenModelMVI<DetailsUserIntent, DetailsUIState>() {
+) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
 
     lateinit var movieDetails: MovieDetail
 

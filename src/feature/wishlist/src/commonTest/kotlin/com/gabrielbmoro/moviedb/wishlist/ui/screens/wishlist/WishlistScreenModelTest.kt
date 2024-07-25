@@ -45,7 +45,7 @@ class WishlistScreenModelTest {
             getFavoriteMoviesUseCase.result = expected
 
             val viewModel =
-                WishlistScreenModel(
+                WishlistViewModel(
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     isFavoriteMovieUseCase = isFavoriteMovieUseCase

@@ -36,7 +36,7 @@ class WishlistScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = koinScreenModel<WishlistScreenModel>()
+        val viewModel = koinScreenModel<WishlistViewModel>()
         val uiState = viewModel.uiState.collectAsState()
         val snackbarHostState = remember { SnackbarHostState() }
         val lazyListState = rememberLazyListState()
