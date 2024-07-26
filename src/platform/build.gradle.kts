@@ -7,7 +7,6 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.bundles.voyager)
             implementation(libs.kotlinx.coroutines.core)
 
             implementation(compose.runtime)
@@ -16,6 +15,8 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
+            api(libs.lifecycle.viewmodel.compose)
+            api(libs.navigation.compose)
         }
 
         androidMain.dependencies {
