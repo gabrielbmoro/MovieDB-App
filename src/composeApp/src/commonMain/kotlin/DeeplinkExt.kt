@@ -1,16 +1,11 @@
-package com.gabrielbmoro.moviedb.movies.ext
-
-import cafe.adriel.voyager.core.screen.Screen
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
-import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
-import dev.theolm.rinku.DeepLink
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
-private val DefaultStack = listOf(MoviesScreen())
+//private val DefaultStack = listOf(MoviesScreen())
 
-fun DeepLink.toScreenStack(): List<Screen> {
+/*fun DeepLink.toScreenStack(): List<Screen> {
     if (this.pathSegments.isEmpty()) {
         return DefaultStack
     }
@@ -51,3 +46,4 @@ fun DeepLink.toScreenStack(): List<Screen> {
 
 private fun List<String>.tryGetMovieId() =
     this.getOrNull(1)?.split("-")?.firstOrNull()?.toLongOrNull()
+*/

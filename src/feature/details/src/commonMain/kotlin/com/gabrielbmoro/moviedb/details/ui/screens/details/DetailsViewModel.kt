@@ -1,16 +1,25 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
+import ModelViewIntent
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 
 class DetailsViewModel(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
+) : ViewModel(), ModelViewIntent<DetailsUserIntent, DetailsUIState> {
+
+    private val _uiState = MutableStateFlow(this.defaultEmptyState())
+    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     lateinit var movieDetails: MovieDetail
     private var movieId: Long? = null
@@ -18,11 +27,11 @@ class DetailsViewModel(
     suspend fun setup(movieId: Long): DetailsUIState {
         this.movieId = movieId
 
-        updateState(
-            uiState.value.copy(
+        _uiState.update {
+            it.copy(
                 isLoading = true
             )
-        )
+        }
 
         movieDetails = fetchMoviesDetails()
 
@@ -48,16 +57,18 @@ class DetailsViewModel(
 
     override fun defaultEmptyState() = DetailsUIState.empty()
 
-    override suspend fun execute(intent: DetailsUserIntent): DetailsUIState {
+    override suspend fun execute(intent: DetailsUserIntent) {
         return when (intent) {
             is DetailsUserIntent.HideVideo -> {
-                getState().copy(
-                    showVideo = false
-                )
+                _uiState.update {
+                    it.copy(
+                        showVideo = false
+                    )
+                }
             }
 
             is DetailsUserIntent.FavoriteMovie -> {
-                val value = getState().isFavorite
+                val value = uiState.value.isFavorite
                 val desiredValue = value.not()
 
                 val params =
@@ -81,9 +92,11 @@ class DetailsViewModel(
                             movieTitle = movieDetails.title
                         )
                     )
-                getState().copy(
-                    isFavorite = result
-                )
+                _uiState.update {
+                    it.copy(
+                        isFavorite = result
+                    )
+                }
             }
         }
     }
