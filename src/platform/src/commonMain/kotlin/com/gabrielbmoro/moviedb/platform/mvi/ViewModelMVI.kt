@@ -17,15 +17,6 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> :
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            val state = setup()
-            if (state != null) {
-                _uiState.update { state }
-            }
-        }
-    }
-
     fun accept(intent: UserIntent) {
         viewModelScope.launch(Dispatchers.IO) {
             val state = execute(intent)
@@ -39,9 +30,5 @@ abstract class ViewModelMVI<in UserIntent : Any, ScreenState : Any> :
 
     protected fun getState(): ScreenState {
         return _uiState.value
-    }
-
-    override suspend fun setup(): ScreenState? {
-        return null
     }
 }

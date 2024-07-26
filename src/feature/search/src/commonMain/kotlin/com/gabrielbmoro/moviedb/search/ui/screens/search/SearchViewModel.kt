@@ -5,18 +5,21 @@ import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class SearchViewModel(
-    private val query: String? = null,
     private val searchMovieUseCase: SearchMovieUseCase
 ) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
-    init {
+
+    fun setup(query: String?) {
         query?.let {
             viewModelScope.launch {
                 accept(SearchUserIntent.SearchInputFieldChanged(TextFieldValue(it)))
             }
         }
     }
+
     override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 
     override suspend fun execute(intent: SearchUserIntent): SearchUIState {

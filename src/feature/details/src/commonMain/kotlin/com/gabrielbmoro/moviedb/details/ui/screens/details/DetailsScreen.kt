@@ -20,6 +20,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -28,10 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
@@ -44,32 +42,36 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 import dev.icerock.moko.resources.compose.stringResource
-import org.koin.core.parameter.parametersOf
+import org.koin.mp.KoinPlatform
 
-class DetailsScreen(private val movieId: Long) : Screen {
-    @Composable
-    override fun Content() {
-        val viewModel = koinScreenModel<DetailsScreenViewModel>(parameters = { parametersOf(movieId) })
-        val navigator = LocalNavigator.currentOrThrow
+@Composable
+fun DetailsScreen(
+    movieId: Long,
+    viewModel: DetailsViewModel = KoinPlatform.getKoin().get(DetailsViewModel::class)
+) {
+    val navigator = rememberNavController()
 
-        val scrollState = rememberScrollState()
-        val uiState by viewModel.uiState.collectAsState()
+    val scrollState = rememberScrollState()
+    val uiState by viewModel.uiState.collectAsState()
 
-        val atTop by remember {
-            derivedStateOf {
-                scrollState.value == 0
-            }
+    val atTop by remember {
+        derivedStateOf {
+            scrollState.value == 0
         }
+    }
 
-        DetailsScreenMain(
-            atTop = atTop,
-            uiState = uiState,
-            scrollState = scrollState,
-            onFavoriteMovie = {
-                viewModel.accept(DetailsUserIntent.FavoriteMovie)
-            },
-            onBackEvent = navigator::pop
-        )
+    DetailsScreenMain(
+        atTop = atTop,
+        uiState = uiState,
+        scrollState = scrollState,
+        onFavoriteMovie = {
+            viewModel.accept(DetailsUserIntent.FavoriteMovie)
+        },
+        onBackEvent = navigator::popBackStack
+    )
+
+    LaunchedEffect(movieId) {
+        viewModel.setup(movieId = movieId)
     }
 }
 

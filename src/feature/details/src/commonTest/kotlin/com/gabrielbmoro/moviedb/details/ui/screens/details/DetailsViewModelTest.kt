@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DetailsScreenModelTest {
+class DetailsViewModelTest {
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
     private lateinit var getMovieDetailsUseCase: FakeGetMovieDetailsUseCase
@@ -59,13 +59,12 @@ class DetailsScreenModelTest {
                     movieTitle = fakeMovieDetail.title
                 )
 
-            val viewModel = DetailsScreenViewModel(
-                movieId = 12,
+            val viewModel = DetailsViewModel(
                 favoriteMovieUseCase = favoriteMovieUseCase,
                 isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                 getMovieDetailsUseCase = getMovieDetailsUseCase
             )
-            viewModel.setup()
+            viewModel.setup(movieId = 12)
             advanceUntilIdle()
 
             // assert

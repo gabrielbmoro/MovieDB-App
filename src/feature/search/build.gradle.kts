@@ -2,6 +2,7 @@
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
+    id("koin-annotations-plugin-setup")
 }
 
 kotlin {

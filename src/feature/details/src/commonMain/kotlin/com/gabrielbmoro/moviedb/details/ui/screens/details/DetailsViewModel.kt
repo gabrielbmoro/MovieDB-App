@@ -6,16 +6,18 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
 
-class DetailsScreenViewModel(
-    private val movieId: Long,
+class DetailsViewModel(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
 ) : ViewModelMVI<DetailsUserIntent, DetailsUIState>() {
 
     lateinit var movieDetails: MovieDetail
+    private var movieId: Long? = null
 
-    override suspend fun setup(): DetailsUIState {
+    suspend fun setup(movieId: Long): DetailsUIState {
+        this.movieId = movieId
+
         updateState(
             uiState.value.copy(
                 isLoading = true
@@ -97,7 +99,7 @@ class DetailsScreenViewModel(
     private suspend fun fetchMoviesDetails(): MovieDetail {
         return getMovieDetailsUseCase.execute(
             GetMovieDetailsUseCase.Params(
-                movieId = movieId
+                movieId = movieId!!
             )
         )
     }

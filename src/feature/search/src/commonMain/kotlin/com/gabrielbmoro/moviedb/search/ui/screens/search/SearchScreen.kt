@@ -90,4 +90,12 @@ fun SearchScreen(
             }
         }
     )
+
+    LaunchedEffect(query) {
+        query?.let {
+            viewModel.setup(
+                query = it
+            )
+        }
+    }
 }
