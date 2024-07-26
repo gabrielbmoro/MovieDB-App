@@ -14,7 +14,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class WishlistScreenModelTest {
+class WishlistViewModelTest {
     private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase

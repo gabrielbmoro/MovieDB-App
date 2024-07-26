@@ -20,13 +20,11 @@ kotlin {
 
             implementation(libs.kamel)
 
-            implementation(libs.bundles.voyager)
-
             implementation(libs.koin.core)
 
             implementation(projects.domain)
             implementation(projects.designsystem)
-            implementation(projects.platform)
+            api(projects.platform)
             implementation(projects.resources)
         }
 

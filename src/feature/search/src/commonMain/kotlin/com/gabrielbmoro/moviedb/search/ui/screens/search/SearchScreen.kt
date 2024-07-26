@@ -17,90 +17,77 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
+import androidx.navigation.compose.rememberNavController
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
 import kotlinx.coroutines.delay
-import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.named
 import org.koin.mp.KoinPlatform
 
 private const val DELAY_IN_MILLIS = 500L
 
-class SearchScreen(private val query: String?) : Screen {
-    @Composable
-    override fun Content() {
-        val viewModel = koinScreenModel<SearchViewModel>() {
-            parametersOf(query)
+@Composable
+fun SearchScreen(
+    query: String?,
+    viewModel: SearchViewModel = KoinPlatform.getKoin().get(SearchViewModel::class)
+) {
+    val navigator = rememberNavController()
+
+    val uiState = viewModel.uiState.collectAsState()
+
+    val showKeyboard = remember { mutableStateOf(true) }
+    val focusRequester = remember { FocusRequester() }
+    val keyboard = LocalSoftwareKeyboardController.current
+
+    Scaffold(
+        topBar = {
+            CustomAppToolbar(
+                title = {
+                    SearchInputText(
+                        currentValue = uiState.value.searchQuery,
+                        onQueryChanged = {
+                            viewModel.accept(SearchUserIntent.SearchInputFieldChanged(it))
+                        },
+                        onSearchBy = {
+                            viewModel.accept(SearchUserIntent.SearchBy(it))
+                        },
+                        onClearText = {
+                            viewModel.accept(SearchUserIntent.ClearSearchField)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        focusRequester = focusRequester
+                    )
+                },
+                backEvent = navigator::popBackStack
+            )
         }
-
-        val navigator = LocalNavigator.currentOrThrow
-
-        val uiState = viewModel.uiState.collectAsState()
-
-        val showKeyboard = remember { mutableStateOf(true) }
-        val focusRequester = remember { FocusRequester() }
-        val keyboard = LocalSoftwareKeyboardController.current
-
-        Scaffold(
-            topBar = {
-                CustomAppToolbar(
-                    title = {
-                        SearchInputText(
-                            currentValue = uiState.value.searchQuery,
-                            onQueryChanged = {
-                                viewModel.accept(SearchUserIntent.SearchInputFieldChanged(it))
-                            },
-                            onSearchBy = {
-                                viewModel.accept(SearchUserIntent.SearchBy(it))
-                            },
-                            onClearText = {
-                                viewModel.accept(SearchUserIntent.ClearSearchField)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            focusRequester = focusRequester
-                        )
-                    },
-                    backEvent = navigator::pop
+    ) {
+        Column(
+            modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp)
+        ) {
+            if (uiState.value.results != null) {
+                MoviesResult(
+                    movies = uiState.value.results!!,
+                    modifier = Modifier.fillMaxWidth(),
+                    navigateToDetailsScreen = { movie ->
+                        navigator.navigateToDetails(movie.id)
+                    }
                 )
             }
-        ) {
-            Column(
-                modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp)
-            ) {
-                if (uiState.value.results != null) {
-                    MoviesResult(
-                        movies = uiState.value.results!!,
-                        modifier = Modifier.fillMaxWidth(),
-                        navigateToDetailsScreen = { movie ->
-                            val detailsScreen =
-                                KoinPlatform.getKoin().get<Screen>(
-                                    qualifier = named(NavigationDestinations.DETAILS),
-                                    parameters = { parametersOf(movie) }
-                                )
-                            navigator.push(detailsScreen)
-                        }
-                    )
-                }
+        }
+    }
+
+    LaunchedEffect(
+        key1 = focusRequester,
+        block = {
+            if (showKeyboard.value) {
+                focusRequester.requestFocus()
+                delay(DELAY_IN_MILLIS)
+                keyboard?.show()
             }
         }
-
-        LaunchedEffect(
-            key1 = focusRequester,
-            block = {
-                if (showKeyboard.value) {
-                    focusRequester.requestFocus()
-                    delay(DELAY_IN_MILLIS)
-                    keyboard?.show()
-                }
-            }
-        )
-    }
+    )
 }

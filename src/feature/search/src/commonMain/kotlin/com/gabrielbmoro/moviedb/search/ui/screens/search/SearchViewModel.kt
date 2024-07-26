@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.compose.ui.text.input.TextFieldValue
-import cafe.adriel.voyager.core.model.screenModelScope
+import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ class SearchViewModel(
 ) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
     init {
         query?.let {
-            screenModelScope.launch {
+            viewModelScope.launch {
                 accept(SearchUserIntent.SearchInputFieldChanged(TextFieldValue(it)))
             }
         }

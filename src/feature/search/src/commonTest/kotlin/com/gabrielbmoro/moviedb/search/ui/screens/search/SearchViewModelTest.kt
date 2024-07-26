@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SearchScreenModelTest {
+class SearchViewModelTest {
     private lateinit var searchMovieUseCase: FakeSearchUseCase
 
     @BeforeTest
