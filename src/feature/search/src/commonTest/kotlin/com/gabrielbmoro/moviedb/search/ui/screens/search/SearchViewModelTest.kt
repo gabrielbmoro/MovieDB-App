@@ -35,7 +35,7 @@ class SearchViewModelTest {
             val viewModel = SearchViewModel(searchMovieUseCase = searchMovieUseCase)
 
             // act
-            viewModel.accept(SearchUserIntent.ClearSearchField)
+            viewModel.execute(SearchUserIntent.ClearSearchField)
 
             // assert
             advanceUntilIdle()

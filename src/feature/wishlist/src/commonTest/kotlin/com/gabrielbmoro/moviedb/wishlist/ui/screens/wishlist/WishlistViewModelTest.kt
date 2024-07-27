@@ -48,11 +48,12 @@ class WishlistViewModelTest {
                 WishlistViewModel(
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                    ioCoroutinesDispatcher = StandardTestDispatcher()
                 )
 
             // act
-            viewModel.accept(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            viewModel.execute(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
 
             // assert
             advanceUntilIdle()

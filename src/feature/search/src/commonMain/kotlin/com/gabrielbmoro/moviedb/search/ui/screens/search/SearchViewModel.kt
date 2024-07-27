@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
-    private val searchMovieUseCase: SearchMovieUseCase
+    private val searchMovieUseCase: SearchMovieUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())

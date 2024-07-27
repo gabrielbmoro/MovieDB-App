@@ -62,9 +62,10 @@ class DetailsViewModelTest {
             val viewModel = DetailsViewModel(
                 favoriteMovieUseCase = favoriteMovieUseCase,
                 isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-                getMovieDetailsUseCase = getMovieDetailsUseCase
+                getMovieDetailsUseCase = getMovieDetailsUseCase,
+                ioDispatcher = StandardTestDispatcher()
             )
-            viewModel.setup(movieId = 12)
+            viewModel.execute(DetailsUserIntent.LoadMovieDetails(movieId = 12))
             advanceUntilIdle()
 
             // assert
