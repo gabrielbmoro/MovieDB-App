@@ -30,7 +30,7 @@ fun NavGraphBuilder.addMovieDetailsScreen(
         )
     ) {
         val movieId = it.arguments?.getLong(DETAILS_MOVIE_ID_ARGUMENT_KEY)
-            ?: throw IllegalStateException("No movieId found in backstack entry")
+            ?: error("No movieId found in backstack entry")
 
         content(movieId)
     }
@@ -45,17 +45,18 @@ fun NavGraphBuilder.addWishlistScreen(
 }
 
 fun NavGraphBuilder.addSearchScreen(
-    content: @Composable AnimatedContentScope.(query: String) -> Unit
+    content: @Composable AnimatedContentScope.(query: String?) -> Unit
 ) {
     composable(
-        route = Screen.Details.route.plus("?$SEARCH_QUERY_ARGUMENT_KEY={query}"),
+        route = Screen.Search.route.plus("?$SEARCH_QUERY_ARGUMENT_KEY={query}"),
         arguments = listOf(
             navArgument(SEARCH_QUERY_ARGUMENT_KEY) {
                 type = NavType.StringType
+                this.nullable = true
             }
         )
     ) {
-        val query = it.arguments?.getString(SEARCH_QUERY_ARGUMENT_KEY)!!
+        val query = it.arguments?.getString(SEARCH_QUERY_ARGUMENT_KEY)
         content(query)
     }
 }

@@ -31,6 +31,6 @@ fun RootApp() {
                 navigator = navigator
             )
         }
-        addSearchScreen { query -> SearchScreen(query = null, navigator = navigator) }
+        addSearchScreen { query -> SearchScreen(query = query, navigator = navigator) }
     }
 }

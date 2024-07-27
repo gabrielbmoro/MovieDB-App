@@ -31,83 +31,80 @@ class DetailsViewModel(
 
     fun execute(intent: DetailsUserIntent) {
         when (intent) {
-            is DetailsUserIntent.HideVideo -> {
-                _uiState.update {
-                    it.copy(
-                        showVideo = false
+            is DetailsUserIntent.HideVideo -> hideVideo()
+
+            is DetailsUserIntent.FavoriteMovie -> favoriteMovie()
+
+            is DetailsUserIntent.LoadMovieDetails -> loadMovieDetails(intent)
+        }
+    }
+
+    private fun hideVideo() {
+        _uiState.update {
+            it.copy(
+                showVideo = false
+            )
+        }
+    }
+
+    private fun favoriteMovie() {
+        val value = uiState.value.isFavorite
+        val desiredValue = value.not()
+
+        val params = movieDetails.toFavoriteUseCaseParam(
+            movieId = movieId!!,
+            desiredValue = desiredValue
+        )
+        viewModelScope.launch(ioDispatcher) {
+            favoriteMovieUseCase.execute(params)
+
+            val result =
+                isFavoriteMovieUseCase.execute(
+                    IsFavoriteMovieUseCase.Params(
+                        movieTitle = movieDetails.title
                     )
-                }
+                )
+            _uiState.update {
+                it.copy(
+                    isFavorite = result
+                )
+            }
+        }
+    }
+
+    private fun loadMovieDetails(intent: DetailsUserIntent.LoadMovieDetails) {
+        this.movieId = intent.movieId
+
+        viewModelScope.launch(ioDispatcher) {
+            _uiState.update {
+                it.copy(isLoading = true)
             }
 
-            is DetailsUserIntent.FavoriteMovie -> {
-                val value = uiState.value.isFavorite
-                val desiredValue = value.not()
+            movieDetails = viewModelScope.async(ioDispatcher) {
+                fetchMoviesDetails()
+            }.await()
 
-                val params =
-                    FavoriteMovieUseCase.Params(
-                        movieTitle = movieDetails.title,
-                        movieLanguage = movieDetails.language,
-                        movieVotesAverage = movieDetails.votesAverage,
-                        movieReleaseDate = movieDetails.releaseDate,
-                        moviePosterImageUrl = movieDetails.posterImageUrl,
-                        moviePopularity = movieDetails.popularity,
-                        movieOverview = movieDetails.overview,
-                        movieId = movieId,
-                        movieBackdropImageUrl = movieDetails.backdropImageUrl,
-                        toFavorite = desiredValue
-                    )
-                viewModelScope.launch(ioDispatcher) {
-                    favoriteMovieUseCase.execute(params)
+            val isMovieFavorite = viewModelScope.async(ioDispatcher) {
+                isMovieFavorite(movieTitle = movieDetails.title)
+            }.await()
 
-                    val result =
-                        isFavoriteMovieUseCase.execute(
-                            IsFavoriteMovieUseCase.Params(
-                                movieTitle = movieDetails.title
-                            )
-                        )
-                    _uiState.update {
-                        it.copy(
-                            isFavorite = result
-                        )
-                    }
-                }
-            }
-
-            is DetailsUserIntent.LoadMovieDetails -> {
-                this.movieId = intent.movieId
-
-                viewModelScope.launch(ioDispatcher) {
-                    _uiState.update {
-                        it.copy(isLoading = true)
-                    }
-
-                    movieDetails = viewModelScope.async(ioDispatcher) {
-                        fetchMoviesDetails()
-                    }.await()
-
-                    val isMovieFavorite = viewModelScope.async(ioDispatcher) {
-                        isMovieFavorite(movieTitle = movieDetails.title)
-                    }.await()
-
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            isFavorite = isMovieFavorite,
-                            videoId = movieDetails.videoId,
-                            tagLine = movieDetails.tagline,
-                            status = movieDetails.status,
-                            genres = movieDetails.genres,
-                            homepage = movieDetails.homepage,
-                            productionCompanies = movieDetails.productionCompanies.reduceToText(),
-                            movieTitle = movieDetails.title,
-                            movieOverview = movieDetails.overview,
-                            movieLanguage = movieDetails.language,
-                            moviePopularity = movieDetails.popularity,
-                            movieVotesAverage = movieDetails.votesAverage,
-                            imageUrl = movieDetails.backdropImageUrl
-                        )
-                    }
-                }
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    isFavorite = isMovieFavorite,
+                    videoId = movieDetails.videoId,
+                    tagLine = movieDetails.tagline,
+                    status = movieDetails.status,
+                    genres = movieDetails.genres,
+                    homepage = movieDetails.homepage,
+                    productionCompanies = movieDetails.productionCompanies.reduceToText(),
+                    movieTitle = movieDetails.title,
+                    movieOverview = movieDetails.overview,
+                    movieLanguage = movieDetails.language,
+                    moviePopularity = movieDetails.popularity,
+                    movieVotesAverage = movieDetails.votesAverage,
+                    imageUrl = movieDetails.backdropImageUrl
+                )
             }
         }
     }
@@ -131,4 +128,22 @@ class DetailsViewModel(
     private fun List<String>.reduceToText() = reduce { acc, s ->
         "$acc, $s"
     }
+}
+
+private fun MovieDetail.toFavoriteUseCaseParam(
+    movieId: Long,
+    desiredValue: Boolean
+): FavoriteMovieUseCase.Params {
+    return FavoriteMovieUseCase.Params(
+        movieTitle = title,
+        movieLanguage = language,
+        movieVotesAverage = votesAverage,
+        movieReleaseDate = releaseDate,
+        moviePosterImageUrl = posterImageUrl,
+        moviePopularity = popularity,
+        movieOverview = overview,
+        movieId = movieId,
+        movieBackdropImageUrl = backdropImageUrl,
+        toFavorite = desiredValue
+    )
 }
