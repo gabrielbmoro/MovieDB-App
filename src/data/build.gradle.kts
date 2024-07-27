@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
     alias(libs.plugins.room.plugin)
+    id("koin-plugin-setup")
 }
 
 kotlin {

@@ -14,123 +14,107 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinScreenModel
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
-import com.gabrielbmoro.moviedb.platform.navigation.NavigationDestinations
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
-import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.named
-import org.koin.mp.KoinPlatform
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
-class WishlistScreen : Screen {
+@OptIn(KoinExperimentalAPI::class)
+@Composable
+fun WishlistScreen(
+    viewModel: WishlistViewModel = koinViewModel(),
+    navigator: NavHostController
+) {
+    val uiState = viewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val lazyListState = rememberLazyListState()
 
-    @Composable
-    override fun Content() {
-        val viewModel = koinScreenModel<WishlistViewModel>()
-        val uiState = viewModel.uiState.collectAsState()
-        val snackbarHostState = remember { SnackbarHostState() }
-        val lazyListState = rememberLazyListState()
+    val successDeleteMessage = stringResource(SharedRes.strings.delete_success_message)
+    val errorDeleteMessage = stringResource(SharedRes.strings.delete_fail_message)
 
-        val successDeleteMessage = stringResource(SharedRes.strings.delete_success_message)
-        val errorDeleteMessage = stringResource(SharedRes.strings.delete_fail_message)
+    val coroutineScope = rememberCoroutineScope()
 
-        val navigator = LocalNavigator.currentOrThrow
-
-        val coroutineScope = rememberCoroutineScope()
-
-        ScreenScaffold(
-            showTopBar = true,
-            appBarTitle = stringResource(SharedRes.strings.wishlist),
-            bottomBar = {
-                NavigationBottomBar(
-                    currentTabIndex = FavoriteTabIndex,
-                    onSelectFavoriteTab = {
-                        coroutineScope.launch {
-                            lazyListState.scrollToItem(0)
-                        }
-                    },
-                    onSelectMoviesTab = {
-                        val moviesScreen =
-                            KoinPlatform.getKoin().get<Screen>(
-                                qualifier = named(NavigationDestinations.MOVIES)
-                            )
-                        navigator.push(moviesScreen)
+    ScreenScaffold(
+        showTopBar = true,
+        appBarTitle = stringResource(SharedRes.strings.wishlist),
+        bottomBar = {
+            NavigationBottomBar(
+                currentTabIndex = FavoriteTabIndex,
+                onSelectFavoriteTab = {
+                    coroutineScope.launch {
+                        lazyListState.scrollToItem(0)
                     }
+                },
+                onSelectMoviesTab = navigator::navigateToMovies
+            )
+        },
+        snackBarHost = {
+            SnackbarHost(snackbarHostState)
+        }
+    ) {
+        when {
+            uiState.value.isLoading -> {
+                BubbleLoader(
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.align(Alignment.Center)
                 )
-            },
-            snackBarHost = {
-                SnackbarHost(snackbarHostState)
             }
-        ) {
-            when {
-                uiState.value.isLoading -> {
-                    BubbleLoader(
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.Center)
+
+            uiState.value.favoriteMovies?.isEmpty() == true -> {
+                EmptyState(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            else -> {
+                if (uiState.value.favoriteMovies != null) {
+                    MovieList(
+                        moviesList = uiState.value.favoriteMovies!!,
+                        onSelectMovie = { selectedMovie ->
+                            navigator.navigateToDetails(selectedMovie.id)
+                        },
+                        lazyListState = lazyListState,
+                        onDeleteMovie = { movie ->
+                            viewModel.execute(WishlistUserIntent.DeleteMovie(movie))
+                        },
+                        modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .align(Alignment.TopCenter)
                     )
                 }
+            }
+        }
+    }
 
-                uiState.value.favoriteMovies?.isEmpty() == true -> {
-                    EmptyState(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-
-                else -> {
-                    if (uiState.value.favoriteMovies != null) {
-                        MovieList(
-                            moviesList = uiState.value.favoriteMovies!!,
-                            onSelectMovie = {
-                                val detailsScreen =
-                                    KoinPlatform.getKoin().get<Screen>(
-                                        qualifier = named(NavigationDestinations.DETAILS),
-                                        parameters = { parametersOf(it.id) }
-                                    )
-                                navigator.push(detailsScreen)
-                            },
-                            lazyListState = lazyListState,
-                            onDeleteMovie = { movie ->
-                                viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
-                            },
-                            modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .align(Alignment.TopCenter)
-                        )
+    LaunchedEffect(
+        key1 = uiState.value,
+        block = {
+            if (uiState.value.isSuccessResult != null) {
+                val resultMessage =
+                    if (uiState.value.isSuccessResult == true) {
+                        successDeleteMessage
+                    } else {
+                        errorDeleteMessage
                     }
-                }
+                snackbarHostState.showSnackbar(resultMessage)
+                viewModel.execute(WishlistUserIntent.ResultMessageReset)
+                viewModel.execute(WishlistUserIntent.LoadMovies)
             }
         }
+    )
 
-        LaunchedEffect(
-            key1 = uiState.value,
-            block = {
-                if (uiState.value.isSuccessResult != null) {
-                    val resultMessage =
-                        if (uiState.value.isSuccessResult == true) {
-                            successDeleteMessage
-                        } else {
-                            errorDeleteMessage
-                        }
-                    snackbarHostState.showSnackbar(resultMessage)
-                    viewModel.accept(WishlistUserIntent.ResultMessageReset)
-                    viewModel.accept(WishlistUserIntent.LoadMovies)
-                }
-            }
-        )
-
-        LaunchedEffect(Unit) {
-            viewModel.accept(WishlistUserIntent.LoadMovies)
-        }
+    LaunchedEffect(Unit) {
+        viewModel.execute(WishlistUserIntent.LoadMovies)
     }
 }

@@ -17,4 +17,5 @@ sealed class Intent {
     data object RequestMoreTopRatedMovies : Intent()
 
     data object RequestMoreNowPlayingMovies : Intent()
+    data object Setup: Intent()
 }

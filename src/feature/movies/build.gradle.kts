@@ -2,7 +2,7 @@
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
-    id("koin-annotations-plugin-setup")
+    id("koin-plugin-setup")
 }
 
 kotlin {
@@ -15,19 +15,17 @@ kotlin {
             implementation(compose.animation)
             implementation(compose.uiUtil)
 
-            implementation(libs.rinku.core)
-            implementation(libs.rinku.compose.ext)
             implementation(libs.kotlinx.coroutines.core)
 
             implementation(libs.bundles.moko)
 
             implementation(libs.kamel)
 
-            implementation(libs.bundles.voyager)
+            implementation(libs.lifecycle.viewmodel.compose)
 
             implementation(projects.domain)
             implementation(projects.designsystem)
-            implementation(projects.platform)
+            api(projects.platform)
             implementation(projects.resources)
 
             implementation(libs.kotlin.stdlib)

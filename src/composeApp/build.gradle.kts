@@ -31,10 +31,9 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
 
-            implementation(libs.voyager.navigator)
             implementation(libs.rinku.core)
             implementation(libs.rinku.compose.ext)
-            implementation(projects.platform)
+            api(projects.platform)
             implementation(projects.designsystem)
             implementation(projects.feature.wishlist)
             implementation(projects.feature.search)

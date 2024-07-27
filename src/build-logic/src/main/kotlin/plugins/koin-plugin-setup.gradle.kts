@@ -1,5 +1,7 @@
 import ext.koinAnnotationsDependency
 import ext.koinCompiler
+import ext.koinComposeDependency
+import ext.koinComposeViewModelDependency
 import ext.koinCoreDependency
 import ext.libs
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
@@ -17,6 +19,8 @@ kotlin {
             dependencies {
                 api(libs.koinCoreDependency())
                 api(libs.koinAnnotationsDependency())
+                api(libs.koinComposeViewModelDependency())
+                api(libs.koinComposeDependency())
             }
         }
     }

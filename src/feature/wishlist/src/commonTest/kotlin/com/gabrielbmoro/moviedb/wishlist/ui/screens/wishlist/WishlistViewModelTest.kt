@@ -14,7 +14,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class WishlistScreenModelTest {
+class WishlistViewModelTest {
     private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
@@ -48,11 +48,12 @@ class WishlistScreenModelTest {
                 WishlistViewModel(
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                    ioCoroutinesDispatcher = StandardTestDispatcher()
                 )
 
             // act
-            viewModel.accept(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            viewModel.execute(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
 
             // assert
             advanceUntilIdle()

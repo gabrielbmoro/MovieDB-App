@@ -3,6 +3,8 @@ firebase-crashlytics-gradle = "2.9.9"
 google-services = "4.4.0"
 kotlin = "1.9.23"
 kotlinx-coroutines-core = "1.8.1-Beta"
+lifecycle-viewmodel-compose-version = "2.8.0"
+navigation-compose-version = "2.7.0-alpha07"
 room = "2.7.0-alpha01"
 junit = "4.13.2"
 arch_core = "2.2.0"
@@ -12,10 +14,11 @@ android_youtube_player_version = "12.0.0"
 material = "1.11.0"
 ksp = "1.9.23-1.0.19"
 kover = "0.7.5"
-koin = "3.5.6"
+koin = "3.6.0-Beta5"
+koin-compose = "1.1.5"
+koin-compose-viewmodel = "1.2.0-Beta4"
 koin_annotations = "1.4.0-RC3"
 ktor = "2.3.9"
-voyager = "1.1.0-alpha04"
 compose_plugin = "1.6.1"
 kamel_image = "0.9.3"
 kotlin_stdlib = "2.0.0-Beta5"
@@ -34,7 +37,9 @@ google-services = { module = "com.google.gms:google-services", version.ref = "go
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose-version" }
 moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
@@ -48,6 +53,8 @@ kotlin_test_common = { group = "org.jetbrains.kotlin", name = "kotlin-test-commo
 
 koin_core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin_compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
+koin_compose_viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-compose-viewmodel" }
 koin_annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin_annotations" }
 koin_compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin_annotations" }
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
@@ -61,9 +68,6 @@ ktor_client_content_negotiation = { group = "io.ktor", name = "ktor-client-conte
 ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor_auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
 ktor_logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-voyager_navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-voyager_screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
-voyager_koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 kamel = { group = "media.kamel", name = "kamel-image", version.ref = "kamel_image" }
 kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin_stdlib" }
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
@@ -77,7 +81,6 @@ rinku-compose-ext = { module = "dev.theolm:rinku-compose-ext", version.ref = "ri
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
 test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
-voyager = ["voyager_koin", "voyager_navigator", "voyager_screenModel"]
 moko = ["moko_compose", "moko_core"]
 
 [plugins]

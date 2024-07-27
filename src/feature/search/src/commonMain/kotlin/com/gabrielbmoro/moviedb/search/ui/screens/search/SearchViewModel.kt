@@ -1,47 +1,59 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.compose.ui.text.input.TextFieldValue
-import cafe.adriel.voyager.core.model.screenModelScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
-import com.gabrielbmoro.moviedb.platform.mvi.ViewModelMVI
+import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
-    private val query: String? = null,
-    private val searchMovieUseCase: SearchMovieUseCase
-) : ViewModelMVI<SearchUserIntent, SearchUIState>() {
-    init {
-        query?.let {
-            screenModelScope.launch {
-                accept(SearchUserIntent.SearchInputFieldChanged(TextFieldValue(it)))
-            }
-        }
-    }
-    override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
+    private val searchMovieUseCase: SearchMovieUseCase,
+    private val ioCoroutinesDispatcher: CoroutineDispatcher,
+) : ViewModel(), ViewModelMvi<SearchUserIntent> {
 
-    override suspend fun execute(intent: SearchUserIntent): SearchUIState {
-        return when (intent) {
+    private val _uiState = MutableStateFlow(this.defaultEmptyState())
+    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
+
+    private fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
+
+    override fun execute(intent: SearchUserIntent) {
+        when (intent) {
             is SearchUserIntent.SearchBy -> {
-                getState().copy(
-                    results =
-                    searchMovieUseCase.execute(
-                        SearchMovieUseCase.Params(
-                            query = intent.query.text
+                viewModelScope.launch(ioCoroutinesDispatcher) {
+                    _uiState.update {
+                        it.copy(
+                            results =
+                            searchMovieUseCase.execute(
+                                SearchMovieUseCase.Params(
+                                    query = intent.query.text
+                                )
+                            )
                         )
-                    )
-                )
+                    }
+                }
             }
 
             is SearchUserIntent.ClearSearchField -> {
-                getState().copy(
-                    searchQuery = TextFieldValue("")
-                )
+                _uiState.update {
+                    it.copy(
+                        searchQuery = TextFieldValue("")
+                    )
+                }
+                execute(SearchUserIntent.SearchBy(TextFieldValue("")))
             }
 
             is SearchUserIntent.SearchInputFieldChanged -> {
-                getState().copy(
-                    searchQuery = intent.query
-                )
+                _uiState.update {
+                    it.copy(
+                        searchQuery = intent.query
+                    )
+                }
             }
         }
     }

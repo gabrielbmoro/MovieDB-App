@@ -10,7 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.gabrielbmoro.moviedb.desingsystem.theme.MovieDBAppTheme
-import com.gabrielbmoro.moviedb.movies.ui.screens.RootApp
+import RootApp
 import dev.theolm.rinku.compose.ext.Rinku
 import ext.syncTopBarsColors
 

@@ -13,7 +13,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SearchScreenModelTest {
+class SearchViewModelTest {
     private lateinit var searchMovieUseCase: FakeSearchUseCase
 
     @BeforeTest
@@ -32,14 +32,17 @@ class SearchScreenModelTest {
         runTest {
             // arrange
             searchMovieUseCase.searchResult = emptyList()
-            val viewModel = SearchViewModel(searchMovieUseCase = searchMovieUseCase)
+            val viewModel = SearchViewModel(
+                searchMovieUseCase = searchMovieUseCase,
+                ioCoroutinesDispatcher = StandardTestDispatcher()
+            )
 
             // act
-            viewModel.accept(SearchUserIntent.ClearSearchField)
+            viewModel.execute(SearchUserIntent.ClearSearchField)
 
             // assert
             advanceUntilIdle()
             assertEquals("", viewModel.uiState.value.searchQuery.text)
-            assertEquals(null, viewModel.uiState.value.results)
+            assertEquals(0, viewModel.uiState.value.results?.size)
         }
 }
