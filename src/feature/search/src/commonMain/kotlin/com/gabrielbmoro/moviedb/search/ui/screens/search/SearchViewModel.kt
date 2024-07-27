@@ -44,6 +44,7 @@ class SearchViewModel(
                         searchQuery = TextFieldValue("")
                     )
                 }
+                execute(SearchUserIntent.SearchBy(TextFieldValue("")))
             }
 
             is SearchUserIntent.SearchInputFieldChanged -> {
