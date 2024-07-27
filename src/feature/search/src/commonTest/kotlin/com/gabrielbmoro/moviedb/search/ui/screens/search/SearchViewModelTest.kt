@@ -32,7 +32,10 @@ class SearchViewModelTest {
         runTest {
             // arrange
             searchMovieUseCase.searchResult = emptyList()
-            val viewModel = SearchViewModel(searchMovieUseCase = searchMovieUseCase)
+            val viewModel = SearchViewModel(
+                searchMovieUseCase = searchMovieUseCase,
+                ioCoroutinesDispatcher = StandardTestDispatcher()
+            )
 
             // act
             viewModel.execute(SearchUserIntent.ClearSearchField)

@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
@@ -94,8 +95,8 @@ fun SearchScreen(
 
     LaunchedEffect(query) {
         query?.let {
-            viewModel.setup(
-                query = it
+            viewModel.execute(
+                SearchUserIntent.SearchBy(query = TextFieldValue(text = it))
             )
         }
     }
