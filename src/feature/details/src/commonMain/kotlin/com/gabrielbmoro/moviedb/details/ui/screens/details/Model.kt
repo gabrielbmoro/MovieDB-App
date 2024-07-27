@@ -4,11 +4,15 @@ sealed class DetailsUserIntent {
     data object HideVideo : DetailsUserIntent()
 
     data object FavoriteMovie : DetailsUserIntent()
+
+    data class LoadMovieDetails(
+        val movieId: Long
+    ): DetailsUserIntent()
 }
 
 data class DetailsUIState(
     val movieTitle: String,
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val isFavorite: Boolean,
     val movieVotesAverage: Float,
     val movieLanguage: String,

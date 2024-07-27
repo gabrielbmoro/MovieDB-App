@@ -6,18 +6,19 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.core.annotation.Factory
 
-@Factory
 class DetailsViewModel(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
@@ -25,39 +26,6 @@ class DetailsViewModel(
 
     private lateinit var movieDetails: MovieDetail
     private var movieId: Long? = null
-
-    suspend fun setup(movieId: Long) {
-        this.movieId = movieId
-
-        _uiState.update {
-            it.copy(
-                isLoading = true
-            )
-        }
-
-        movieDetails = fetchMoviesDetails()
-
-        val isMovieFavorite = isMovieFavorite(movieTitle = movieDetails.title)
-
-        _uiState.update {
-            it.copy(
-                isLoading = false,
-                isFavorite = isMovieFavorite,
-                videoId = movieDetails.videoId,
-                tagLine = movieDetails.tagline,
-                status = movieDetails.status,
-                genres = movieDetails.genres,
-                homepage = movieDetails.homepage,
-                productionCompanies = movieDetails.productionCompanies.reduceToText(),
-                movieTitle = movieDetails.title,
-                movieOverview = movieDetails.overview,
-                movieLanguage = movieDetails.language,
-                moviePopularity = movieDetails.popularity,
-                movieVotesAverage = movieDetails.votesAverage,
-                imageUrl = movieDetails.backdropImageUrl
-            )
-        }
-    }
 
     private fun defaultEmptyState() = DetailsUIState.empty()
 
@@ -88,7 +56,7 @@ class DetailsViewModel(
                         movieBackdropImageUrl = movieDetails.backdropImageUrl,
                         toFavorite = desiredValue
                     )
-                viewModelScope.launch {
+                viewModelScope.launch(ioDispatcher) {
                     favoriteMovieUseCase.execute(params)
 
                     val result =
@@ -100,6 +68,43 @@ class DetailsViewModel(
                     _uiState.update {
                         it.copy(
                             isFavorite = result
+                        )
+                    }
+                }
+            }
+
+            is DetailsUserIntent.LoadMovieDetails -> {
+                this.movieId = intent.movieId
+
+                viewModelScope.launch(ioDispatcher) {
+                    _uiState.update {
+                        it.copy(isLoading = true)
+                    }
+
+                    movieDetails = viewModelScope.async(ioDispatcher) {
+                        fetchMoviesDetails()
+                    }.await()
+
+                    val isMovieFavorite = viewModelScope.async(ioDispatcher) {
+                        isMovieFavorite(movieTitle = movieDetails.title)
+                    }.await()
+
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            isFavorite = isMovieFavorite,
+                            videoId = movieDetails.videoId,
+                            tagLine = movieDetails.tagline,
+                            status = movieDetails.status,
+                            genres = movieDetails.genres,
+                            homepage = movieDetails.homepage,
+                            productionCompanies = movieDetails.productionCompanies.reduceToText(),
+                            movieTitle = movieDetails.title,
+                            movieOverview = movieDetails.overview,
+                            movieLanguage = movieDetails.language,
+                            moviePopularity = movieDetails.popularity,
+                            movieVotesAverage = movieDetails.votesAverage,
+                            imageUrl = movieDetails.backdropImageUrl
                         )
                     }
                 }

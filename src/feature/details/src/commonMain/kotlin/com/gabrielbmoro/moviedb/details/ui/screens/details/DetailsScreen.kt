@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -30,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
@@ -43,16 +43,18 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
 import dev.icerock.moko.resources.compose.stringResource
-import org.koin.mp.KoinPlatform
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun DetailsScreen(
     movieId: Long,
-    viewModel: DetailsViewModel = KoinPlatform.getKoin().get(DetailsViewModel::class),
+    viewModel: DetailsViewModel = koinViewModel(),
     navigator: NavHostController
 ) {
     val scrollState = rememberScrollState()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsState()
 
     val atTop by remember {
         derivedStateOf {
@@ -62,7 +64,7 @@ fun DetailsScreen(
 
     DetailsScreenMain(
         atTop = atTop,
-        uiState = uiState,
+        uiState = uiState.value,
         scrollState = scrollState,
         onFavoriteMovie = {
             viewModel.execute(DetailsUserIntent.FavoriteMovie)
@@ -71,7 +73,15 @@ fun DetailsScreen(
     )
 
     LaunchedEffect(movieId) {
-        viewModel.setup(movieId = movieId)
+        viewModel.execute(
+            DetailsUserIntent.LoadMovieDetails(
+                movieId = movieId
+            )
+        )
+    }
+
+    SideEffect {
+        println("UiState ${uiState.value}")
     }
 }
 

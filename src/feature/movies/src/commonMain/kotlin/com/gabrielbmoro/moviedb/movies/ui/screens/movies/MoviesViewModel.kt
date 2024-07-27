@@ -8,6 +8,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -20,7 +21,8 @@ class MoviesViewModel(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
+    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
@@ -72,22 +74,22 @@ class MoviesViewModel(
     fun execute(intent: Intent) {
         when (intent) {
             is Intent.RequestMoreUpComingMovies -> {
-                viewModelScope.launch {
+                viewModelScope.launch(ioDispatcher) {
                     processRequestMoreForUpcomingMoviesIntent()
                 }
             }
 
             is Intent.RequestMoreTopRatedMovies -> {
-                viewModelScope.launch {
+                viewModelScope.launch(ioDispatcher) {
                     processRequestMoreForTopRatedMoviesIntent()
                 }
             }
 
-            is Intent.RequestMorePopularMovies -> viewModelScope.launch {
+            is Intent.RequestMorePopularMovies -> viewModelScope.launch(ioDispatcher) {
                 processRequestMoreForPopularMoviesIntent()
             }
 
-            is Intent.RequestMoreNowPlayingMovies -> viewModelScope.launch {
+            is Intent.RequestMoreNowPlayingMovies -> viewModelScope.launch(ioDispatcher) {
                 processRequestMoreForNowPlayingMoviesIntent()
             }
         }
