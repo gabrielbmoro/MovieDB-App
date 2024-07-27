@@ -28,6 +28,8 @@ class MoviesViewModel(
 
     private val nowPlayingMoviesPageController =
         PagingController(
+            coroutineScope = viewModelScope,
+            ioCoroutineDispatcher = ioDispatcher,
             requestMore = { pageIndex ->
                 getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
             }
@@ -35,6 +37,8 @@ class MoviesViewModel(
 
     private val popularMoviesPageController =
         PagingController(
+            coroutineScope = viewModelScope,
+            ioCoroutineDispatcher = ioDispatcher,
             requestMore = { pageIndex ->
                 getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
             }
@@ -42,6 +46,8 @@ class MoviesViewModel(
 
     private val topRatedMoviesPageController =
         PagingController(
+            coroutineScope = viewModelScope,
+            ioCoroutineDispatcher = ioDispatcher,
             requestMore = { pageIndex ->
                 getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
             }
@@ -49,24 +55,15 @@ class MoviesViewModel(
 
     private val upComingMoviesPagingController =
         PagingController(
+            coroutineScope = viewModelScope,
+            ioCoroutineDispatcher = ioDispatcher,
             requestMore = { pageIndex ->
                 getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
             }
         )
 
     init {
-        viewModelScope.launch { setup() }
-    }
-
-    private suspend fun setup() {
-        _uiState.update {
-            it.copy(
-                nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
-                topRatedMovies = topRatedMoviesPageController.onRequestMore(),
-                popularMovies = popularMoviesPageController.onRequestMore(),
-                upComingMovies = upComingMoviesPagingController.onRequestMore()
-            )
-        }
+        execute(Intent.Setup)
     }
 
     fun execute(intent: Intent) {
@@ -89,6 +86,19 @@ class MoviesViewModel(
 
             is Intent.RequestMoreNowPlayingMovies -> viewModelScope.launch(ioDispatcher) {
                 processRequestMoreForNowPlayingMoviesIntent()
+            }
+
+            Intent.Setup -> {
+                viewModelScope.launch(ioDispatcher) {
+                    _uiState.update {
+                        it.copy(
+                            nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
+                            topRatedMovies = topRatedMoviesPageController.onRequestMore(),
+                            popularMovies = popularMoviesPageController.onRequestMore(),
+                            upComingMovies = upComingMoviesPagingController.onRequestMore()
+                        )
+                    }
+                }
             }
         }
     }
