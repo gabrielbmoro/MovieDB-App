@@ -6,6 +6,7 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
+import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,7 @@ class DetailsViewModel(
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val ioDispatcher: CoroutineDispatcher,
-) : ViewModel() {
+) : ViewModel(), ViewModelMvi<DetailsUserIntent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
@@ -29,7 +30,7 @@ class DetailsViewModel(
 
     private fun defaultEmptyState() = DetailsUIState.empty()
 
-    fun execute(intent: DetailsUserIntent) {
+    override fun execute(intent: DetailsUserIntent) {
         when (intent) {
             is DetailsUserIntent.HideVideo -> hideVideo()
 

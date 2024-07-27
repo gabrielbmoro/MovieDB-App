@@ -4,6 +4,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
+import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,14 +15,14 @@ import kotlinx.coroutines.launch
 class SearchViewModel(
     private val searchMovieUseCase: SearchMovieUseCase,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
-) : ViewModel() {
+) : ViewModel(), ViewModelMvi<SearchUserIntent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 
-    fun execute(intent: SearchUserIntent) {
+    override fun execute(intent: SearchUserIntent) {
         when (intent) {
             is SearchUserIntent.SearchBy -> {
                 viewModelScope.launch(ioCoroutinesDispatcher) {
