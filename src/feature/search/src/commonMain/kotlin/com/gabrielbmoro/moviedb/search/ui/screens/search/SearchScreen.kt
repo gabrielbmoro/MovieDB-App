@@ -22,14 +22,16 @@ import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
 import kotlinx.coroutines.delay
-import org.koin.mp.KoinPlatform
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
 private const val DELAY_IN_MILLIS = 500L
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun SearchScreen(
     query: String?,
-    viewModel: SearchViewModel = KoinPlatform.getKoin().get(SearchViewModel::class),
+    viewModel: SearchViewModel = koinViewModel(),
     navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()

@@ -9,10 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
-import org.koin.core.annotation.Factory
 
-@Factory
 class SearchViewModel(
     private val searchMovieUseCase: SearchMovieUseCase
 ) : ViewModel() {

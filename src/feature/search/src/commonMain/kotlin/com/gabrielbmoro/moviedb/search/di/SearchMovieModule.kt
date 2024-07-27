@@ -1,11 +1,13 @@
 package com.gabrielbmoro.moviedb.search.di
 
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
+import com.gabrielbmoro.moviedb.search.ui.screens.search.SearchViewModel
+import org.koin.compose.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureSearchMovieModule = SearchModule().module
-
-@Module
-@ComponentScan("com.gabrielbmoro.moviedb.search.ui")
-class SearchModule
+val featureSearchMovieModule = module {
+    viewModel {
+        SearchViewModel(
+            searchMovieUseCase = get()
+        )
+    }
+}
