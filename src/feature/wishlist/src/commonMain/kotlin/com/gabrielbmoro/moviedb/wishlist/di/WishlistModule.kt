@@ -1,11 +1,18 @@
 package com.gabrielbmoro.moviedb.wishlist.di
 
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
+import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import org.koin.compose.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureWishlistModule = WishlistModule().module
-
-@Module
-@ComponentScan("com.gabrielbmoro.moviedb.wishlist.ui")
-class WishlistModule
+val featureWishlistModule = module {
+    viewModel {
+        WishlistViewModel(
+            getFavoriteMoviesUseCase = get(),
+            isFavoriteMovieUseCase = get(),
+            ioCoroutinesDispatcher = Dispatchers.IO,
+            favoriteMovieUseCase = get()
+        )
+    }
+}

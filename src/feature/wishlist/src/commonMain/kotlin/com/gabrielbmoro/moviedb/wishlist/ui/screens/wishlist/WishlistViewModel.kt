@@ -5,19 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
-import org.koin.core.annotation.Factory
 
-@Factory
 class WishlistViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
-    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase
+    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
+    private val ioCoroutinesDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
@@ -26,7 +25,7 @@ class WishlistViewModel(
     fun execute(intent: WishlistUserIntent) {
         when (intent) {
             is WishlistUserIntent.DeleteMovie -> {
-                viewModelScope.launch {
+                viewModelScope.launch(ioCoroutinesDispatcher) {
                     favoriteMovieUseCase.execute(
                         FavoriteMovieUseCase.Params(
                             movieTitle = intent.movie.title,
@@ -51,7 +50,7 @@ class WishlistViewModel(
             }
 
             is WishlistUserIntent.LoadMovies -> {
-                viewModelScope.launch {
+                viewModelScope.launch(ioCoroutinesDispatcher) {
                     val movies = getFavoriteMoviesUseCase.execute(Unit)
                     _uiState.update {
                         it.copy(

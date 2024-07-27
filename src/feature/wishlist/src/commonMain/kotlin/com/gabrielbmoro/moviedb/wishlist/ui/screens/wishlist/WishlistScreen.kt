@@ -26,11 +26,13 @@ import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
-import org.koin.mp.KoinPlatform
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun WishlistScreen(
-    viewModel: WishlistViewModel = KoinPlatform.getKoin().get(WishlistViewModel::class),
+    viewModel: WishlistViewModel = koinViewModel(),
     navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
