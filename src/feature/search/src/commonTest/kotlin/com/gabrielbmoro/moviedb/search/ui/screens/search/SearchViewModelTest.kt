@@ -43,6 +43,6 @@ class SearchViewModelTest {
             // assert
             advanceUntilIdle()
             assertEquals("", viewModel.uiState.value.searchQuery.text)
-            assertEquals(null, viewModel.uiState.value.results)
+            assertEquals(0, viewModel.uiState.value.results?.size)
         }
 }
