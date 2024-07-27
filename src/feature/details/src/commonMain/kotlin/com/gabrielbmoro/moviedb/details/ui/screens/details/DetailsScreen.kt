@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
@@ -47,10 +48,9 @@ import org.koin.mp.KoinPlatform
 @Composable
 fun DetailsScreen(
     movieId: Long,
-    viewModel: DetailsViewModel = KoinPlatform.getKoin().get(DetailsViewModel::class)
+    viewModel: DetailsViewModel = KoinPlatform.getKoin().get(DetailsViewModel::class),
+    navigator: NavHostController
 ) {
-    val navigator = rememberNavController()
-
     val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -65,7 +65,7 @@ fun DetailsScreen(
         uiState = uiState,
         scrollState = scrollState,
         onFavoriteMovie = {
-            viewModel.accept(DetailsUserIntent.FavoriteMovie)
+            viewModel.execute(DetailsUserIntent.FavoriteMovie)
         },
         onBackEvent = navigator::popBackStack
     )

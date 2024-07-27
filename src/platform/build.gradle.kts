@@ -15,7 +15,6 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
-            api(libs.lifecycle.viewmodel.compose)
             api(libs.navigation.compose)
         }
 

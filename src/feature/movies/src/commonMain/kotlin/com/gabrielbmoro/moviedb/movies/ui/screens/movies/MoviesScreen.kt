@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
@@ -32,10 +33,11 @@ import kotlinx.coroutines.launch
 import org.koin.mp.KoinPlatform
 
 @Composable
-fun MoviesScreen(viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesViewModel::class)) {
+fun MoviesScreen(
+    viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesViewModel::class),
+    navigator: NavHostController
+) {
     val uiState = viewModel.uiState.collectAsState()
-
-    val navigator = rememberNavController()
 
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -48,7 +50,9 @@ fun MoviesScreen(viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesV
     ScreenScaffold(
         showTopBar = showTopBar,
         appBarTitle = stringResource(SharedRes.strings.movies),
-        searchEvent = navigator::navigateToSearch,
+        searchEvent = {
+            navigator.navigateToSearch("")
+        },
         bottomBar = {
             NavigationBottomBar(
                 currentTabIndex = MoviesTabIndex,
@@ -73,7 +77,7 @@ fun MoviesScreen(viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesV
                             navigator.navigateToDetails(selectedMovie.id)
                         },
                         onRequestMore = {
-                            viewModel.accept(Intent.RequestMoreNowPlayingMovies)
+                            viewModel.execute(Intent.RequestMoreNowPlayingMovies)
                         },
                         modifier =
                         Modifier
@@ -90,7 +94,7 @@ fun MoviesScreen(viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesV
                             navigator.navigateToDetails(selectedMovie.id)
                         },
                         onRequestMore = {
-                            viewModel.accept(Intent.RequestMorePopularMovies)
+                            viewModel.execute(Intent.RequestMorePopularMovies)
                         },
                         modifier =
                         Modifier
@@ -107,7 +111,7 @@ fun MoviesScreen(viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesV
                             navigator.navigateToDetails(selectedMovie.id)
                         },
                         onRequestMore = {
-                            viewModel.accept(Intent.RequestMoreTopRatedMovies)
+                            viewModel.execute(Intent.RequestMoreTopRatedMovies)
                         },
                         modifier =
                         Modifier
@@ -124,7 +128,7 @@ fun MoviesScreen(viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesV
                             navigator.navigateToDetails(selectedMovie.id)
                         },
                         onRequestMore = {
-                            viewModel.accept(Intent.RequestMoreUpComingMovies)
+                            viewModel.execute(Intent.RequestMoreUpComingMovies)
                         },
                         modifier =
                         Modifier

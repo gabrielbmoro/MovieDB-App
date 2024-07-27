@@ -20,6 +20,7 @@ kotlin {
             implementation(libs.bundles.moko)
 
             implementation(libs.kamel)
+            implementation(libs.lifecycle.viewmodel.compose)
 
             implementation(projects.domain)
             implementation(projects.designsystem)
@@ -36,3 +37,5 @@ kotlin {
         }
     }
 }
+
+task("testClasses")

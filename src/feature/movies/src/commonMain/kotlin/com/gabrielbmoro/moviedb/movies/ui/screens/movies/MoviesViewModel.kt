@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import ModelViewIntent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.Movie
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -21,7 +21,7 @@ class MoviesViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
-) : ViewModel(), ModelViewIntent<Intent, MoviesUIState> {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
@@ -54,24 +54,42 @@ class MoviesViewModel(
             }
         )
 
-    override suspend fun setup(): MoviesUIState {
-        return uiState.value.copy(
-            nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
-            topRatedMovies = topRatedMoviesPageController.onRequestMore(),
-            popularMovies = popularMoviesPageController.onRequestMore(),
-            upComingMovies = upComingMoviesPagingController.onRequestMore()
-        )
+    init {
+        viewModelScope.launch { setup() }
     }
 
-    override suspend fun execute(intent: Intent) {
+    private suspend fun setup() {
+        _uiState.update {
+            it.copy(
+                nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
+                topRatedMovies = topRatedMoviesPageController.onRequestMore(),
+                popularMovies = popularMoviesPageController.onRequestMore(),
+                upComingMovies = upComingMoviesPagingController.onRequestMore()
+            )
+        }
+    }
+
+    fun execute(intent: Intent) {
         when (intent) {
-            is Intent.RequestMoreUpComingMovies -> processRequestMoreForUpcomingMoviesIntent()
+            is Intent.RequestMoreUpComingMovies -> {
+                viewModelScope.launch {
+                    processRequestMoreForUpcomingMoviesIntent()
+                }
+            }
 
-            is Intent.RequestMoreTopRatedMovies -> processRequestMoreForTopRatedMoviesIntent()
+            is Intent.RequestMoreTopRatedMovies -> {
+                viewModelScope.launch {
+                    processRequestMoreForTopRatedMoviesIntent()
+                }
+            }
 
-            is Intent.RequestMorePopularMovies -> processRequestMoreForPopularMoviesIntent()
+            is Intent.RequestMorePopularMovies -> viewModelScope.launch {
+                processRequestMoreForPopularMoviesIntent()
+            }
 
-            is Intent.RequestMoreNowPlayingMovies -> processRequestMoreForNowPlayingMoviesIntent()
+            is Intent.RequestMoreNowPlayingMovies -> viewModelScope.launch {
+                processRequestMoreForNowPlayingMoviesIntent()
+            }
         }
     }
 
@@ -123,7 +141,7 @@ class MoviesViewModel(
         }
     }
 
-    override fun defaultEmptyState() =
+    private fun defaultEmptyState() =
         MoviesUIState(
             nowPlayingMovies = emptyList(),
             popularMovies = emptyList(),

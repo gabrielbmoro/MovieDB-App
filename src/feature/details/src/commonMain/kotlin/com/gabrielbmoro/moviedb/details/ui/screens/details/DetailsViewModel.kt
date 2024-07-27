@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
-import ModelViewIntent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
@@ -11,20 +10,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 
+@Factory
 class DetailsViewModel(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
-) : ViewModel(), ModelViewIntent<DetailsUserIntent, DetailsUIState> {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    lateinit var movieDetails: MovieDetail
+    private lateinit var movieDetails: MovieDetail
     private var movieId: Long? = null
 
-    suspend fun setup(movieId: Long): DetailsUIState {
+    suspend fun setup(movieId: Long) {
         this.movieId = movieId
 
         _uiState.update {
@@ -37,28 +39,30 @@ class DetailsViewModel(
 
         val isMovieFavorite = isMovieFavorite(movieTitle = movieDetails.title)
 
-        return uiState.value.copy(
-            isLoading = false,
-            isFavorite = isMovieFavorite,
-            videoId = movieDetails.videoId,
-            tagLine = movieDetails.tagline,
-            status = movieDetails.status,
-            genres = movieDetails.genres,
-            homepage = movieDetails.homepage,
-            productionCompanies = movieDetails.productionCompanies.reduceToText(),
-            movieTitle = movieDetails.title,
-            movieOverview = movieDetails.overview,
-            movieLanguage = movieDetails.language,
-            moviePopularity = movieDetails.popularity,
-            movieVotesAverage = movieDetails.votesAverage,
-            imageUrl = movieDetails.backdropImageUrl
-        )
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                isFavorite = isMovieFavorite,
+                videoId = movieDetails.videoId,
+                tagLine = movieDetails.tagline,
+                status = movieDetails.status,
+                genres = movieDetails.genres,
+                homepage = movieDetails.homepage,
+                productionCompanies = movieDetails.productionCompanies.reduceToText(),
+                movieTitle = movieDetails.title,
+                movieOverview = movieDetails.overview,
+                movieLanguage = movieDetails.language,
+                moviePopularity = movieDetails.popularity,
+                movieVotesAverage = movieDetails.votesAverage,
+                imageUrl = movieDetails.backdropImageUrl
+            )
+        }
     }
 
-    override fun defaultEmptyState() = DetailsUIState.empty()
+    private fun defaultEmptyState() = DetailsUIState.empty()
 
-    override suspend fun execute(intent: DetailsUserIntent) {
-        return when (intent) {
+    fun execute(intent: DetailsUserIntent) {
+        when (intent) {
             is DetailsUserIntent.HideVideo -> {
                 _uiState.update {
                     it.copy(
@@ -84,18 +88,20 @@ class DetailsViewModel(
                         movieBackdropImageUrl = movieDetails.backdropImageUrl,
                         toFavorite = desiredValue
                     )
-                favoriteMovieUseCase.execute(params)
+                viewModelScope.launch {
+                    favoriteMovieUseCase.execute(params)
 
-                val result =
-                    isFavoriteMovieUseCase.execute(
-                        IsFavoriteMovieUseCase.Params(
-                            movieTitle = movieDetails.title
+                    val result =
+                        isFavoriteMovieUseCase.execute(
+                            IsFavoriteMovieUseCase.Params(
+                                movieTitle = movieDetails.title
+                            )
                         )
-                    )
-                _uiState.update {
-                    it.copy(
-                        isFavorite = result
-                    )
+                    _uiState.update {
+                        it.copy(
+                            isFavorite = result
+                        )
+                    }
                 }
             }
         }

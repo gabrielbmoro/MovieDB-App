@@ -21,6 +21,8 @@ kotlin {
 
             implementation(libs.kamel)
 
+            implementation(libs.lifecycle.viewmodel.compose)
+
             implementation(projects.domain)
             implementation(projects.designsystem)
             api(projects.platform)

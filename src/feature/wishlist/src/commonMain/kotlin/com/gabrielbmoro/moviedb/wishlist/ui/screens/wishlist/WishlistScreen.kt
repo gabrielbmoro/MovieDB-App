@@ -14,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
@@ -30,7 +30,8 @@ import org.koin.mp.KoinPlatform
 
 @Composable
 fun WishlistScreen(
-    viewModel: WishlistViewModel = KoinPlatform.getKoin().get(WishlistViewModel::class)
+    viewModel: WishlistViewModel = KoinPlatform.getKoin().get(WishlistViewModel::class),
+    navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -38,8 +39,6 @@ fun WishlistScreen(
 
     val successDeleteMessage = stringResource(SharedRes.strings.delete_success_message)
     val errorDeleteMessage = stringResource(SharedRes.strings.delete_fail_message)
-
-    val navigator = rememberNavController()
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -84,7 +83,7 @@ fun WishlistScreen(
                         },
                         lazyListState = lazyListState,
                         onDeleteMovie = { movie ->
-                            viewModel.accept(WishlistUserIntent.DeleteMovie(movie))
+                            viewModel.execute(WishlistUserIntent.DeleteMovie(movie))
                         },
                         modifier =
                         Modifier
@@ -107,13 +106,13 @@ fun WishlistScreen(
                         errorDeleteMessage
                     }
                 snackbarHostState.showSnackbar(resultMessage)
-                viewModel.accept(WishlistUserIntent.ResultMessageReset)
-                viewModel.accept(WishlistUserIntent.LoadMovies)
+                viewModel.execute(WishlistUserIntent.ResultMessageReset)
+                viewModel.execute(WishlistUserIntent.LoadMovies)
             }
         }
     )
 
     LaunchedEffect(Unit) {
-        viewModel.accept(WishlistUserIntent.LoadMovies)
+        viewModel.execute(WishlistUserIntent.LoadMovies)
     }
 }

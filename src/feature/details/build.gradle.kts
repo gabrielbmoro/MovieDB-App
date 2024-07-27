@@ -23,6 +23,8 @@ kotlin {
 
             implementation(libs.koin.core)
 
+            implementation(libs.lifecycle.viewmodel.compose)
+
             implementation(projects.domain)
             implementation(projects.designsystem)
             api(projects.platform)

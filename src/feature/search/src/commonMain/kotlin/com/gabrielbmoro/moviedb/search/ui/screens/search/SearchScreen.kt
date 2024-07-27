@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
@@ -29,10 +29,9 @@ private const val DELAY_IN_MILLIS = 500L
 @Composable
 fun SearchScreen(
     query: String?,
-    viewModel: SearchViewModel = KoinPlatform.getKoin().get(SearchViewModel::class)
+    viewModel: SearchViewModel = KoinPlatform.getKoin().get(SearchViewModel::class),
+    navigator: NavHostController
 ) {
-    val navigator = rememberNavController()
-
     val uiState = viewModel.uiState.collectAsState()
 
     val showKeyboard = remember { mutableStateOf(true) }
@@ -46,13 +45,13 @@ fun SearchScreen(
                     SearchInputText(
                         currentValue = uiState.value.searchQuery,
                         onQueryChanged = {
-                            viewModel.accept(SearchUserIntent.SearchInputFieldChanged(it))
+                            viewModel.execute(SearchUserIntent.SearchInputFieldChanged(it))
                         },
                         onSearchBy = {
-                            viewModel.accept(SearchUserIntent.SearchBy(it))
+                            viewModel.execute(SearchUserIntent.SearchBy(it))
                         },
                         onClearText = {
-                            viewModel.accept(SearchUserIntent.ClearSearchField)
+                            viewModel.execute(SearchUserIntent.ClearSearchField)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         focusRequester = focusRequester

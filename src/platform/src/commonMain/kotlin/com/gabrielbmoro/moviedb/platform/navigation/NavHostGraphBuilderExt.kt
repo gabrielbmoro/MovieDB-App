@@ -55,7 +55,7 @@ fun NavGraphBuilder.addSearchScreen(
             }
         )
     ) {
-        val query = it.arguments?.getString(SEARCH_QUERY_ARGUMENT_KEY) ?: ""
+        val query = it.arguments?.getString(SEARCH_QUERY_ARGUMENT_KEY)!!
         content(query)
     }
 }

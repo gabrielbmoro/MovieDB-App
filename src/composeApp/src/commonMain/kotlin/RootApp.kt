@@ -19,9 +19,18 @@ fun RootApp() {
         startDestination = Screen.Movies.route,
         navController = navigator,
     ) {
-        addMoviesScreen { MoviesScreen() }
-        addMovieDetailsScreen { movieId -> DetailsScreen(movieId = movieId) }
-        addWishlistScreen { WishlistScreen() }
-        addSearchScreen { query -> SearchScreen(query = query) }
+        addMoviesScreen { MoviesScreen(navigator = navigator) }
+        addMovieDetailsScreen { movieId ->
+            DetailsScreen(
+                movieId = movieId,
+                navigator = navigator
+            )
+        }
+        addWishlistScreen {
+            WishlistScreen(
+                navigator = navigator
+            )
+        }
+        addSearchScreen { query -> SearchScreen(query = null, navigator = navigator) }
     }
 }
