@@ -64,7 +64,6 @@ MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 ### Tech stack summary 🛠️
 
 - [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform)
-- [Voyager](https://voyager.adriel.cafe) - MVVM & navigation
 - [Koin](https://github.com/InsertKoinIO/koin) - Dependency injection
 - [Rinku](https://github.com/theolm/Rinku) - Deep links
 - Coroutines
