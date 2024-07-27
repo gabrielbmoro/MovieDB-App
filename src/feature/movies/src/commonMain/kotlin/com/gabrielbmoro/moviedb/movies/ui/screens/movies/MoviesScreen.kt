@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.scaffold.ScreenScaffold
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
@@ -30,11 +29,13 @@ import com.gabrielbmoro.moviedb.platform.navigation.navigateToSearch
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
 import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
-import org.koin.mp.KoinPlatform
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun MoviesScreen(
-    viewModel: MoviesViewModel = KoinPlatform.getKoin().get(MoviesViewModel::class),
+    viewModel: MoviesViewModel = koinViewModel(),
     navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()

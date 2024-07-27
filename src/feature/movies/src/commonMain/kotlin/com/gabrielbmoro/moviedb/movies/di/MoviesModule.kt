@@ -1,19 +1,19 @@
 package com.gabrielbmoro.moviedb.movies.di
 
-import kotlinx.coroutines.CoroutineDispatcher
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Factory
-import org.koin.core.annotation.Module
-import org.koin.ksp.generated.module
+import org.koin.compose.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureMoviesModule = MoviesModule().module
-
-@Module
-@ComponentScan("com.gabrielbmoro.moviedb.movies.ui")
-class MoviesModule {
-
-    @Factory
-    fun ioDispatcher() : CoroutineDispatcher = Dispatchers.IO
+val featureMoviesModule = module {
+    viewModel {
+        MoviesViewModel(
+            getPopularMoviesUseCase = get(),
+            getUpcomingMoviesUseCase = get(),
+            getNowPlayingMoviesUseCase = get(),
+            getTopRatedMoviesUseCase = get(),
+            ioDispatcher = Dispatchers.IO
+        )
+    }
 }
