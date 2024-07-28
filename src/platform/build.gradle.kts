@@ -15,7 +15,7 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
-            api(libs.navigation.compose)
+            implementation(libs.navigation.compose)
         }
 
         androidMain.dependencies {

@@ -33,7 +33,9 @@ kotlin {
 
             implementation(libs.rinku.core)
             implementation(libs.rinku.compose.ext)
-            api(projects.platform)
+            implementation(libs.koin.core)
+
+            implementation(projects.platform)
             implementation(projects.designsystem)
             implementation(projects.feature.wishlist)
             implementation(projects.feature.search)
@@ -41,8 +43,6 @@ kotlin {
             implementation(projects.feature.movies)
             implementation(projects.data)
             implementation(projects.domain)
-            implementation(libs.koin.core)
-
             implementation(projects.resources)
         }
     }

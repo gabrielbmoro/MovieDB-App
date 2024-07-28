@@ -16,18 +16,14 @@ kotlin {
             implementation(compose.uiUtil)
 
             implementation(libs.kotlinx.coroutines.core)
-
             implementation(libs.bundles.moko)
-
             implementation(libs.kamel)
-
-            implementation(libs.koin.core)
 
             implementation(libs.lifecycle.viewmodel.compose)
 
             implementation(projects.domain)
             implementation(projects.designsystem)
-            api(projects.platform)
+            implementation(projects.platform)
             implementation(projects.resources)
         }
 
