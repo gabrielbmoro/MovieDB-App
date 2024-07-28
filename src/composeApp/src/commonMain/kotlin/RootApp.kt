@@ -19,7 +19,10 @@ fun RootApp() {
         startDestination = Screen.Movies.route,
         navController = navigator,
     ) {
-        addMoviesScreen { MoviesScreen(navigator = navigator) }
+        addMoviesScreen {
+            MoviesScreen(navigator = navigator)
+        }
+
         addMovieDetailsScreen { movieId ->
             DetailsScreen(
                 movieId = movieId,
@@ -33,4 +36,8 @@ fun RootApp() {
         }
         addSearchScreen { query -> SearchScreen(query = query, navigator = navigator) }
     }
+
+    DeeplinkEffect(
+        navigator = navigator,
+    )
 }
