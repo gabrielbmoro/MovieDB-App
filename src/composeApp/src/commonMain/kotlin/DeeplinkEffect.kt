@@ -8,7 +8,7 @@ import com.gabrielbmoro.moviedb.platform.navigation.Screen
 import com.gabrielbmoro.moviedb.platform.navigation.detailsRoute
 import com.gabrielbmoro.moviedb.platform.navigation.searchRoute
 import dev.theolm.rinku.compose.ext.DeepLinkListener
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -16,14 +16,14 @@ import kotlinx.coroutines.launch
 fun DeeplinkEffect(
     navigator: NavHostController
 ) {
-    val deepLinkNavigation = remember { DeepLinkNavigation() }
+    val deepLinkNavigationStateFlow = remember {
+        MutableSharedFlow<String>()
+    }
     val coroutineContext = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        deepLinkNavigation.barrier.collectLatest { route ->
-            route?.let {
-                navigator.navigate(route)
-            }
+        deepLinkNavigationStateFlow.collectLatest { route ->
+            navigator.navigate(route)
         }
     }
 
@@ -33,7 +33,7 @@ fun DeeplinkEffect(
                 it.pathSegments.getOrNull(1)?.split("-")?.firstOrNull()?.toLongOrNull()
                     ?.let { movieId ->
                         coroutineContext.launch {
-                            deepLinkNavigation.barrier.emit(
+                            deepLinkNavigationStateFlow.emit(
                                 Screen.Details.route.detailsRoute(movieId)
                             )
                         }
@@ -42,14 +42,14 @@ fun DeeplinkEffect(
 
             Screen.Wishlist.firstSegment -> {
                 coroutineContext.launch {
-                    deepLinkNavigation.barrier.emit(Screen.Wishlist.route)
+                    deepLinkNavigationStateFlow.emit(Screen.Wishlist.route)
                 }
             }
 
             Screen.Search.firstSegment -> {
                 it.parameters[SEARCH_QUERY_ARGUMENT_KEY]?.let { query ->
                     coroutineContext.launch {
-                        deepLinkNavigation.barrier.emit(
+                        deepLinkNavigationStateFlow.emit(
                             Screen.Search.route.searchRoute(query)
                         )
                     }
@@ -61,8 +61,4 @@ fun DeeplinkEffect(
             }
         }
     }
-}
-
-class DeepLinkNavigation {
-    val barrier = MutableStateFlow<String?>(null)
 }
