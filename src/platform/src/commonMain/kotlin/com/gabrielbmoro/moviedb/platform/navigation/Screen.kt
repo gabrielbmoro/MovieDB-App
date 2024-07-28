@@ -1,11 +1,26 @@
 package com.gabrielbmoro.moviedb.platform.navigation
 
-enum class Screen(val route: String) {
-    Movies("movies"),
-    Search("Search"),
-    Details("details"),
-    Wishlist("wishlist")
+enum class Screen(
+    val route: String,
+    val firstSegment: String?,
+) {
+    Movies(
+        route = "movies",
+        firstSegment = null
+    ),
+    Search(
+        route = "Search",
+        firstSegment = "search"
+    ),
+    Details(
+        route = "details",
+        firstSegment = "movie"
+    ),
+    Wishlist(
+        route = "wishlist",
+        firstSegment = "favorite"
+    )
 }
 
 internal const val DETAILS_MOVIE_ID_ARGUMENT_KEY = "movieId"
-internal const val SEARCH_QUERY_ARGUMENT_KEY = "query"
+const val SEARCH_QUERY_ARGUMENT_KEY = "query"
