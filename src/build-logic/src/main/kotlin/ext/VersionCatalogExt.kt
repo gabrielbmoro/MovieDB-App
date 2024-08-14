@@ -10,4 +10,6 @@ internal fun VersionCatalog.koinComposeViewModelDependency() = findLibrary("koin
 
 internal fun VersionCatalog.koinComposeDependency() = findLibrary("koin_compose").get()
 
+internal fun VersionCatalog.koinCoroutines() = findLibrary("koin_coroutines").get()
+
 internal fun VersionCatalog.koinCompiler() = findLibrary("koin_compiler").get()
