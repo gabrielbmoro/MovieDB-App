@@ -18,7 +18,6 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation(projects.platform)
         }
         iosMain.dependencies {
             implementation(libs.koin.core)
