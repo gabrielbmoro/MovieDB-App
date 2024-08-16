@@ -39,7 +39,7 @@ fun MovieList(
                 votes = movie.votesAverage,
                 description = movie.overview,
                 onClick = { onSelectMovie(movie) },
-                enableSwipeToDelete = true,
+                enableDelete = true,
                 onDeleteClick = { onDeleteMovie(movie) }
             )
         }

@@ -3,6 +3,7 @@ import ext.koinCompiler
 import ext.koinComposeDependency
 import ext.koinComposeViewModelDependency
 import ext.koinCoreDependency
+import ext.koinCoroutines
 import ext.libs
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
@@ -21,6 +22,7 @@ kotlin {
                 api(libs.koinAnnotationsDependency())
                 api(libs.koinComposeViewModelDependency())
                 api(libs.koinComposeDependency())
+                api(libs.koinCoroutines())
             }
         }
     }

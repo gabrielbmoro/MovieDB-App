@@ -4,9 +4,9 @@ import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.compose.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import org.koin.dsl.lazyModule
 
-val featureMoviesModule = module {
+val featureMoviesModule = lazyModule {
     viewModel {
         MoviesViewModel(
             getPopularMoviesUseCase = get(),

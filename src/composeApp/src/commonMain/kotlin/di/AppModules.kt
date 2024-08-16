@@ -20,7 +20,10 @@ val appModules = listOf(
     authModule,
     dataModule,
     domainModule,
-    dataModule,
+    dataModule
+)
+
+val featureModules = listOf(
     featureDetailsModule,
     featureMoviesModule,
     featureSearchMovieModule,
