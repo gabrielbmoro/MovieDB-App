@@ -28,74 +28,82 @@ class WishlistViewModel(
 
     override fun execute(intent: WishlistUserIntent) {
         when (intent) {
-            is WishlistUserIntent.PrepareToDeleteMovie -> {
-                _movieToBeDeleted = intent.movie
-                _uiState.update {
-                    it.copy(
-                        isDeleteAlertDialogVisible = true
-                    )
-                }
-            }
+            is WishlistUserIntent.PrepareToDeleteMovie -> handlePrepareToDeleteMovie(intent.movie)
 
-            is WishlistUserIntent.LoadMovies -> {
-                viewModelScope.launch(ioCoroutinesDispatcher) {
-                    val movies = getFavoriteMoviesUseCase.execute(Unit)
+            is WishlistUserIntent.LoadMovies -> handleLoadMovies()
+
+            is WishlistUserIntent.ResultMessageReset -> handleResultMessageReset()
+
+            is WishlistUserIntent.HideConfirmDeleteDialog -> handleHideConfirmDeleteDialog()
+
+            WishlistUserIntent.DeleteMovie -> handleDeleteMovie()
+        }
+    }
+
+    private fun handleDeleteMovie() {
+        viewModelScope.launch(ioCoroutinesDispatcher) {
+            _movieToBeDeleted?.let { movie ->
+                favoriteMovieUseCase.execute(
+                    FavoriteMovieUseCase.Params(
+                        movieTitle = movie.title,
+                        toFavorite = false
+                    )
+                )
+                val result =
+                    isFavoriteMovieUseCase.execute(
+                        IsFavoriteMovieUseCase.Params(
+                            movieTitle = movie.title
+                        )
+                    )
+                if (!result) {
                     _uiState.update {
                         it.copy(
-                            favoriteMovies = movies
+                            favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
+                            isSuccessResult = true
                         )
                     }
                 }
+
+                _movieToBeDeleted = null
             }
 
-            is WishlistUserIntent.ResultMessageReset -> {
-                _uiState.update { it.copy(isSuccessResult = null) }
-            }
+            execute(WishlistUserIntent.HideConfirmDeleteDialog)
+        }
+    }
 
-            is WishlistUserIntent.HideConfirmDeleteDialog -> {
-                _uiState.update {
-                    it.copy(
-                        isDeleteAlertDialogVisible = false
-                    )
-                }
-            }
+    private fun handleHideConfirmDeleteDialog() {
+        _uiState.update {
+            it.copy(
+                isDeleteAlertDialogVisible = false
+            )
+        }
+    }
 
-            WishlistUserIntent.DeleteMovie -> viewModelScope.launch(ioCoroutinesDispatcher) {
-                deleteMovie()
+    private fun handleResultMessageReset() {
+        _uiState.update { it.copy(isSuccessResult = null) }
+    }
 
-                execute(WishlistUserIntent.HideConfirmDeleteDialog)
+    private fun handleLoadMovies() {
+        viewModelScope.launch(ioCoroutinesDispatcher) {
+            val movies = getFavoriteMoviesUseCase.execute(Unit)
+            _uiState.update {
+                it.copy(
+                    favoriteMovies = movies
+                )
             }
+        }
+    }
+
+    private fun handlePrepareToDeleteMovie(movie: Movie) {
+        _movieToBeDeleted = movie
+        _uiState.update {
+            it.copy(
+                isDeleteAlertDialogVisible = true
+            )
         }
     }
 
     private fun defaultEmptyState(): WishlistUIState = WishlistUIState()
-
-    private suspend fun deleteMovie() {
-        _movieToBeDeleted?.let { movie ->
-            favoriteMovieUseCase.execute(
-                FavoriteMovieUseCase.Params(
-                    movieTitle = movie.title,
-                    toFavorite = false
-                )
-            )
-            val result =
-                isFavoriteMovieUseCase.execute(
-                    IsFavoriteMovieUseCase.Params(
-                        movieTitle = movie.title
-                    )
-                )
-            if (!result) {
-                _uiState.update {
-                    it.copy(
-                        favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
-                        isSuccessResult = true
-                    )
-                }
-            }
-
-            _movieToBeDeleted = null
-        }
-    }
 
     override fun onCleared() {
         _movieToBeDeleted = null
