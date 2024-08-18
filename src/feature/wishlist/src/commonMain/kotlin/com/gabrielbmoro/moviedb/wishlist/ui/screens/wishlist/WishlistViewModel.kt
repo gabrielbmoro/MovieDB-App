@@ -96,4 +96,10 @@ class WishlistViewModel(
             _movieToBeDeleted = null
         }
     }
+
+    override fun onCleared() {
+        _movieToBeDeleted = null
+
+        super.onCleared()
+    }
 }
