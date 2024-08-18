@@ -12,6 +12,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class WishlistViewModelTest {
@@ -34,7 +35,7 @@ class WishlistViewModelTest {
     }
 
     @Test
-    fun `should be able to process delete movie intent`() =
+    fun `should be able to process prepare to delete movie intent`() =
         runTest {
             // arrange
             val expected =
@@ -53,10 +54,66 @@ class WishlistViewModelTest {
                 )
 
             // act
-            viewModel.execute(WishlistUserIntent.DeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            advanceUntilIdle()
 
             // assert
+            assertTrue(viewModel.uiState.value.isDeleteAlertDialogVisible)
+        }
+
+    @Test
+    fun `should be able to load all favorite movies`() =
+        runTest {
+            // arrange
+            val expected =
+                listOf(
+                    Movie.mockChuckNorrisVsVandammeMovie()
+                )
+            isFavoriteMovieUseCase.result = true
+            getFavoriteMoviesUseCase.result = expected
+
+            val viewModel =
+                WishlistViewModel(
+                    getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+                    favoriteMovieUseCase = favoriteMovieUseCase,
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                    ioCoroutinesDispatcher = StandardTestDispatcher()
+                )
+
+            // act
+            viewModel.execute(WishlistUserIntent.LoadMovies)
             advanceUntilIdle()
+
+            // assert
+            assertEquals(expected, viewModel.uiState.value.favoriteMovies)
+        }
+
+    @Test
+    fun `should be able to process to delete movie intent`() =
+        runTest {
+            // arrange
+            val expected =
+                listOf(
+                    Movie.mockChuckNorrisVsVandammeMovie()
+                )
+            isFavoriteMovieUseCase.result = true
+            getFavoriteMoviesUseCase.result = expected
+
+            val viewModel =
+                WishlistViewModel(
+                    getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+                    favoriteMovieUseCase = favoriteMovieUseCase,
+                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                    ioCoroutinesDispatcher = StandardTestDispatcher()
+                )
+            viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            advanceUntilIdle()
+
+            // act
+            viewModel.execute(WishlistUserIntent.DeleteMovie)
+            advanceUntilIdle()
+
+            // assert
             assertEquals(1, favoriteMovieUseCase.timesCalled)
         }
 }

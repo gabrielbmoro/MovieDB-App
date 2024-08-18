@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
@@ -23,30 +24,16 @@ class WishlistViewModel(
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
+    private var _movieToBeDeleted: Movie? = null
+
     override fun execute(intent: WishlistUserIntent) {
         when (intent) {
-            is WishlistUserIntent.DeleteMovie -> {
-                viewModelScope.launch(ioCoroutinesDispatcher) {
-                    favoriteMovieUseCase.execute(
-                        FavoriteMovieUseCase.Params(
-                            movieTitle = intent.movie.title,
-                            toFavorite = false
-                        )
+            is WishlistUserIntent.PrepareToDeleteMovie -> {
+                _movieToBeDeleted = intent.movie
+                _uiState.update {
+                    it.copy(
+                        isDeleteAlertDialogVisible = true
                     )
-                    val result =
-                        isFavoriteMovieUseCase.execute(
-                            IsFavoriteMovieUseCase.Params(
-                                movieTitle = intent.movie.title
-                            )
-                        )
-                    if (!result) {
-                        _uiState.update {
-                            it.copy(
-                                favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
-                                isSuccessResult = true
-                            )
-                        }
-                    }
                 }
             }
 
@@ -64,8 +51,49 @@ class WishlistViewModel(
             is WishlistUserIntent.ResultMessageReset -> {
                 _uiState.update { it.copy(isSuccessResult = null) }
             }
+
+            is WishlistUserIntent.HideConfirmDeleteDialog -> {
+                _uiState.update {
+                    it.copy(
+                        isDeleteAlertDialogVisible = false
+                    )
+                }
+            }
+
+            WishlistUserIntent.DeleteMovie -> viewModelScope.launch(ioCoroutinesDispatcher) {
+                deleteMovie()
+
+                execute(WishlistUserIntent.HideConfirmDeleteDialog)
+            }
         }
     }
 
     private fun defaultEmptyState(): WishlistUIState = WishlistUIState()
+
+    private suspend fun deleteMovie() {
+        _movieToBeDeleted?.let { movie ->
+            favoriteMovieUseCase.execute(
+                FavoriteMovieUseCase.Params(
+                    movieTitle = movie.title,
+                    toFavorite = false
+                )
+            )
+            val result =
+                isFavoriteMovieUseCase.execute(
+                    IsFavoriteMovieUseCase.Params(
+                        movieTitle = movie.title
+                    )
+                )
+            if (!result) {
+                _uiState.update {
+                    it.copy(
+                        favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
+                        isSuccessResult = true
+                    )
+                }
+            }
+
+            _movieToBeDeleted = null
+        }
+    }
 }
