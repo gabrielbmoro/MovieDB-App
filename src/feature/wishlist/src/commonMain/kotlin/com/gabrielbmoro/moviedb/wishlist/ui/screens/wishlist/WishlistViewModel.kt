@@ -49,13 +49,13 @@ class WishlistViewModel(
                         toFavorite = false
                     )
                 )
-                val result =
+                val isFavoriteAfterDeletion =
                     isFavoriteMovieUseCase.execute(
                         IsFavoriteMovieUseCase.Params(
                             movieTitle = movie.title
                         )
                     )
-                if (!result) {
+                if (!isFavoriteAfterDeletion) {
                     _uiState.update {
                         it.copy(
                             favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
