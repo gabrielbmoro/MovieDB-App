@@ -23,6 +23,7 @@ import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
+import com.gabrielbmoro.moviedb.wishlist.ui.widgets.DeleteConfirmationDialog
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
 import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
@@ -85,7 +86,7 @@ fun WishlistScreen(
                         },
                         lazyListState = lazyListState,
                         onDeleteMovie = { movie ->
-                            viewModel.execute(WishlistUserIntent.DeleteMovie(movie))
+                            viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(movie))
                         },
                         modifier =
                         Modifier
@@ -117,4 +118,18 @@ fun WishlistScreen(
     LaunchedEffect(Unit) {
         viewModel.execute(WishlistUserIntent.LoadMovies)
     }
+
+    DeleteConfirmationDialog(
+        onDismissRequest = {
+            viewModel.execute(
+                WishlistUserIntent.HideConfirmDeleteDialog
+            )
+        },
+        onPositiveAction = {
+            viewModel.execute(
+                WishlistUserIntent.DeleteMovie
+            )
+        },
+        visible = uiState.value.isDeleteAlertDialogVisible
+    )
 }
