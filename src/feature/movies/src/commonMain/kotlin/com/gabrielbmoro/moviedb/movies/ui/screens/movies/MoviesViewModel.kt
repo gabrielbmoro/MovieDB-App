@@ -7,6 +7,8 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
+import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,41 +29,29 @@ class MoviesViewModel(
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    private val nowPlayingMoviesPageController =
-        PagingController(
-            coroutineScope = viewModelScope,
-            ioCoroutineDispatcher = ioDispatcher,
-            requestMore = { pageIndex ->
-                getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
-            }
-        )
+    private val moviesPageController: PagingController<Movie> = PagingController(
+        coroutineScope = viewModelScope,
+        ioCoroutineDispatcher = ioDispatcher,
+        requestMore = { pageIndex ->
+            when (_uiState.value.selectedFilterMenu) {
+                FilterType.NowPlaying -> {
+                    getNowPlayingMoviesUseCase.execute(GetNowPlayingMoviesUseCase.Params(pageIndex))
+                }
 
-    private val popularMoviesPageController =
-        PagingController(
-            coroutineScope = viewModelScope,
-            ioCoroutineDispatcher = ioDispatcher,
-            requestMore = { pageIndex ->
-                getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
-            }
-        )
+                FilterType.TopRated -> {
+                    getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
+                }
 
-    private val topRatedMoviesPageController =
-        PagingController(
-            coroutineScope = viewModelScope,
-            ioCoroutineDispatcher = ioDispatcher,
-            requestMore = { pageIndex ->
-                getTopRatedMoviesUseCase.execute(GetTopRatedMoviesUseCase.Params(pageIndex))
-            }
-        )
+                FilterType.Popular -> {
+                    getPopularMoviesUseCase.execute(GetPopularMoviesUseCase.Params(pageIndex))
+                }
 
-    private val upComingMoviesPagingController =
-        PagingController(
-            coroutineScope = viewModelScope,
-            ioCoroutineDispatcher = ioDispatcher,
-            requestMore = { pageIndex ->
-                getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
+                FilterType.UpComing -> {
+                    getUpcomingMoviesUseCase.execute(GetUpcomingMoviesUseCase.Params(pageIndex))
+                }
             }
-        )
+        }
+    )
 
     init {
         execute(Intent.Setup)
@@ -69,83 +59,47 @@ class MoviesViewModel(
 
     override fun execute(intent: Intent) {
         when (intent) {
-            is Intent.RequestMoreUpComingMovies -> {
+            is Intent.RequestMoreMovies -> {
                 viewModelScope.launch(ioDispatcher) {
-                    processRequestMoreForUpcomingMoviesIntent()
+                    processRequestMoreForMoreMoviesIntent()
                 }
-            }
-
-            is Intent.RequestMoreTopRatedMovies -> {
-                viewModelScope.launch(ioDispatcher) {
-                    processRequestMoreForTopRatedMoviesIntent()
-                }
-            }
-
-            is Intent.RequestMorePopularMovies -> viewModelScope.launch(ioDispatcher) {
-                processRequestMoreForPopularMoviesIntent()
-            }
-
-            is Intent.RequestMoreNowPlayingMovies -> viewModelScope.launch(ioDispatcher) {
-                processRequestMoreForNowPlayingMoviesIntent()
             }
 
             Intent.Setup -> {
+                moviesPageController.reset()
+
                 viewModelScope.launch(ioDispatcher) {
                     _uiState.update {
                         it.copy(
-                            nowPlayingMovies = nowPlayingMoviesPageController.onRequestMore(),
-                            topRatedMovies = topRatedMoviesPageController.onRequestMore(),
-                            popularMovies = popularMoviesPageController.onRequestMore(),
-                            upComingMovies = upComingMoviesPagingController.onRequestMore()
+                            movies = moviesPageController.onRequestMore(),
+                            isLoading = false,
                         )
                     }
                 }
             }
+
+            is Intent.SelectFilterMenuItem -> {
+                _uiState.update {
+                    it.copy(
+                        selectedFilterMenu = intent.menuItem.type,
+                        movies = emptyList(),
+                        isLoading = true,
+                        menuItems = it.menuItems.updateAccordingToFilterType(
+                            newFilterType = intent.menuItem.type
+                        )
+                    )
+                }
+
+                execute(Intent.Setup)
+            }
         }
     }
 
-    private suspend fun processRequestMoreForUpcomingMoviesIntent() {
-        val movies = upComingMoviesPagingController.onRequestMore()
+    private suspend fun processRequestMoreForMoreMoviesIntent() {
+        val movies = moviesPageController.onRequestMore()
         _uiState.update {
             it.copy(
-                upComingMovies =
-                uiState.value.upComingMovies.addAllDistinctly(
-                    movies
-                )
-            )
-        }
-    }
-
-    private suspend fun processRequestMoreForTopRatedMoviesIntent() {
-        val movies = topRatedMoviesPageController.onRequestMore()
-        _uiState.update {
-            it.copy(
-                topRatedMovies =
-                uiState.value.topRatedMovies.addAllDistinctly(
-                    movies
-                )
-            )
-        }
-    }
-
-    private suspend fun processRequestMoreForPopularMoviesIntent() {
-        val movies = popularMoviesPageController.onRequestMore()
-        _uiState.update {
-            it.copy(
-                popularMovies =
-                uiState.value.popularMovies.addAllDistinctly(
-                    movies
-                )
-            )
-        }
-    }
-
-    private suspend fun processRequestMoreForNowPlayingMoviesIntent() {
-        val movies = nowPlayingMoviesPageController.onRequestMore()
-        _uiState.update {
-            it.copy(
-                nowPlayingMovies =
-                uiState.value.nowPlayingMovies.addAllDistinctly(
+                movies = uiState.value.movies.addAllDistinctly(
                     movies
                 )
             )
@@ -154,15 +108,39 @@ class MoviesViewModel(
 
     private fun defaultEmptyState() =
         MoviesUIState(
-            nowPlayingMovies = emptyList(),
-            popularMovies = emptyList(),
-            topRatedMovies = emptyList(),
-            upComingMovies = emptyList()
+            movies = emptyList(),
+            selectedFilterMenu = FilterType.NowPlaying,
+            menuItems = listOf(
+                FilterMenuItem(
+                    selected = true,
+                    type = FilterType.NowPlaying
+                ),
+                FilterMenuItem(
+                    selected = false,
+                    type = FilterType.UpComing
+                ),
+                FilterMenuItem(
+                    selected = false,
+                    type = FilterType.TopRated
+                ),
+                FilterMenuItem(
+                    selected = false,
+                    type = FilterType.Popular
+                )
+            )
         )
 
     private fun List<Movie>.addAllDistinctly(newMovies: List<Movie>): List<Movie> {
         return toMutableList().apply {
             addAll(newMovies)
         }.distinctBy { it.id }
+    }
+
+    private fun List<FilterMenuItem>.updateAccordingToFilterType(newFilterType: FilterType): List<FilterMenuItem> {
+        return map {
+            it.copy(
+                selected = it.type == newFilterType
+            )
+        }
     }
 }

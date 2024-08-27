@@ -2,16 +2,12 @@ package com.gabrielbmoro.moviedb.movies.ui.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -21,46 +17,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 
-private const val WINDOW_SIZE = 5
-
 @Composable
-fun MoviesCarousel(
-    title: String,
+fun MoviesList(
     movies: List<Movie>,
     onSelectMovie: ((Movie) -> Unit),
     onRequestMore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val lazyListState = rememberLazyListState()
-    val firstVisibleItemIndex by remember {
+    val lazyListState = rememberLazyStaggeredGridState()
+    val canScrollForward by remember {
         derivedStateOf {
-            lazyListState.firstVisibleItemIndex
+            lazyListState.canScrollForward
         }
     }
 
-    Text(
-        text = title,
-        style =
-        MaterialTheme.typography.titleMedium.copy(
-            fontSize = 18.sp
-        )
-    )
-
-    Spacer(
-        modifier =
-        Modifier
-            .height(8.dp)
-            .fillMaxWidth()
-    )
-
-    LazyRow(
+    LazyVerticalStaggeredGrid(
         state = lazyListState,
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        columns = StaggeredGridCells.Adaptive(120.dp),
+        verticalItemSpacing = 8.dp,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         content = {
             items(
                 count = movies.size,
@@ -71,24 +50,21 @@ fun MoviesCarousel(
                 val movie = movies[index]
                 MovieImage(
                     imageUrl = movie.posterImageUrl,
-                    contentScale = ContentScale.FillHeight,
+                    contentScale = ContentScale.FillBounds,
                     contentDescription = movie.title,
                     modifier =
                     Modifier
-                        .width(180.dp)
+                        .fillMaxWidth()
+                        .height(300.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .clickable { onSelectMovie(movie) }
-                        .fillMaxHeight()
                 )
             }
         }
     )
 
-    LaunchedEffect(key1 = firstVisibleItemIndex) {
-        val firstItemIndexOfLastWindow = movies.lastIndex - WINDOW_SIZE
-        val reachTheBeginningOfTheLastWindow = firstVisibleItemIndex == firstItemIndexOfLastWindow
-
-        if (reachTheBeginningOfTheLastWindow) {
+    LaunchedEffect(key1 = canScrollForward) {
+        if (canScrollForward.not()) {
             onRequestMore()
         }
     }
