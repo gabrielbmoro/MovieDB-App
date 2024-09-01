@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -55,7 +56,7 @@ class DetailsViewModelTest {
                     productionCompanies = "productionCompany1",
                     status = fakeMovieDetail.status,
                     tagLine = fakeMovieDetail.tagline,
-                    genres = fakeMovieDetail.genres,
+                    genres = fakeMovieDetail.genres.toImmutableList(),
                     movieTitle = fakeMovieDetail.title
                 )
 
