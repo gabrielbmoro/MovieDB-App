@@ -4,9 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,19 +23,19 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 @Composable
 fun MoviesList(
     movies: List<Movie>,
+    lazyStaggeredGridState: LazyStaggeredGridState,
     onSelectMovie: ((Movie) -> Unit),
     onRequestMore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val lazyListState = rememberLazyStaggeredGridState()
     val canScrollForward by remember {
         derivedStateOf {
-            lazyListState.canScrollForward
+            lazyStaggeredGridState.canScrollForward
         }
     }
 
     LazyVerticalStaggeredGrid(
-        state = lazyListState,
+        state = lazyStaggeredGridState,
         modifier = modifier,
         columns = StaggeredGridCells.Adaptive(120.dp),
         verticalItemSpacing = 8.dp,

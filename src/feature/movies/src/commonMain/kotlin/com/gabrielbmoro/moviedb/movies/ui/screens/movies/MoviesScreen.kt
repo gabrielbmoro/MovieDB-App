@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -40,12 +41,12 @@ fun MoviesScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
-    val lazyListState = rememberLazyListState()
+    val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val coroutineScope = rememberCoroutineScope()
 
     val showTopBar by remember {
         derivedStateOf {
-            lazyListState.firstVisibleItemIndex == 0
+            lazyStaggeredGridState.firstVisibleItemIndex == 0
         }
     }
 
@@ -69,7 +70,7 @@ fun MoviesScreen(
                 currentTabIndex = MoviesTabIndex,
                 onSelectMoviesTab = {
                     coroutineScope.launch {
-                        lazyListState.scrollToItem(0)
+                        lazyStaggeredGridState.scrollToItem(0)
                     }
                 },
                 onSelectFavoriteTab = {
@@ -97,6 +98,10 @@ fun MoviesScreen(
                             menuItem = filterMenuItem
                         )
                     )
+
+                    coroutineScope.launch {
+                        lazyStaggeredGridState.scrollToItem(0)
+                    }
                 }
             )
 
@@ -108,8 +113,8 @@ fun MoviesScreen(
                 onRequestMore = {
                     viewModel.execute(Intent.RequestMoreMovies)
                 },
-                modifier =
-                Modifier
+                lazyStaggeredGridState = lazyStaggeredGridState,
+                modifier = Modifier
                     .fillMaxSize()
             )
         }
