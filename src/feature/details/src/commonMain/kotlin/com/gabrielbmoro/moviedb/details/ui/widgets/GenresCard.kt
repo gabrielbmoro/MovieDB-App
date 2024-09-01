@@ -12,11 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GenresCard(
-    genres: List<String>,
+    genres: ImmutableList<String>,
     modifier: Modifier = Modifier
 ) {
     FlowRow(
