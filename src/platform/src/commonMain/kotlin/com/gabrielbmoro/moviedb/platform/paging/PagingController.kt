@@ -17,4 +17,8 @@ class PagingController<E>(
             requestMore(currentPage)
         }.await()
     }
+
+    fun reset() {
+        currentPage = 0
+    }
 }
