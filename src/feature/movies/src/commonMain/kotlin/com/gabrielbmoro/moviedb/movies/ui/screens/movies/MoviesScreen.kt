@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -106,9 +105,9 @@ fun MoviesScreen(
             )
 
             MoviesList(
-                movies = uiState.value.movies,
-                onSelectMovie = { selectedMovie ->
-                    navigator.navigateToDetails(selectedMovie.id)
+                movies = uiState.value.movieCardInfos,
+                onSelectMovie = { selectedMovieId ->
+                    navigator.navigateToDetails(selectedMovieId)
                 },
                 onRequestMore = {
                     viewModel.execute(Intent.RequestMoreMovies)

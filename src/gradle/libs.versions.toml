@@ -2,6 +2,7 @@
 firebase-crashlytics-gradle = "2.9.9"
 google-services = "4.4.0"
 kotlin = "1.9.23"
+kotlinx-collections-immutable-version = "0.3.7"
 kotlinx-coroutines-core = "1.8.1-Beta"
 lifecycle-viewmodel-compose-version = "2.8.0"
 navigation-compose-version = "2.7.0-alpha07"
@@ -34,6 +35,7 @@ detekt = "1.23.6"
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable-version" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }

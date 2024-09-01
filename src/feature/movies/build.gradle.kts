@@ -25,7 +25,7 @@ kotlin {
             implementation(projects.designsystem)
             implementation(projects.platform)
             implementation(projects.resources)
-
+            implementation(libs.kotlinx.collections.immutable)
         }
     }
 }
