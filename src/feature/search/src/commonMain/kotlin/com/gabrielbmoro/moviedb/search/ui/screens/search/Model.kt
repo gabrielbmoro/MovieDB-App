@@ -1,7 +1,8 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.compose.ui.text.input.TextFieldValue
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.search.ui.widgets.MovieCardInfo
+import kotlinx.collections.immutable.ImmutableList
 
 sealed class SearchUserIntent {
     data class SearchBy(val query: TextFieldValue) : SearchUserIntent()
@@ -13,5 +14,5 @@ sealed class SearchUserIntent {
 
 data class SearchUIState(
     val searchQuery: TextFieldValue,
-    val results: List<Movie>? = null
+    val results: ImmutableList<MovieCardInfo>? = null
 )
