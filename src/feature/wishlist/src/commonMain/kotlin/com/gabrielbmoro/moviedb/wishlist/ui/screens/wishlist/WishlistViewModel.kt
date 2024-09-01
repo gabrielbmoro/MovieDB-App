@@ -7,6 +7,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -56,9 +57,11 @@ class WishlistViewModel(
                         )
                     )
                 if (!isFavoriteAfterDeletion) {
+                    val favoriteMovies = getFavoriteMoviesUseCase.execute(Unit)
+                        .toImmutableList()
                     _uiState.update {
                         it.copy(
-                            favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
+                            favoriteMovies = favoriteMovies,
                             isSuccessResult = true
                         )
                     }
@@ -86,6 +89,7 @@ class WishlistViewModel(
     private fun handleLoadMovies() {
         viewModelScope.launch(ioCoroutinesDispatcher) {
             val movies = getFavoriteMoviesUseCase.execute(Unit)
+                .toImmutableList()
             _uiState.update {
                 it.copy(
                     favoriteMovies = movies

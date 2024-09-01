@@ -11,10 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.cards.MovieCard
 import com.gabrielbmoro.moviedb.domain.entities.Movie
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MovieList(
-    moviesList: List<Movie>,
+    moviesList: ImmutableList<Movie>,
     onSelectMovie: (Movie) -> Unit,
     onDeleteMovie: (Movie) -> Unit,
     lazyListState: LazyListState,
