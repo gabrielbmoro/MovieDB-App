@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.data.providers
 
 import androidx.room.Room
+import androidx.room.util.findDatabaseConstructorAndInitDatabaseImpl
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,7 @@ actual fun databaseInstance(): AppDatabase {
     val dbFile = "${fileDirectory()}/$dbFileName"
     return Room.databaseBuilder<AppDatabase>(
         name = dbFile,
-        factory = { AppDatabase::class.instantiateImpl() }
+        factory = { findDatabaseConstructorAndInitDatabaseImpl(AppDatabase::class) }
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
