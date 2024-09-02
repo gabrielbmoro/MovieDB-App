@@ -1,11 +1,12 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
+import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
+import kotlinx.collections.immutable.ImmutableList
 
 data class MoviesUIState(
-    val movies: List<Movie>,
+    val movieCardInfos: ImmutableList<MovieCardInfo>,
     val menuItems: List<FilterMenuItem>,
     val selectedFilterMenu: FilterType,
     val isLoading: Boolean = false,

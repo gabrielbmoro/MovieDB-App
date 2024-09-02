@@ -9,7 +9,9 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -18,13 +20,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MoviesList(
-    movies: List<Movie>,
+    movies: ImmutableList<MovieCardInfo>,
     lazyStaggeredGridState: LazyStaggeredGridState,
-    onSelectMovie: ((Movie) -> Unit),
+    onSelectMovie: ((Long) -> Unit),
     onRequestMore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -44,20 +46,20 @@ fun MoviesList(
             items(
                 count = movies.size,
                 key = { index ->
-                    movies[index].id
+                    movies[index].movieId
                 }
             ) { index ->
-                val movie = movies[index]
+                val movieCardInfo = movies[index]
                 MovieImage(
-                    imageUrl = movie.posterImageUrl,
+                    imageUrl = movieCardInfo.moviePosterUrl,
                     contentScale = ContentScale.FillBounds,
-                    contentDescription = movie.title,
+                    contentDescription = movieCardInfo.movieTitle,
                     modifier =
                     Modifier
                         .fillMaxWidth()
                         .height(300.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable { onSelectMovie(movie) }
+                        .clickable { onSelectMovie(movieCardInfo.movieId) }
                 )
             }
         }
@@ -69,3 +71,11 @@ fun MoviesList(
         }
     }
 }
+
+@Immutable
+@Stable
+data class MovieCardInfo(
+    val movieId: Long,
+    val movieTitle: String,
+    val moviePosterUrl: String
+)

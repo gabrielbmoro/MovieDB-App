@@ -7,6 +7,8 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,7 +26,7 @@ class WishlistViewModel(
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    private var _movieToBeDeleted: Movie? = null
+    private var _movieToBeDeleted: MovieCardInfo? = null
 
     override fun execute(intent: WishlistUserIntent) {
         when (intent) {
@@ -56,9 +58,12 @@ class WishlistViewModel(
                         )
                     )
                 if (!isFavoriteAfterDeletion) {
+                    val favoriteMovies = getFavoriteMoviesUseCase.execute(Unit)
+                        .map(::toMovieCardInfo)
+                        .toImmutableList()
                     _uiState.update {
                         it.copy(
-                            favoriteMovies = getFavoriteMoviesUseCase.execute(Unit),
+                            favoriteMovies = favoriteMovies,
                             isSuccessResult = true
                         )
                     }
@@ -86,6 +91,8 @@ class WishlistViewModel(
     private fun handleLoadMovies() {
         viewModelScope.launch(ioCoroutinesDispatcher) {
             val movies = getFavoriteMoviesUseCase.execute(Unit)
+                .map(::toMovieCardInfo)
+                .toImmutableList()
             _uiState.update {
                 it.copy(
                     favoriteMovies = movies
@@ -94,7 +101,7 @@ class WishlistViewModel(
         }
     }
 
-    private fun handlePrepareToDeleteMovie(movie: Movie) {
+    private fun handlePrepareToDeleteMovie(movie: MovieCardInfo) {
         _movieToBeDeleted = movie
         _uiState.update {
             it.copy(
@@ -104,6 +111,16 @@ class WishlistViewModel(
     }
 
     private fun defaultEmptyState(): WishlistUIState = WishlistUIState()
+
+    private fun toMovieCardInfo(movie: Movie): MovieCardInfo {
+        return MovieCardInfo(
+            id = movie.id,
+            title = movie.title,
+            overview = movie.overview,
+            votesAverage = movie.votesAverage,
+            posterImageUrl = movie.posterImageUrl
+        )
+    }
 
     override fun onCleared() {
         _movieToBeDeleted = null

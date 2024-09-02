@@ -74,8 +74,8 @@ fun SearchScreen(
                 MoviesResult(
                     movies = uiState.value.results!!,
                     modifier = Modifier.fillMaxWidth(),
-                    navigateToDetailsScreen = { movie ->
-                        navigator.navigateToDetails(movie.id)
+                    navigateToDetailsScreen = { movieId ->
+                        navigator.navigateToDetails(movieId)
                     }
                 )
             }

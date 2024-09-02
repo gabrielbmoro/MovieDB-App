@@ -7,6 +7,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -96,7 +97,7 @@ class DetailsViewModel(
                     videoId = movieDetails.videoId,
                     tagLine = movieDetails.tagline,
                     status = movieDetails.status,
-                    genres = movieDetails.genres,
+                    genres = movieDetails.genres.toImmutableList(),
                     homepage = movieDetails.homepage,
                     productionCompanies = movieDetails.productionCompanies.reduceToText(),
                     movieTitle = movieDetails.title,

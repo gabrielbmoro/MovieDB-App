@@ -1,9 +1,10 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
+import kotlinx.collections.immutable.ImmutableList
 
 sealed class WishlistUserIntent {
-    data class PrepareToDeleteMovie(val movie: Movie) : WishlistUserIntent()
+    data class PrepareToDeleteMovie(val movie: MovieCardInfo) : WishlistUserIntent()
 
     data object DeleteMovie : WishlistUserIntent()
 
@@ -15,7 +16,7 @@ sealed class WishlistUserIntent {
 }
 
 data class WishlistUIState(
-    val favoriteMovies: List<Movie>? = null,
+    val favoriteMovies: ImmutableList<MovieCardInfo>? = null,
     val isLoading: Boolean = false,
     val areBarsVisible: Boolean = true,
     val isSuccessResult: Boolean? = null,

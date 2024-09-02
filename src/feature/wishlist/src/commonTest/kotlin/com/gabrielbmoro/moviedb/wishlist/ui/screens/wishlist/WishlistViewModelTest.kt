@@ -1,6 +1,8 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -19,6 +21,16 @@ class WishlistViewModelTest {
     private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
     private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
+    private val mockChuckNorrisVsVandammeMovieCardInfo =
+        Movie.mockChuckNorrisVsVandammeMovie().let {
+            MovieCardInfo(
+                id = it.id,
+                title = it.title,
+                posterImageUrl = it.posterImageUrl,
+                votesAverage = it.votesAverage,
+                overview = it.overview
+            )
+        }
 
     @BeforeTest
     fun before() {
@@ -42,6 +54,7 @@ class WishlistViewModelTest {
                 listOf(
                     Movie.mockChuckNorrisVsVandammeMovie()
                 )
+
             isFavoriteMovieUseCase.result = true
             getFavoriteMoviesUseCase.result = expected
 
@@ -54,7 +67,11 @@ class WishlistViewModelTest {
                 )
 
             // act
-            viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            viewModel.execute(
+                WishlistUserIntent.PrepareToDeleteMovie(
+                    mockChuckNorrisVsVandammeMovieCardInfo
+                )
+            )
             advanceUntilIdle()
 
             // assert
@@ -66,11 +83,11 @@ class WishlistViewModelTest {
         runTest {
             // arrange
             val expected =
-                listOf(
-                    Movie.mockChuckNorrisVsVandammeMovie()
+                persistentListOf(
+                    mockChuckNorrisVsVandammeMovieCardInfo
                 )
             isFavoriteMovieUseCase.result = true
-            getFavoriteMoviesUseCase.result = expected
+            getFavoriteMoviesUseCase.result = listOf(Movie.mockChuckNorrisVsVandammeMovie())
 
             val viewModel =
                 WishlistViewModel(
@@ -106,7 +123,11 @@ class WishlistViewModelTest {
                     isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher()
                 )
-            viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(Movie.mockChuckNorrisVsVandammeMovie()))
+            viewModel.execute(
+                WishlistUserIntent.PrepareToDeleteMovie(
+                    mockChuckNorrisVsVandammeMovieCardInfo
+                )
+            )
             advanceUntilIdle()
 
             // act

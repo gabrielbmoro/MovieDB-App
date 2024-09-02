@@ -9,8 +9,12 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
+import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -71,7 +75,9 @@ class MoviesViewModel(
                 viewModelScope.launch(ioDispatcher) {
                     _uiState.update {
                         it.copy(
-                            movies = moviesPageController.onRequestMore(),
+                            movieCardInfos = moviesPageController.onRequestMore().map(
+                                ::toMovieCardInfo
+                            ).toPersistentList(),
                             isLoading = false,
                         )
                     }
@@ -82,7 +88,7 @@ class MoviesViewModel(
                 _uiState.update {
                     it.copy(
                         selectedFilterMenu = intent.menuItem.type,
-                        movies = emptyList(),
+                        movieCardInfos = persistentListOf(),
                         isLoading = true,
                         menuItems = it.menuItems.updateAccordingToFilterType(
                             newFilterType = intent.menuItem.type
@@ -95,11 +101,17 @@ class MoviesViewModel(
         }
     }
 
+    private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
+        movieId = movie.id,
+        movieTitle = movie.title,
+        moviePosterUrl = movie.posterImageUrl ?: ""
+    )
+
     private suspend fun processRequestMoreForMoreMoviesIntent() {
-        val movies = moviesPageController.onRequestMore()
+        val movies = moviesPageController.onRequestMore().map(::toMovieCardInfo)
         _uiState.update {
             it.copy(
-                movies = uiState.value.movies.addAllDistinctly(
+                movieCardInfos = uiState.value.movieCardInfos.addAllDistinctly(
                     movies
                 )
             )
@@ -108,7 +120,7 @@ class MoviesViewModel(
 
     private fun defaultEmptyState() =
         MoviesUIState(
-            movies = emptyList(),
+            movieCardInfos = persistentListOf(),
             selectedFilterMenu = FilterType.NowPlaying,
             menuItems = listOf(
                 FilterMenuItem(
@@ -130,10 +142,13 @@ class MoviesViewModel(
             )
         )
 
-    private fun List<Movie>.addAllDistinctly(newMovies: List<Movie>): List<Movie> {
+    private fun ImmutableList<MovieCardInfo>.addAllDistinctly(
+        newMovies: List<MovieCardInfo>
+    ): ImmutableList<MovieCardInfo> {
         return toMutableList().apply {
             addAll(newMovies)
-        }.distinctBy { it.id }
+        }.distinctBy { it.movieId }
+            .toPersistentList()
     }
 
     private fun List<FilterMenuItem>.updateAccordingToFilterType(newFilterType: FilterType): List<FilterMenuItem> {

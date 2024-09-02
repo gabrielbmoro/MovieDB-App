@@ -7,16 +7,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.cards.MovieCard
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun MovieList(
-    moviesList: List<Movie>,
-    onSelectMovie: (Movie) -> Unit,
-    onDeleteMovie: (Movie) -> Unit,
+    moviesList: ImmutableList<MovieCardInfo>,
+    onSelectMovie: (MovieCardInfo) -> Unit,
+    onDeleteMovie: (MovieCardInfo) -> Unit,
     lazyListState: LazyListState,
     modifier: Modifier = Modifier
 ) {
@@ -45,3 +47,13 @@ fun MovieList(
         }
     }
 }
+
+@Stable
+@Immutable
+data class MovieCardInfo(
+    val id: Long,
+    val title: String,
+    val votesAverage: Float,
+    val overview: String,
+    val posterImageUrl: String?,
+)

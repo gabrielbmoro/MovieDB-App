@@ -1,5 +1,7 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
+import kotlinx.collections.immutable.ImmutableList
+
 sealed class DetailsUserIntent {
     data object HideVideo : DetailsUserIntent()
 
@@ -20,7 +22,7 @@ data class DetailsUIState(
     val movieOverview: String,
     val imageUrl: String?,
     val tagLine: String? = null,
-    val genres: List<String>? = null,
+    val genres: ImmutableList<String>? = null,
     val status: String? = null,
     val productionCompanies: String? = null,
     val homepage: String? = null,
