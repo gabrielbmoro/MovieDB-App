@@ -1,10 +1,12 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.gradle.internal.tasks.factory.registerTask
 import config.ConfigurationKeys
 import ext.configureCompileOptions
 import ext.configureDefaultConfig
 import ext.configurePlatformTargets
 import ext.configureTestOptions
+import tasks.CheckArchitectureViolationTask
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -27,3 +29,5 @@ android {
 kotlin {
     configurePlatformTargets()
 }
+
+tasks.register("checkArcViolationTask", CheckArchitectureViolationTask::class)
