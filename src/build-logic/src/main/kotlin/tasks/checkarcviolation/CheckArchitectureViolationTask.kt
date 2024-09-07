@@ -5,43 +5,25 @@ import org.gradle.api.tasks.TaskAction
 
 open class CheckArchitectureViolationTask : DefaultTask() {
 
-    private val checker = ArcViolationChecker(
-        rules = listOf(
-            ArcViolationRule.JustWith(
-                targetModule = "data",
-                justWith = listOf(
-                    "domain",
-                ),
-            ),
-            ArcViolationRule.NoRelationship(
-                targetModule = "domain"
-            ),
-            ArcViolationRule.NoRelationship(
-                targetModule = "resources"
-            ),
-            ArcViolationRule.JustWith(
-                targetModule = "designsystem",
-                justWith = listOf("resources")
-            )
-        )
-    )
+    private val checker = ArcViolationChecker()
 
     @TaskAction
     fun process() {
         val internalProjectDependencies = getInternalProjectDependencies()
 
-        checker.check(
-            targetModuleName = project.name,
-            internalProjectDependencies = internalProjectDependencies
+        val targetModule = TargetModule(
+            moduleName = project.name,
+            isFeatureModule = isFeatureModule(),
+            internalDependencies = internalProjectDependencies
         )
 
-        val isFeatureModule = isFeatureModule()
+        val result = checker.check(targetModule = targetModule)
 
-        println(
-            "Check: ${project.name}, " +
-                    "isFeatureModule $isFeatureModule, " +
-                    "deps: $internalProjectDependencies"
-        )
+        if (result is CheckResult.Failure) {
+            throw IllegalStateException("Something went wrong")
+        }
+
+        println("Check: $targetModule")
     }
 
     private fun isFeatureModule() = project.parent?.name == FEATURE_PARENT_MODULE_NAME
