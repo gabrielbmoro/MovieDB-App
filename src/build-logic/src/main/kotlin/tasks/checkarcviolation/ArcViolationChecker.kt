@@ -37,19 +37,27 @@ internal class ArcViolationChecker {
         when (targetRule) {
             is ArcViolationRule.JustWith -> {
                 if (sortedInternalProjectDependencies != targetRule.justWith) {
-                    return CheckResult.Failure
+                    return CheckResult.Failure(
+                        errorMessage = "${targetModule.moduleName} should only have deps " +
+                                "with ${targetRule.justWith}"
+                    )
                 }
             }
 
             is ArcViolationRule.NoRelationship -> {
                 if (sortedInternalProjectDependencies.isNotEmpty()) {
-                    return CheckResult.Failure
+                    return CheckResult.Failure(
+                        errorMessage = "${targetModule.moduleName} should not have deps"
+                    )
                 }
             }
 
             is ArcViolationRule.Feature -> {
                 if (sortedInternalProjectDependencies.contains("data")) {
-                    return CheckResult.Failure
+                    return CheckResult.Failure(
+                        errorMessage = "${targetModule.moduleName} is a feature module and " +
+                                "should not have dependency with data"
+                    )
                 }
             }
         }

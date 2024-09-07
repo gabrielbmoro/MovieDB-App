@@ -3,5 +3,5 @@ package tasks.checkarcviolation
 sealed class CheckResult {
     object Success : CheckResult()
 
-    object Failure : CheckResult()
+    data class Failure(val errorMessage: String) : CheckResult()
 }

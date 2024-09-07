@@ -20,7 +20,7 @@ open class CheckArchitectureViolationTask : DefaultTask() {
         val result = checker.check(targetModule = targetModule)
 
         if (result is CheckResult.Failure) {
-            throw IllegalStateException("Something went wrong")
+            throw IllegalStateException(result.errorMessage)
         }
 
         println("Check: $targetModule")
