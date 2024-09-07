@@ -5,6 +5,7 @@ import ext.configureCompileOptions
 import ext.configureDefaultConfig
 import ext.configurePlatformTargets
 import ext.configureTestOptions
+import tasks.checkarcviolation.CheckArchitectureViolationTask
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -27,3 +28,5 @@ android {
 kotlin {
     configurePlatformTargets()
 }
+
+tasks.register("checkArcViolationTask", CheckArchitectureViolationTask::class)
