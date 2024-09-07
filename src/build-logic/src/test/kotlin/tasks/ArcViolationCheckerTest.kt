@@ -157,4 +157,19 @@ class ArcViolationCheckerTest {
 
         assertIs<CheckResult.Success>(result)
     }
+
+    @Test
+    fun `Given a unknown module with no rule when it is checked then pass`() {
+        val arcViolationChecker = ArcViolationChecker()
+
+        val result = arcViolationChecker.check(
+            TargetModule(
+                moduleName = "chuck norris",
+                internalDependencies = listOf("domain"),
+                isFeatureModule = false
+            )
+        )
+
+        assertIs<CheckResult.Success>(result)
+    }
 }

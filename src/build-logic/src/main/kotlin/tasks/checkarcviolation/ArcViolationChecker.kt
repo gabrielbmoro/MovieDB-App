@@ -28,31 +28,31 @@ internal class ArcViolationChecker {
 
     fun check(targetModule: TargetModule): CheckResult {
         val sortedInternalProjectDependencies = targetModule.internalDependencies.sorted()
-        rules.firstOrNull { rule ->
+
+        val targetRule = rules.firstOrNull { rule ->
             rule.targetModule == targetModule.moduleName
                     || targetModule.isFeatureModule && rule is ArcViolationRule.Feature
-        }
-            ?.let { targetRule ->
-                when (targetRule) {
-                    is ArcViolationRule.JustWith -> {
-                        if (sortedInternalProjectDependencies != targetRule.justWith) {
-                            return CheckResult.Failure
-                        }
-                    }
+        } ?: return CheckResult.Success
 
-                    is ArcViolationRule.NoRelationship -> {
-                        if (sortedInternalProjectDependencies.isNotEmpty()) {
-                            return CheckResult.Failure
-                        }
-                    }
-
-                    is ArcViolationRule.Feature -> {
-                        if (sortedInternalProjectDependencies.contains("data")) {
-                            return CheckResult.Failure
-                        }
-                    }
+        when (targetRule) {
+            is ArcViolationRule.JustWith -> {
+                if (sortedInternalProjectDependencies != targetRule.justWith) {
+                    return CheckResult.Failure
                 }
             }
+
+            is ArcViolationRule.NoRelationship -> {
+                if (sortedInternalProjectDependencies.isNotEmpty()) {
+                    return CheckResult.Failure
+                }
+            }
+
+            is ArcViolationRule.Feature -> {
+                if (sortedInternalProjectDependencies.contains("data")) {
+                    return CheckResult.Failure
+                }
+            }
+        }
 
         return CheckResult.Success
     }
