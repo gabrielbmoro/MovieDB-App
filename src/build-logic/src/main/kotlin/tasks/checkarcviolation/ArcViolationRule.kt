@@ -11,4 +11,8 @@ internal sealed class ArcViolationRule(
         override val targetModule: String,
         val justWith: List<String>
     ) : ArcViolationRule(targetModule)
+
+    data class Feature(
+        override val targetModule: String
+    ) : ArcViolationRule(targetModule)
 }

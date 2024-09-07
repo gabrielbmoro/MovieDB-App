@@ -16,4 +16,13 @@ dependencies {
     implementation(libs.kover.gradle.plugin)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
     implementation(libs.detekt.gradle.plugin)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test)
+}
+
+tasks.test {
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
