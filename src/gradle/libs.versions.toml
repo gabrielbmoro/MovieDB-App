@@ -54,7 +54,7 @@ arc_core_testing = { group = "androidx.arch.core", name = "core-testing", versio
 kotlinx_coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin_test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlin_test_common = { group = "org.jetbrains.kotlin", name = "kotlin-test-common", version.ref = "kotlin" }
-popcorn_guineapig = { group = "io.github.gabrielbmoro.popcorngp", name = "io.github.gabrielbmoro.popcorngp.gradle.plugin", version.ref = "popcorn_guineapig" }
+popcorn_guineapig = { group = "io.github.gabrielbmoro", name = "popcornguineapig", version.ref = "popcorn_guineapig" }
 
 koin_core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
