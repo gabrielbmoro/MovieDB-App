@@ -21,9 +21,3 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
 }
-
-tasks.test {
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-}
