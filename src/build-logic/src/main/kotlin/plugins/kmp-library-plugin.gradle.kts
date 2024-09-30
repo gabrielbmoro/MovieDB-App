@@ -1,7 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.gabrielbmoro.popcorn.domain.entity.PopcornConfiguration
-import com.gabrielbmoro.popcorn.domain.entity.PopcornDoNotWithRule
 import com.gabrielbmoro.popcorn.domain.entity.PopcornJustWithRule
 import com.gabrielbmoro.popcorn.domain.entity.PopcornNoRelationShipRule
 import com.gabrielbmoro.popcorn.domain.entity.PopcornProject
