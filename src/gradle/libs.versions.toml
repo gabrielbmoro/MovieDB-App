@@ -31,7 +31,7 @@ rinku = "0.1.0"
 buildkonfig = "0.15.1"
 sqlite = "2.5.0-SNAPSHOT"
 detekt = "1.23.6"
-popcorn_guineapig = "1.0.8"
+popcorn_guineapig = "1.0.14"
 
 [libraries]
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
