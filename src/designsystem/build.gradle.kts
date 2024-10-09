@@ -1,3 +1,8 @@
+import com.gabrielbmoro.popcorn.domain.input.PopcornConfiguration
+import com.gabrielbmoro.popcorn.domain.input.PopcornProject
+import com.gabrielbmoro.popcorn.domain.input.ProjectType
+import com.gabrielbmoro.popcorn.domain.rules.JustWithRule
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
@@ -21,4 +26,17 @@ kotlin {
             implementation(projects.resources)
         }
     }
+}
+
+popcornGuineapigConfig {
+    configuration = PopcornConfiguration(
+        project = PopcornProject(
+            type = ProjectType.KMP
+        ),
+        rules = listOf(
+            JustWithRule(
+                justWith = listOf("resources")
+            )
+        )
+    )
 }
