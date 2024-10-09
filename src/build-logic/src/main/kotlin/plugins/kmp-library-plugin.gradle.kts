@@ -1,11 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.gabrielbmoro.popcorn.domain.entity.PopcornConfiguration
-import com.gabrielbmoro.popcorn.domain.entity.PopcornJustWithRule
-import com.gabrielbmoro.popcorn.domain.entity.PopcornNoRelationShipRule
-import com.gabrielbmoro.popcorn.domain.entity.PopcornProject
-import com.gabrielbmoro.popcorn.domain.entity.PopcornRules
-import com.gabrielbmoro.popcorn.domain.entity.ProjectType
+import com.gabrielbmoro.popcorn.domain.input.PopcornConfiguration
+import com.gabrielbmoro.popcorn.domain.input.PopcornProject
+import com.gabrielbmoro.popcorn.domain.input.ProjectType
+import com.gabrielbmoro.popcorn.domain.rules.NoDependencyRule
 import config.ConfigurationKeys
 import ext.configureCompileOptions
 import ext.configureDefaultConfig
@@ -35,33 +33,13 @@ kotlin {
     configurePlatformTargets()
 }
 
-
 popcornGuineapigConfig {
     configuration = PopcornConfiguration(
         project = PopcornProject(
             type = ProjectType.KMP
         ),
-        rules = PopcornRules(
-            noRelationship = listOf(
-                PopcornNoRelationShipRule("domain"),
-                PopcornNoRelationShipRule("resources"),
-                PopcornNoRelationShipRule("platform")
-            ),
-            justWith = listOf(
-                PopcornJustWithRule(
-                    target = "data",
-                    with = listOf(
-                        "domain"
-                    )
-                ),
-                PopcornJustWithRule(
-                    target = "designsystem",
-                    with = listOf(
-                        "resources"
-                    )
-                )
-            ),
-            doNotWith = emptyList()
+        rules = listOf(
+            NoDependencyRule()
         )
     )
 }
