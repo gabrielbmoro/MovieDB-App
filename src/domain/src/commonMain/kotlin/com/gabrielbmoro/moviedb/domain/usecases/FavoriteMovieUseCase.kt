@@ -20,7 +20,6 @@ interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
     )
 }
 
-@Factory
 open class FavoriteMovieUseCaseImpl(
     @Provided private val repository: MoviesRepository
 ) : FavoriteMovieUseCase {
