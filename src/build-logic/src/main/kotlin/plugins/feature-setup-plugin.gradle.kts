@@ -1,7 +1,7 @@
-import com.gabrielbmoro.popcorn.domain.input.PopcornConfiguration
-import com.gabrielbmoro.popcorn.domain.input.PopcornProject
-import com.gabrielbmoro.popcorn.domain.input.ProjectType
-import com.gabrielbmoro.popcorn.domain.rules.DoNotWithRule
+import com.github.codandotv.popcorn.domain.input.PopcornConfiguration
+import com.github.codandotv.popcorn.domain.input.PopcornProject
+import com.github.codandotv.popcorn.domain.input.ProjectType
+import com.github.codandotv.popcorn.domain.rules.DoNotWithRule
 
 plugins {
     id("kmp-library-plugin")
