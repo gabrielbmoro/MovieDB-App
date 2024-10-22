@@ -1,7 +1,7 @@
-import com.gabrielbmoro.popcorn.domain.input.PopcornConfiguration
-import com.gabrielbmoro.popcorn.domain.input.PopcornProject
-import com.gabrielbmoro.popcorn.domain.input.ProjectType
-import com.gabrielbmoro.popcorn.domain.rules.JustWithRule
+import com.github.codandotv.popcorn.domain.input.PopcornConfiguration
+import com.github.codandotv.popcorn.domain.input.PopcornProject
+import com.github.codandotv.popcorn.domain.input.ProjectType
+import com.github.codandotv.popcorn.domain.rules.JustWithRule
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {

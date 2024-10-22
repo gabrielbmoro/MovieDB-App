@@ -1,9 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.gabrielbmoro.popcorn.domain.input.PopcornConfiguration
-import com.gabrielbmoro.popcorn.domain.input.PopcornProject
-import com.gabrielbmoro.popcorn.domain.input.ProjectType
-import com.gabrielbmoro.popcorn.domain.rules.NoDependencyRule
+import com.github.codandotv.popcorn.domain.input.PopcornConfiguration
+import com.github.codandotv.popcorn.domain.input.PopcornProject
+import com.github.codandotv.popcorn.domain.input.ProjectType
+import com.github.codandotv.popcorn.domain.rules.NoDependencyRule
 import config.ConfigurationKeys
 import ext.configureCompileOptions
 import ext.configureDefaultConfig
@@ -16,7 +16,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlinx.kover")
     id("detekt-plugin-setup")
-    id("io.github.gabrielbmoro.popcorngp")
+    id("io.github.codandotv.popcorngp")
 }
 
 android {
