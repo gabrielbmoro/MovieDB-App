@@ -74,3 +74,4 @@ MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 - Gradle Catalogs - Dependency management
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - Android video player
 - [BuildKonfig](https://github.com/yshrsmz/BuildKonfig) - Gradle variables
+- [Popcorn Guineapig](https://github.com/CodandoTV/popcorn-guineapig) - Module analysis
