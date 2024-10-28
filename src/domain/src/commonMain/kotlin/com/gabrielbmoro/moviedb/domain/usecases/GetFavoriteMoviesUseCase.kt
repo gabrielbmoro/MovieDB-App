@@ -7,7 +7,6 @@ import org.koin.core.annotation.Provided
 
 interface GetFavoriteMoviesUseCase : UseCase<Unit, List<Movie>>
 
-@Factory
 class GetFavoriteMoviesUseCaseImpl(
     @Provided private val repository: MoviesRepository
 ) : GetFavoriteMoviesUseCase {
