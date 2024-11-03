@@ -18,7 +18,6 @@ kotlin {
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.bundles.moko)
-            implementation(libs.kamel)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.collections.immutable)
 
