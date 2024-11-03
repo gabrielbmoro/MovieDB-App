@@ -12,6 +12,7 @@ import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
+@Suppress("LongParameterList")
 @Composable
 fun AsyncImage(
     imageUrl: String,
