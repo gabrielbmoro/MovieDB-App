@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.details.ui.widgets
+package com.gabrielbmoro.moviedb.media
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

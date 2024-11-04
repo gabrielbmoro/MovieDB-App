@@ -15,5 +15,9 @@ kotlin {
             implementation(compose.foundation)
             implementation(libs.kamel)
         }
+
+        androidMain.dependencies {
+            implementation(libs.android.youtube.player)
+        }
     }
 }
