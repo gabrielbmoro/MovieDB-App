@@ -25,16 +25,13 @@ kotlin {
             implementation(projects.designsystem)
             implementation(projects.platform)
             implementation(projects.resources)
+            implementation(projects.util.media)
         }
 
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlin.stdlib)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.android.youtube.player)
         }
     }
 }

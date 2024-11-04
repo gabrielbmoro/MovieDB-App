@@ -41,7 +41,7 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.MovieDetailIndicator
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
-import com.gabrielbmoro.moviedb.details.ui.widgets.VideoPlayer
+import com.gabrielbmoro.moviedb.media.VideoPlayer
 import dev.icerock.moko.resources.compose.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
