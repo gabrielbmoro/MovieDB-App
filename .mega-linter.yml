@@ -4,7 +4,7 @@
 # linters documentation
 
 # all, none, or list of linter keys
-APPLY_FIXES: none
+APPLY_FIXES: all
 
 # If you use ENABLE variable, all other languages/formats/tooling-formats will
 # be disabled by default
