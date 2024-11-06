@@ -7,8 +7,8 @@ src/gradle.properties
 
 *.hprof
 
-src/buildSrc/.gradle/
-src/buildSrc/build/
+src/build-logic/.gradle/
+src/build-logic/build/
 
 *.iml
 src/xcuserdata
@@ -23,4 +23,3 @@ src/.DS_Store
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
-megalinter-reports/
