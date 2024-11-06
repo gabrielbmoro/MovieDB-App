@@ -12,7 +12,7 @@ APPLY_FIXES: all
 
 # If you use ENABLE_LINTERS variable, all other linters will be disabled by
 # default
-ENABLE_LINTERS: KOTLIN_DETEKT
+ENABLE_LINTERS: MARKDOWN_MARKDOWNLINT, JSON_PRETTIER, YAML_PRETTIER
 
 DISABLE:
   - COPYPASTE # Uncomment to disable checks of excessive copy-pastes
