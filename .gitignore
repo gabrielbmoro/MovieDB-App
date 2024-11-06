@@ -23,3 +23,4 @@ src/.DS_Store
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+megalinter-reports/
