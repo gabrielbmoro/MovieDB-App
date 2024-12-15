@@ -30,7 +30,7 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
-
+            implementation(libs.navigation.compose)
             implementation(libs.rinku.core)
             implementation(libs.rinku.compose.ext)
             implementation(libs.koin.core)

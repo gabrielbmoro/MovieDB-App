@@ -20,6 +20,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.navigation.compose)
 
             implementation(projects.domain)
             implementation(projects.designsystem)

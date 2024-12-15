@@ -17,14 +17,11 @@ material = "1.12.0"
 ksp = "2.0.21-1.0.27"
 kover = "0.8.3"
 koin = "4.0.0"
-koin-compose = "1.1.5"
-koin-compose-viewmodel = "1.2.0-Beta5"
 koin_annotations = "1.4.0"
 ktor = "3.0.1"
 compose_plugin = "1.7.0"
 kamel_image = "1.0.1"
-kotlin_stdlib = "2.0.21"
-compose = "1.7.5"
+compose = "1.7.6"
 androidx_activity_compose = "1.9.3"
 moko_resources = "0.23.0"
 rinku = "0.6.0"
@@ -58,8 +55,8 @@ popcorn_guineapig = { group = "io.github.codandotv", name = "popcornguineapig", 
 
 koin_core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin_compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
-koin_compose_viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin-compose-viewmodel" }
+koin_compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin_compose_viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin_annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin_annotations" }
 koin_compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin_annotations" }
 koin_coroutines = { group = "io.insert-koin", name = "koin-core-coroutines", version.ref = "koin" }
@@ -75,7 +72,7 @@ ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serializatio
 ktor_auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
 ktor_logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 kamel = { group = "media.kamel", name = "kamel-image-default", version.ref = "kamel_image" }
-kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin_stdlib" }
+kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }

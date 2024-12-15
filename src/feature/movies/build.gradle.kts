@@ -20,12 +20,13 @@ kotlin {
             implementation(libs.bundles.moko)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlin.stdlib)
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.navigation.compose)
 
             implementation(projects.domain)
             implementation(projects.designsystem)
             implementation(projects.platform)
             implementation(projects.resources)
-            implementation(libs.kotlinx.collections.immutable)
         }
     }
 }
