@@ -8,5 +8,4 @@ actual fun VideoPlayer(
     videoId: String,
     shouldStartMuted: Boolean,
     modifier: Modifier
-) {
-}
+) = Unit

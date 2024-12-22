@@ -10,12 +10,11 @@ import ext.configureDefaultConfig
 import ext.configurePlatformTargets
 import ext.configureTestOptions
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
+@Suppress("DSL_SCOPE_VIOLATION",  "ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
     id("org.jetbrains.kotlinx.kover")
-    id("detekt-plugin-setup")
     id("io.github.codandotv.popcorngp")
 }
 

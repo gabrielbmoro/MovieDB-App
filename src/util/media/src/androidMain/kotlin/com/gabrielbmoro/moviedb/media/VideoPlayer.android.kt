@@ -30,31 +30,27 @@ actual fun VideoPlayer(
 
                 initialize(
                     object : YouTubePlayerListener {
-                        override fun onApiChange(youTubePlayer: YouTubePlayer) {}
+                        override fun onApiChange(youTubePlayer: YouTubePlayer) = Unit
 
                         override fun onCurrentSecond(
                             youTubePlayer: YouTubePlayer,
                             second: Float
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onError(
                             youTubePlayer: YouTubePlayer,
                             error: PlayerConstants.PlayerError
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onPlaybackQualityChange(
                             youTubePlayer: YouTubePlayer,
                             playbackQuality: PlayerConstants.PlaybackQuality
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onPlaybackRateChange(
                             youTubePlayer: YouTubePlayer,
                             playbackRate: PlayerConstants.PlaybackRate
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onReady(youTubePlayer: YouTubePlayer) {
                             youTubePlayer.loadVideo(
@@ -69,26 +65,22 @@ actual fun VideoPlayer(
                         override fun onStateChange(
                             youTubePlayer: YouTubePlayer,
                             state: PlayerConstants.PlayerState
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onVideoDuration(
                             youTubePlayer: YouTubePlayer,
                             duration: Float
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onVideoId(
                             youTubePlayer: YouTubePlayer,
                             videoId: String
-                        ) {
-                        }
+                        ) = Unit
 
                         override fun onVideoLoadedFraction(
                             youTubePlayer: YouTubePlayer,
                             loadedFraction: Float
-                        ) {
-                        }
+                        ) = Unit
                     },
                     IFramePlayerOptions
                         .Builder()
