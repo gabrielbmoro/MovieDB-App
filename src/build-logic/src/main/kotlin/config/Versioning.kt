@@ -6,21 +6,16 @@ internal object Versioning {
     private const val MAJOR_VERSION = "1.8"
 
     internal fun versionCode(): Int {
-        val versionCode =
-            try {
-                System.getenv(EnvKeys.BITRISE_BUILD_NUMBER).toIntOrNull()
-            } catch (nullPointerException: NullPointerException) {
-                null
-            }
+        val versionCode = runCatching {
+            System.getenv(EnvKeys.BITRISE_BUILD_NUMBER).toIntOrNull()
+        }.getOrNull()
         return versionCode ?: LOCAL_VERSION_CODE
     }
 
     internal fun versionName(): String {
-        val versionName = try {
+        val versionName = runCatching {
             "$MAJOR_VERSION.${System.getenv(EnvKeys.BITRISE_BUILD_NUMBER)}"
-        } catch (nullPointerException: NullPointerException) {
-            null
-        }
+        }.getOrNull()
 
         return versionName?.ifEmpty { LOCAL_VERSION_NAME } ?: LOCAL_VERSION_NAME
     }
