@@ -15,9 +15,9 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.animation)
             implementation(compose.uiUtil)
+            implementation(compose.components.resources)
 
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.bundles.moko)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.navigation.compose)
@@ -25,8 +25,6 @@ kotlin {
             implementation(projects.domain)
             implementation(projects.designsystem)
             implementation(projects.platform)
-            implementation(projects.resources)
-
         }
 
         commonTest.dependencies {

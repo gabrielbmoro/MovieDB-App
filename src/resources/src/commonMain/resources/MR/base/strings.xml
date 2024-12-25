@@ -9,13 +9,4 @@
     <string name="delete">Delete</string>
     <string name="movies">Movies</string>
     <string name="favorite">Favorite</string>
-
-    <!-- Wishlist -->
-    <string name="wishlist">Wishlist</string>
-    <string name="delete_success_message">Movie deleted successfully</string>
-    <string name="delete_fail_message">Something went wrong</string>
-    <string name="confirm_delete_dialog_title">Delete Movie?</string>
-    <string name="confirm_delete_dialog_body">After you delete the movie this item will not appear in your wishlist.</string>
-    <string name="confirm_delete_dialog_positive_action">Delete</string>
-    <string name="confirm_delete_dialog_negative_action">Cancel</string>
 </resources>
