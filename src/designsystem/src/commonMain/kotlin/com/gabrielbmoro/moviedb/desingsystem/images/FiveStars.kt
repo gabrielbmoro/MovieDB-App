@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.ImageResource
-import dev.icerock.moko.resources.compose.painterResource
+import moviedbapp.designsystem.generated.resources.Res
+import moviedbapp.designsystem.generated.resources.ic_star
+import moviedbapp.designsystem.generated.resources.ic_star_border
+import moviedbapp.designsystem.generated.resources.ic_star_half
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 private const val STARS_AVAILABLE = 5
 private const val AVERAGE_TOTAL = 10
@@ -19,18 +22,18 @@ private const val INVALID_NUMBER = -1f
 private fun getDrawableAccordingToStarPosition(
     votes: Float,
     position: Int
-): ImageResource {
+): DrawableResource {
     return when {
-        votes >= position -> SharedRes.images.ic_star
+        votes >= position -> Res.drawable.ic_star
         votes < position -> {
             if (votes.toInt() == position) {
-                SharedRes.images.ic_star_half
+                Res.drawable.ic_star_half
             } else {
-                SharedRes.images.ic_star_border
+                Res.drawable.ic_star_border
             }
         }
 
-        else -> SharedRes.images.ic_star_border
+        else -> Res.drawable.ic_star_border
     }
 }
 

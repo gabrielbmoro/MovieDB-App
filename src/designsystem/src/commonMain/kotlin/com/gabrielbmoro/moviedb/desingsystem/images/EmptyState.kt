@@ -12,9 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.designsystem.generated.resources.Res
+import moviedbapp.designsystem.generated.resources.alt_sad_emoji
+import moviedbapp.designsystem.generated.resources.empty_view_title
+import moviedbapp.designsystem.generated.resources.ic_sad_emoji
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun EmptyState(modifier: Modifier = Modifier) {
@@ -24,11 +27,11 @@ fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(SharedRes.images.ic_sad_emoji),
-            contentDescription = stringResource(SharedRes.strings.alt_sad_emoji)
+            painter = painterResource(Res.drawable.ic_sad_emoji),
+            contentDescription = stringResource(Res.string.alt_sad_emoji)
         )
         Text(
-            text = stringResource(SharedRes.strings.empty_view_title),
+            text = stringResource(Res.string.empty_view_title),
             style = MaterialTheme.typography.headlineSmall,
             modifier =
             Modifier

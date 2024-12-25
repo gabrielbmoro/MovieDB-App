@@ -6,8 +6,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.designsystem.generated.resources.Res
+import moviedbapp.designsystem.generated.resources.search
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SearchNavigationIcon(
@@ -17,7 +18,7 @@ fun SearchNavigationIcon(
     IconButton(onClick = event, modifier = modifier) {
         Icon(
             imageVector = Icons.Filled.Search,
-            contentDescription = stringResource(SharedRes.strings.search)
+            contentDescription = stringResource(Res.string.search)
         )
     }
 }

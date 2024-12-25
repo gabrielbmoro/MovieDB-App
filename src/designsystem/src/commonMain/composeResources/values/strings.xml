@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Desing system -->
+    <string name="back">Back</string>
+    <string name="search">Search</string>
+    <string name="empty_view_title">No movie here</string>
+    <string name="alt_sad_emoji">Sad emoji</string>
+    <string name="poster">Poster</string>
+    <string name="delete">Delete</string>
+    <string name="movies">Movies</string>
+    <string name="favorite">Favorite</string>
+</resources>
