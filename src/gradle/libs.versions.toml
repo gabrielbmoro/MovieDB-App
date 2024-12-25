@@ -23,7 +23,6 @@ compose_plugin = "1.7.0"
 kamel_image = "1.0.1"
 compose = "1.7.6"
 androidx_activity_compose = "1.9.3"
-moko_resources = "0.23.0"
 rinku = "0.6.0"
 buildkonfig = "0.15.2"
 sqlite = "2.5.0-SNAPSHOT"
@@ -37,7 +36,6 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kover-gradle-plugin = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose-version" }
-moko_resources_generator = { module = "dev.icerock.moko:resources-generator", version.ref = "moko_resources" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -73,8 +71,6 @@ kamel = { group = "media.kamel", name = "kamel-image-default", version.ref = "ka
 kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-moko_core = { group = "dev.icerock.moko", name = "resources", version.ref = "moko_resources" }
-moko_compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko_resources" }
 rinku-core = { module = "dev.theolm:rinku", version.ref = "rinku" }
 rinku-compose-ext = { module = "dev.theolm:rinku-compose-ext", version.ref = "rinku" }
 
@@ -82,7 +78,6 @@ rinku-compose-ext = { module = "dev.theolm:rinku-compose-ext", version.ref = "ri
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
 test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
-moko = ["moko_compose", "moko_core"]
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -91,6 +86,5 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 kotlin_multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-moko_plugin = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko_resources" }
 buildkonfig_plugin = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 room_plugin = { id = "androidx.room", version.ref = "room" }
