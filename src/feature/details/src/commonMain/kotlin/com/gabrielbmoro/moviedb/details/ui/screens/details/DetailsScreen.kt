@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
@@ -42,11 +41,17 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.media.VideoPlayer
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.feature.details.generated.resources.Res
+import moviedbapp.feature.details.generated.resources.homepage
+import moviedbapp.feature.details.generated.resources.language
+import moviedbapp.feature.details.generated.resources.overview
+import moviedbapp.feature.details.generated.resources.popularity
+import moviedbapp.feature.details.generated.resources.poster
+import moviedbapp.feature.details.generated.resources.production_companies
+import moviedbapp.feature.details.generated.resources.tagline
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun DetailsScreen(
     movieId: Long,
@@ -188,7 +193,7 @@ private fun DetailsScreenContent(
                         Modifier
                             .align(Alignment.TopCenter)
                             .fillMaxSize(),
-                        contentDescription = stringResource(SharedRes.strings.poster)
+                        contentDescription = stringResource(Res.string.poster)
                     )
                 }
             }
@@ -213,7 +218,7 @@ private fun DetailsScreenContent(
         }
 
         SectionTitle(
-            title = stringResource(SharedRes.strings.overview),
+            title = stringResource(Res.string.overview),
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         SectionBody(
@@ -222,7 +227,7 @@ private fun DetailsScreenContent(
         )
 
         SectionTitle(
-            title = stringResource(SharedRes.strings.popularity),
+            title = stringResource(Res.string.popularity),
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         SectionBody(
@@ -231,7 +236,7 @@ private fun DetailsScreenContent(
         )
 
         SectionTitle(
-            title = stringResource(SharedRes.strings.language),
+            title = stringResource(Res.string.language),
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         SectionBody(
@@ -241,7 +246,7 @@ private fun DetailsScreenContent(
 
         if (uiState.tagLine != null) {
             SectionTitle(
-                title = stringResource(SharedRes.strings.tagline),
+                title = stringResource(Res.string.tagline),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             SectionBody(
@@ -252,7 +257,7 @@ private fun DetailsScreenContent(
 
         if (uiState.productionCompanies != null) {
             SectionTitle(
-                title = stringResource(SharedRes.strings.production_companies),
+                title = stringResource(Res.string.production_companies),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             SectionBody(
@@ -263,7 +268,7 @@ private fun DetailsScreenContent(
 
         if (uiState.homepage != null) {
             SectionTitle(
-                title = stringResource(SharedRes.strings.homepage),
+                title = stringResource(Res.string.homepage),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             TextUrl(

@@ -10,9 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.feature.details.generated.resources.Res
+import moviedbapp.feature.details.generated.resources.error_message
+import moviedbapp.feature.details.generated.resources.error_title
+import moviedbapp.feature.details.generated.resources.ic_dino_error
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorMessage(modifier: Modifier = Modifier) {
@@ -21,18 +24,18 @@ fun ErrorMessage(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = stringResource(SharedRes.strings.error_title),
+            text = stringResource(Res.string.error_title),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
 
         Image(
-            painter = painterResource(SharedRes.images.ic_dino_error),
+            painter = painterResource(Res.drawable.ic_dino_error),
             modifier =
             Modifier
                 .fillMaxWidth(),
-            contentDescription = stringResource(SharedRes.strings.error_message)
+            contentDescription = stringResource(Res.string.error_message)
         )
     }
 }
