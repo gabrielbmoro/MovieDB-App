@@ -11,8 +11,12 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.feature.movies.generated.resources.Res
+import moviedbapp.feature.movies.generated.resources.now_playing
+import moviedbapp.feature.movies.generated.resources.popular
+import moviedbapp.feature.movies.generated.resources.top_rated
+import moviedbapp.feature.movies.generated.resources.upcoming
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FilterMenu(
@@ -33,10 +37,10 @@ fun FilterMenu(
                 selected = menuItem.selected,
                 label = {
                     val menuTitle = when (menuItem.type) {
-                        FilterType.NowPlaying -> stringResource(SharedRes.strings.now_playing)
-                        FilterType.TopRated -> stringResource(SharedRes.strings.top_rated)
-                        FilterType.Popular -> stringResource(SharedRes.strings.popular)
-                        FilterType.UpComing -> stringResource(SharedRes.strings.upcoming)
+                        FilterType.NowPlaying -> stringResource(Res.string.now_playing)
+                        FilterType.TopRated -> stringResource(Res.string.top_rated)
+                        FilterType.Popular -> stringResource(Res.string.popular)
+                        FilterType.UpComing -> stringResource(Res.string.upcoming)
                     }
                     Text(menuTitle)
                 },

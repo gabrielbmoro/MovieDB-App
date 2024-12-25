@@ -10,12 +10,7 @@
     <string name="movies">Movies</string>
     <string name="favorite">Favorite</string>
 
-    <!-- Movies -->
-    <string name="top_rated">Top rated</string>
-    <string name="now_playing">Now playing</string>
-    <string name="popular">Popular</string>
-    <string name="upcoming">Up coming</string>
-    <string name="movies">Movies</string>
+
 
     <!-- Search -->
     <string name="search_movie_placeholder">Search a movie...</string>

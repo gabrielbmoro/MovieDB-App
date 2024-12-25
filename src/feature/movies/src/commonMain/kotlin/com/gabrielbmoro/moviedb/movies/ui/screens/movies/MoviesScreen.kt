@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AnimatedAppToolbar
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
@@ -27,12 +26,12 @@ import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesList
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToSearch
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
-import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
+import moviedbapp.feature.movies.generated.resources.Res
+import moviedbapp.feature.movies.generated.resources.movies
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
@@ -54,7 +53,7 @@ fun MoviesScreen(
             AnimatedAppToolbar(
                 appBar = {
                     AppToolbarTitle(
-                        title = stringResource(SharedRes.strings.movies),
+                        title = stringResource(Res.string.movies),
                         backEvent = null,
                         searchEvent = {
                             navigator.navigateToSearch("")
