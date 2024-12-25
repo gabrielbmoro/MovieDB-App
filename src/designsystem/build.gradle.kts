@@ -33,7 +33,7 @@ popcornGuineapigConfig {
         ),
         rules = listOf(
             JustWithRule(
-                justWith = listOf("resources", "media")
+                justWith = listOf("media")
             )
         )
     )
