@@ -1,24 +1,20 @@
 package com.gabrielbmoro.moviedb.platform.paging
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
-class PagingController<E>(
-    val coroutineScope: CoroutineScope,
-    val ioCoroutineDispatcher: CoroutineDispatcher,
-    val requestMore: suspend (Int) -> List<E>
-) {
-    private var currentPage = 0
+class PagingController {
+    private var _currentPageFlow = MutableStateFlow(0)
+    val currentPage: StateFlow<Int> get() = _currentPageFlow
 
-    suspend fun onRequestMore(): List<E> {
-        currentPage++
-        return coroutineScope.async(ioCoroutineDispatcher) {
-            requestMore(currentPage)
-        }.await()
+    fun onRequestMore() {
+        _currentPageFlow.update {
+            it + 1
+        }
     }
 
     fun reset() {
-        currentPage = 0
+        _currentPageFlow.update { 0 }
     }
 }
