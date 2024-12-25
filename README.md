@@ -68,7 +68,6 @@ MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 - [Rinku](https://github.com/theolm/Rinku) - Deep links
 - Coroutines
 - [Ktor](https://ktor.io) - Network requests
-- [Moko Resources](https://github.com/icerockdev/moko-resources) - Multiplatform resources
 - [Kamel](https://github.com/Kamel-Media/Kamel) - Image loader
 - [Room](https://developer.android.com/kotlin/multiplatform/room) - Multiplatform database
 - Gradle Catalogs - Dependency management

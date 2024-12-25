@@ -8,9 +8,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.designsystem.generated.resources.Res
+import moviedbapp.designsystem.generated.resources.favorite
+import moviedbapp.designsystem.generated.resources.ic_movies
+import moviedbapp.designsystem.generated.resources.ic_wishlist
+import moviedbapp.designsystem.generated.resources.movies
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 const val MoviesTabIndex = 0
 const val FavoriteTabIndex = 1
@@ -28,12 +32,12 @@ fun NavigationBottomBar(
             onClick = onSelectMoviesTab,
             icon = {
                 Icon(
-                    painter = painterResource(SharedRes.images.ic_movies),
+                    painter = painterResource(Res.drawable.ic_movies),
                     contentDescription = null
                 )
             },
             label = {
-                Text(stringResource(SharedRes.strings.movies))
+                Text(stringResource(Res.string.movies))
             }
         )
 
@@ -42,12 +46,12 @@ fun NavigationBottomBar(
             onClick = onSelectFavoriteTab,
             icon = {
                 Icon(
-                    painter = painterResource(SharedRes.images.ic_wishlist),
+                    painter = painterResource(Res.drawable.ic_wishlist),
                     contentDescription = null
                 )
             },
             label = {
-                Text(stringResource(SharedRes.strings.favorite))
+                Text(stringResource(Res.string.favorite))
             }
         )
     }

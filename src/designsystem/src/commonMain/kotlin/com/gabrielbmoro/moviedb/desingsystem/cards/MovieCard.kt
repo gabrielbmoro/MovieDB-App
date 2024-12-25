@@ -17,10 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.buttons.DeleteButton
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.designsystem.generated.resources.Res
+import moviedbapp.designsystem.generated.resources.poster
+import org.jetbrains.compose.resources.stringResource
 
 val CardViewImageHeight = 200.dp
 val PosterCardWidth = 120.dp
@@ -59,7 +60,7 @@ fun MovieCard(
                         Modifier
                             .width(PosterCardWidth)
                             .fillMaxHeight(),
-                        contentDescription = stringResource(SharedRes.strings.poster)
+                        contentDescription = stringResource(Res.string.poster)
                     )
                     MovieCardInformation(
                         title = title,

@@ -43,7 +43,6 @@ kotlin {
             implementation(projects.feature.movies)
             implementation(projects.data)
             implementation(projects.domain)
-            implementation(projects.resources)
         }
     }
 }

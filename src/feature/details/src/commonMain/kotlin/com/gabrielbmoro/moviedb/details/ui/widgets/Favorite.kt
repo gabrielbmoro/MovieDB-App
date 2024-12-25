@@ -13,9 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.feature.details.generated.resources.Res
+import moviedbapp.feature.details.generated.resources.alt_is_favorite
+import moviedbapp.feature.details.generated.resources.alt_is_not_favorite
+import moviedbapp.feature.details.generated.resources.ic_heart_border
+import moviedbapp.feature.details.generated.resources.ic_heart_filled
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun Favorite(
@@ -35,16 +39,16 @@ fun Favorite(
                 painter =
                 painterResource(
                     if (!isFavorite) {
-                        SharedRes.images.ic_heart_border
+                        Res.drawable.ic_heart_border
                     } else {
-                        SharedRes.images.ic_heart_filled
+                        Res.drawable.ic_heart_filled
                     }
                 ),
                 contentDescription =
                 if (!isFavorite) {
-                    stringResource(SharedRes.strings.alt_is_not_favorite)
+                    stringResource(Res.string.alt_is_not_favorite)
                 } else {
-                    stringResource(SharedRes.strings.alt_is_favorite)
+                    stringResource(Res.string.alt_is_favorite)
                 },
                 modifier = Modifier.align(Center),
                 tint = Color.Red

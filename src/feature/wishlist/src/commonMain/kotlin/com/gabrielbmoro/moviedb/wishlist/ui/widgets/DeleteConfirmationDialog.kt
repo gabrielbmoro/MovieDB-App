@@ -5,8 +5,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.stringResource
+import moviedbapp.feature.wishlist.generated.resources.Res
+import moviedbapp.feature.wishlist.generated.resources.confirm_delete_dialog_body
+import moviedbapp.feature.wishlist.generated.resources.confirm_delete_dialog_negative_action
+import moviedbapp.feature.wishlist.generated.resources.confirm_delete_dialog_positive_action
+import moviedbapp.feature.wishlist.generated.resources.confirm_delete_dialog_title
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DeleteConfirmationDialog(
@@ -17,14 +21,14 @@ fun DeleteConfirmationDialog(
     if (visible) {
         AlertDialog(
             onDismissRequest = onDismissRequest,
-            title = { Text(text = stringResource(SharedRes.strings.confirm_delete_dialog_title)) },
-            text = { Text(text = stringResource(SharedRes.strings.confirm_delete_dialog_body)) },
+            title = { Text(text = stringResource(Res.string.confirm_delete_dialog_title)) },
+            text = { Text(text = stringResource(Res.string.confirm_delete_dialog_body)) },
             confirmButton = {
                 Button(
                     onClick = onPositiveAction
                 ) {
                     Text(
-                        text = stringResource(SharedRes.strings.confirm_delete_dialog_positive_action),
+                        text = stringResource(Res.string.confirm_delete_dialog_positive_action),
                     )
                 }
             },
@@ -34,7 +38,7 @@ fun DeleteConfirmationDialog(
                     colors = ButtonDefaults.outlinedButtonColors()
                 ) {
                     Text(
-                        text = stringResource(SharedRes.strings.confirm_delete_dialog_negative_action),
+                        text = stringResource(Res.string.confirm_delete_dialog_negative_action),
                     )
                 }
             }

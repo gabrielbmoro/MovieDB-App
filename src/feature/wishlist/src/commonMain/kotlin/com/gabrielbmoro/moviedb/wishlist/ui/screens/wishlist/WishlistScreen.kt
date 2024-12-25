@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gabrielbmoro.moviedb.SharedRes
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
@@ -29,12 +28,14 @@ import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.DeleteConfirmationDialog
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
-import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.launch
+import moviedbapp.feature.wishlist.generated.resources.Res
+import moviedbapp.feature.wishlist.generated.resources.delete_fail_message
+import moviedbapp.feature.wishlist.generated.resources.delete_success_message
+import moviedbapp.feature.wishlist.generated.resources.wishlist
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun WishlistScreen(
     viewModel: WishlistViewModel = koinViewModel(),
@@ -44,15 +45,15 @@ fun WishlistScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val lazyListState = rememberLazyListState()
 
-    val successDeleteMessage = stringResource(SharedRes.strings.delete_success_message)
-    val errorDeleteMessage = stringResource(SharedRes.strings.delete_fail_message)
+    val successDeleteMessage = stringResource(Res.string.delete_success_message)
+    val errorDeleteMessage = stringResource(Res.string.delete_fail_message)
 
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             AppToolbarTitle(
-                title = stringResource(SharedRes.strings.wishlist),
+                title = stringResource(Res.string.wishlist),
             )
         },
         snackbarHost = {

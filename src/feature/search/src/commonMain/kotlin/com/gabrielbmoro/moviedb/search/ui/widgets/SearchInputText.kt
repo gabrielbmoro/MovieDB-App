@@ -21,12 +21,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.SharedRes
-import dev.icerock.moko.resources.compose.stringResource
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import moviedbapp.feature.search.generated.resources.Res
+import moviedbapp.feature.search.generated.resources.cancel
+import moviedbapp.feature.search.generated.resources.search_movie_placeholder
+import org.jetbrains.compose.resources.stringResource
 
 private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
 
@@ -57,7 +59,7 @@ fun SearchInputText(
                 ) {
                     Image(
                         imageVector = Icons.Filled.Close,
-                        contentDescription = stringResource(SharedRes.strings.cancel),
+                        contentDescription = stringResource(Res.string.cancel),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
                     )
                 }
@@ -78,7 +80,7 @@ fun SearchInputText(
         },
         placeholder = {
             Text(
-                stringResource(SharedRes.strings.search_movie_placeholder),
+                stringResource(Res.string.search_movie_placeholder),
                 style = MaterialTheme.typography.titleMedium
             )
         },

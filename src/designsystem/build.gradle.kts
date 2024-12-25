@@ -19,12 +19,9 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.animation)
             implementation(compose.uiUtil)
-
-
-            implementation(libs.bundles.moko)
+            implementation(compose.components.resources)
 
             implementation(projects.util.media)
-            implementation(projects.resources)
         }
     }
 }
@@ -36,7 +33,7 @@ popcornGuineapigConfig {
         ),
         rules = listOf(
             JustWithRule(
-                justWith = listOf("resources", "media")
+                justWith = listOf("media")
             )
         )
     )

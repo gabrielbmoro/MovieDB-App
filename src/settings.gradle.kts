@@ -28,7 +28,6 @@ include(
     ":feature:details",
     ":feature:movies",
     ":platform",
-    ":resources",
     ":util:media"
 )
 
