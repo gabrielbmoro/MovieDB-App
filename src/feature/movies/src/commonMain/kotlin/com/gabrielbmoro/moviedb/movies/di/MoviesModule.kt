@@ -13,7 +13,8 @@ val featureMoviesModule = lazyModule {
             getUpcomingMoviesUseCase = get(),
             getNowPlayingMoviesUseCase = get(),
             getTopRatedMoviesUseCase = get(),
-            ioDispatcher = Dispatchers.IO
+            ioDispatcher = Dispatchers.IO,
+            loggerHelper = get()
         )
     }
 }

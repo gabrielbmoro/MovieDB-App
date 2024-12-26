@@ -7,6 +7,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
+import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
@@ -30,6 +31,7 @@ class MoviesViewModel(
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher,
+    private val loggerHelper: LoggerHelper,
 ) : ViewModel(), ViewModelMvi<Intent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
@@ -40,12 +42,17 @@ class MoviesViewModel(
     private var _paginationJob: Job? = null
 
     init {
+        loggerHelper.plant(this::class)
+
         execute(Intent.Setup)
     }
 
     override fun execute(intent: Intent) {
         when (intent) {
             is Intent.RequestMoreMovies -> {
+                loggerHelper.logDebug(
+                    message = "${getSelectedFilterName()} - Request more movies...}"
+                )
                 moviesPageController.onRequestMore()
             }
 
@@ -56,6 +63,11 @@ class MoviesViewModel(
 
                 _paginationJob = viewModelScope.launch(ioDispatcher) {
                     moviesPageController.currentPage.collectLatest { pageIndex ->
+                        loggerHelper.logDebug(
+                            message = "${getSelectedFilterName()} - " +
+                                    "Request received to fetch the page $pageIndex}"
+                        )
+
                         runCatching {
                             onRequestMoreMovies(pageIndex)
                         }.getOrNull()?.let { requestedMoreMovies ->
@@ -91,6 +103,8 @@ class MoviesViewModel(
             }
         }
     }
+
+    private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
     private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> {
         return when (_uiState.value.selectedFilterMenu) {

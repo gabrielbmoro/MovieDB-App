@@ -26,6 +26,7 @@ kotlin {
             implementation(projects.domain)
             implementation(projects.designsystem)
             implementation(projects.platform)
+            implementation(projects.util.logging)
         }
     }
 }

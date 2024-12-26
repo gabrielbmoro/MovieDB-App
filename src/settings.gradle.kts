@@ -28,7 +28,8 @@ include(
     ":feature:details",
     ":feature:movies",
     ":platform",
-    ":util:media"
+    ":util:media",
+    ":util:logging"
 )
 
 rootProject.name = "MovieDBApp"

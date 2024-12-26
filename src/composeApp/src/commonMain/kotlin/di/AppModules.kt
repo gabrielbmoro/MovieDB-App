@@ -4,6 +4,7 @@ import com.gabrielbmoro.moviedb.BuildKonfig
 import com.gabrielbmoro.moviedb.data.di.dataModule
 import com.gabrielbmoro.moviedb.details.di.featureDetailsModule
 import com.gabrielbmoro.moviedb.domain.di.domainModule
+import com.gabrielbmoro.moviedb.logging.di.loggingModule
 import com.gabrielbmoro.moviedb.movies.di.featureMoviesModule
 import com.gabrielbmoro.moviedb.search.di.featureSearchMovieModule
 import com.gabrielbmoro.moviedb.wishlist.di.featureWishlistModule
@@ -20,7 +21,8 @@ val appModules = listOf(
     authModule,
     dataModule,
     domainModule,
-    dataModule
+    dataModule,
+    loggingModule
 )
 
 val featureModules = listOf(
