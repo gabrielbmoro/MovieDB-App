@@ -22,5 +22,9 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.material)
         }
+
+        commonTest.dependencies {
+            implementation(libs.bundles.test.multiplatform)
+        }
     }
 }
