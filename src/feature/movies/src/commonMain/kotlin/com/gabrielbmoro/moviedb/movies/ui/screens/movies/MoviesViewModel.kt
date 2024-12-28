@@ -13,6 +13,7 @@ import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
+import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -32,12 +33,10 @@ class MoviesViewModel(
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
-) : ViewModel(), ViewModelMvi<Intent> {
+) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
-
-    private val moviesPageController = PagingController()
 
     private var _paginationJob: Job? = null
 
@@ -53,16 +52,16 @@ class MoviesViewModel(
                 loggerHelper.logDebug(
                     message = "${getSelectedFilterName()} - Request more movies...}"
                 )
-                moviesPageController.onRequestMore()
+                requestNextPage()
             }
 
             Intent.Setup -> {
                 _paginationJob?.cancel()
 
-                moviesPageController.reset()
+                resetPaging()
 
                 _paginationJob = viewModelScope.launch(ioDispatcher) {
-                    moviesPageController.currentPage.collectLatest { pageIndex ->
+                    currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
                                     "Request received to fetch the page $pageIndex}"
