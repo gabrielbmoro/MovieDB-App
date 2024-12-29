@@ -2,7 +2,7 @@
 firebase-crashlytics-gradle = "3.0.2"
 google-services = "4.4.2"
 gradle-test-kit-version = "7.6"
-kermit-version = "2.0.4"
+kermit-version = "2.0.5"
 kotlin = "2.1.0"
 kotlinx-collections-immutable-version = "0.3.8"
 kotlinx-coroutines-core = "1.9.0"
