@@ -21,13 +21,13 @@ koin = "4.0.1"
 koin_annotations = "1.4.0"
 ktor = "3.0.1"
 compose_plugin = "1.7.3"
-kamel_image = "1.0.1"
 compose = "1.7.6"
 androidx_activity_compose = "1.9.3"
 rinku = "1.3.1"
 buildkonfig = "0.15.2"
 sqlite = "2.5.0-SNAPSHOT"
 popcorn_guineapig = "2.0.5"
+coil = "3.1.0"
 
 [libraries]
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
@@ -69,12 +69,13 @@ ktor_client_content_negotiation = { group = "io.ktor", name = "ktor-client-conte
 ktor_serialization_kotlinx_json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor_auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
 ktor_logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-kamel = { group = "media.kamel", name = "kamel-image-default", version.ref = "kamel_image" }
 kotlin_stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 androidx_activity_compose = { module = "androidx.activity:activity-compose", version.ref = "androidx_activity_compose" }
 compose_ui_tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 rinku-core = { module = "dev.theolm:rinku", version.ref = "rinku" }
 rinku-compose-ext = { module = "dev.theolm:rinku-compose-ext", version.ref = "rinku" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref="coil"}
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref="coil"}
 
 [bundles]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]

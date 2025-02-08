@@ -1,16 +1,20 @@
 package com.gabrielbmoro.moviedb.media
 
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.BoxWithConstraintsScope
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import io.kamel.core.Resource
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
+import androidx.compose.ui.unit.dp
+import coil3.compose.LocalPlatformContext
+import coil3.compose.SubcomposeAsyncImage
+import coil3.network.ktor3.KtorNetworkFetcherFactory
+import coil3.request.ImageRequest
 
 @Suppress("LongParameterList")
 @Composable
@@ -18,24 +22,38 @@ fun AsyncImage(
     imageUrl: String,
     contentDescription: String?,
     contentScale: ContentScale,
-    onLoading: (@Composable BoxScope.(Float) -> Unit)? = null,
-    onFailure: (@Composable BoxScope.(Throwable) -> Unit)? = null,
+    onFailure: (@Composable () -> Unit) = {},
     filterQuality: FilterQuality = FilterQuality.High,
     modifier: Modifier = Modifier
 ) {
-    val getPainterResource: @Composable (BoxWithConstraintsScope.() -> Resource<Painter>) = {
-        asyncPainterResource(
-            imageUrl,
-            filterQuality = filterQuality,
-        )
+    val platformContext = LocalPlatformContext.current
+    val imageRequest = remember {
+        ImageRequest.Builder(
+            context = platformContext
+        ).data(
+            imageUrl
+        ).fetcherFactory(
+            KtorNetworkFetcherFactory()
+        ).build()
     }
-    KamelImage(
-        resource = getPainterResource,
-        contentScale = contentScale,
-        alignment = Alignment.TopCenter,
+
+    SubcomposeAsyncImage(
+        model = imageRequest,
+        filterQuality = filterQuality,
         contentDescription = contentDescription,
+        contentScale = contentScale,
         modifier = modifier,
-        onLoading = onLoading,
-        onFailure = onFailure
+        loading = {
+            Box {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                        .heightIn(max = 52.dp)
+                        .widthIn(max = 52.dp)
+                )
+            }
+        },
+        error = {
+            onFailure()
+        }
     )
 }
