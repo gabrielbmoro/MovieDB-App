@@ -68,7 +68,7 @@ MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 - [Rinku](https://github.com/theolm/Rinku) - Deep links
 - Coroutines
 - [Ktor](https://ktor.io) - Network requests
-- [Kamel](https://github.com/Kamel-Media/Kamel) - Image loader
+- [Coil](https://coil-kt.github.io/coil/compose) - Image loader
 - [Room](https://developer.android.com/kotlin/multiplatform/room) - Multiplatform database
 - Gradle Catalogs - Dependency management
 - [Android YouTube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - Android video player
