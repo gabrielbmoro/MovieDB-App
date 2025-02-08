@@ -17,8 +17,8 @@ internal object ConfigurationKeys {
 
     val sdkConfiguration = SdkConfiguration(
         minSdk = 28,
-        targetSdk = 34,
-        compileSdk = 34
+        targetSdk = 35,
+        compileSdk = 35
     )
 
     val ELIGIBLE_MODULES_FOR_COVERAGE = listOf(
