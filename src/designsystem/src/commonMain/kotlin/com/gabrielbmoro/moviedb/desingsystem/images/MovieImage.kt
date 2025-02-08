@@ -1,7 +1,6 @@
 package com.gabrielbmoro.moviedb.desingsystem.images
 
 import androidx.compose.foundation.Image
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +22,7 @@ fun MovieImage(
             imageUrl = imageUrl,
             contentScale = contentScale,
             contentDescription = contentDescription,
-            modifier = modifier,
-            onLoading = { CircularProgressIndicator({ it }) },
-            onFailure = { exception: Throwable ->
-                exception.printStackTrace()
-            }
+            modifier = modifier
         )
     } else {
         Image(
