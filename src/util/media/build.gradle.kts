@@ -19,7 +19,6 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.android.youtube.player)
             implementation(libs.ktor.client.okhttp)
         }
 

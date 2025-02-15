@@ -177,9 +177,7 @@ private fun DetailsScreenContent(
                 uiState.showVideo && uiState.videoId != null -> {
                     VideoPlayer(
                         videoId = uiState.videoId,
-                        shouldStartMuted = true,
-                        modifier =
-                        Modifier
+                        modifier = Modifier
                             .align(Alignment.TopCenter)
                             .fillMaxSize()
                     )
