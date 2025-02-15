@@ -1,114 +1,56 @@
 package com.gabrielbmoro.moviedb.media
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 actual fun VideoPlayer(
     videoId: String,
-    shouldStartMuted: Boolean,
     modifier: Modifier
 ) {
     val context = LocalContext.current
-
-    var youtubePlayer: YouTubePlayerView? =
-        remember {
-            YouTubePlayerView(
-                context
-            ).apply {
-                enableAutomaticInitialization = false
-
-                initialize(
-                    object : YouTubePlayerListener {
-                        override fun onApiChange(youTubePlayer: YouTubePlayer) = Unit
-
-                        override fun onCurrentSecond(
-                            youTubePlayer: YouTubePlayer,
-                            second: Float
-                        ) = Unit
-
-                        override fun onError(
-                            youTubePlayer: YouTubePlayer,
-                            error: PlayerConstants.PlayerError
-                        ) = Unit
-
-                        override fun onPlaybackQualityChange(
-                            youTubePlayer: YouTubePlayer,
-                            playbackQuality: PlayerConstants.PlaybackQuality
-                        ) = Unit
-
-                        override fun onPlaybackRateChange(
-                            youTubePlayer: YouTubePlayer,
-                            playbackRate: PlayerConstants.PlaybackRate
-                        ) = Unit
-
-                        override fun onReady(youTubePlayer: YouTubePlayer) {
-                            youTubePlayer.loadVideo(
-                                videoId = videoId,
-                                0f
-                            )
-                            if (shouldStartMuted) {
-                                youTubePlayer.mute()
-                            }
-                        }
-
-                        override fun onStateChange(
-                            youTubePlayer: YouTubePlayer,
-                            state: PlayerConstants.PlayerState
-                        ) = Unit
-
-                        override fun onVideoDuration(
-                            youTubePlayer: YouTubePlayer,
-                            duration: Float
-                        ) = Unit
-
-                        override fun onVideoId(
-                            youTubePlayer: YouTubePlayer,
-                            videoId: String
-                        ) = Unit
-
-                        override fun onVideoLoadedFraction(
-                            youTubePlayer: YouTubePlayer,
-                            loadedFraction: Float
-                        ) = Unit
-                    },
-                    IFramePlayerOptions
-                        .Builder()
-                        .controls(1)
-                        .build()
-                )
-                layoutParams =
-                    ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-            }
+    val webView = remember {
+        WebView(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            )
+            webViewClient = WebViewClient()
+            settings.javaScriptEnabled = true
+            settings.useWideViewPort = true
         }
-
-    youtubePlayer?.let { viewPlayer ->
-        AndroidView(
-            factory = { viewPlayer },
-            modifier = modifier
-        )
     }
 
-    DisposableEffect(
-        key1 = Unit,
-        effect = {
-            onDispose {
-                youtubePlayer?.release()
-                youtubePlayer = null
-            }
-        }
+    AndroidView(
+        modifier = modifier,
+        factory = {
+            webView
+        },
     )
+
+    LaunchedEffect(Unit) {
+        val embedHTML = "<html>" +
+                "<head>" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
+                "</head>" +
+                "<body>" +
+                videoId.videoIdToEmbedHTML() +
+                "</body>" +
+                "</html>"
+
+        webView.loadData(
+            embedHTML,
+            "text/html",
+            "UTF-8"
+        )
+    }
 }
