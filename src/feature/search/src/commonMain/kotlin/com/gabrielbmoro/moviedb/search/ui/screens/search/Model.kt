@@ -8,8 +8,6 @@ sealed class SearchUserIntent {
     data class SearchBy(val query: TextFieldValue) : SearchUserIntent()
 
     data object ClearSearchField : SearchUserIntent()
-
-    data class SearchInputFieldChanged(val query: TextFieldValue) : SearchUserIntent()
 }
 
 data class SearchUIState(

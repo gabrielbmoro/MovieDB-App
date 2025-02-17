@@ -12,10 +12,10 @@ data class MoviesUIState(
     val isLoading: Boolean = false,
 )
 
-sealed class Intent {
-    data object RequestMoreMovies : Intent()
+sealed interface Intent {
+    data object RequestMoreMovies : Intent
 
-    data object Setup : Intent()
+    data object Setup : Intent
 
-    data class SelectFilterMenuItem(val menuItem: FilterMenuItem) : Intent()
+    data class SelectFilterMenuItem(val menuItem: FilterMenuItem) : Intent
 }
