@@ -14,7 +14,7 @@ fun MovieResponse.toMovie(): Movie {
     return Movie(
         id = id,
         votesAverage = vote_average ?: 0f,
-        title = title ?: "",
+        title = title.orEmpty(),
         posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
         backdropImageUrl =
         backdrop_path?.let {
@@ -22,10 +22,10 @@ fun MovieResponse.toMovie(): Movie {
                 backdrop_path
             )
         },
-        overview = overview ?: "",
-        releaseDate = release_date ?: "",
+        overview = overview.orEmpty(),
+        releaseDate = release_date.orEmpty(),
         popularity = popularity ?: 0f,
-        language = original_language ?: "",
+        language = original_language.orEmpty(),
         isFavorite = false
     )
 }
@@ -41,7 +41,7 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         tagline = tagline,
         productionCompanies = production_companies.map { it.name },
         votesAverage = vote_average ?: 0f,
-        title = title ?: "",
+        title = title.orEmpty(),
         posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
         backdropImageUrl =
         backdrop_path?.let {
@@ -49,10 +49,10 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
                 backdrop_path
             )
         },
-        overview = overview ?: "",
-        releaseDate = release_date ?: "",
+        overview = overview.orEmpty(),
+        releaseDate = release_date.orEmpty(),
         popularity = popularity ?: 0f,
-        language = original_language ?: ""
+        language = original_language.orEmpty(),
     )
 }
 
