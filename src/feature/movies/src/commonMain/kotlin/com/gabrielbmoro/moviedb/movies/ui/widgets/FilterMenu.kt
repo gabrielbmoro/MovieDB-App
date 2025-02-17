@@ -36,12 +36,14 @@ fun FilterMenu(
             FilterChip(
                 selected = menuItem.selected,
                 label = {
-                    val menuTitle = when (menuItem.type) {
-                        FilterType.NowPlaying -> stringResource(Res.string.now_playing)
-                        FilterType.TopRated -> stringResource(Res.string.top_rated)
-                        FilterType.Popular -> stringResource(Res.string.popular)
-                        FilterType.UpComing -> stringResource(Res.string.upcoming)
-                    }
+                    val menuTitle = stringResource(
+                        when (menuItem.type) {
+                            FilterType.NowPlaying -> Res.string.now_playing
+                            FilterType.TopRated -> Res.string.top_rated
+                            FilterType.Popular -> Res.string.popular
+                            FilterType.UpComing -> Res.string.upcoming
+                        }
+                    )
                     Text(menuTitle)
                 },
                 onClick = {
