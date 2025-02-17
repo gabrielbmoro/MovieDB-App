@@ -71,9 +71,7 @@ fun MoviesScreen(
                         lazyStaggeredGridState.scrollToItem(0)
                     }
                 },
-                onSelectFavoriteTab = {
-                    navigator.navigateToWishlist()
-                }
+                onSelectFavoriteTab = navigator::navigateToWishlist
             )
         }
     ) {
