@@ -15,13 +15,8 @@ fun MovieResponse.toMovie(): Movie {
         id = id,
         votesAverage = vote_average ?: 0f,
         title = title ?: "",
-        posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
-        backdropImageUrl =
-        backdrop_path?.let {
-            BIG_SIZE_IMAGE_ADDRESS.plus(
-                backdrop_path
-            )
-        },
+        posterImageUrl = poster_path.toSmallImageUrl(),
+        backdropImageUrl = backdrop_path.toBigImageUrl(),
         overview = overview ?: "",
         releaseDate = release_date ?: "",
         popularity = popularity ?: 0f,
@@ -42,13 +37,8 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         productionCompanies = production_companies.map { it.name },
         votesAverage = vote_average ?: 0f,
         title = title ?: "",
-        posterImageUrl = poster_path?.let { SMALL_SIZE_IMAGE_ADDRESS.plus(it) },
-        backdropImageUrl =
-        backdrop_path?.let {
-            BIG_SIZE_IMAGE_ADDRESS.plus(
-                backdrop_path
-            )
-        },
+        posterImageUrl = poster_path.toSmallImageUrl(),
+        backdropImageUrl = backdrop_path.toBigImageUrl(),
         overview = overview ?: "",
         releaseDate = release_date ?: "",
         popularity = popularity ?: 0f,
@@ -69,3 +59,7 @@ fun VideoStreamsResponse.toVideoStreams(): List<VideoStream> {
         )
     }
 }
+
+private fun String?.toSmallImageUrl(): String? = safeStringSum(SMALL_SIZE_IMAGE_ADDRESS)
+private fun String?.toBigImageUrl(): String? = safeStringSum(BIG_SIZE_IMAGE_ADDRESS)
+private fun String?.safeStringSum(other: String): String? = this?.let(other::plus)
