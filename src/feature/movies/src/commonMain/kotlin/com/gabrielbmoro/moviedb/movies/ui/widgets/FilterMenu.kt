@@ -25,7 +25,7 @@ fun FilterMenu(
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
