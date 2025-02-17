@@ -25,9 +25,7 @@ fun GenresCard(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         maxItemsInEachRow = 4
     ) {
-        var i = 0
-        while (i < genres.size) {
-            val genre = genres[i]
+        genres.forEach { genre ->
             Card(
                 shape = CircleShape,
                 modifier = Modifier.padding(vertical = 4.dp),
@@ -46,7 +44,6 @@ fun GenresCard(
                     )
                 )
             }
-            i++
         }
     }
 }
