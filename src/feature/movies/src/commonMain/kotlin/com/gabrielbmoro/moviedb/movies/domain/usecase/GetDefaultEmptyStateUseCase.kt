@@ -17,4 +17,3 @@ class GetDefaultEmptyStateUseCaseImpl(
         menuItems = getDefaultMenuItems()
     )
 }
-

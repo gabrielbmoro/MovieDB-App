@@ -38,5 +38,4 @@ class GetDefaultEmptyStateUseCaseImplTest {
 
         assertEquals(expected, result)
     }
-
 }
