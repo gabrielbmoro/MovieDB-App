@@ -8,9 +8,9 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
-import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
-import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
-import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
+import com.gabrielbmoro.moviedb.movies.domain.model.MoviesUseCases
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
@@ -27,15 +27,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
+    private val useCases: MoviesUseCases,
 ) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
 
-    private val _uiState = MutableStateFlow(this.defaultEmptyState())
+    private val _uiState = MutableStateFlow(useCases.getDefaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private var _paginationJob: Job? = null
@@ -105,8 +102,8 @@ class MoviesViewModel(
 
     private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> {
-        return when (_uiState.value.selectedFilterMenu) {
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = useCases.run {
+        when (_uiState.value.selectedFilterMenu) {
             FilterType.NowPlaying -> {
                 getNowPlayingMoviesUseCase.execute(
                     GetNowPlayingMoviesUseCase.Params(pageIndex)
@@ -140,30 +137,6 @@ class MoviesViewModel(
         movieTitle = movie.title,
         moviePosterUrl = movie.posterImageUrl ?: ""
     )
-
-    private fun defaultEmptyState() =
-        MoviesUIState(
-            movieCardInfos = persistentListOf(),
-            selectedFilterMenu = FilterType.NowPlaying,
-            menuItems = listOf(
-                FilterMenuItem(
-                    selected = true,
-                    type = FilterType.NowPlaying
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.UpComing
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.TopRated
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.Popular
-                )
-            )
-        )
 
     private fun ImmutableList<MovieCardInfo>.addAllDistinctly(
         newMovies: List<MovieCardInfo>

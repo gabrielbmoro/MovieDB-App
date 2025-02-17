@@ -27,6 +27,12 @@ kotlin {
             implementation(projects.designsystem)
             implementation(projects.platform)
             implementation(projects.util.logging)
+
+            commonTest.dependencies {
+                implementation(libs.bundles.test.multiplatform)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlin.stdlib)
+            }
         }
     }
 }
