@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.movies.di
 
+import com.gabrielbmoro.moviedb.movies.domain.model.MoviesUseCases
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetDefaultEmptyStateUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetDefaultEmptyStateUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetDefaultMenuItemsUseCase
@@ -14,16 +15,21 @@ val featureMoviesModule = lazyModule {
 
     factory<GetDefaultEmptyStateUseCase> { GetDefaultEmptyStateUseCaseImpl(get()) }
     factory<GetDefaultMenuItemsUseCase> { GetDefaultMenuItemsUseCaseImpl() }
+    factory {
+        MoviesUseCases(
+            getUpcomingMoviesUseCase = get(),
+            getPopularMoviesUseCase = get(),
+            getTopRatedMoviesUseCase = get(),
+            getNowPlayingMoviesUseCase = get(),
+            getDefaultEmptyState = get(),
+        )
+    }
 
     viewModel {
         MoviesViewModel(
-            getPopularMoviesUseCase = get(),
-            getUpcomingMoviesUseCase = get(),
-            getNowPlayingMoviesUseCase = get(),
-            getTopRatedMoviesUseCase = get(),
             ioDispatcher = Dispatchers.IO,
             loggerHelper = get(),
-            getDefaultEmptyState = get(),
+            useCases = get(),
         )
     }
 }

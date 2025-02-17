@@ -10,7 +10,7 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
-import com.gabrielbmoro.moviedb.movies.domain.usecase.GetDefaultEmptyStateUseCase
+import com.gabrielbmoro.moviedb.movies.domain.model.MoviesUseCases
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
@@ -27,16 +27,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
-    getDefaultEmptyState: GetDefaultEmptyStateUseCase,
+    private val useCases: MoviesUseCases,
 ) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
 
-    private val _uiState = MutableStateFlow(getDefaultEmptyState())
+    private val _uiState = MutableStateFlow(useCases.getDefaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private var _paginationJob: Job? = null
@@ -106,8 +102,8 @@ class MoviesViewModel(
 
     private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> {
-        return when (_uiState.value.selectedFilterMenu) {
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = useCases.run {
+        when (_uiState.value.selectedFilterMenu) {
             FilterType.NowPlaying -> {
                 getNowPlayingMoviesUseCase.execute(
                     GetNowPlayingMoviesUseCase.Params(pageIndex)
