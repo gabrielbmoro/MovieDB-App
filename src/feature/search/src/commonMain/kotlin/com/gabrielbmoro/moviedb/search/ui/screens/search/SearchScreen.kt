@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
@@ -24,15 +23,16 @@ import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
 import kotlinx.coroutines.delay
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
+import org.koin.core.parameter.parametersOf
 
 private const val DELAY_IN_MILLIS = 500L
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun SearchScreen(
     query: String?,
-    viewModel: SearchViewModel = koinViewModel(),
+    viewModel: SearchViewModel = koinViewModel(
+        parameters = { parametersOf(query) }
+    ),
     navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
@@ -48,9 +48,6 @@ fun SearchScreen(
                     SearchInputText(
                         currentValue = uiState.value.searchQuery,
                         onQueryChanged = {
-                            viewModel.execute(SearchUserIntent.SearchInputFieldChanged(it))
-                        },
-                        onSearchBy = {
                             viewModel.execute(SearchUserIntent.SearchBy(it))
                         },
                         onClearText = {
@@ -92,12 +89,4 @@ fun SearchScreen(
             }
         }
     )
-
-    LaunchedEffect(query) {
-        query?.let {
-            viewModel.execute(
-                SearchUserIntent.SearchBy(query = TextFieldValue(text = it))
-            )
-        }
-    }
 }
