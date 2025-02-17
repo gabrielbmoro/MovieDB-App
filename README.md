@@ -53,11 +53,11 @@ MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
 
 - 🤖 **Android**
 
-<img src="img/android-teaser.webm" height="500" />
+![Android teaser](/img/android-teaser.webm)
 
 - 🍎 **iOS**
 
-<img src="img/ios-teaser.webm" height="500" />
+![iOS teaser](/img/ios-teaser.webm)
 
 ---
 
