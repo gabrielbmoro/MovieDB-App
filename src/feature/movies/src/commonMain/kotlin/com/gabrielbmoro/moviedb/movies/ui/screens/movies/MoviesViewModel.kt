@@ -8,9 +8,9 @@ import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
-import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
-import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
-import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
+import com.gabrielbmoro.moviedb.movies.domain.usecase.GetDefaultEmptyStateUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
@@ -33,9 +33,10 @@ class MoviesViewModel(
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
+    getDefaultEmptyState: GetDefaultEmptyStateUseCase,
 ) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
 
-    private val _uiState = MutableStateFlow(this.defaultEmptyState())
+    private val _uiState = MutableStateFlow(getDefaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private var _paginationJob: Job? = null
@@ -140,30 +141,6 @@ class MoviesViewModel(
         movieTitle = movie.title,
         moviePosterUrl = movie.posterImageUrl ?: ""
     )
-
-    private fun defaultEmptyState() =
-        MoviesUIState(
-            movieCardInfos = persistentListOf(),
-            selectedFilterMenu = FilterType.NowPlaying,
-            menuItems = listOf(
-                FilterMenuItem(
-                    selected = true,
-                    type = FilterType.NowPlaying
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.UpComing
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.TopRated
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.Popular
-                )
-            )
-        )
 
     private fun ImmutableList<MovieCardInfo>.addAllDistinctly(
         newMovies: List<MovieCardInfo>
