@@ -3,6 +3,7 @@ package com.gabrielbmoro.moviedb.movies.ui.widgets
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
@@ -22,12 +23,14 @@ import org.jetbrains.compose.resources.stringResource
 fun FilterMenu(
     menuItems: List<FilterMenuItem>,
     onClick: (FilterMenuItem) -> Unit,
+    lazyListState: LazyListState,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(vertical = 8.dp)
+        contentPadding = PaddingValues(vertical = 8.dp),
+        state = lazyListState,
     ) {
         items(
             count = menuItems.size
