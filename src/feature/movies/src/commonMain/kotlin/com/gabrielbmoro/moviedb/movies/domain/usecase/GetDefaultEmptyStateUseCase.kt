@@ -14,6 +14,7 @@ class GetDefaultEmptyStateUseCaseImpl(
     override operator fun invoke(): MoviesUIState = MoviesUIState(
         movieCardInfos = persistentListOf(),
         selectedFilterMenu = FilterType.NowPlaying,
-        menuItems = getDefaultMenuItems()
+        menuItems = getDefaultMenuItems(),
+        isLoading = false,
     )
 }

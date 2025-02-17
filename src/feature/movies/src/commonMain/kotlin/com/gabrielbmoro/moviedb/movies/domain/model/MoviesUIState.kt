@@ -7,5 +7,5 @@ data class MoviesUIState(
     val movieCardInfos: ImmutableList<MovieCardInfo>,
     val menuItems: List<FilterMenuItem>,
     val selectedFilterMenu: FilterType,
-    val isLoading: Boolean = false,
+    val isLoading: Boolean,
 )

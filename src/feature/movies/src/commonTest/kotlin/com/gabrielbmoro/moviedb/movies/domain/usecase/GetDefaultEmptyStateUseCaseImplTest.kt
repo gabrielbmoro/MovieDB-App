@@ -32,6 +32,7 @@ class GetDefaultEmptyStateUseCaseImplTest {
             movieCardInfos = persistentListOf(),
             selectedFilterMenu = FilterType.NowPlaying,
             menuItems = fakeItems,
+            isLoading = false,
         )
 
         val result = useCase()
