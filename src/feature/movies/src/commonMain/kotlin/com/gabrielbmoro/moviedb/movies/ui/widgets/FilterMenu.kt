@@ -2,7 +2,6 @@ package com.gabrielbmoro.moviedb.movies.ui.widgets
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
@@ -25,7 +24,7 @@ fun FilterMenu(
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
@@ -36,12 +35,14 @@ fun FilterMenu(
             FilterChip(
                 selected = menuItem.selected,
                 label = {
-                    val menuTitle = when (menuItem.type) {
-                        FilterType.NowPlaying -> stringResource(Res.string.now_playing)
-                        FilterType.TopRated -> stringResource(Res.string.top_rated)
-                        FilterType.Popular -> stringResource(Res.string.popular)
-                        FilterType.UpComing -> stringResource(Res.string.upcoming)
-                    }
+                    val menuTitle = stringResource(
+                        when (menuItem.type) {
+                            FilterType.NowPlaying -> Res.string.now_playing
+                            FilterType.TopRated -> Res.string.top_rated
+                            FilterType.Popular -> Res.string.popular
+                            FilterType.UpComing -> Res.string.upcoming
+                        }
+                    )
                     Text(menuTitle)
                 },
                 onClick = {
