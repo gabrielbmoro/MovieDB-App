@@ -27,9 +27,12 @@ buildkonfig = "0.15.2"
 sqlite = "2.5.0-SNAPSHOT"
 popcorn_guineapig = "2.0.5"
 coil = "3.1.0"
+detekt = "1.23.7"
 
 [libraries]
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit-version" }
