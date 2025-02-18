@@ -3,14 +3,10 @@ package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
+import com.gabrielbmoro.moviedb.movies.domain.interactor.MoviesInteractor
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
-import com.gabrielbmoro.moviedb.movies.domain.model.MoviesUseCases
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
@@ -29,10 +25,10 @@ import kotlinx.coroutines.launch
 class MoviesViewModel(
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
-    private val useCases: MoviesUseCases,
+    private val interactor: MoviesInteractor,
 ) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
 
-    private val _uiState = MutableStateFlow(useCases.getDefaultEmptyState())
+    private val _uiState = MutableStateFlow(interactor.getDefaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private var _paginationJob: Job? = null
@@ -102,33 +98,15 @@ class MoviesViewModel(
 
     private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = useCases.run {
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = interactor.run {
         when (_uiState.value.selectedFilterMenu) {
-            FilterType.NowPlaying -> {
-                getNowPlayingMoviesUseCase.execute(
-                    GetNowPlayingMoviesUseCase.Params(pageIndex)
-                )
-            }
+            FilterType.NowPlaying -> getNowPlayingMovies(pageIndex)
 
-            FilterType.TopRated -> {
-                getTopRatedMoviesUseCase.execute(
-                    GetTopRatedMoviesUseCase.Params(pageIndex)
-                )
-            }
+            FilterType.TopRated -> getTopRatedMovies(pageIndex)
 
-            FilterType.Popular -> {
-                getPopularMoviesUseCase.execute(
-                    GetPopularMoviesUseCase.Params(pageIndex)
-                )
-            }
+            FilterType.Popular -> getPopularMovies(pageIndex)
 
-            FilterType.UpComing -> {
-                getUpcomingMoviesUseCase.execute(
-                    GetUpcomingMoviesUseCase.Params(
-                        pageIndex
-                    )
-                )
-            }
+            FilterType.UpComing -> getUpcomingMovies(pageIndex)
         }
     }
 
