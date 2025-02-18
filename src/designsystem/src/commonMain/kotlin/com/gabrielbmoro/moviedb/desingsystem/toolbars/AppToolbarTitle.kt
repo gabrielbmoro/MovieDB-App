@@ -17,15 +17,6 @@ fun AppToolbarTitle(
     backEvent: (() -> Unit)? = null,
     searchEvent: (() -> Unit)? = null
 ) {
-    val backNavigationIcon: @Composable (() -> Unit) =
-        if (backEvent != null) {
-            {
-                BackNavigationIcon(backEvent)
-            }
-        } else {
-            {}
-        }
-
     TopAppBar(
         title = {
             Text(
@@ -34,7 +25,9 @@ fun AppToolbarTitle(
                 overflow = TextOverflow.Ellipsis
             )
         },
-        navigationIcon = backNavigationIcon,
+        navigationIcon = {
+            backEvent?.let { BackNavigationIcon(it) }
+        },
         colors =
         TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
