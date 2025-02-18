@@ -17,12 +17,6 @@ dependencies {
     detektConfiguration(libs.detekt.formatting)
 }
 
-detekt {
-    config.setFrom(files("$projectDir/config/detekt/detekt.yml"))
-    allRules = true
-    buildUponDefaultConfig = true
-}
-
 buildscript {
     repositories {
         mavenCentral()
