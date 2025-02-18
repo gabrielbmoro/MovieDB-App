@@ -135,7 +135,7 @@ class MoviesViewModel(
     private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
         movieId = movie.id,
         movieTitle = movie.title,
-        moviePosterUrl = movie.posterImageUrl ?: ""
+        moviePosterUrl = movie.posterImageUrl.orEmpty(),
     )
 
     private fun ImmutableList<MovieCardInfo>.addAllDistinctly(
