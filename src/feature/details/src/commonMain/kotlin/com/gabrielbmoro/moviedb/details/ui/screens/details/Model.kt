@@ -2,14 +2,14 @@ package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 import kotlinx.collections.immutable.ImmutableList
 
-sealed class DetailsUserIntent {
-    data object HideVideo : DetailsUserIntent()
+sealed interface DetailsUserIntent {
+    data object HideVideo : DetailsUserIntent
 
-    data object FavoriteMovie : DetailsUserIntent()
+    data object FavoriteMovie : DetailsUserIntent
 
     data class LoadMovieDetails(
         val movieId: Long
-    ): DetailsUserIntent()
+    ): DetailsUserIntent
 }
 
 data class DetailsUIState(
