@@ -7,6 +7,20 @@ plugins {
     alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.buildkonfig.plugin) apply false
+    alias(libs.plugins.detekt.plugin)
+}
+
+private val detektConfiguration by configurations.creating
+
+dependencies {
+    detektConfiguration(libs.detekt.cli)
+    detektConfiguration(libs.detekt.formatting)
+}
+
+detekt {
+    config.setFrom(files("$projectDir/config/detekt/detekt.yml"))
+    allRules = true
+    buildUponDefaultConfig = true
 }
 
 buildscript {
@@ -21,6 +35,18 @@ buildscript {
         classpath(libs.google.services)
         classpath(libs.firebase.crashlytics.gradle)
     }
+}
+
+tasks.register<JavaExec>("linter") {
+    mainClass.set("io.gitlab.arturbosch.detekt.cli.Main")
+    classpath = detektConfiguration
+
+    val input = projectDir
+    val config = "$projectDir/config/detekt/detekt.yml"
+    val exclude = "**/build/**,."
+    val params = listOf("-i", input, "-c", config, "-ex", exclude)
+
+    args(params)
 }
 
 tasks.register("clean", Delete::class) {
