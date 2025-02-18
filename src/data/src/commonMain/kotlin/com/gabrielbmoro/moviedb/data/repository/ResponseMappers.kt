@@ -60,6 +60,6 @@ fun VideoStreamsResponse.toVideoStreams(): List<VideoStream> {
     }
 }
 
-private fun String?.toSmallImageUrl(): String? = safeStringSum(SMALL_SIZE_IMAGE_ADDRESS)
+private fun String.toSmallImageUrl(): String...
 private fun String?.toBigImageUrl(): String? = safeStringSum(BIG_SIZE_IMAGE_ADDRESS)
 private fun String?.safeStringSum(other: String): String? = this?.let(other::plus)
