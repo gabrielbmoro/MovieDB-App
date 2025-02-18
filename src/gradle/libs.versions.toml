@@ -92,4 +92,3 @@ jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugi
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 buildkonfig_plugin = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 room_plugin = { id = "androidx.room", version.ref = "room" }
-detekt_plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

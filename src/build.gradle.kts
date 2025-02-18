@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.buildkonfig.plugin) apply false
-    alias(libs.plugins.detekt.plugin)
 }
 
 private val detektConfiguration by configurations.creating
