@@ -15,8 +15,8 @@ fun MovieResponse.toMovie(): Movie {
         id = id,
         votesAverage = vote_average ?: 0f,
         title = title ?: "",
-        posterImageUrl = poster_path.toSmallImageUrl(),
-        backdropImageUrl = backdrop_path.toBigImageUrl(),
+        posterImageUrl = poster_path?.toSmallImageUrl(),
+        backdropImageUrl = backdrop_path?.toBigImageUrl(),
         overview = overview ?: "",
         releaseDate = release_date ?: "",
         popularity = popularity ?: 0f,
@@ -37,8 +37,8 @@ fun MovieDetailResponse.toMovieDetail(): MovieDetail {
         productionCompanies = production_companies.map { it.name },
         votesAverage = vote_average ?: 0f,
         title = title ?: "",
-        posterImageUrl = poster_path.toSmallImageUrl(),
-        backdropImageUrl = backdrop_path.toBigImageUrl(),
+        posterImageUrl = poster_path?.toSmallImageUrl(),
+        backdropImageUrl = backdrop_path?.toBigImageUrl(),
         overview = overview ?: "",
         releaseDate = release_date ?: "",
         popularity = popularity ?: 0f,
@@ -60,6 +60,5 @@ fun VideoStreamsResponse.toVideoStreams(): List<VideoStream> {
     }
 }
 
-private fun String.toSmallImageUrl(): String...
-private fun String?.toBigImageUrl(): String? = safeStringSum(BIG_SIZE_IMAGE_ADDRESS)
-private fun String?.safeStringSum(other: String): String? = this?.let(other::plus)
+private fun String.toSmallImageUrl(): String = SMALL_SIZE_IMAGE_ADDRESS.plus(this)
+private fun String.toBigImageUrl(): String = BIG_SIZE_IMAGE_ADDRESS.plus(this)
