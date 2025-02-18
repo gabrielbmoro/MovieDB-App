@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.movies.domain.model
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieCardInfo
 import kotlinx.collections.immutable.ImmutableList
 
-data class MoviesUIState(
+data class MoviesState(
     val movieCardInfos: ImmutableList<MovieCardInfo>,
     val menuItems: List<FilterMenuItem>,
     val selectedFilterMenu: FilterType,

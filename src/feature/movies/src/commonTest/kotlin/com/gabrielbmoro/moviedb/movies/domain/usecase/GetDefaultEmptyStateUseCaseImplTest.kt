@@ -2,7 +2,7 @@ package com.gabrielbmoro.moviedb.movies.domain.usecase
 
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
-import com.gabrielbmoro.moviedb.movies.domain.model.MoviesUIState
+import com.gabrielbmoro.moviedb.movies.domain.model.MoviesState
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -28,7 +28,7 @@ class GetDefaultEmptyStateUseCaseImplTest {
 
     @Test
     fun `should return the default empty state`() {
-        val expected = MoviesUIState(
+        val expected = MoviesState(
             movieCardInfos = persistentListOf(),
             selectedFilterMenu = FilterType.NowPlaying,
             menuItems = fakeItems,
