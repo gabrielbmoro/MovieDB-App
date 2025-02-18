@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -80,14 +83,18 @@ fun MoviesScreen(
                 .padding(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
                 )
                 .fillMaxSize()
         ) {
+            val lazyListState = rememberLazyListState()
+            val isAtStart by rememberIsAtStartState(lazyListState)
+
             FilterMenu(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = if (isAtStart) 16.dp else 0.dp),
                 menuItems = uiState.value.menuItems,
+                lazyListState = lazyListState,
                 onClick = { filterMenuItem ->
                     viewModel.execute(
                         Intent.SelectFilterMenuItem(
@@ -111,8 +118,20 @@ fun MoviesScreen(
                 },
                 lazyStaggeredGridState = lazyStaggeredGridState,
                 modifier = Modifier
+                    .padding(horizontal = 16.dp)
                     .fillMaxSize()
             )
         }
     }
 }
+
+@Composable
+private fun rememberIsAtStartState(lazyListState: LazyListState): State<Boolean> = remember {
+    derivedStateOf { lazyListState.isAtStart() }
+}
+
+private const val FIRST_INDEX = 0
+private const val NO_OFFSET = 0
+
+private fun LazyListState.isAtStart(): Boolean =
+    firstVisibleItemIndex == FIRST_INDEX && firstVisibleItemScrollOffset == NO_OFFSET

@@ -87,7 +87,7 @@ class SearchViewModel(
         return MovieCardInfo(
             movieId = movie.id,
             movieTitle = movie.title,
-            moviePosterImageUrl = movie.posterImageUrl ?: "",
+            moviePosterImageUrl = movie.posterImageUrl.orEmpty(),
             movieOverview = movie.overview,
             movieVotesAverage = movie.votesAverage,
         )
