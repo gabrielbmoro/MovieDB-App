@@ -8,10 +8,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
 import moviedbapp.feature.movies.generated.resources.Res
 import moviedbapp.feature.movies.generated.resources.now_playing
 import moviedbapp.feature.movies.generated.resources.popular
@@ -56,14 +56,3 @@ fun FilterMenu(
         }
     }
 }
-
-enum class FilterType {
-    NowPlaying, TopRated, Popular, UpComing
-}
-
-@Immutable
-@Stable
-data class FilterMenuItem(
-    val selected: Boolean,
-    val type: FilterType,
-)
