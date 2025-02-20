@@ -29,3 +29,4 @@ FILEIO_REPORTER: false
 # DISABLE_ERRORS: true
 KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**"
 MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.json
+MARKDOWN_MARKDOWNLINT_DISABLE_ERRORS: false
