@@ -21,13 +21,13 @@ import org.jetbrains.compose.resources.stringResource
 fun ErrorMessage(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
             text = stringResource(Res.string.error_title),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Image(
@@ -35,7 +35,7 @@ fun ErrorMessage(modifier: Modifier = Modifier) {
             modifier =
             Modifier
                 .fillMaxWidth(),
-            contentDescription = stringResource(Res.string.error_message)
+            contentDescription = stringResource(Res.string.error_message),
         )
     }
 }

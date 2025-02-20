@@ -7,6 +7,6 @@ actual fun databaseInstance(): AppDatabase {
     return Room.databaseBuilder(
         KoinPlatform.getKoin().get(),
         AppDatabase::class.java,
-        dbFileName
+        dbFileName,
     ).build()
 }

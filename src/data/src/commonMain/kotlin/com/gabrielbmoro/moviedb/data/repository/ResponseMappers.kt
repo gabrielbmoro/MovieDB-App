@@ -22,7 +22,7 @@ fun MovieResponse.toMovie(): Movie {
         releaseDate = release_date.orEmpty(),
         popularity = popularity ?: 0f,
         language = original_language.orEmpty(),
-        isFavorite = false
+        isFavorite = false,
     )
 }
 
@@ -56,7 +56,7 @@ fun VideoStreamsResponse.toVideoStreams(): List<VideoStream> {
             type = it.type,
             official = it.official,
             name = it.name,
-            id = it.id
+            id = it.id,
         )
     }
 }

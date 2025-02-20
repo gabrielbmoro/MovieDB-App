@@ -43,7 +43,7 @@ class MoviesViewModel(
         when (intent) {
             is Intent.RequestMoreMovies -> {
                 loggerHelper.logDebug(
-                    message = "${getSelectedFilterName()} - Request more movies...}"
+                    message = "${getSelectedFilterName()} - Request more movies...}",
                 )
                 requestNextPage()
             }
@@ -57,19 +57,19 @@ class MoviesViewModel(
                     currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
-                                    "Request received to fetch the page $pageIndex}"
+                                    "Request received to fetch the page $pageIndex}",
                         )
 
                         runCatching {
                             onRequestMoreMovies(pageIndex)
                         }.getOrNull()?.let { requestedMoreMovies ->
                             val requestedMoviesCardInfo = requestedMoreMovies.map(
-                                ::toMovieCardInfo
+                                ::toMovieCardInfo,
                             )
                             _uiState.update {
                                 it.copy(
                                     movieCardInfos = it.movieCardInfos.addAllDistinctly(
-                                        requestedMoviesCardInfo
+                                        requestedMoviesCardInfo,
                                     ).toPersistentList(),
                                     isLoading = false,
                                 )
@@ -86,8 +86,8 @@ class MoviesViewModel(
                         movieCardInfos = persistentListOf(),
                         isLoading = true,
                         menuItems = it.menuItems.updateAccordingToFilterType(
-                            newFilterType = intent.menuItem.type
-                        )
+                            newFilterType = intent.menuItem.type,
+                        ),
                     )
                 }
 
@@ -117,7 +117,7 @@ class MoviesViewModel(
     )
 
     private fun ImmutableList<MovieCardInfo>.addAllDistinctly(
-        newMovies: List<MovieCardInfo>
+        newMovies: List<MovieCardInfo>,
     ): ImmutableList<MovieCardInfo> {
         return toMutableList().apply {
             addAll(newMovies)
@@ -128,7 +128,7 @@ class MoviesViewModel(
     private fun List<FilterMenuItem>.updateAccordingToFilterType(newFilterType: FilterType): List<FilterMenuItem> {
         return map {
             it.copy(
-                selected = it.type == newFilterType
+                selected = it.type == newFilterType,
             )
         }
     }

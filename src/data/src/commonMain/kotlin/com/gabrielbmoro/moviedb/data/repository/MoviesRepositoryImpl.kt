@@ -11,7 +11,7 @@ import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 
 class MoviesRepositoryImpl(
     private val api: ApiService,
-    private val favoriteMoviesDAO: FavoriteMoviesDAO
+    private val favoriteMoviesDAO: FavoriteMoviesDAO,
 ) : MoviesRepository {
 
     override suspend fun getFavoriteMovies(): List<Movie> {
@@ -56,14 +56,14 @@ class MoviesRepositoryImpl(
 
     override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
         return favoriteMoviesDAO.isThereAMovie(
-            title = movieTitle
+            title = movieTitle,
         ).any()
     }
 
     override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
         val result =
             api.getVideoStreams(
-                movieId = movieId
+                movieId = movieId,
             )
         return result.toVideoStreams()
     }
@@ -71,7 +71,7 @@ class MoviesRepositoryImpl(
     override suspend fun getMovieDetail(movieId: Long): MovieDetail {
         val result =
             api.getMovieDetails(
-                movieId = movieId
+                movieId = movieId,
             )
         return result.toMovieDetail()
     }
