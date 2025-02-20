@@ -28,3 +28,4 @@ FILEIO_REPORTER: false
 # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 # DISABLE_ERRORS: true
 KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**"
+MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.json
