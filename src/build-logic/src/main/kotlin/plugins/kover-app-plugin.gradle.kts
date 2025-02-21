@@ -22,7 +22,7 @@ kover {
                     "*.dto",
                     "*.core.ui.*",
                     "*.widgets",
-                    "*.navigation"
+                    "*.navigation",
                 )
 
                 classes(
@@ -32,7 +32,7 @@ kover {
                     "*_Factory*",
                     "*Activity",
                     "*ScreenKt*",
-                    "*_HiltModules*"
+                    "*_HiltModules*",
                 )
                 annotatedBy("Generated")
             }

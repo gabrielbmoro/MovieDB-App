@@ -8,11 +8,11 @@ import androidx.compose.ui.Modifier
 @Composable
 fun SectionTitle(
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium,
-        modifier = modifier
+        modifier = modifier,
     )
 }

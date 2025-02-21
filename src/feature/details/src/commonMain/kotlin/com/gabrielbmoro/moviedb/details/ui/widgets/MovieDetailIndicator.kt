@@ -15,7 +15,7 @@ fun MovieDetailIndicator(
     isFavorite: Boolean,
     votesAverage: Float,
     onFavoriteMovie: (() -> Unit),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -23,15 +23,15 @@ fun MovieDetailIndicator(
         modifier =
         modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surface),
     ) {
         Favorite(
             isFavorite = isFavorite,
-            action = onFavoriteMovie
+            action = onFavoriteMovie,
         )
 
         FiveStars(
-            votes = votesAverage
+            votes = votesAverage,
         )
     }
 }

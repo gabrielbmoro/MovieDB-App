@@ -20,40 +20,40 @@ fun MovieCardInformation(
     title: String,
     description: String,
     votes: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall.copy(
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             ),
             modifier = Modifier
                 .fillMaxWidth(),
             maxLines = 4,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
 
         FiveStars(
             votes = votes,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(32.dp)
+                .height(32.dp),
         )
 
         Text(
             text = description,
             style = MaterialTheme.typography.bodySmall.copy(
                 fontStyle = FontStyle.Italic,
-                fontSize = 12.sp
+                fontSize = 12.sp,
             ),
             modifier = Modifier
                 .fillMaxWidth(),
             maxLines = 6,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }

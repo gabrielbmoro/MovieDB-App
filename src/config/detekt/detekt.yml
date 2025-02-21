@@ -935,3 +935,9 @@ style:
     active: true
     excludeImports:
       - "java.util.*"
+
+formatting:
+  TrailingCommaOnCallSite:
+    active: true
+  TrailingCommaOnDeclarationSite:
+    active: true

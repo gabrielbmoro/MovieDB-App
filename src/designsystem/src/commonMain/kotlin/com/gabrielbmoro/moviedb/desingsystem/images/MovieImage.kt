@@ -15,14 +15,14 @@ fun MovieImage(
     imageUrl: String?,
     contentDescription: String,
     contentScale: ContentScale,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (imageUrl != null) {
         AsyncImage(
             imageUrl = imageUrl,
             contentScale = contentScale,
             contentDescription = contentDescription,
-            modifier = modifier
+            modifier = modifier,
         )
     } else {
         Image(
@@ -30,7 +30,7 @@ fun MovieImage(
             contentScale = contentScale,
             alignment = Alignment.TopCenter,
             contentDescription = contentDescription,
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }

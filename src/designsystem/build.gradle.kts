@@ -29,12 +29,12 @@ kotlin {
 popcornGuineapigConfig {
     configuration = PopcornConfiguration(
         project = PopcornProject(
-            type = ProjectType.KMP
+            type = ProjectType.KMP,
         ),
         rules = listOf(
             JustWithRule(
-                justWith = listOf("media")
-            )
-        )
+                justWith = listOf("media"),
+            ),
+        ),
     )
 }

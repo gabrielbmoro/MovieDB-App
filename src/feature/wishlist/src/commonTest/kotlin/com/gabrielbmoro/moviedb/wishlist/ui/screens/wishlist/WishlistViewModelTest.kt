@@ -28,7 +28,7 @@ class WishlistViewModelTest {
                 title = it.title,
                 posterImageUrl = it.posterImageUrl,
                 votesAverage = it.votesAverage,
-                overview = it.overview
+                overview = it.overview,
             )
         }
 
@@ -52,7 +52,7 @@ class WishlistViewModelTest {
             // arrange
             val expected =
                 listOf(
-                    Movie.mockChuckNorrisVsVandammeMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie(),
                 )
 
             isFavoriteMovieUseCase.result = true
@@ -63,14 +63,14 @@ class WishlistViewModelTest {
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-                    ioCoroutinesDispatcher = StandardTestDispatcher()
+                    ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
 
             // act
             viewModel.execute(
                 WishlistUserIntent.PrepareToDeleteMovie(
-                    mockChuckNorrisVsVandammeMovieCardInfo
-                )
+                    mockChuckNorrisVsVandammeMovieCardInfo,
+                ),
             )
             advanceUntilIdle()
 
@@ -84,7 +84,7 @@ class WishlistViewModelTest {
             // arrange
             val expected =
                 persistentListOf(
-                    mockChuckNorrisVsVandammeMovieCardInfo
+                    mockChuckNorrisVsVandammeMovieCardInfo,
                 )
             isFavoriteMovieUseCase.result = true
             getFavoriteMoviesUseCase.result = listOf(Movie.mockChuckNorrisVsVandammeMovie())
@@ -94,7 +94,7 @@ class WishlistViewModelTest {
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-                    ioCoroutinesDispatcher = StandardTestDispatcher()
+                    ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
 
             // act
@@ -111,7 +111,7 @@ class WishlistViewModelTest {
             // arrange
             val expected =
                 listOf(
-                    Movie.mockChuckNorrisVsVandammeMovie()
+                    Movie.mockChuckNorrisVsVandammeMovie(),
                 )
             isFavoriteMovieUseCase.result = true
             getFavoriteMoviesUseCase.result = expected
@@ -121,12 +121,12 @@ class WishlistViewModelTest {
                     getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     isFavoriteMovieUseCase = isFavoriteMovieUseCase,
-                    ioCoroutinesDispatcher = StandardTestDispatcher()
+                    ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
             viewModel.execute(
                 WishlistUserIntent.PrepareToDeleteMovie(
-                    mockChuckNorrisVsVandammeMovieCardInfo
-                )
+                    mockChuckNorrisVsVandammeMovieCardInfo,
+                ),
             )
             advanceUntilIdle()
 

@@ -15,18 +15,18 @@ class MoviesInteractor(
     val getDefaultEmptyState: GetDefaultEmptyStateUseCase,
 ) {
     suspend fun getUpcomingMovies(page: Int): List<Movie> = getUpcomingMoviesUseCase.execute(
-        GetUpcomingMoviesUseCase.Params(page)
+        GetUpcomingMoviesUseCase.Params(page),
     )
 
     suspend fun getPopularMovies(page: Int): List<Movie> = getPopularMoviesUseCase.execute(
-        GetPopularMoviesUseCase.Params(page)
+        GetPopularMoviesUseCase.Params(page),
     )
 
     suspend fun getTopRatedMovies(page: Int): List<Movie> = getTopRatedMoviesUseCase.execute(
-        GetTopRatedMoviesUseCase.Params(page)
+        GetTopRatedMoviesUseCase.Params(page),
     )
 
     suspend fun getNowPlayingMovies(page: Int): List<Movie> = getNowPlayingMoviesUseCase.execute(
-        GetNowPlayingMoviesUseCase.Params(page)
+        GetNowPlayingMoviesUseCase.Params(page),
     )
 }

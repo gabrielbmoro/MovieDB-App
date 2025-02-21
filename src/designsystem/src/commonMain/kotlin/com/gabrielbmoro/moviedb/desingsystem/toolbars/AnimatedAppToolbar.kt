@@ -14,9 +14,9 @@ fun AnimatedAppToolbar(
     AnimatedVisibility(
         visible = showTopBar,
         enter = expandVertically(
-            tween(delayMillis = 200, durationMillis = 500)
+            tween(delayMillis = 200, durationMillis = 500),
         ),
-        exit = shrinkVertically()
+        exit = shrinkVertically(),
     ) {
         appBar()
     }

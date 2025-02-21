@@ -57,14 +57,14 @@ class DetailsViewModelTest {
                     status = fakeMovieDetail.status,
                     tagLine = fakeMovieDetail.tagline,
                     genres = fakeMovieDetail.genres.toImmutableList(),
-                    movieTitle = fakeMovieDetail.title
+                    movieTitle = fakeMovieDetail.title,
                 )
 
             val viewModel = DetailsViewModel(
                 favoriteMovieUseCase = favoriteMovieUseCase,
                 isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                 getMovieDetailsUseCase = getMovieDetailsUseCase,
-                ioDispatcher = StandardTestDispatcher()
+                ioDispatcher = StandardTestDispatcher(),
             )
             viewModel.execute(DetailsUserIntent.LoadMovieDetails(movieId = 12))
             advanceUntilIdle()

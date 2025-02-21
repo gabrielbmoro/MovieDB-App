@@ -9,7 +9,7 @@ interface GetDefaultEmptyStateUseCase {
 }
 
 class GetDefaultEmptyStateUseCaseImpl(
-    private val getDefaultMenuItems: GetDefaultMenuItemsUseCase
+    private val getDefaultMenuItems: GetDefaultMenuItemsUseCase,
 ) : GetDefaultEmptyStateUseCase {
     override operator fun invoke(): MoviesState = MoviesState(
         movieCardInfos = persistentListOf(),

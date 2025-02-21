@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 @Composable
 expect fun VideoPlayer(
     videoId: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 )
 
 internal fun String.videoIdToEmbedHTML(): String {

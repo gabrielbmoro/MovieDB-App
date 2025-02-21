@@ -20,7 +20,7 @@ class WishlistViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
-    private val ioCoroutinesDispatcher: CoroutineDispatcher
+    private val ioCoroutinesDispatcher: CoroutineDispatcher,
 ) : ViewModel(), ViewModelMvi<WishlistUserIntent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
@@ -48,14 +48,14 @@ class WishlistViewModel(
                 favoriteMovieUseCase.execute(
                     FavoriteMovieUseCase.Params(
                         movieTitle = movie.title,
-                        toFavorite = false
-                    )
+                        toFavorite = false,
+                    ),
                 )
                 val isFavoriteAfterDeletion =
                     isFavoriteMovieUseCase.execute(
                         IsFavoriteMovieUseCase.Params(
-                            movieTitle = movie.title
-                        )
+                            movieTitle = movie.title,
+                        ),
                     )
                 if (!isFavoriteAfterDeletion) {
                     val favoriteMovies = getFavoriteMoviesUseCase.execute(Unit)
@@ -64,7 +64,7 @@ class WishlistViewModel(
                     _uiState.update {
                         it.copy(
                             favoriteMovies = favoriteMovies,
-                            isSuccessResult = true
+                            isSuccessResult = true,
                         )
                     }
                 }
@@ -79,7 +79,7 @@ class WishlistViewModel(
     private fun handleHideConfirmDeleteDialog() {
         _uiState.update {
             it.copy(
-                isDeleteAlertDialogVisible = false
+                isDeleteAlertDialogVisible = false,
             )
         }
     }
@@ -95,7 +95,7 @@ class WishlistViewModel(
                 .toImmutableList()
             _uiState.update {
                 it.copy(
-                    favoriteMovies = movies
+                    favoriteMovies = movies,
                 )
             }
         }
@@ -105,7 +105,7 @@ class WishlistViewModel(
         _movieToBeDeleted = movie
         _uiState.update {
             it.copy(
-                isDeleteAlertDialogVisible = true
+                isDeleteAlertDialogVisible = true,
             )
         }
     }
@@ -118,7 +118,7 @@ class WishlistViewModel(
             title = movie.title,
             overview = movie.overview,
             votesAverage = movie.votesAverage,
-            posterImageUrl = movie.posterImageUrl
+            posterImageUrl = movie.posterImageUrl,
         )
     }
 

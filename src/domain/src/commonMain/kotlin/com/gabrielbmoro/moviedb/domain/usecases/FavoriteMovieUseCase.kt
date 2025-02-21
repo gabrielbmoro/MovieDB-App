@@ -16,13 +16,13 @@ interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
         val movieLanguage: String? = null,
         val moviePopularity: Float? = null,
         val movieTitle: String,
-        val toFavorite: Boolean
+        val toFavorite: Boolean,
     )
 }
 
 @Factory
 open class FavoriteMovieUseCaseImpl(
-    @Provided private val repository: MoviesRepository
+    @Provided private val repository: MoviesRepository,
 ) : FavoriteMovieUseCase {
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {
         val toFavorite = input.toFavorite
@@ -40,7 +40,7 @@ open class FavoriteMovieUseCaseImpl(
                         releaseDate = input.movieReleaseDate!!,
                         isFavorite = true,
                         language = input.movieLanguage!!,
-                        popularity = input.moviePopularity!!
+                        popularity = input.moviePopularity!!,
                     )
                 repository.favorite(movie = movie)
             }

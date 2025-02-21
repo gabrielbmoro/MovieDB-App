@@ -7,17 +7,17 @@ import org.koin.core.annotation.Provided
 
 interface GetUpcomingMoviesUseCase : UseCase<GetUpcomingMoviesUseCase.Params, List<Movie>> {
     data class Params(
-        val page: Int
+        val page: Int,
     )
 }
 
 @Factory
 class GetUpcomingMoviesUseCaseImpl(
-    @Provided private val repository: MoviesRepository
+    @Provided private val repository: MoviesRepository,
 ) : GetUpcomingMoviesUseCase {
     override suspend fun execute(input: GetUpcomingMoviesUseCase.Params): List<Movie> {
         return repository.getUpcomingMovies(
-            page = input.page
+            page = input.page,
         )
     }
 }

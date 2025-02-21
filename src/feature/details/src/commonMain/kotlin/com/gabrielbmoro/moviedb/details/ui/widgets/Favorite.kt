@@ -25,14 +25,14 @@ import org.jetbrains.compose.resources.stringResource
 fun Favorite(
     isFavorite: Boolean,
     modifier: Modifier = Modifier,
-    action: (() -> Unit)
+    action: (() -> Unit),
 ) {
     Card(
         modifier =
         modifier
             .size(56.dp)
             .clip(CircleShape)
-            .clickable(onClick = action)
+            .clickable(onClick = action),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Icon(
@@ -42,7 +42,7 @@ fun Favorite(
                         Res.drawable.ic_heart_border
                     } else {
                         Res.drawable.ic_heart_filled
-                    }
+                    },
                 ),
                 contentDescription =
                 if (!isFavorite) {
@@ -51,7 +51,7 @@ fun Favorite(
                     stringResource(Res.string.alt_is_favorite)
                 },
                 modifier = Modifier.align(Center),
-                tint = Color.Red
+                tint = Color.Red,
             )
         }
     }

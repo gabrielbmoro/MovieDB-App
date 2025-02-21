@@ -16,12 +16,12 @@ import kotlinx.collections.immutable.ImmutableList
 fun MoviesResult(
     movies: ImmutableList<MovieCardInfo>,
     navigateToDetailsScreen: (Long) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(vertical = 8.dp)
+        contentPadding = PaddingValues(vertical = 8.dp),
     ) {
         items(movies.size) {
             val moviecardInfo = movies[it]
@@ -34,7 +34,7 @@ fun MoviesResult(
                 onClick = {
                     navigateToDetailsScreen(moviecardInfo.movieId)
                 },
-                votes = moviecardInfo.movieVotesAverage
+                votes = moviecardInfo.movieVotesAverage,
             )
         }
     }
@@ -47,5 +47,5 @@ data class MovieCardInfo(
     val moviePosterImageUrl: String,
     val movieTitle: String,
     val movieOverview: String,
-    val movieVotesAverage: Float
+    val movieVotesAverage: Float,
 )

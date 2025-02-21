@@ -17,5 +17,5 @@ data class MovieResponse(
     val backdrop_path: String?,
     val adult: Boolean?,
     val overview: String?,
-    val release_date: String?
+    val release_date: String?,
 )

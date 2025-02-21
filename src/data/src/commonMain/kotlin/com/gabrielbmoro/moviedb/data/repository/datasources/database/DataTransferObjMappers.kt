@@ -14,7 +14,7 @@ fun Movie.toFavoriteMovieDTO(customId: Int? = null): FavoriteMovieDTO {
         backdropImageUrl = backdropImageUrl,
         popularity = popularity,
         releaseDate = releaseDate,
-        movieId = id
+        movieId = id,
     )
 }
 
@@ -29,6 +29,6 @@ fun FavoriteMovieDTO.toMovie(): Movie {
         backdropImageUrl = backdropImageUrl,
         overview = overview,
         title = title,
-        votesAverage = votesAverage
+        votesAverage = votesAverage,
     )
 }

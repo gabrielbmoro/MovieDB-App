@@ -10,7 +10,7 @@ data class Movie(
     val releaseDate: String,
     var isFavorite: Boolean,
     val language: String,
-    val popularity: Float
+    val popularity: Float,
 ) {
     companion object {
         fun mockWhiteDragonNotFavorite() =
@@ -24,7 +24,7 @@ data class Movie(
                 "2002-02-21",
                 language = "pt-br",
                 popularity = 2f,
-                isFavorite = false
+                isFavorite = false,
             )
 
         fun mockWhyDoWeUseItFavorite() =
@@ -44,7 +44,7 @@ data class Movie(
                 backdropImageUrl = "https://image/bucket/s3/ga1.png",
                 popularity = 10f,
                 votesAverage = 5f,
-                language = "en-US"
+                language = "en-US",
             )
 
         fun mockChuckNorrisVsVandammeMovie() =
@@ -58,7 +58,7 @@ data class Movie(
                 releaseDate = "03-02-2023",
                 isFavorite = false,
                 language = "pt-br",
-                popularity = 1f
+                popularity = 1f,
             )
     }
 }

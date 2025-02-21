@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextDecoration
 @Composable
 fun TextUrl(
     url: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val uriHandler = LocalUriHandler.current
 
@@ -22,7 +22,7 @@ fun TextUrl(
         MaterialTheme.typography.bodyMedium.copy(
             color = MaterialTheme.colorScheme.tertiary,
             fontStyle = FontStyle.Italic,
-            textDecoration = TextDecoration.Underline
+            textDecoration = TextDecoration.Underline,
         ),
         text =
         buildAnnotatedString {
@@ -30,6 +30,6 @@ fun TextUrl(
         },
         onClick = {
             uriHandler.openUri(url)
-        }
+        },
     )
 }

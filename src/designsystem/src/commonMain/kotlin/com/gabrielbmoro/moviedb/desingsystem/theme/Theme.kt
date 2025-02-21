@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 @Composable
 fun MovieDBAppTheme(
     dynamicColorScheme: ColorScheme? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme =
         dynamicColorScheme ?: if (isSystemInDarkTheme()) {
@@ -19,6 +19,6 @@ fun MovieDBAppTheme(
 
     MaterialTheme(
         content = content,
-        colorScheme = colorScheme
+        colorScheme = colorScheme,
     )
 }

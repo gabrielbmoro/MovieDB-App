@@ -7,13 +7,13 @@ import org.koin.core.annotation.Provided
 
 interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, MovieDetail> {
     data class Params(
-        val movieId: Long
+        val movieId: Long,
     )
 }
 
 @Factory
 class GetMovieDetailsUseCaseImpl(
-    @Provided private val repository: MoviesRepository
+    @Provided private val repository: MoviesRepository,
 ) : GetMovieDetailsUseCase {
     override suspend fun execute(input: GetMovieDetailsUseCase.Params): MovieDetail {
         val movieDetail = repository.getMovieDetail(input.movieId)
@@ -24,7 +24,7 @@ class GetMovieDetailsUseCaseImpl(
             }
 
         return movieDetail.copy(
-            videoId = videoStream?.key
+            videoId = videoStream?.key,
         )
     }
 

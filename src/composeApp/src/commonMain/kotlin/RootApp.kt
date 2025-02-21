@@ -26,12 +26,12 @@ fun RootApp() {
         addMovieDetailsScreen { movieId ->
             DetailsScreen(
                 movieId = movieId,
-                navigator = navigator
+                navigator = navigator,
             )
         }
         addWishlistScreen {
             WishlistScreen(
-                navigator = navigator
+                navigator = navigator,
             )
         }
         addSearchScreen { query -> SearchScreen(query = query, navigator = navigator) }

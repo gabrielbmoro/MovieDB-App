@@ -27,7 +27,7 @@ fun MoviesList(
     lazyStaggeredGridState: LazyStaggeredGridState,
     onSelectMovie: ((Long) -> Unit),
     onRequestMore: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val canScrollForward by remember {
         derivedStateOf {
@@ -46,7 +46,7 @@ fun MoviesList(
                 count = movies.size,
                 key = { index ->
                     movies[index].movieId
-                }
+                },
             ) { index ->
                 val movieCardInfo = movies[index]
                 MovieImage(
@@ -58,10 +58,10 @@ fun MoviesList(
                         .fillMaxWidth()
                         .height(300.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable { onSelectMovie(movieCardInfo.movieId) }
+                        .clickable { onSelectMovie(movieCardInfo.movieId) },
                 )
             }
-        }
+        },
     )
 
     LaunchedEffect(key1 = canScrollForward) {

@@ -24,7 +24,7 @@ fun FilterMenu(
     menuItems: List<FilterMenuItem>,
     onClick: (FilterMenuItem) -> Unit,
     lazyListState: LazyListState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
@@ -33,7 +33,7 @@ fun FilterMenu(
         state = lazyListState,
     ) {
         items(
-            count = menuItems.size
+            count = menuItems.size,
         ) { index ->
             val menuItem = menuItems[index]
             FilterChip(
@@ -45,13 +45,13 @@ fun FilterMenu(
                             FilterType.TopRated -> Res.string.top_rated
                             FilterType.Popular -> Res.string.popular
                             FilterType.UpComing -> Res.string.upcoming
-                        }
+                        },
                     )
                     Text(menuTitle)
                 },
                 onClick = {
                     onClick(menuItem)
-                }
+                },
             )
         }
     }

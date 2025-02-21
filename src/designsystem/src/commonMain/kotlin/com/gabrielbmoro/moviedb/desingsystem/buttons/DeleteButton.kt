@@ -15,15 +15,15 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun DeleteButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     IconButton(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Icon(
             imageVector = Icons.Filled.Delete,
-            contentDescription = stringResource(Res.string.delete)
+            contentDescription = stringResource(Res.string.delete),
         )
     }
 }

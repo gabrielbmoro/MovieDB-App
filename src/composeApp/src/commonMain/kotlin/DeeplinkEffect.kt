@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DeeplinkEffect(
-    navigator: NavHostController
+    navigator: NavHostController,
 ) {
     val deepLinkNavigationStateFlow = remember {
         MutableSharedFlow<String>()
@@ -34,7 +34,7 @@ fun DeeplinkEffect(
                     ?.let { movieId ->
                         coroutineContext.launch {
                             deepLinkNavigationStateFlow.emit(
-                                Screen.Details.route.detailsRoute(movieId)
+                                Screen.Details.route.detailsRoute(movieId),
                             )
                         }
                     }
@@ -50,7 +50,7 @@ fun DeeplinkEffect(
                 it.parameters[SEARCH_QUERY_ARGUMENT_KEY]?.let { query ->
                     coroutineContext.launch {
                         deepLinkNavigationStateFlow.emit(
-                            Screen.Search.route.searchRoute(query)
+                            Screen.Search.route.searchRoute(query),
                         )
                     }
                 }

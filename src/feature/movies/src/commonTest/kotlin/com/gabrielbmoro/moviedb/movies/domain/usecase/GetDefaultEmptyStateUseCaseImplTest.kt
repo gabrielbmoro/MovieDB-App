@@ -12,11 +12,11 @@ class GetDefaultEmptyStateUseCaseImplTest {
     private val fakeItems: List<FilterMenuItem> = listOf(
         FilterMenuItem(
             selected = true,
-            type = FilterType.NowPlaying
+            type = FilterType.NowPlaying,
         ),
         FilterMenuItem(
             selected = true,
-            type = FilterType.NowPlaying
+            type = FilterType.NowPlaying,
         ),
     )
     private val getDefaultMenuItems: GetDefaultMenuItemsUseCase =

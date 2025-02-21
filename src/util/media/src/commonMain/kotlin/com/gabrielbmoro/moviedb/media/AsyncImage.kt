@@ -24,16 +24,16 @@ fun AsyncImage(
     contentScale: ContentScale,
     onFailure: (@Composable () -> Unit) = {},
     filterQuality: FilterQuality = FilterQuality.High,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val platformContext = LocalPlatformContext.current
     val imageRequest = remember {
         ImageRequest.Builder(
-            context = platformContext
+            context = platformContext,
         ).data(
-            imageUrl
+            imageUrl,
         ).fetcherFactory(
-            KtorNetworkFetcherFactory()
+            KtorNetworkFetcherFactory(),
         ).build()
     }
 
@@ -48,12 +48,12 @@ fun AsyncImage(
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center)
                         .heightIn(max = 52.dp)
-                        .widthIn(max = 52.dp)
+                        .widthIn(max = 52.dp),
                 )
             }
         },
         error = {
             onFailure()
-        }
+        },
     )
 }

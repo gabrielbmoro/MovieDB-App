@@ -30,12 +30,12 @@ fun MovieCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit),
     enableDelete: Boolean = false,
-    onDeleteClick: (() -> Unit) = {}
+    onDeleteClick: (() -> Unit) = {},
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
-        onClick = onClick
+        onClick = onClick,
     ) {
         MovieImage(
             imageUrl = imageUrl,
@@ -43,20 +43,20 @@ fun MovieCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(max = CardViewImageHeight),
-            contentDescription = stringResource(Res.string.poster)
+            contentDescription = stringResource(Res.string.poster),
         )
         MovieCardInformation(
             title = title,
             votes = votes,
             modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 6.dp),
-            description = description
+            description = description,
         )
 
         if (enableDelete) {
             DeleteButton(
                 onClick = onDeleteClick,
-                modifier = Modifier.size(DeleteButtonSize)
+                modifier = Modifier.size(DeleteButtonSize),
             )
         }
     }

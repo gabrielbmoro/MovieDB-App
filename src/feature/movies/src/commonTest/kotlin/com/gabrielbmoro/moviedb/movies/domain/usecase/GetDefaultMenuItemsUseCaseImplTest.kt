@@ -14,20 +14,20 @@ class GetDefaultMenuItemsUseCaseImplTest {
         val expected = listOf(
             FilterMenuItem(
                 selected = true,
-                type = FilterType.NowPlaying
+                type = FilterType.NowPlaying,
             ),
             FilterMenuItem(
                 selected = false,
-                type = FilterType.UpComing
+                type = FilterType.UpComing,
             ),
             FilterMenuItem(
                 selected = false,
-                type = FilterType.TopRated
+                type = FilterType.TopRated,
             ),
             FilterMenuItem(
                 selected = false,
-                type = FilterType.Popular
-            )
+                type = FilterType.Popular,
+            ),
         )
 
         val result = useCase()

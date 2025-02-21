@@ -18,30 +18,30 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun GenresCard(
     genres: ImmutableList<String>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        maxItemsInEachRow = 4
+        maxItemsInEachRow = 4,
     ) {
         genres.forEach { genre ->
             Card(
                 shape = CircleShape,
                 modifier = Modifier.padding(vertical = 4.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
             ) {
                 Text(
                     text = genre,
                     style =
                     MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.secondaryContainer
+                        color = MaterialTheme.colorScheme.secondaryContainer,
                     ),
                     modifier =
                     Modifier.padding(
                         horizontal = 8.dp,
-                        vertical = 4.dp
-                    )
+                        vertical = 4.dp,
+                    ),
                 )
             }
         }

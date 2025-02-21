@@ -18,7 +18,7 @@ private fun fileDirectory(): String {
         inDomain = NSUserDomainMask,
         appropriateForURL = null,
         create = false,
-        error = null
+        error = null,
     )
     return requireNotNull(documentDirectory).path!!
 }
@@ -27,7 +27,7 @@ actual fun databaseInstance(): AppDatabase {
     val dbFile = "${fileDirectory()}/$dbFileName"
     return Room.databaseBuilder<AppDatabase>(
         name = dbFile,
-        factory = { findDatabaseConstructorAndInitDatabaseImpl(AppDatabase::class) }
+        factory = { findDatabaseConstructorAndInitDatabaseImpl(AppDatabase::class) },
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()

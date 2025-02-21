@@ -13,12 +13,12 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun BackNavigationIcon(
     event: (() -> Unit),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     IconButton(onClick = event, modifier = modifier) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = stringResource(Res.string.back)
+            contentDescription = stringResource(Res.string.back),
         )
     }
 }

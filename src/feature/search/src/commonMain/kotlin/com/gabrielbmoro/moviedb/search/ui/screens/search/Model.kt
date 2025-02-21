@@ -12,5 +12,5 @@ sealed interface SearchUserIntent {
 
 data class SearchUIState(
     val searchQuery: TextFieldValue,
-    val results: ImmutableList<MovieCardInfo>? = null
+    val results: ImmutableList<MovieCardInfo>? = null,
 )
