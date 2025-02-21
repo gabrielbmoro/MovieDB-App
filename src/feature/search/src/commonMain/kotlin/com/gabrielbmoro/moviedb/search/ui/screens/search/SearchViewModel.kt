@@ -7,15 +7,21 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.search.ui.widgets.MovieCardInfo
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class)
 class SearchViewModel(
+    private val query: String?,
     private val searchMovieUseCase: SearchMovieUseCase,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
 ) : ViewModel(), ViewModelMvi<SearchUserIntent> {
@@ -23,41 +29,54 @@ class SearchViewModel(
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
+    private val searchFlow = MutableSharedFlow<String>()
+
     private fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
+
+    init {
+        query?.let {
+            execute(SearchUserIntent.SearchBy(TextFieldValue(query)))
+        }
+
+        viewModelScope.launch(ioCoroutinesDispatcher) {
+            searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { searchQuery ->
+                val result = searchMovieUseCase.execute(
+                    SearchMovieUseCase.Params(
+                        query = searchQuery
+                    )
+                )
+
+                val movieCardsInfos = result.map(::mapToMovieCardInfo).toImmutableList()
+
+                _uiState.update {
+                    it.copy(
+                        results = movieCardsInfos
+                    )
+                }
+            }
+        }
+    }
 
     override fun execute(intent: SearchUserIntent) {
         when (intent) {
             is SearchUserIntent.SearchBy -> {
-                viewModelScope.launch(ioCoroutinesDispatcher) {
-                    val result = searchMovieUseCase.execute(
-                        SearchMovieUseCase.Params(
-                            query = intent.query.text
-                        )
+                val searchQuery = intent.query
+                _uiState.update {
+                    it.copy(
+                        searchQuery = searchQuery
                     )
+                }
 
-                    val movieCardsInfos = result.map(::mapToMovieCardInfo).toImmutableList()
-
-                    _uiState.update {
-                        it.copy(
-                            results = movieCardsInfos
-                        )
-                    }
+                viewModelScope.launch(ioCoroutinesDispatcher) {
+                    searchFlow.emit(searchQuery.text)
                 }
             }
 
             is SearchUserIntent.ClearSearchField -> {
                 _uiState.update {
                     it.copy(
-                        searchQuery = TextFieldValue("")
-                    )
-                }
-                execute(SearchUserIntent.SearchBy(TextFieldValue("")))
-            }
-
-            is SearchUserIntent.SearchInputFieldChanged -> {
-                _uiState.update {
-                    it.copy(
-                        searchQuery = intent.query
+                        searchQuery = TextFieldValue(""),
+                        results = persistentListOf()
                     )
                 }
             }
@@ -68,9 +87,13 @@ class SearchViewModel(
         return MovieCardInfo(
             movieId = movie.id,
             movieTitle = movie.title,
-            moviePosterImageUrl = movie.posterImageUrl ?: "",
+            moviePosterImageUrl = movie.posterImageUrl.orEmpty(),
             movieOverview = movie.overview,
             movieVotesAverage = movie.votesAverage,
         )
+    }
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY_IN_MS = 600L
     }
 }
