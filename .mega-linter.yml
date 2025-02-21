@@ -27,4 +27,4 @@ FILEIO_REPORTER: false
 
 # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 # DISABLE_ERRORS: true
-KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**" -p "detekt-formatting-1.23.7.jar"
+KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**" -p "lib/detekt-formatting-1.23.7.jar"
