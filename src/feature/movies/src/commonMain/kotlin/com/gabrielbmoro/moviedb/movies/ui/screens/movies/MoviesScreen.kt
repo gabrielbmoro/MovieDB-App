@@ -97,7 +97,7 @@ fun MoviesScreen(
                 lazyListState = lazyListState,
                 onClick = { filterMenuItem ->
                     viewModel.execute(
-                        Intent.SelectFilterMenuItem(
+                        MoviesIntent.SelectFilterMenuItem(
                             menuItem = filterMenuItem
                         )
                     )
@@ -114,7 +114,7 @@ fun MoviesScreen(
                     navigator.navigateToDetails(selectedMovieId)
                 },
                 onRequestMore = {
-                    viewModel.execute(Intent.RequestMoreMovies)
+                    viewModel.execute(MoviesIntent.RequestMoreMovies)
                 },
                 lazyStaggeredGridState = lazyStaggeredGridState,
                 modifier = Modifier
