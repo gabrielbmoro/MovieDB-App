@@ -38,7 +38,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
-    navigator: NavHostController,
+    navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -60,7 +60,7 @@ fun MoviesScreen(
                         backEvent = null,
                         searchEvent = {
                             navigator.navigateToSearch("")
-                        },
+                        }
                     )
                 },
                 showTopBar = showTopBar,
@@ -74,9 +74,9 @@ fun MoviesScreen(
                         lazyStaggeredGridState.scrollToItem(0)
                     }
                 },
-                onSelectFavoriteTab = navigator::navigateToWishlist,
+                onSelectFavoriteTab = navigator::navigateToWishlist
             )
-        },
+        }
     ) {
         Column(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun MoviesScreen(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
                 )
-                .fillMaxSize(),
+                .fillMaxSize()
         ) {
             val lazyListState = rememberLazyListState()
             val isAtStart by rememberIsAtStartState(lazyListState)
@@ -97,15 +97,15 @@ fun MoviesScreen(
                 lazyListState = lazyListState,
                 onClick = { filterMenuItem ->
                     viewModel.execute(
-                        Intent.SelectFilterMenuItem(
-                            menuItem = filterMenuItem,
-                        ),
+                        MoviesIntent.SelectFilterMenuItem(
+                            menuItem = filterMenuItem
+                        )
                     )
 
                     coroutineScope.launch {
                         lazyStaggeredGridState.scrollToItem(0)
                     }
-                },
+                }
             )
 
             MoviesList(
@@ -114,12 +114,12 @@ fun MoviesScreen(
                     navigator.navigateToDetails(selectedMovieId)
                 },
                 onRequestMore = {
-                    viewModel.execute(Intent.RequestMoreMovies)
+                    viewModel.execute(MoviesIntent.RequestMoreMovies)
                 },
                 lazyStaggeredGridState = lazyStaggeredGridState,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .fillMaxSize(),
+                    .fillMaxSize()
             )
         }
     }
