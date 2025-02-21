@@ -28,7 +28,4 @@ src/.DS_Store
 .idea/
 
 src/.kotlin/
-src/build/
-src/util/logging/build/
-src/util/media/build/
-src/build-logic/build
+**/build/**
