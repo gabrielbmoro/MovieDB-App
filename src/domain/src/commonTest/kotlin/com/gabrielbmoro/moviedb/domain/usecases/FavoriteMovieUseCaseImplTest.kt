@@ -1,13 +1,11 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class FavoriteMovieUseCaseImplTest {
     private lateinit var repository: FakeRepository
     private lateinit var useCase: FavoriteMovieUseCase

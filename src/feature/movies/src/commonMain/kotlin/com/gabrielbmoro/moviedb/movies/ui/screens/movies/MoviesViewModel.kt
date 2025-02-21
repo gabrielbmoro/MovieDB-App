@@ -98,17 +98,10 @@ class MoviesViewModel(
 
     private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = interactor.run {
-        when (_uiState.value.selectedFilterMenu) {
-            FilterType.NowPlaying -> getNowPlayingMovies(pageIndex)
-
-            FilterType.TopRated -> getTopRatedMovies(pageIndex)
-
-            FilterType.Popular -> getPopularMovies(pageIndex)
-
-            FilterType.UpComing -> getUpcomingMovies(pageIndex)
-        }
-    }
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = interactor.getMoviesFromFilter(
+        filter = uiState.value.selectedFilterMenu,
+        page = pageIndex,
+    )
 
     private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
         movieId = movie.id,

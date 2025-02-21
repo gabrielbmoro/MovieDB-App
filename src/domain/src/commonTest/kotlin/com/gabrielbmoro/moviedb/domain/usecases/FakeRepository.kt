@@ -16,38 +16,21 @@ class FakeRepository : MoviesRepository {
 
     lateinit var favoriteMovies: List<Movie>
 
-    lateinit var popularMovies: List<Movie>
-
-    lateinit var topRatedMovies: List<Movie>
-
-    lateinit var nowPlayingMovies: List<Movie>
-
-    lateinit var upComingMovies: List<Movie>
-
     lateinit var movieDetails: MovieDetail
 
     lateinit var videoStreams: List<VideoStream>
 
     lateinit var searchMovies: List<Movie>
 
+    lateinit var moviesFromFilter: List<Movie>
+
+    override suspend fun getMoviesFromFilter(
+        filter: String,
+        page: Int,
+    ): List<Movie> = moviesFromFilter
+
     override suspend fun getFavoriteMovies(): List<Movie> {
         return favoriteMovies
-    }
-
-    override suspend fun getPopularMovies(page: Int): List<Movie> {
-        return popularMovies
-    }
-
-    override suspend fun getTopRatedMovies(page: Int): List<Movie> {
-        return topRatedMovies
-    }
-
-    override suspend fun getUpcomingMovies(page: Int): List<Movie> {
-        return upComingMovies
-    }
-
-    override suspend fun getNowPlayingMovies(page: Int): List<Movie> {
-        return nowPlayingMovies
     }
 
     override suspend fun favorite(movie: Movie) {
