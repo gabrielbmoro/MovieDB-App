@@ -26,7 +26,7 @@ class MoviesViewModel(
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
     private val interactor: MoviesInteractor,
-) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
+) : ViewModel(), ViewModelMvi<MoviesIntent>, PagingController by SimplePaging() {
 
     private val _uiState = MutableStateFlow(interactor.getDefaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
@@ -36,19 +36,19 @@ class MoviesViewModel(
     init {
         loggerHelper.plant(this::class)
 
-        execute(Intent.Setup)
+        execute(MoviesIntent.Setup)
     }
 
-    override fun execute(intent: Intent) {
+    override fun execute(intent: MoviesIntent) {
         when (intent) {
-            is Intent.RequestMoreMovies -> {
+            is MoviesIntent.RequestMoreMovies -> {
                 loggerHelper.logDebug(
                     message = "${getSelectedFilterName()} - Request more movies...}"
                 )
                 requestNextPage()
             }
 
-            Intent.Setup -> {
+            MoviesIntent.Setup -> {
                 _paginationJob?.cancel()
 
                 resetPaging()
@@ -79,7 +79,7 @@ class MoviesViewModel(
                 }
             }
 
-            is Intent.SelectFilterMenuItem -> {
+            is MoviesIntent.SelectFilterMenuItem -> {
                 _uiState.update {
                     it.copy(
                         selectedFilterMenu = intent.menuItem.type,
@@ -91,7 +91,7 @@ class MoviesViewModel(
                     )
                 }
 
-                execute(Intent.Setup)
+                execute(MoviesIntent.Setup)
             }
         }
     }
