@@ -20,22 +20,22 @@ class MoviesRepositoryImpl(
 
     override suspend fun getPopularMovies(page: Int): List<Movie> = fetchMovies(
         category = "popular",
-        page = page
+        page = page,
     )
 
     override suspend fun getTopRatedMovies(page: Int): List<Movie> = fetchMovies(
         category = "top_rated",
-        page = page
+        page = page,
     )
 
     override suspend fun getUpcomingMovies(page: Int): List<Movie> = fetchMovies(
         category = "upcoming",
-        page = page
+        page = page,
     )
 
     override suspend fun getNowPlayingMovies(page: Int): List<Movie> = fetchMovies(
         category = "now_playing",
-        page = page
+        page = page,
     )
 
     private suspend fun fetchMovies(category: String, page: Int): List<Movie> =
