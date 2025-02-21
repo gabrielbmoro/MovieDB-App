@@ -8,8 +8,8 @@ Add something here if you want
 
 ## Issues 🔖
 
-- Issue 01 -> <https://issues/here>
-- Issue 02 -> <https://issues/here2>
+- Closes #<https://issues/here>
+- Closes #<https://issues/here2>
 
 --
 
