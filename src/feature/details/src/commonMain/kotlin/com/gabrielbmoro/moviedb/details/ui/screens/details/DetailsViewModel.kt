@@ -99,7 +99,10 @@ class DetailsViewModel(
                     status = movieDetails.status,
                     genres = movieDetails.genres.toImmutableList(),
                     homepage = movieDetails.homepage,
-                    productionCompanies = movieDetails.productionCompanies.reduceToText(),
+                    productionCompanies = movieDetails
+                        .productionCompanies.takeIf { productionCompanies ->
+                            productionCompanies.isNotEmpty()
+                        }?.reduceToText(),
                     movieTitle = movieDetails.title,
                     movieOverview = movieDetails.overview,
                     movieLanguage = movieDetails.language,
