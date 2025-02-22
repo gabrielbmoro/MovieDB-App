@@ -42,15 +42,15 @@ class SearchViewModel(
             searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { searchQuery ->
                 val result = searchMovieUseCase.execute(
                     SearchMovieUseCase.Params(
-                        query = searchQuery
-                    )
+                        query = searchQuery,
+                    ),
                 )
 
                 val movieCardsInfos = result.map(::mapToMovieCardInfo).toImmutableList()
 
                 _uiState.update {
                     it.copy(
-                        results = movieCardsInfos
+                        results = movieCardsInfos,
                     )
                 }
             }
@@ -63,7 +63,7 @@ class SearchViewModel(
                 val searchQuery = intent.query
                 _uiState.update {
                     it.copy(
-                        searchQuery = searchQuery
+                        searchQuery = searchQuery,
                     )
                 }
 
@@ -76,7 +76,7 @@ class SearchViewModel(
                 _uiState.update {
                     it.copy(
                         searchQuery = TextFieldValue(""),
-                        results = persistentListOf()
+                        results = persistentListOf(),
                     )
                 }
             }
