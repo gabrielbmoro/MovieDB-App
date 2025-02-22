@@ -40,7 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
-    navigator: NavHostController
+    navigator: NavHostController,
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -62,7 +62,7 @@ fun MoviesScreen(
                         backEvent = null,
                         searchEvent = {
                             navigator.navigateToSearch("")
-                        }
+                        },
                     )
                 },
                 showTopBar = showTopBar,
@@ -74,9 +74,9 @@ fun MoviesScreen(
                 onSelectMoviesTab = {
                     lazyStaggeredGridState.scrollToInit(coroutineScope)
                 },
-                onSelectFavoriteTab = navigator::navigateToWishlist
+                onSelectFavoriteTab = navigator::navigateToWishlist,
             )
-        }
+        },
     ) {
         Column(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun MoviesScreen(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
                 )
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
             val lazyListState = rememberLazyListState()
             val isAtStart by rememberIsAtStartState(lazyListState)
@@ -98,11 +98,11 @@ fun MoviesScreen(
                 onClick = { filterMenuItem ->
                     viewModel.execute(
                         MoviesIntent.SelectFilterMenuItem(
-                            menuItem = filterMenuItem
-                        )
+                            menuItem = filterMenuItem,
+                        ),
                     )
                     lazyStaggeredGridState.scrollToInit(coroutineScope)
-                }
+                },
             )
 
             MoviesList(
@@ -116,7 +116,7 @@ fun MoviesScreen(
                 lazyStaggeredGridState = lazyStaggeredGridState,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .fillMaxSize()
+                    .fillMaxSize(),
             )
         }
     }

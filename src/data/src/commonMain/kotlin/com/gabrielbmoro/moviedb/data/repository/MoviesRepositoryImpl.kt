@@ -20,7 +20,7 @@ class MoviesRepositoryImpl(
 
     override suspend fun getMoviesFromFilter(filter: String, page: Int): List<Movie> = fetchMovies(
         category = filter,
-        page = page
+        page = page,
     )
 
     private suspend fun fetchMovies(category: String, page: Int): List<Movie> =

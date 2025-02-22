@@ -30,7 +30,7 @@ val featureMoviesModule = lazyModule {
     factory {
         MoviesInteractor(
             getMoviesFromFilter = get(),
-            getDefaultEmptyState = get()
+            getDefaultEmptyState = get(),
         )
     }
 

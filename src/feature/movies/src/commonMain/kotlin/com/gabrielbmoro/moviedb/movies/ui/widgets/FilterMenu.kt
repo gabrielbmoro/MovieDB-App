@@ -42,7 +42,7 @@ fun FilterMenu(
                 },
                 onClick = {
                     onClick(menuItem)
-                }
+                },
             )
         }
     }

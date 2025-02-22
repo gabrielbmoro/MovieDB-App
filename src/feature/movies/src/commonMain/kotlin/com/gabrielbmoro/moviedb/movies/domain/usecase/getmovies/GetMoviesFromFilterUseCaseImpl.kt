@@ -11,7 +11,7 @@ class GetMoviesFromFilterUseCaseImpl(
     override suspend fun execute(input: GetMoviesFromFilterUseCase.Params): List<Movie> = input.run {
         repository.getMoviesFromFilter(
             filter = filter.asString(),
-            page = page
+            page = page,
         )
     }
 
