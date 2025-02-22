@@ -32,7 +32,7 @@ class FavoriteMovieUseCaseImplTest {
                     moviePosterImageUrl = movie.posterImageUrl,
                     movieReleaseDate = movie.releaseDate,
                     movieVotesAverage = movie.votesAverage,
-                    toFavorite = false
+                    toFavorite = false,
                 )
 
             repository.isFavoriteMovie = true

@@ -39,7 +39,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun WishlistScreen(
     viewModel: WishlistViewModel = koinViewModel(),
-    navigator: NavHostController
+    navigator: NavHostController,
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -67,7 +67,7 @@ fun WishlistScreen(
                         lazyListState.scrollToItem(0)
                     }
                 },
-                onSelectMoviesTab = navigator::navigateToMovies
+                onSelectMoviesTab = navigator::navigateToMovies,
             )
         },
     ) {
@@ -77,21 +77,21 @@ fun WishlistScreen(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
                     start = 16.dp,
-                    end = 16.dp
+                    end = 16.dp,
                 )
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
             when {
                 uiState.value.isLoading -> {
                     BubbleLoader(
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
                 }
 
                 uiState.value.favoriteMovies?.isEmpty() == true -> {
                     EmptyState(
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
                 }
 
@@ -109,7 +109,7 @@ fun WishlistScreen(
                             modifier =
                             Modifier
                                 .fillMaxSize()
-                                .align(Alignment.TopCenter)
+                                .align(Alignment.TopCenter),
                         )
                     }
                 }
@@ -131,7 +131,7 @@ fun WishlistScreen(
                 viewModel.execute(WishlistUserIntent.ResultMessageReset)
                 viewModel.execute(WishlistUserIntent.LoadMovies)
             }
-        }
+        },
     )
 
     LaunchedEffect(Unit) {
@@ -141,14 +141,14 @@ fun WishlistScreen(
     DeleteConfirmationDialog(
         onDismissRequest = {
             viewModel.execute(
-                WishlistUserIntent.HideConfirmDeleteDialog
+                WishlistUserIntent.HideConfirmDeleteDialog,
             )
         },
         onPositiveAction = {
             viewModel.execute(
-                WishlistUserIntent.DeleteMovie
+                WishlistUserIntent.DeleteMovie,
             )
         },
-        visible = uiState.value.isDeleteAlertDialogVisible
+        visible = uiState.value.isDeleteAlertDialogVisible,
     )
 }

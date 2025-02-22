@@ -8,7 +8,7 @@ sealed interface DetailsUserIntent {
     data object FavoriteMovie : DetailsUserIntent
 
     data class LoadMovieDetails(
-        val movieId: Long
+        val movieId: Long,
     ): DetailsUserIntent
 }
 
@@ -28,7 +28,7 @@ data class DetailsUIState(
     val homepage: String? = null,
     val videoId: String? = null,
     val showVideo: Boolean = true,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 ) {
     companion object {
         fun empty() =
@@ -39,7 +39,7 @@ data class DetailsUIState(
                 movieLanguage = "",
                 movieVotesAverage = 0f,
                 movieOverview = "",
-                imageUrl = ""
+                imageUrl = "",
             )
     }
 }

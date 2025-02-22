@@ -47,7 +47,7 @@ class GetMoviesFromFilterUseCaseImplTest {
                 TODO("Not yet implemented")
             }
 
-        }
+        },
     )
 
     @Test

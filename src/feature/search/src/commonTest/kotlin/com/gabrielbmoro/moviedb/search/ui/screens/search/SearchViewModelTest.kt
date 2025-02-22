@@ -35,7 +35,7 @@ class SearchViewModelTest {
             val viewModel = SearchViewModel(
                 searchMovieUseCase = searchMovieUseCase,
                 ioCoroutinesDispatcher = StandardTestDispatcher(),
-                query = null
+                query = null,
             )
 
             // act
