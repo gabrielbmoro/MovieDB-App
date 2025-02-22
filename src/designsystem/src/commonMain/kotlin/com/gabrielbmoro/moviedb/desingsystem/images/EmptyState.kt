@@ -24,11 +24,11 @@ fun EmptyState(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = painterResource(Res.drawable.ic_sad_emoji),
-            contentDescription = stringResource(Res.string.alt_sad_emoji)
+            contentDescription = stringResource(Res.string.alt_sad_emoji),
         )
         Text(
             text = stringResource(Res.string.empty_view_title),
@@ -36,7 +36,7 @@ fun EmptyState(modifier: Modifier = Modifier) {
             modifier =
             Modifier
                 .padding(horizontal = 24.dp, vertical = 4.dp)
-                .wrapContentWidth(Alignment.CenterHorizontally)
+                .wrapContentWidth(Alignment.CenterHorizontally),
         )
     }
 }

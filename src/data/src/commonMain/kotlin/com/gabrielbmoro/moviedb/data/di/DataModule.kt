@@ -24,7 +24,7 @@ val dataModule =
     module {
         single {
             HttpClient(
-                engine = httpClientEngine()
+                engine = httpClientEngine(),
             ) {
                 install(Logging) {
                     logger = Logger.SIMPLE
@@ -36,7 +36,7 @@ val dataModule =
                         json =
                         Json {
                             ignoreUnknownKeys = true
-                        }
+                        },
                     )
                 }
 
@@ -45,7 +45,7 @@ val dataModule =
                         loadTokens {
                             BearerTokens(
                                 get(named("api_token")),
-                                ""
+                                "",
                             )
                         }
                     }
@@ -56,7 +56,7 @@ val dataModule =
         single {
             ApiService(
                 baseUrl = "https://api.themoviedb.org/3",
-                httpClient = get()
+                httpClient = get(),
             )
         }
 
@@ -67,7 +67,7 @@ val dataModule =
         single<MoviesRepository> {
             MoviesRepositoryImpl(
                 api = get(),
-                favoriteMoviesDAO = get()
+                favoriteMoviesDAO = get(),
             )
         }
     }

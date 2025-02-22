@@ -23,3 +23,9 @@ src/.DS_Store
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+.DS_Store
+.idea/
+
+src/.kotlin/
+**/build/**

@@ -15,7 +15,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 actual fun VideoPlayer(
     videoId: String,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val context = LocalContext.current
     val webView = remember {
@@ -50,7 +50,7 @@ actual fun VideoPlayer(
         webView.loadData(
             embedHTML,
             "text/html",
-            "UTF-8"
+            "UTF-8",
         )
     }
 }

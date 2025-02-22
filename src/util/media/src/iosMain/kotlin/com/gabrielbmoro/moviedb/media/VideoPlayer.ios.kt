@@ -11,7 +11,7 @@ import platform.WebKit.WKWebsiteDataStore
 @Composable
 actual fun VideoPlayer(
     videoId: String,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val webView = remember {
         val embedHTML = videoId.videoIdToEmbedHTML()
@@ -24,7 +24,7 @@ actual fun VideoPlayer(
         webView.configuration.limitsNavigationsToAppBoundDomains = false
         webView.loadHTMLString(
             string = embedHTML,
-            baseURL = null
+            baseURL = null,
         )
         webView
     }
@@ -34,6 +34,6 @@ actual fun VideoPlayer(
         factory = {
             webView
         },
-        update = { }
+        update = { },
     )
 }
