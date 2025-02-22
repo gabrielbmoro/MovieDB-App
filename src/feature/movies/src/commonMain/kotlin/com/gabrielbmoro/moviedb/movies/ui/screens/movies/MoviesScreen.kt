@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesList
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToSearch
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import moviedbapp.feature.movies.generated.resources.Res
 import moviedbapp.feature.movies.generated.resources.movies
@@ -38,7 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
-    navigator: NavHostController,
+    navigator: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -60,7 +62,7 @@ fun MoviesScreen(
                         backEvent = null,
                         searchEvent = {
                             navigator.navigateToSearch("")
-                        },
+                        }
                     )
                 },
                 showTopBar = showTopBar,
@@ -70,13 +72,11 @@ fun MoviesScreen(
             NavigationBottomBar(
                 currentTabIndex = MoviesTabIndex,
                 onSelectMoviesTab = {
-                    coroutineScope.launch {
-                        lazyStaggeredGridState.scrollToItem(0)
-                    }
+                    lazyStaggeredGridState.scrollToInit(coroutineScope)
                 },
-                onSelectFavoriteTab = navigator::navigateToWishlist,
+                onSelectFavoriteTab = navigator::navigateToWishlist
             )
-        },
+        }
     ) {
         Column(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun MoviesScreen(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
                 )
-                .fillMaxSize(),
+                .fillMaxSize()
         ) {
             val lazyListState = rememberLazyListState()
             val isAtStart by rememberIsAtStartState(lazyListState)
@@ -98,14 +98,11 @@ fun MoviesScreen(
                 onClick = { filterMenuItem ->
                     viewModel.execute(
                         MoviesIntent.SelectFilterMenuItem(
-                            menuItem = filterMenuItem,
-                        ),
+                            menuItem = filterMenuItem
+                        )
                     )
-
-                    coroutineScope.launch {
-                        lazyStaggeredGridState.scrollToItem(0)
-                    }
-                },
+                    lazyStaggeredGridState.scrollToInit(coroutineScope)
+                }
             )
 
             MoviesList(
@@ -119,9 +116,15 @@ fun MoviesScreen(
                 lazyStaggeredGridState = lazyStaggeredGridState,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .fillMaxSize(),
+                    .fillMaxSize()
             )
         }
+    }
+}
+
+private fun LazyStaggeredGridState.scrollToInit(coroutineScope: CoroutineScope) {
+    coroutineScope.launch {
+        scrollToItem(FIRST_INDEX)
     }
 }
 
