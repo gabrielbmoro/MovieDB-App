@@ -21,7 +21,7 @@ val fakeMovieDetail = MovieDetail(
     backdropImageUrl = "backgropImageUrl",
     language = "language",
     popularity = 2f,
-    posterImageUrl = "posterImageUrl"
+    posterImageUrl = "posterImageUrl",
 )
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {

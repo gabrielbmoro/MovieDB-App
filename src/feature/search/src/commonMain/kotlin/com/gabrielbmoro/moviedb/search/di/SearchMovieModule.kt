@@ -11,7 +11,7 @@ val featureSearchMovieModule = lazyModule {
         SearchViewModel(
             query = param.get(),
             searchMovieUseCase = get(),
-            ioCoroutinesDispatcher = Dispatchers.IO
+            ioCoroutinesDispatcher = Dispatchers.IO,
         )
     }
 }

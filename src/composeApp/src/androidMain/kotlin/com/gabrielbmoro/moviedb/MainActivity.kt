@@ -48,6 +48,6 @@ fun DynamicColorApp(content: @Composable () -> Unit) {
 
     MovieDBAppTheme(
         dynamicColorScheme = dynamicColorScheme,
-        content = content
+        content = content,
     )
 }
