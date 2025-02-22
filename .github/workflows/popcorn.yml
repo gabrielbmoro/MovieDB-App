@@ -8,7 +8,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+          run:
+            working-directory: ./src
     steps:
     - uses: actions/checkout@v4
     - name: set up JDK 17
@@ -19,6 +21,6 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x ./src/gradlew
+      run: chmod +x gradlew
     - name: Run popcorn
-      run: ./src/gradlew popcorn
+      run: ./gradlew popcorn
