@@ -4,9 +4,9 @@ on:
   pull_request:
     types: [opened, synchronize] # Trigger on PR opened or updated
     paths:
-      - "*.yml"
       - "**/*.gradle.kts"
       - "**/build-logic/src/**"
+      - "*.yml"
 
 jobs:
   popcorn:
