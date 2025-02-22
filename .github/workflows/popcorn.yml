@@ -2,6 +2,8 @@ name: Popcorn
 
 on:
   pull_request:
+    branches: 
+      - main
     types: [opened, synchronize] # Trigger on PR opened or updated
     paths:
       - "**/*.gradle.kts"
