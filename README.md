@@ -41,7 +41,7 @@ If your bearer token is:
 Bearer cHuckNoRRisIsAWarRior
 ```
 
-Your `gradle.properties` file (_Global properties_) should looks like:
+Your `local.properties` file (_Global properties_) should have a line:
 
 ```
 MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
