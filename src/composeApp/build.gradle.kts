@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.codingfeline.buildkonfig.compiler.FieldSpec
+import java.util.Properties
 
 plugins {
     id("kmp-app-plugin")
@@ -51,8 +52,15 @@ kotlin {
 buildkonfig {
     packageName = "com.gabrielbmoro.moviedb"
 
+    val properties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+
     defaultConfigs {
-        val apiToken = findProperty("MOVIE_DB_API_TOKEN") as? String
+        val apiToken = properties.getProperty("MOVIE_DB_API_TOKEN")
+            ?: findProperty("MOVIE_DB_API_TOKEN") as? String
             ?: System.getenv("MOVIE_DB_API_TOKEN")
         buildConfigField(FieldSpec.Type.STRING, "API_TOKEN", apiToken)
     }
