@@ -1,5 +1,5 @@
 package com.gabrielbmoro.moviedb.movies.domain.usecase
 
-interface OnEndScrollUseCase {
+interface FetchFirstPageUseCase {
     suspend operator fun invoke()
 }

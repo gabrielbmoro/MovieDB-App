@@ -6,7 +6,6 @@ import com.gabrielbmoro.moviedb.movies.domain.interactor.MoviesInteractor
 import com.gabrielbmoro.moviedb.movies.domain.model.MoviesState
 import com.gabrielbmoro.moviedb.platform.IntentExecutor
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -18,16 +17,16 @@ class MoviesViewModel(
 
     init {
         viewModelScope.launch(ioDispatcher) {
-            interactor.listenToPagination()
+            interactor.fetchFirstPage()
         }
     }
 
     override fun execute(intent: MoviesIntent) {
-        interactor.run {
-            when (intent) {
-                is MoviesIntent.OnEndScroll -> onEndScroll()
-                is MoviesIntent.SelectFilterMenuItem -> viewModelScope.launch(ioDispatcher) {
-                    onSelectFilter(intent.filterType)
+        viewModelScope.launch(ioDispatcher) {
+            interactor.run {
+                when (intent) {
+                    is MoviesIntent.OnEndScroll -> onEndScroll()
+                    is MoviesIntent.SelectFilterMenuItem -> onSelectFilter(intent.filterType)
                 }
             }
         }

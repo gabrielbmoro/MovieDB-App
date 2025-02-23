@@ -1,5 +1,5 @@
 package com.gabrielbmoro.moviedb.movies.domain.usecase
 
-interface ListenToPaginationUseCase {
+interface UpdateStateBasedOnCurrentPageUseCase {
     suspend operator fun invoke()
 }

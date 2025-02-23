@@ -1,48 +1,47 @@
 package com.gabrielbmoro.moviedb.movies.di
 
 import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.movies.data.MoviesPageDataSource
+import com.gabrielbmoro.moviedb.movies.data.MoviesPageRepositoryImpl
 import com.gabrielbmoro.moviedb.movies.domain.interactor.MoviesInteractor
 import com.gabrielbmoro.moviedb.movies.domain.mapper.MovieMapper
-import com.gabrielbmoro.moviedb.movies.domain.model.MoviesPaging
+import com.gabrielbmoro.moviedb.movies.domain.repository.MoviesPageRepository
 import com.gabrielbmoro.moviedb.movies.domain.state.MoviesStateHolder
 import com.gabrielbmoro.moviedb.movies.domain.state.MoviesStateHolderImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.FetchFirstPageUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFilterTypeOrder
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFilterTypeOrderImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFirstMoviesStateUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFirstMoviesStateUseCaseImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFirstSuccessStateUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesFromFilterUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesStateFromFilterSelectionUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesStateFromPaginationUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetUpdatedMoviesSuccessStateUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.OnEndScrollUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.OnSelectFilterUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateSelectedMenuItemUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnCurrentPageUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateToLoadedFromFilterUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateToLoadingStateUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.FetchFirstPageUseCaseImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFilterTypeOrderImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFirstMoviesStateUseCaseImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFirstSuccessStateUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetMoviesFromFilterUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetMoviesStateFromFilterSelectionUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetMoviesStateFromPaginationUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetUpdatedMoviesSuccessStateUseCaseImpl
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.UpdateSelectedMenuItemUseCaseImpl
-import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFirstSuccessStateUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.ListenToPaginationUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.OnEndScrollUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.OnSelectFilterUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnNextPageUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateToLoadedFromFilterUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateToLoadingStateUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFirstSuccessStateUseCaseImpl
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.ListenToPaginationUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.OnEndScrollUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.OnSelectFilterUseCaseImpl
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.UpdateStateBasedOnNextPageUseCaseImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.UpdateSelectedMenuItemUseCaseImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.UpdateStateBasedOnCurrentPageUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.UpdateToLoadedFromFilterUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.UpdateToLoadingStateUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieCardInfo
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesViewModel
 import com.gabrielbmoro.moviedb.platform.Mapper
-import com.gabrielbmoro.moviedb.platform.paging.PagingController
-import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.module.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.lazyModule
 
 val featureMoviesModule = lazyModule {
@@ -105,10 +104,11 @@ val featureMoviesModule = lazyModule {
         MovieMapper()
     }
 
-    factory<UpdateStateBasedOnNextPageUseCase> {
-        UpdateStateBasedOnNextPageUseCaseImpl(
+    factory<UpdateStateBasedOnCurrentPageUseCase> {
+        UpdateStateBasedOnCurrentPageUseCaseImpl(
             stateHolder = get(),
-            getMoviesStateFromPaginationUseCase = get(),
+            getMoviesStateFromPagination = get(),
+            repository = get(),
         )
     }
 
@@ -116,7 +116,7 @@ val featureMoviesModule = lazyModule {
         OnSelectFilterUseCaseImpl(
             updateToLoadingState = get(),
             updateToLoadedFromFilter = get(),
-            pagingController = get(named(MOVIES_PAGING_CONTROLLER)),
+            pageRepository = get(),
         )
     }
 
@@ -129,27 +129,32 @@ val featureMoviesModule = lazyModule {
 
     factory<OnEndScrollUseCase> {
         OnEndScrollUseCaseImpl(
-            pagingController = get(named(MOVIES_PAGING_CONTROLLER)),
+            pageRepository = get(),
+            updateStateBasedOnCurrentPage = get(),
         )
+    }
+
+    factory<MoviesPageRepository> {
+        MoviesPageRepositoryImpl(get())
+    }
+
+    single {
+        MoviesPageDataSource()
     }
 
     factory {
         MoviesInteractor(
             onSelectFilter = get(),
-            listenToPagination = get(),
+            fetchFirstPage = get(),
             onEndScroll = get(),
         )
     }
 
-    factory<ListenToPaginationUseCase> {
-        ListenToPaginationUseCaseImpl(
-            pagingController = get(named(MOVIES_PAGING_CONTROLLER)),
-            updateStateBasedOnNextPage = get(),
+    factory<FetchFirstPageUseCase> {
+        FetchFirstPageUseCaseImpl(
+            repository = get(),
+            updateStateBasedOCurrentPage = get(),
         )
-    }
-
-    single<PagingController>(named(MOVIES_PAGING_CONTROLLER)) {
-        MoviesPaging()
     }
 
     single<MoviesStateHolder> {

@@ -1,23 +1,25 @@
 package com.gabrielbmoro.moviedb.movies.domain.usecase.impl
 
+import com.gabrielbmoro.moviedb.movies.domain.repository.MoviesPageRepository
 import com.gabrielbmoro.moviedb.movies.domain.state.MoviesStateHolder
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesStateFromPaginationUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnNextPageUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnCurrentPageUseCase
 
-class UpdateStateBasedOnNextPageUseCaseImpl(
+class UpdateStateBasedOnCurrentPageUseCaseImpl(
     private val stateHolder: MoviesStateHolder,
-    private val getMoviesStateFromPaginationUseCase: GetMoviesStateFromPaginationUseCase,
-): UpdateStateBasedOnNextPageUseCase {
+    private val repository: MoviesPageRepository,
+    private val getMoviesStateFromPagination: GetMoviesStateFromPaginationUseCase,
+): UpdateStateBasedOnCurrentPageUseCase {
 
-    override suspend fun invoke(page: Int) {
+    override suspend fun invoke() {
         val currentState = stateHolder.state.value
         val filterType = currentState.menuItems.first { it.selected }.type
         stateHolder.updateState(
-            getMoviesStateFromPaginationUseCase.execute(
+            getMoviesStateFromPagination.execute(
                 GetMoviesStateFromPaginationUseCase.Params(
                     currentState = currentState,
                     filterType = filterType,
-                    pageIndex = page,
+                    pageIndex = repository.getCurrentPage() ?: return,
                 ),
             ),
         )
