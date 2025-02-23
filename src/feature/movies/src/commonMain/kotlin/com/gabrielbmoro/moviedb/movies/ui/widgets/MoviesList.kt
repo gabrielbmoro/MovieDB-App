@@ -9,9 +9,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -20,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieCardInfo
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -28,7 +27,7 @@ fun MoviesList(
     lazyStaggeredGridState: LazyStaggeredGridState,
     onSelectMovie: ((Long) -> Unit),
     onRequestMore: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val canScrollForward by remember {
         derivedStateOf {
@@ -47,7 +46,7 @@ fun MoviesList(
                 count = movies.size,
                 key = { index ->
                     movies[index].movieId
-                }
+                },
             ) { index ->
                 val movieCardInfo = movies[index]
                 MovieImage(
@@ -59,10 +58,10 @@ fun MoviesList(
                         .fillMaxWidth()
                         .height(300.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .clickable { onSelectMovie(movieCardInfo.movieId) }
+                        .clickable { onSelectMovie(movieCardInfo.movieId) },
                 )
             }
-        }
+        },
     )
 
     LaunchedEffect(key1 = canScrollForward) {
@@ -71,11 +70,3 @@ fun MoviesList(
         }
     }
 }
-
-@Immutable
-@Stable
-data class MovieCardInfo(
-    val movieId: Long,
-    val movieTitle: String,
-    val moviePosterUrl: String
-)

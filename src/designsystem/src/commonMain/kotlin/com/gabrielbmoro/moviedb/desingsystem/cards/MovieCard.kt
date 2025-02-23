@@ -2,18 +2,13 @@
 
 package com.gabrielbmoro.moviedb.desingsystem.cards
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -24,7 +19,6 @@ import moviedbapp.designsystem.generated.resources.poster
 import org.jetbrains.compose.resources.stringResource
 
 val CardViewImageHeight = 200.dp
-val PosterCardWidth = 120.dp
 val DeleteButtonSize = 48.dp
 
 @Composable
@@ -36,40 +30,34 @@ fun MovieCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit),
     enableDelete: Boolean = false,
-    onDeleteClick: (() -> Unit) = {}
+    onDeleteClick: (() -> Unit) = {},
 ) {
-    Box(modifier = modifier) {
-        Card(
-            modifier = Modifier.height(CardViewImageHeight),
-            shape = RoundedCornerShape(12.dp),
-            onClick = onClick
-        ) {
-            Box {
-                if (enableDelete) {
-                    DeleteButton(
-                        onClick = onDeleteClick,
-                        modifier = Modifier.align(Alignment.BottomEnd).size(DeleteButtonSize)
-                    )
-                }
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        onClick = onClick,
+    ) {
+        MovieImage(
+            imageUrl = imageUrl,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = CardViewImageHeight),
+            contentDescription = stringResource(Res.string.poster),
+        )
+        MovieCardInformation(
+            title = title,
+            votes = votes,
+            modifier = Modifier.fillMaxWidth()
+                .padding(horizontal = 6.dp),
+            description = description,
+        )
 
-                Row {
-                    MovieImage(
-                        imageUrl = imageUrl,
-                        contentScale = ContentScale.FillHeight,
-                        modifier =
-                        Modifier
-                            .width(PosterCardWidth)
-                            .fillMaxHeight(),
-                        contentDescription = stringResource(Res.string.poster)
-                    )
-                    MovieCardInformation(
-                        title = title,
-                        votes = votes,
-                        modifier = Modifier.fillMaxSize().padding(bottom = DeleteButtonSize),
-                        description = description
-                    )
-                }
-            }
+        if (enableDelete) {
+            DeleteButton(
+                onClick = onDeleteClick,
+                modifier = Modifier.size(DeleteButtonSize),
+            )
         }
     }
 }

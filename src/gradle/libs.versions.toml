@@ -12,8 +12,7 @@ room = "2.7.0-alpha13"
 junit = "4.13.2"
 arch_core = "2.2.0"
 coroutines = "1.10.1"
-gradle = "8.8.0"
-android_youtube_player_version = "12.1.1"
+gradle = "8.8.1"
 material = "1.12.0"
 ksp = "2.1.10-1.0.29"
 kover = "0.9.1"
@@ -28,9 +27,12 @@ buildkonfig = "0.15.2"
 sqlite = "2.5.0-SNAPSHOT"
 popcorn_guineapig = "2.0.5"
 coil = "3.1.0"
+detekt = "1.23.7"
 
 [libraries]
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit-version" }
@@ -60,7 +62,6 @@ koin_compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.
 koin_coroutines = { group = "io.insert-koin", name = "koin-core-coroutines", version.ref = "koin" }
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-android_youtube_player = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "android_youtube_player_version" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor_client_okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
