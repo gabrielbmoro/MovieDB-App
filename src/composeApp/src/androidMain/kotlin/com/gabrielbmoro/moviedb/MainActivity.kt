@@ -1,28 +1,27 @@
 package com.gabrielbmoro.moviedb
 
+import RootApp
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.gabrielbmoro.moviedb.desingsystem.theme.MovieDBAppTheme
-import RootApp
 import dev.theolm.rinku.compose.ext.Rinku
-import ext.syncTopBarsColors
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        syncTopBarsColors()
-
         setContent {
             Rinku {
                 DynamicColorApp {
+                    enableEdgeToEdge()
                     RootApp()
                 }
             }
@@ -49,6 +48,6 @@ fun DynamicColorApp(content: @Composable () -> Unit) {
 
     MovieDBAppTheme(
         dynamicColorScheme = dynamicColorScheme,
-        content = content
+        content = content,
     )
 }

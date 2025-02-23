@@ -12,7 +12,7 @@ val featureDetailsModule = lazyModule {
             getMovieDetailsUseCase = get(),
             favoriteMovieUseCase = get(),
             isFavoriteMovieUseCase = get(),
-            ioDispatcher = Dispatchers.IO
+            ioDispatcher = Dispatchers.IO,
         )
     }
 }

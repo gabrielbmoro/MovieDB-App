@@ -10,12 +10,12 @@ plugins {
 popcornGuineapigConfig {
     configuration = PopcornConfiguration(
         project = PopcornProject(
-            type = ProjectType.KMP
+            type = ProjectType.KMP,
         ),
         rules = listOf(
             DoNotWithRule(
-                notWith = listOf("data")
-            )
-        )
+                notWith = listOf("data"),
+            ),
+        ),
     )
 }

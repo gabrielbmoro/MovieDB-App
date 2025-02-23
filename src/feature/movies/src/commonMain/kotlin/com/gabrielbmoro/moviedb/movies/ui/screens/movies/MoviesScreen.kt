@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -26,6 +30,7 @@ import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesList
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToSearch
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import moviedbapp.feature.movies.generated.resources.Res
 import moviedbapp.feature.movies.generated.resources.movies
@@ -35,7 +40,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
-    navigator: NavHostController
+    navigator: NavHostController,
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -57,7 +62,7 @@ fun MoviesScreen(
                         backEvent = null,
                         searchEvent = {
                             navigator.navigateToSearch("")
-                        }
+                        },
                     )
                 },
                 showTopBar = showTopBar,
@@ -67,40 +72,37 @@ fun MoviesScreen(
             NavigationBottomBar(
                 currentTabIndex = MoviesTabIndex,
                 onSelectMoviesTab = {
-                    coroutineScope.launch {
-                        lazyStaggeredGridState.scrollToItem(0)
-                    }
+                    lazyStaggeredGridState.scrollToInit(coroutineScope)
                 },
-                onSelectFavoriteTab = {
-                    navigator.navigateToWishlist()
-                }
+                onSelectFavoriteTab = navigator::navigateToWishlist,
             )
-        }
+        },
     ) {
         Column(
             modifier = Modifier
                 .padding(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
                 )
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
+            val lazyListState = rememberLazyListState()
+            val isAtStart by rememberIsAtStartState(lazyListState)
+
             FilterMenu(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = if (isAtStart) 16.dp else 0.dp),
                 menuItems = uiState.value.menuItems,
+                lazyListState = lazyListState,
                 onClick = { filterMenuItem ->
                     viewModel.execute(
-                        Intent.SelectFilterMenuItem(
-                            menuItem = filterMenuItem
-                        )
+                        MoviesIntent.SelectFilterMenuItem(
+                            menuItem = filterMenuItem,
+                        ),
                     )
-
-                    coroutineScope.launch {
-                        lazyStaggeredGridState.scrollToItem(0)
-                    }
-                }
+                    lazyStaggeredGridState.scrollToInit(coroutineScope)
+                },
             )
 
             MoviesList(
@@ -109,12 +111,30 @@ fun MoviesScreen(
                     navigator.navigateToDetails(selectedMovieId)
                 },
                 onRequestMore = {
-                    viewModel.execute(Intent.RequestMoreMovies)
+                    viewModel.execute(MoviesIntent.RequestMoreMovies)
                 },
                 lazyStaggeredGridState = lazyStaggeredGridState,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .fillMaxSize(),
             )
         }
     }
 }
+
+private fun LazyStaggeredGridState.scrollToInit(coroutineScope: CoroutineScope) {
+    coroutineScope.launch {
+        scrollToItem(FIRST_INDEX)
+    }
+}
+
+@Composable
+private fun rememberIsAtStartState(lazyListState: LazyListState): State<Boolean> = remember {
+    derivedStateOf { lazyListState.isAtStart() }
+}
+
+private const val FIRST_INDEX = 0
+private const val NO_OFFSET = 0
+
+private fun LazyListState.isAtStart(): Boolean =
+    firstVisibleItemIndex == FIRST_INDEX && firstVisibleItemScrollOffset == NO_OFFSET

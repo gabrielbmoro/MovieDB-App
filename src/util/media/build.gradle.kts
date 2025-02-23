@@ -13,11 +13,17 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.ui)
             implementation(compose.foundation)
-            implementation(libs.kamel)
+            implementation(compose.material3)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
         }
 
         androidMain.dependencies {
-            implementation(libs.android.youtube.player)
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }

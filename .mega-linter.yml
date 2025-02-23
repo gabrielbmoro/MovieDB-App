@@ -14,7 +14,7 @@ APPLY_FIXES: none
 # default
 ENABLE_LINTERS:
   - YAML_PRETTIER
-  - MARKDOWN_MARKDOWN_TABLE_FORMATTER
+  - MARKDOWN_MARKDOWNLINT
   - KOTLIN_DETEKT
 
 DISABLE:
@@ -27,4 +27,6 @@ FILEIO_REPORTER: false
 
 # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 # DISABLE_ERRORS: true
-KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**"
+MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.json
+MARKDOWN_MARKDOWNLINT_DISABLE_ERRORS: false
+KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**" -p "lib/detekt-formatting-1.23.7.jar"

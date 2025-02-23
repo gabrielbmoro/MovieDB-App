@@ -24,7 +24,7 @@ fun NavigationBottomBar(
     currentTabIndex: Int,
     onSelectMoviesTab: () -> Unit,
     onSelectFavoriteTab: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavigationBar(modifier = modifier) {
         NavigationBarItem(
@@ -33,12 +33,12 @@ fun NavigationBottomBar(
             icon = {
                 Icon(
                     painter = painterResource(Res.drawable.ic_movies),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             },
             label = {
                 Text(stringResource(Res.string.movies))
-            }
+            },
         )
 
         NavigationBarItem(
@@ -47,12 +47,12 @@ fun NavigationBottomBar(
             icon = {
                 Icon(
                     painter = painterResource(Res.drawable.ic_wishlist),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             },
             label = {
                 Text(stringResource(Res.string.favorite))
-            }
+            },
         )
     }
 }

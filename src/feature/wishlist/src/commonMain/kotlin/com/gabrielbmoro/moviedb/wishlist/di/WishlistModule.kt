@@ -12,7 +12,7 @@ val featureWishlistModule = lazyModule {
             getFavoriteMoviesUseCase = get(),
             isFavoriteMovieUseCase = get(),
             ioCoroutinesDispatcher = Dispatchers.IO,
-            favoriteMovieUseCase = get()
+            favoriteMovieUseCase = get(),
         )
     }
 }
