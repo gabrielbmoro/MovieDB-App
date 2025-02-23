@@ -1,9 +1,9 @@
 package com.gabrielbmoro.moviedb.movies.domain.usecase.impl
 
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
-import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFilterTypeOrder
+import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFilterTypeOrderUseCase
 
-class GetFilterTypeOrderImpl : GetFilterTypeOrder {
+class GetFilterTypeOrderUseCaseImpl : GetFilterTypeOrderUseCase {
     override operator fun invoke(): List<FilterType> = listOf(
         FilterType.NowPlaying,
         FilterType.UpComing,

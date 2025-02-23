@@ -9,7 +9,7 @@ import com.gabrielbmoro.moviedb.movies.domain.repository.MoviesPageRepository
 import com.gabrielbmoro.moviedb.movies.domain.state.MoviesStateHolder
 import com.gabrielbmoro.moviedb.movies.domain.state.MoviesStateHolderImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.FetchFirstPageUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFilterTypeOrder
+import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFilterTypeOrderUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFirstMoviesStateUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetFirstSuccessStateUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesFromFilterUseCase
@@ -23,7 +23,7 @@ import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnCurrentP
 import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateToLoadedFromFilterUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateToLoadingStateUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.FetchFirstPageUseCaseImpl
-import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFilterTypeOrderImpl
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFilterTypeOrderUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFirstMoviesStateUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFirstSuccessStateUseCaseImpl
 import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetMoviesFromFilterUseCaseImpl
@@ -50,8 +50,8 @@ val featureMoviesModule = lazyModule {
         GetMoviesFromFilterUseCaseImpl(get())
     }
 
-    factory<GetFilterTypeOrder> {
-        GetFilterTypeOrderImpl()
+    factory<GetFilterTypeOrderUseCase> {
+        GetFilterTypeOrderUseCaseImpl()
     }
 
     factory<GetFirstMoviesStateUseCase> {
@@ -171,5 +171,3 @@ val featureMoviesModule = lazyModule {
         )
     }
 }
-
-private const val MOVIES_PAGING_CONTROLLER = "movies paging controller"
