@@ -1,8 +1,8 @@
-name: 'Java setup'
-description: 'Setup Java'
+name: "Java setup"
+description: "Setup Java"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - uses: actions/checkout@v4
     - name: set up JDK 17
@@ -11,4 +11,3 @@ runs:
         java-version: "17"
         distribution: "temurin"
         cache: gradle
-
