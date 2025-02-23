@@ -12,6 +12,8 @@ jobs:
       - name: Setup Java
         uses: ./.github/actions/java
       - name: Grant execute permission for gradlew
-        run: chmod +x ./src/gradlew
+        working-directory: ./src
+        run: chmod +x gradlew
       - name: Run popcorn
-        run: ./src/gradlew popcorn
+        working-directory: ./src
+        run: ./gradlew popcorn
