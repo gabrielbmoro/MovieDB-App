@@ -11,6 +11,7 @@ jobs:
       run:
         working-directory: ./src
     steps:
+      - uses: actions/checkout@v4
       - name: Setup Java
         uses: ./.github/actions/java/setup
       - name: Grant execute permission for gradlew
