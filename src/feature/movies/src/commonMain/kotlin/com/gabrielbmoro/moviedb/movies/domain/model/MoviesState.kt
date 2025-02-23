@@ -16,6 +16,6 @@ sealed interface MoviesState {
 
     data class Error(
         val errorType: MoviesErrorType,
-        override val menuItems: List<FilterMenuItem>
+        override val menuItems: List<FilterMenuItem>,
     ): MoviesState
 }

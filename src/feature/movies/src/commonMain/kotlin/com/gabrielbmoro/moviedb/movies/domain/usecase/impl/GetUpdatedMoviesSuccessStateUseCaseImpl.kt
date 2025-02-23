@@ -27,14 +27,14 @@ class GetUpdatedMoviesSuccessStateUseCaseImpl(
                     UpdateSelectedMenuItemUseCase.Params(
                         items = menuItems,
                         filterType = filterType,
-                    )
+                    ),
                 ),
             )
         } ?: getFirstSuccessStateUseCase.execute(
             GetFirstSuccessStateUseCase.Params(
                 filterType = filterType,
                 requestedMoreMovies = requestedMoreMovies,
-            )
+            ),
         )
     }
 

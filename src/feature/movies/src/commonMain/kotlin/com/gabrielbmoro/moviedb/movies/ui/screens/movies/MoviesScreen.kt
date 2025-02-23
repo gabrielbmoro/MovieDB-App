@@ -101,8 +101,8 @@ fun MoviesScreen(
                 onClick = { filterMenuItem ->
                     viewModel.execute(
                         MoviesIntent.SelectFilterMenuItem(
-                            filterType = filterMenuItem.type
-                        )
+                            filterType = filterMenuItem.type,
+                        ),
                     )
                     lazyStaggeredGridState.scrollToInit(coroutineScope)
                 },

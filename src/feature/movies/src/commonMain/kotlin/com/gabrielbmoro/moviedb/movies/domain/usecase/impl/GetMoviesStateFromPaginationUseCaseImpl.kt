@@ -8,7 +8,7 @@ import com.gabrielbmoro.moviedb.movies.domain.usecase.GetUpdatedMoviesSuccessSta
 
 class GetMoviesStateFromPaginationUseCaseImpl(
     private val getMoviesFromFilter: GetMoviesFromFilterUseCase,
-    private val getUpdatedMoviesSuccessState: GetUpdatedMoviesSuccessStateUseCase
+    private val getUpdatedMoviesSuccessState: GetUpdatedMoviesSuccessStateUseCase,
 ) : GetMoviesStateFromPaginationUseCase {
 
     override suspend fun execute(
@@ -27,7 +27,7 @@ class GetMoviesStateFromPaginationUseCaseImpl(
                     currentState = currentState,
                     filterType = filterType,
                     requestedMoreMovies = requestedMoreMovies,
-                )
+                ),
             )
         } ?: MoviesState.Error(
             errorType = MoviesErrorType.UNKNOWN,

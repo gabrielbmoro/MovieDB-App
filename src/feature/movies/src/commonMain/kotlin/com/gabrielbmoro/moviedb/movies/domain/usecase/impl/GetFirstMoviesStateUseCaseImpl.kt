@@ -15,6 +15,6 @@ class GetFirstMoviesStateUseCaseImpl(
                 type = it,
                 selected = it == FilterType.NowPlaying,
             )
-        }
+        },
     )
 }

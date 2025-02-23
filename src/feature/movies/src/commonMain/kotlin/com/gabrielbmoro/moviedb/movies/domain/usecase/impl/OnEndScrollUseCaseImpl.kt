@@ -6,7 +6,7 @@ import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnCurrentP
 
 class OnEndScrollUseCaseImpl(
     private val pageRepository: MoviesPageRepository,
-    private val updateStateBasedOnCurrentPage: UpdateStateBasedOnCurrentPageUseCase
+    private val updateStateBasedOnCurrentPage: UpdateStateBasedOnCurrentPageUseCase,
 ): OnEndScrollUseCase {
     override suspend fun invoke() {
         pageRepository.apply {

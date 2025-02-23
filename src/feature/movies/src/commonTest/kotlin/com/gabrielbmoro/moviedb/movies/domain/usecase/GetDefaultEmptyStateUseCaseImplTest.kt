@@ -32,7 +32,7 @@ class GetDefaultEmptyStateUseCaseImplTest {
                     type = FilterType.Popular,
                     selected = false,
                 ),
-            )
+            ),
         )
 
         val result = useCase()

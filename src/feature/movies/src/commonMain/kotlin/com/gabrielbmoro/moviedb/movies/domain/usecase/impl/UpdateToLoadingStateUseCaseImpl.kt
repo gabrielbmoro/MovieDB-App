@@ -17,10 +17,10 @@ class UpdateToLoadingStateUseCaseImpl(
                     menuItems = updateSelectedMenuItemUseCase.execute(
                         UpdateSelectedMenuItemUseCase.Params(
                             items = state.value.menuItems,
-                            filterType = selectedFilterType
-                        )
-                    )
-                )
+                            filterType = selectedFilterType,
+                        ),
+                    ),
+                ),
             )
         }
     }

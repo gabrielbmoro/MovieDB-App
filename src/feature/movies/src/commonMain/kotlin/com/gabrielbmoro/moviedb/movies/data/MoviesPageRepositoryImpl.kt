@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.movies.data
 import com.gabrielbmoro.moviedb.movies.domain.repository.MoviesPageRepository
 
 class MoviesPageRepositoryImpl(
-    private val dataSource: MoviesPageDataSource
+    private val dataSource: MoviesPageDataSource,
 ): MoviesPageRepository {
 
     override fun setCurrentPage(page: Int) {

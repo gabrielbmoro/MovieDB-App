@@ -15,9 +15,9 @@ class UpdateToLoadedFromFilterUseCaseImpl(
                 getMoviesStateFromFilterSelection.execute(
                     GetMoviesStateFromFilterSelectionUseCase.Params(
                         filterType = selectedFilterType,
-                        menuItems = state.value.menuItems
-                    )
-                )
+                        menuItems = state.value.menuItems,
+                    ),
+                ),
             )
         }
     }
