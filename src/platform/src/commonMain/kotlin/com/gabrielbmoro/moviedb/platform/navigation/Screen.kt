@@ -6,20 +6,20 @@ enum class Screen(
 ) {
     Movies(
         route = "movies",
-        firstSegment = null
+        firstSegment = null,
     ),
     Search(
         route = "Search",
-        firstSegment = "search"
+        firstSegment = "search",
     ),
     Details(
         route = "details",
-        firstSegment = "movie"
+        firstSegment = "movie",
     ),
     Wishlist(
         route = "wishlist",
-        firstSegment = "favorite"
-    )
+        firstSegment = "favorite",
+    ),
 }
 
 internal const val DETAILS_MOVIE_ID_ARGUMENT_KEY = "movieId"

@@ -22,12 +22,12 @@ val appModules = listOf(
     dataModule,
     domainModule,
     dataModule,
-    loggingModule
+    loggingModule,
 )
 
 val featureModules = listOf(
     featureDetailsModule,
     featureMoviesModule,
     featureSearchMovieModule,
-    featureWishlistModule
+    featureWishlistModule,
 )

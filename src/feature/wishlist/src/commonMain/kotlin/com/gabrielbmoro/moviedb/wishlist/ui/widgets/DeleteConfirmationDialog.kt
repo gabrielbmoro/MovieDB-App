@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.stringResource
 fun DeleteConfirmationDialog(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    onPositiveAction: () -> Unit
+    onPositiveAction: () -> Unit,
 ) {
     if (visible) {
         AlertDialog(
@@ -25,7 +25,7 @@ fun DeleteConfirmationDialog(
             text = { Text(text = stringResource(Res.string.confirm_delete_dialog_body)) },
             confirmButton = {
                 Button(
-                    onClick = onPositiveAction
+                    onClick = onPositiveAction,
                 ) {
                     Text(
                         text = stringResource(Res.string.confirm_delete_dialog_positive_action),
@@ -35,13 +35,13 @@ fun DeleteConfirmationDialog(
             dismissButton = {
                 Button(
                     onClick = onDismissRequest,
-                    colors = ButtonDefaults.outlinedButtonColors()
+                    colors = ButtonDefaults.outlinedButtonColors(),
                 ) {
                     Text(
                         text = stringResource(Res.string.confirm_delete_dialog_negative_action),
                     )
                 }
-            }
+            },
         )
     }
 }
