@@ -9,13 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src
     steps:
       - name: Setup Java
-        uses: ../.github/actions/java
+        uses: .github/actions/java
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x ./src/gradlew
       - name: Run popcorn
-        run: ./gradlew popcorn
+        run: ./src/gradlew popcorn
