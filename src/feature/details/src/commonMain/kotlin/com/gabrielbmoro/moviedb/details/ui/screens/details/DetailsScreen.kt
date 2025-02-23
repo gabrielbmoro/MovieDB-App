@@ -56,7 +56,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun DetailsScreen(
     movieId: Long,
     viewModel: DetailsViewModel = koinViewModel(),
-    navigator: NavHostController
+    navigator: NavHostController,
 ) {
     val scrollState = rememberScrollState()
     val uiState = viewModel.uiState.collectAsState()
@@ -74,14 +74,14 @@ fun DetailsScreen(
         onFavoriteMovie = {
             viewModel.execute(DetailsUserIntent.FavoriteMovie)
         },
-        onBackEvent = navigator::popBackStack
+        onBackEvent = navigator::popBackStack,
     )
 
     LaunchedEffect(movieId) {
         viewModel.execute(
             DetailsUserIntent.LoadMovieDetails(
-                movieId = movieId
-            )
+                movieId = movieId,
+            ),
         )
     }
 
@@ -96,21 +96,21 @@ private fun DetailsScreenMain(
     uiState: DetailsUIState,
     scrollState: ScrollState,
     onFavoriteMovie: () -> Unit,
-    onBackEvent: (() -> Unit)
+    onBackEvent: (() -> Unit),
 ) {
     Scaffold(
         topBar = {
             AnimatedVisibility(
                 visible = atTop,
                 enter = fadeIn(),
-                exit = fadeOut()
+                exit = fadeOut(),
             ) {
                 AppToolbarTitle(
                     title = uiState.movieTitle,
-                    backEvent = onBackEvent
+                    backEvent = onBackEvent,
                 )
             }
-        }
+        },
     ) {
         val modifier =
             Modifier
@@ -129,7 +129,7 @@ private fun DetailsScreenMain(
                     Modifier
                         .then(modifier)
                         .verticalScroll(scrollState),
-                    onFavoriteMovie = onFavoriteMovie
+                    onFavoriteMovie = onFavoriteMovie,
                 )
             }
         }
@@ -140,7 +140,7 @@ private fun DetailsScreenMain(
 private fun DetailsScreenError(modifier: Modifier) {
     Box(modifier = modifier) {
         ErrorMessage(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }
@@ -152,7 +152,7 @@ private fun DetailsScreenLoading(modifier: Modifier) {
             color = MaterialTheme.colorScheme.primary,
             modifier =
             Modifier
-                .align(Alignment.Center)
+                .align(Alignment.Center),
         )
     }
 }
@@ -161,27 +161,25 @@ private fun DetailsScreenLoading(modifier: Modifier) {
 private fun DetailsScreenContent(
     uiState: DetailsUIState,
     modifier: Modifier = Modifier,
-    onFavoriteMovie: () -> Unit
+    onFavoriteMovie: () -> Unit,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Box(
             modifier =
             Modifier
                 .height(280.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             when {
                 uiState.showVideo && uiState.videoId != null -> {
                     VideoPlayer(
                         videoId = uiState.videoId,
-                        shouldStartMuted = true,
-                        modifier =
-                        Modifier
+                        modifier = Modifier
                             .align(Alignment.TopCenter)
-                            .fillMaxSize()
+                            .fillMaxSize(),
                     )
                 }
 
@@ -193,7 +191,7 @@ private fun DetailsScreenContent(
                         Modifier
                             .align(Alignment.TopCenter)
                             .fillMaxSize(),
-                        contentDescription = stringResource(Res.string.poster)
+                        contentDescription = stringResource(Res.string.poster),
                     )
                 }
             }
@@ -203,77 +201,77 @@ private fun DetailsScreenContent(
             isFavorite = uiState.isFavorite,
             votesAverage = uiState.movieVotesAverage,
             onFavoriteMovie = onFavoriteMovie,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         if (uiState.genres != null) {
             GenresCard(
                 genres = uiState.genres,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
         SectionTitle(
             title = stringResource(Res.string.overview),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
             body = uiState.movieOverview,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         SectionTitle(
             title = stringResource(Res.string.popularity),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
             body = uiState.moviePopularity.toString(),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         SectionTitle(
             title = stringResource(Res.string.language),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
             body = uiState.movieLanguage,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         if (uiState.tagLine != null) {
             SectionTitle(
                 title = stringResource(Res.string.tagline),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             SectionBody(
                 body = uiState.tagLine,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
         if (uiState.productionCompanies != null) {
             SectionTitle(
                 title = stringResource(Res.string.production_companies),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             SectionBody(
                 body = uiState.productionCompanies,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
         if (uiState.homepage != null) {
             SectionTitle(
                 title = stringResource(Res.string.homepage),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
             TextUrl(
                 url = uiState.homepage,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
@@ -281,7 +279,7 @@ private fun DetailsScreenContent(
             modifier =
             Modifier
                 .height(240.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp),
         )
     }
 }

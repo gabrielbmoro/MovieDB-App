@@ -7,10 +7,11 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.lazyModule
 
 val featureSearchMovieModule = lazyModule {
-    viewModel {
+    viewModel { param ->
         SearchViewModel(
+            query = param.get(),
             searchMovieUseCase = get(),
-            ioCoroutinesDispatcher = Dispatchers.IO
+            ioCoroutinesDispatcher = Dispatchers.IO,
         )
     }
 }

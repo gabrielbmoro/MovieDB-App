@@ -3,14 +3,10 @@ package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.usecases.GetNowPlayingMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetPopularMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetTopRatedMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetUpcomingMoviesUseCase
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
-import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenuItem
-import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterType
-import com.gabrielbmoro.moviedb.movies.ui.widgets.MovieCardInfo
+import com.gabrielbmoro.moviedb.movies.domain.interactor.MoviesInteractor
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
@@ -27,15 +23,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
-) : ViewModel(), ViewModelMvi<Intent>, PagingController by SimplePaging() {
+    private val interactor: MoviesInteractor,
+) : ViewModel(), ViewModelMvi<MoviesIntent>, PagingController by SimplePaging() {
 
-    private val _uiState = MutableStateFlow(this.defaultEmptyState())
+    private val _uiState = MutableStateFlow(interactor.getDefaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private var _paginationJob: Job? = null
@@ -43,19 +36,19 @@ class MoviesViewModel(
     init {
         loggerHelper.plant(this::class)
 
-        execute(Intent.Setup)
+        execute(MoviesIntent.Setup)
     }
 
-    override fun execute(intent: Intent) {
+    override fun execute(intent: MoviesIntent) {
         when (intent) {
-            is Intent.RequestMoreMovies -> {
+            is MoviesIntent.RequestMoreMovies -> {
                 loggerHelper.logDebug(
-                    message = "${getSelectedFilterName()} - Request more movies...}"
+                    message = "${getSelectedFilterName()} - Request more movies...}",
                 )
                 requestNextPage()
             }
 
-            Intent.Setup -> {
+            MoviesIntent.Setup -> {
                 _paginationJob?.cancel()
 
                 resetPaging()
@@ -64,19 +57,19 @@ class MoviesViewModel(
                     currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
-                                    "Request received to fetch the page $pageIndex}"
+                                    "Request received to fetch the page $pageIndex}",
                         )
 
                         runCatching {
                             onRequestMoreMovies(pageIndex)
                         }.getOrNull()?.let { requestedMoreMovies ->
                             val requestedMoviesCardInfo = requestedMoreMovies.map(
-                                ::toMovieCardInfo
+                                ::toMovieCardInfo,
                             )
                             _uiState.update {
                                 it.copy(
                                     movieCardInfos = it.movieCardInfos.addAllDistinctly(
-                                        requestedMoviesCardInfo
+                                        requestedMoviesCardInfo,
                                     ).toPersistentList(),
                                     isLoading = false,
                                 )
@@ -86,87 +79,38 @@ class MoviesViewModel(
                 }
             }
 
-            is Intent.SelectFilterMenuItem -> {
+            is MoviesIntent.SelectFilterMenuItem -> {
                 _uiState.update {
                     it.copy(
                         selectedFilterMenu = intent.menuItem.type,
                         movieCardInfos = persistentListOf(),
                         isLoading = true,
                         menuItems = it.menuItems.updateAccordingToFilterType(
-                            newFilterType = intent.menuItem.type
-                        )
+                            newFilterType = intent.menuItem.type,
+                        ),
                     )
                 }
 
-                execute(Intent.Setup)
+                execute(MoviesIntent.Setup)
             }
         }
     }
 
     private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> {
-        return when (_uiState.value.selectedFilterMenu) {
-            FilterType.NowPlaying -> {
-                getNowPlayingMoviesUseCase.execute(
-                    GetNowPlayingMoviesUseCase.Params(pageIndex)
-                )
-            }
-
-            FilterType.TopRated -> {
-                getTopRatedMoviesUseCase.execute(
-                    GetTopRatedMoviesUseCase.Params(pageIndex)
-                )
-            }
-
-            FilterType.Popular -> {
-                getPopularMoviesUseCase.execute(
-                    GetPopularMoviesUseCase.Params(pageIndex)
-                )
-            }
-
-            FilterType.UpComing -> {
-                getUpcomingMoviesUseCase.execute(
-                    GetUpcomingMoviesUseCase.Params(
-                        pageIndex
-                    )
-                )
-            }
-        }
-    }
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = interactor.getMoviesFromFilter(
+        filter = uiState.value.selectedFilterMenu,
+        page = pageIndex,
+    )
 
     private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
         movieId = movie.id,
         movieTitle = movie.title,
-        moviePosterUrl = movie.posterImageUrl ?: ""
+        moviePosterUrl = movie.posterImageUrl.orEmpty(),
     )
 
-    private fun defaultEmptyState() =
-        MoviesUIState(
-            movieCardInfos = persistentListOf(),
-            selectedFilterMenu = FilterType.NowPlaying,
-            menuItems = listOf(
-                FilterMenuItem(
-                    selected = true,
-                    type = FilterType.NowPlaying
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.UpComing
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.TopRated
-                ),
-                FilterMenuItem(
-                    selected = false,
-                    type = FilterType.Popular
-                )
-            )
-        )
-
     private fun ImmutableList<MovieCardInfo>.addAllDistinctly(
-        newMovies: List<MovieCardInfo>
+        newMovies: List<MovieCardInfo>,
     ): ImmutableList<MovieCardInfo> {
         return toMutableList().apply {
             addAll(newMovies)
@@ -177,7 +121,7 @@ class MoviesViewModel(
     private fun List<FilterMenuItem>.updateAccordingToFilterType(newFilterType: FilterType): List<FilterMenuItem> {
         return map {
             it.copy(
-                selected = it.type == newFilterType
+                selected = it.type == newFilterType,
             )
         }
     }
