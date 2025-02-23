@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup Java
-        uses: ./.github/actions/java/setup
+        uses: ./.github/actions/java
       - name: Grant execute permission for gradlew
         run: chmod +x ./src/gradlew
       - name: Run popcorn
