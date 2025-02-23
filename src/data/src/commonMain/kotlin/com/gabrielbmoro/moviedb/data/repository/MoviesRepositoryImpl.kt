@@ -18,10 +18,12 @@ class MoviesRepositoryImpl(
     override suspend fun getFavoriteMovies(): List<Movie> =
         favoriteMoviesDAO.allFavoriteMovies().map { it.toMovie() }
 
-    override suspend fun getMoviesFromFilter(filter: String, page: Int): List<Movie> = fetchMovies(
-        category = filter,
-        page = page,
-    )
+    override suspend fun getMoviesFromFilter(filter: String, page: Int): List<Movie> {
+        return fetchMovies(
+            category = filter,
+            page = page,
+        )
+    }
 
     private suspend fun fetchMovies(category: String, page: Int): List<Movie> =
         api.getMovies(category, page).results?.toDomain().orEmpty()

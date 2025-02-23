@@ -2,6 +2,7 @@
 
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -18,6 +20,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -25,6 +28,7 @@ import com.gabrielbmoro.moviedb.desingsystem.toolbars.AnimatedAppToolbar
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
+import com.gabrielbmoro.moviedb.movies.domain.model.MoviesState
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenu
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesList
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
@@ -42,7 +46,7 @@ fun MoviesScreen(
     viewModel: MoviesViewModel = koinViewModel(),
     navigator: NavHostController,
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val coroutineScope = rememberCoroutineScope()
@@ -88,36 +92,40 @@ fun MoviesScreen(
         ) {
             val lazyListState = rememberLazyListState()
             val isAtStart by rememberIsAtStartState(lazyListState)
-
             FilterMenu(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = if (isAtStart) 16.dp else 0.dp),
-                menuItems = uiState.value.menuItems,
+                menuItems = uiState.menuItems,
                 lazyListState = lazyListState,
                 onClick = { filterMenuItem ->
                     viewModel.execute(
                         MoviesIntent.SelectFilterMenuItem(
-                            menuItem = filterMenuItem,
-                        ),
+                            filterType = filterMenuItem.type
+                        )
                     )
                     lazyStaggeredGridState.scrollToInit(coroutineScope)
                 },
             )
-
-            MoviesList(
-                movies = uiState.value.movieCardInfos,
-                onSelectMovie = { selectedMovieId ->
-                    navigator.navigateToDetails(selectedMovieId)
-                },
-                onRequestMore = {
-                    viewModel.execute(MoviesIntent.RequestMoreMovies)
-                },
-                lazyStaggeredGridState = lazyStaggeredGridState,
+            Box(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .fillMaxSize(),
-            )
+            ) {
+                (uiState as? MoviesState.Success)?.run {
+                    MoviesList(
+                        modifier = Modifier.fillMaxSize(),
+                        movies = movieCardInfos,
+                        onSelectMovie = { selectedMovieId ->
+                            navigator.navigateToDetails(selectedMovieId)
+                        },
+                        onEndOfPage = {
+                            viewModel.execute(MoviesIntent.OnEndScroll)
+                        },
+                        lazyStaggeredGridState = lazyStaggeredGridState,
+                    )
+                } ?: CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
         }
     }
 }

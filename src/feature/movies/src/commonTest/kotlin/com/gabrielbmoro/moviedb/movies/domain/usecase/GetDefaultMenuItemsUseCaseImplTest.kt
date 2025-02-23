@@ -2,12 +2,13 @@ package com.gabrielbmoro.moviedb.movies.domain.usecase
 
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetFilterTypeOrderImpl
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetDefaultMenuItemsUseCaseImplTest {
 
-    private val useCase = GetDefaultMenuItemsUseCaseImpl()
+    private val useCase = GetFilterTypeOrderImpl()
 
     @Test
     fun `should return the default menu items`() {

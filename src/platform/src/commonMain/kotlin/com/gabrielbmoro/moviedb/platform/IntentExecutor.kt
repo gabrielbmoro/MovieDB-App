@@ -1,5 +1,5 @@
 package com.gabrielbmoro.moviedb.platform
 
-interface ViewModelMvi<in UserIntent : Any> {
+interface IntentExecutor<in UserIntent : Any> {
     fun execute(intent: UserIntent)
 }

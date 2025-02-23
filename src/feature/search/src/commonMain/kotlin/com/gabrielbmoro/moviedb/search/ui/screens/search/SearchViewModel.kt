@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
-import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import com.gabrielbmoro.moviedb.platform.IntentExecutor
 import com.gabrielbmoro.moviedb.search.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -24,7 +24,7 @@ class SearchViewModel(
     private val query: String?,
     private val searchMovieUseCase: SearchMovieUseCase,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
-) : ViewModel(), ViewModelMvi<SearchUserIntent> {
+) : ViewModel(), IntentExecutor<SearchUserIntent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
