@@ -16,7 +16,6 @@ kotlin {
             implementation(compose.animation)
             implementation(compose.uiUtil)
             implementation(compose.components.resources)
-
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.collections.immutable)
