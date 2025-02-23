@@ -3,6 +3,9 @@ name: Popcorn
 on:
   pull_request:
     branches: ["main"]
+    paths:
+      - "**/build-logic/**"
+      - "**.gradle.kts"
 
 jobs:
   popcorn:
