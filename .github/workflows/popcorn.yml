@@ -16,4 +16,4 @@ jobs:
         run: chmod +x gradlew
       - name: Run popcorn
         working-directory: ./src
-        run: ./gradlew popcorn
+        run: ./gradlew popcorn -DMOVIE_DB_API_TOKEN=dumbValue
