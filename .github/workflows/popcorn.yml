@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup Java
-        uses: gabrielbmoro/MovieDB-App/.github/actions/java/setup@feature/break-pipeline-down
+        uses: ./.github/actions/java/setup
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Run popcorn
