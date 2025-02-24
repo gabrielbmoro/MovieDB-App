@@ -39,7 +39,7 @@ file using the Android Studio.
 1. Create an account [Movie DB API](https://www.themoviedb.org)
 (if you don't have it);
 2. Copy the value of your [Bearer token](https://developer.themoviedb.org/docs/authentication-application#bearer-token);
-3. Paste the value of your token your `gradle.properties` file (_Global properties_):
+3. Paste the value of your token your `local.properties` file (_Global properties_):
 
 If your bearer token is:
 
@@ -47,7 +47,7 @@ If your bearer token is:
 Bearer cHuckNoRRisIsAWarRior
 ```
 
-Your `gradle.properties` file (_Global properties_) should looks like:
+Your `local.properties` file (_Global properties_) should have a line:
 
 ```shell
 MOVIE_DB_API_TOKEN=cHuckNoRRisIsAWarRior
