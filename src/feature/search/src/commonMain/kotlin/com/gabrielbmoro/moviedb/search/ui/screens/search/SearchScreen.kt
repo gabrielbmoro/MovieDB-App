@@ -31,9 +31,9 @@ private const val DELAY_IN_MILLIS = 500L
 fun SearchScreen(
     query: String?,
     viewModel: SearchViewModel = koinViewModel(
-        parameters = { parametersOf(query) }
+        parameters = { parametersOf(query) },
     ),
-    navigator: NavHostController
+    navigator: NavHostController,
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -54,18 +54,18 @@ fun SearchScreen(
                             viewModel.execute(SearchUserIntent.ClearSearchField)
                         },
                         modifier = Modifier.fillMaxWidth(),
-                        focusRequester = focusRequester
+                        focusRequester = focusRequester,
                     )
                 },
-                backEvent = navigator::popBackStack
+                backEvent = navigator::popBackStack,
             )
-        }
+        },
     ) {
         Column(
             modifier =
             Modifier
                 .fillMaxSize()
-                .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp)
+                .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp),
         ) {
             if (uiState.value.results != null) {
                 MoviesResult(
@@ -73,7 +73,7 @@ fun SearchScreen(
                     modifier = Modifier.fillMaxWidth(),
                     navigateToDetailsScreen = { movieId ->
                         navigator.navigateToDetails(movieId)
-                    }
+                    },
                 )
             }
         }
@@ -87,6 +87,6 @@ fun SearchScreen(
                 delay(DELAY_IN_MILLIS)
                 keyboard?.show()
             }
-        }
+        },
     )
 }

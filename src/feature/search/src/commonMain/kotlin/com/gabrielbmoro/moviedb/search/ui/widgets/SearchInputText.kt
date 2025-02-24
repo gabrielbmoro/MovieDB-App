@@ -29,7 +29,7 @@ fun SearchInputText(
     onQueryChanged: ((TextFieldValue) -> Unit),
     onClearText: (() -> Unit),
     focusRequester: FocusRequester,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val trailingIcon: @Composable (() -> Unit)? =
         if (currentValue.text != "") {
@@ -38,12 +38,12 @@ fun SearchInputText(
                     onClick = onClearText,
                     modifier =
                     Modifier
-                        .size(48.dp)
+                        .size(48.dp),
                 ) {
                     Image(
                         imageVector = Icons.Filled.Close,
                         contentDescription = stringResource(Res.string.cancel),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
                     )
                 }
             }
@@ -58,16 +58,16 @@ fun SearchInputText(
         placeholder = {
             Text(
                 stringResource(Res.string.search_movie_placeholder),
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
         },
         colors =
         TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer
+            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
         trailingIcon = trailingIcon,
         maxLines = 1,
-        modifier = modifier.focusRequester(focusRequester)
+        modifier = modifier.focusRequester(focusRequester),
     )
 }

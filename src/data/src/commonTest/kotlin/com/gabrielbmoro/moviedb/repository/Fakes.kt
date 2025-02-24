@@ -25,7 +25,7 @@ val movieAndFavoriteMovieDTO =
             backdropImageUrl = "backgropImageUrl",
             language = "language",
             popularity = 2f,
-            posterImageUrl = "posterImageUrl"
+            posterImageUrl = "posterImageUrl",
         ),
         FavoriteMovieDTO(
             id = null,
@@ -37,8 +37,8 @@ val movieAndFavoriteMovieDTO =
             language = "language",
             popularity = 2f,
             posterImageUrl = "posterImageUrl",
-            movieId = 12L
-        )
+            movieId = 12L,
+        ),
     )
 
 val movieAndMovieResponse =
@@ -53,7 +53,7 @@ val movieAndMovieResponse =
             backdropImageUrl = BIG_SIZE_IMAGE_ADDRESS.plus("backdropPath"),
             language = "language",
             popularity = 2f,
-            posterImageUrl = SMALL_SIZE_IMAGE_ADDRESS.plus("posterPath")
+            posterImageUrl = SMALL_SIZE_IMAGE_ADDRESS.plus("posterPath"),
         ),
         MovieResponse(
             id = 12L,
@@ -68,8 +68,8 @@ val movieAndMovieResponse =
             original_language = "language",
             original_title = "originalTitle",
             video = null,
-            vote_count = null
-        )
+            vote_count = null,
+        ),
     )
 
 val videoStreamAndVideoStreamResponse =
@@ -82,7 +82,7 @@ val videoStreamAndVideoStreamResponse =
                 official = true,
                 site = "site",
                 size = 12,
-                type = "type"
+                type = "type",
             ),
             VideoStream(
                 id = "13",
@@ -91,8 +91,8 @@ val videoStreamAndVideoStreamResponse =
                 official = true,
                 site = "site1",
                 size = 13,
-                type = "type1"
-            )
+                type = "type1",
+            ),
         ),
         VideoStreamsResponse(
             results =
@@ -104,7 +104,7 @@ val videoStreamAndVideoStreamResponse =
                     official = true,
                     site = "site",
                     size = 12,
-                    type = "type"
+                    type = "type",
                 ),
                 VideoStreamsResponseItem(
                     id = "13",
@@ -113,10 +113,10 @@ val videoStreamAndVideoStreamResponse =
                     official = true,
                     site = "site1",
                     size = 13,
-                    type = "type1"
-                )
-            )
-        )
+                    type = "type1",
+                ),
+            ),
+        ),
     )
 
 val movieDetailsAndMovieDetailsResponse =
@@ -137,7 +137,7 @@ val movieDetailsAndMovieDetailsResponse =
             tagline = "tagline",
             budget = 2,
             imdbId = "imdbId",
-            genres = listOf("Comedy")
+            genres = listOf("Comedy"),
         ),
         MovieDetailResponse(
             overview = "overview",
@@ -158,6 +158,6 @@ val movieDetailsAndMovieDetailsResponse =
             genres = listOf(GenreResponse(id = 1, name = "Comedy")),
             vote_count = 123,
             video = true,
-            original_title = "title"
-        )
+            original_title = "title",
+        ),
     )

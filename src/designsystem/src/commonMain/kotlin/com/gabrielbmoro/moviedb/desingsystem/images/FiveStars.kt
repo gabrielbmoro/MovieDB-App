@@ -21,7 +21,7 @@ private const val INVALID_NUMBER = -1f
 
 private fun getDrawableAccordingToStarPosition(
     votes: Float,
-    position: Int
+    position: Int,
 ): DrawableResource {
     return when {
         votes >= position -> Res.drawable.ic_star
@@ -40,7 +40,7 @@ private fun getDrawableAccordingToStarPosition(
 @Composable
 fun FiveStars(
     votes: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val numberOfStars = (votes / AVERAGE_TOTAL) * STARS_AVAILABLE
     if (votes != INVALID_NUMBER) {
@@ -50,50 +50,50 @@ fun FiveStars(
                 painterResource(
                     getDrawableAccordingToStarPosition(
                         numberOfStars,
-                        0
-                    )
+                        0,
+                    ),
                 ),
-                contentDescription = ""
+                contentDescription = "",
             )
             Image(
                 painter =
                 painterResource(
                     getDrawableAccordingToStarPosition(
                         numberOfStars,
-                        1
-                    )
+                        1,
+                    ),
                 ),
-                contentDescription = ""
+                contentDescription = "",
             )
             Image(
                 painter =
                 painterResource(
                     getDrawableAccordingToStarPosition(
                         numberOfStars,
-                        2
-                    )
+                        2,
+                    ),
                 ),
-                contentDescription = ""
+                contentDescription = "",
             )
             Image(
                 painter =
                 painterResource(
                     getDrawableAccordingToStarPosition(
                         numberOfStars,
-                        3
-                    )
+                        3,
+                    ),
                 ),
-                contentDescription = ""
+                contentDescription = "",
             )
             Image(
                 painter =
                 painterResource(
                     getDrawableAccordingToStarPosition(
                         numberOfStars,
-                        4
-                    )
+                        4,
+                    ),
                 ),
-                contentDescription = ""
+                contentDescription = "",
             )
         }
     }

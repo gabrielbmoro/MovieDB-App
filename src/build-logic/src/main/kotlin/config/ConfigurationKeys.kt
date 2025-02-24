@@ -12,13 +12,13 @@ internal object ConfigurationKeys {
 
     val javaConfiguration = JavaConfiguration(
         javaVmTarget = "17",
-        version = JavaVersion.VERSION_17
+        version = JavaVersion.VERSION_17,
     )
 
     val sdkConfiguration = SdkConfiguration(
         minSdk = 28,
         targetSdk = 35,
-        compileSdk = 35
+        compileSdk = 35,
     )
 
     val ELIGIBLE_MODULES_FOR_COVERAGE = listOf(
@@ -26,6 +26,6 @@ internal object ConfigurationKeys {
         ModuleKeys.FEATURE_SEARCH_MODULE,
         ModuleKeys.FEATURE_MOVIES_MODULE,
         ModuleKeys.FEATURE_WISHLIST_MODULE,
-        ModuleKeys.DOMAIN_MODULE
+        ModuleKeys.DOMAIN_MODULE,
     )
 }

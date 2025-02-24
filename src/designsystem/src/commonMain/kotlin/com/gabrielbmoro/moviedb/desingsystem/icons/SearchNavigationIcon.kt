@@ -13,12 +13,12 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun SearchNavigationIcon(
     event: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     IconButton(onClick = event, modifier = modifier) {
         Icon(
             imageVector = Icons.Filled.Search,
-            contentDescription = stringResource(Res.string.search)
+            contentDescription = stringResource(Res.string.search),
         )
     }
 }
