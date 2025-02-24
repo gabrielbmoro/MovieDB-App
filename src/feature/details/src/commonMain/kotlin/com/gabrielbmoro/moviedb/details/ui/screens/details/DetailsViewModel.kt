@@ -44,7 +44,7 @@ class DetailsViewModel(
     private fun hideVideo() {
         _uiState.update {
             it.copy(
-                showVideo = false
+                showVideo = false,
             )
         }
     }
@@ -55,7 +55,7 @@ class DetailsViewModel(
 
         val params = movieDetails.toFavoriteUseCaseParam(
             movieId = movieId!!,
-            desiredValue = desiredValue
+            desiredValue = desiredValue,
         )
         viewModelScope.launch(ioDispatcher) {
             favoriteMovieUseCase.execute(params)
@@ -63,12 +63,12 @@ class DetailsViewModel(
             val result =
                 isFavoriteMovieUseCase.execute(
                     IsFavoriteMovieUseCase.Params(
-                        movieTitle = movieDetails.title
-                    )
+                        movieTitle = movieDetails.title,
+                    ),
                 )
             _uiState.update {
                 it.copy(
-                    isFavorite = result
+                    isFavorite = result,
                 )
             }
         }
@@ -99,13 +99,16 @@ class DetailsViewModel(
                     status = movieDetails.status,
                     genres = movieDetails.genres.toImmutableList(),
                     homepage = movieDetails.homepage,
-                    productionCompanies = movieDetails.productionCompanies.reduceToText(),
+                    productionCompanies = movieDetails
+                        .productionCompanies.takeIf { productionCompanies ->
+                            productionCompanies.isNotEmpty()
+                        }?.reduceToText(),
                     movieTitle = movieDetails.title,
                     movieOverview = movieDetails.overview,
                     movieLanguage = movieDetails.language,
                     moviePopularity = movieDetails.popularity,
                     movieVotesAverage = movieDetails.votesAverage,
-                    imageUrl = movieDetails.backdropImageUrl
+                    imageUrl = movieDetails.backdropImageUrl,
                 )
             }
         }
@@ -114,16 +117,16 @@ class DetailsViewModel(
     private suspend fun isMovieFavorite(movieTitle: String): Boolean {
         return isFavoriteMovieUseCase.execute(
             IsFavoriteMovieUseCase.Params(
-                movieTitle = movieTitle
-            )
+                movieTitle = movieTitle,
+            ),
         )
     }
 
     private suspend fun fetchMoviesDetails(): MovieDetail {
         return getMovieDetailsUseCase.execute(
             GetMovieDetailsUseCase.Params(
-                movieId = movieId!!
-            )
+                movieId = movieId!!,
+            ),
         )
     }
 
@@ -134,7 +137,7 @@ class DetailsViewModel(
 
 private fun MovieDetail.toFavoriteUseCaseParam(
     movieId: Long,
-    desiredValue: Boolean
+    desiredValue: Boolean,
 ): FavoriteMovieUseCase.Params {
     return FavoriteMovieUseCase.Params(
         movieTitle = title,
@@ -146,6 +149,6 @@ private fun MovieDetail.toFavoriteUseCaseParam(
         movieOverview = overview,
         movieId = movieId,
         movieBackdropImageUrl = backdropImageUrl,
-        toFavorite = desiredValue
+        toFavorite = desiredValue,
     )
 }

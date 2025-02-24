@@ -2,13 +2,11 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class GetMovieDetailsUseCaseImplTest {
     private lateinit var repository: FakeRepository
     private lateinit var useCase: GetMovieDetailsUseCase
@@ -21,7 +19,7 @@ class GetMovieDetailsUseCaseImplTest {
             size = 12,
             site = "YouTube",
             name = "name",
-            key = "a0s9d"
+            key = "a0s9d",
         )
     private val validStreamsList =
         listOf(
@@ -33,8 +31,8 @@ class GetMovieDetailsUseCaseImplTest {
                 size = 12,
                 site = "Twiter",
                 name = "name",
-                key = "a0s9d"
-            )
+                key = "a0s9d",
+            ),
         )
 
     @BeforeTest
@@ -65,7 +63,7 @@ class GetMovieDetailsUseCaseImplTest {
                     "",
                     "",
                     "",
-                    0f
+                    0f,
                 )
             repository.movieDetails =
                 MovieDetail(
@@ -85,7 +83,7 @@ class GetMovieDetailsUseCaseImplTest {
                     "",
                     "",
                     "",
-                    0f
+                    0f,
                 )
             repository.videoStreams = validStreamsList
 

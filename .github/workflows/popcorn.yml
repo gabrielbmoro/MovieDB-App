@@ -1,0 +1,24 @@
+name: Popcorn
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "**/build-logic/**"
+      - "**.gradle.kts"
+
+jobs:
+  popcorn:
+    runs-on: ubuntu-latest
+    env:
+      MOVIE_DB_API_TOKEN: ${{ secrets.MOVIE_DB_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: ./.github/actions/java
+      - name: Grant execute permission for gradlew
+        working-directory: ./src
+        run: chmod +x gradlew
+      - name: Run popcorn
+        working-directory: ./src
+        run: ./gradlew popcorn
