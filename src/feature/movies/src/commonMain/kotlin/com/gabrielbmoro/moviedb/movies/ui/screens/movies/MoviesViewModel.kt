@@ -25,7 +25,7 @@ class MoviesViewModel(
         viewModelScope.launch(ioDispatcher) {
             interactor.run {
                 when (intent) {
-                    is MoviesIntent.OnEndScroll -> onEndScroll()
+                    is MoviesIntent.OnEndScroll -> onRequestMoreMovies()
                     is MoviesIntent.SelectFilterMenuItem -> onSelectFilter(intent.filterType)
                 }
             }

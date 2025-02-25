@@ -16,7 +16,7 @@ import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesFromFilterUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesStateFromFilterSelectionUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesStateFromPaginationUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.GetUpdatedMoviesSuccessStateUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.OnEndScrollUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.OnRequestMoreMoviesUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.OnSelectFilterUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateSelectedMenuItemUseCase
 import com.gabrielbmoro.moviedb.movies.domain.usecase.UpdateStateBasedOnCurrentPageUseCase
@@ -127,7 +127,7 @@ val featureMoviesModule = lazyModule {
         )
     }
 
-    factory<OnEndScrollUseCase> {
+    factory<OnRequestMoreMoviesUseCase> {
         OnEndScrollUseCaseImpl(
             pageRepository = get(),
             updateStateBasedOnCurrentPage = get(),
@@ -146,7 +146,7 @@ val featureMoviesModule = lazyModule {
         MoviesInteractor(
             onSelectFilter = get(),
             fetchFirstPage = get(),
-            onEndScroll = get(),
+            onRequestMoreMovies = get(),
         )
     }
 
