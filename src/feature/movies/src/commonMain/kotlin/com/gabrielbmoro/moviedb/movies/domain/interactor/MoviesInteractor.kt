@@ -1,14 +1,11 @@
 package com.gabrielbmoro.moviedb.movies.domain.interactor
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
-import com.gabrielbmoro.moviedb.movies.domain.usecase.GetDefaultEmptyStateUseCase
-import com.gabrielbmoro.moviedb.movies.domain.usecase.getmovies.GetMoviesFromFilterUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.FetchFirstPageUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.OnRequestMoreMoviesUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.OnSelectFilterUseCase
 
 class MoviesInteractor(
-    private val getMoviesFromFilter: GetMoviesFromFilterUseCase,
-    val getDefaultEmptyState: GetDefaultEmptyStateUseCase,
-) {
-    suspend fun getMoviesFromFilter(filter: FilterType, page: Int): List<Movie> =
-        getMoviesFromFilter.execute(GetMoviesFromFilterUseCase.Params(filter, page))
-}
+    val onRequestMoreMovies: OnRequestMoreMoviesUseCase,
+    val onSelectFilter: OnSelectFilterUseCase,
+    val fetchFirstPage: FetchFirstPageUseCase,
+)

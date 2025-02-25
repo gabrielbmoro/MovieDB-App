@@ -6,7 +6,7 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import com.gabrielbmoro.moviedb.platform.IntentExecutor
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,7 +21,7 @@ class WishlistViewModel(
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
-) : ViewModel(), ViewModelMvi<WishlistUserIntent> {
+) : ViewModel(), IntentExecutor<WishlistUserIntent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)

@@ -26,7 +26,7 @@ fun MoviesList(
     movies: ImmutableList<MovieCardInfo>,
     lazyStaggeredGridState: LazyStaggeredGridState,
     onSelectMovie: ((Long) -> Unit),
-    onRequestMore: () -> Unit,
+    onEndOfPage: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val canScrollForward by remember {
@@ -66,7 +66,7 @@ fun MoviesList(
 
     LaunchedEffect(key1 = canScrollForward) {
         if (canScrollForward.not()) {
-            onRequestMore()
+            onEndOfPage()
         }
     }
 }

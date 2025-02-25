@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.movies.domain.usecase.getmovies
+package com.gabrielbmoro.moviedb.movies.domain.usecase
 
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.UseCase

@@ -6,7 +6,7 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import com.gabrielbmoro.moviedb.platform.IntentExecutor
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -21,7 +21,7 @@ class DetailsViewModel(
     private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val ioDispatcher: CoroutineDispatcher,
-) : ViewModel(), ViewModelMvi<DetailsUserIntent> {
+) : ViewModel(), IntentExecutor<DetailsUserIntent> {
 
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
