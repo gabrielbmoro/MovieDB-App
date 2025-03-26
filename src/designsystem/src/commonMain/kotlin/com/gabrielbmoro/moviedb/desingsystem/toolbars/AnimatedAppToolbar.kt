@@ -16,7 +16,11 @@ fun AnimatedAppToolbar(
         enter = expandVertically(
             tween(delayMillis = 200, durationMillis = 500),
         ),
-        exit = shrinkVertically(),
+        exit = shrinkVertically(
+            targetHeight = { fullHeight ->
+                fullHeight.div(2)
+            },
+        ),
     ) {
         appBar()
     }
