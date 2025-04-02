@@ -22,3 +22,15 @@ jobs:
       - name: Run popcorn
         working-directory: ./src
         run: ./gradlew popcorn
+      - name: Grant execute permission for group_popcorn_reports
+        run: chmod +x ./scripts/group_popcorn_reports.sh
+      - name: Read Markdown file
+        id: read_markdown
+        run: ./scripts/group_popcorn_reports.sh >> $GITHUB_ENV && echo "EOF" >> $GITHUB_ENV
+      - name: Post comment via API
+        if: github.event_name == 'pull_request'
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+               -d "{\"body\": \"$COMMENT_BODY\"}"
