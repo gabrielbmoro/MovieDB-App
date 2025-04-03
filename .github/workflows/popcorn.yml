@@ -28,6 +28,9 @@ jobs:
       - name: Read Markdown file
         id: read_markdown
         run: ./.github/workflows/scripts/group_popcorn_reports.sh >> $GITHUB_ENV && echo "EOF" >> $GITHUB_ENV
+      - name: Show content
+        id: show_content
+        run: echo "$GITHUB_ENV"
       - name: Post comment via API
         if: github.event_name == 'pull_request'
         run: |
