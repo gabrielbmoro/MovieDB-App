@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew popcorn -PerrorReportEnabled
 
       - name: Read Markdown file
-        if: always()  # ensures it runs no matter what  
+        if: always() # ensures it runs no matter what
         id: read_md
         run: |
           content=$(find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +)
@@ -36,7 +36,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create or update comment via GitHub API
-        if: always()  # ensures it runs no matter what
+        if: always() # ensures it runs no matter what
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}

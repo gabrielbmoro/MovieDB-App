@@ -11,7 +11,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kermit)
-            implementation(projects.domain)
         }
     }
 }
