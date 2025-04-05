@@ -64,7 +64,7 @@ jobs:
       - name: Fail the job if risky step failed
         if: always()  # ensures it runs no matter what
         run: |
-          if [ -f module_analysis.flag ]; then
+          if [ -f steps.read_md.outputs.content ]; then
             echo "❌ Module analysis step failed."
             exit 1
           else
