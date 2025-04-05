@@ -59,8 +59,8 @@ jobs:
             # If comment body is empty, we have a success, let's delete the comment
             if [ -z "$COMMENT_BODY" ]; then
               echo "Deleting empty comment..."
-              curl -s -X DELETE curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
-                "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments/$comment_id"
+              curl -s -X DELETE -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+                "$API_URL/repos/$REPO/issues/comments/$comment_id"
             else
               echo "Updating existing comment (ID: $comment_id)..."
               curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
