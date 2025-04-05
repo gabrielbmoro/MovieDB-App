@@ -47,7 +47,7 @@ jobs:
             "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments")
 
           # Extract the comment ID if it contains our marker
-          comment_id=$(echo "$comments" | jq -r '.[] | select(.user.login=="github-actions[bot]") | select(.body | contains("<!-- pr-md-comment -->")) | .id')
+          comment_id=$(echo "$comments" | jq -r '.[] | select(.user.login=="github-actions[bot]") | select(.body | contains("Module analysis")) | .id')
 
           if [ -n "$comment_id" ]; then
             echo "Updating existing comment (ID: $comment_id)..."
