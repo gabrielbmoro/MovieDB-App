@@ -16,8 +16,8 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
-            /*// Introduce architecture violation error
-            implementation(projects.domain)*/
+            // Introducing violation
+            implementation(projects.domain)
         }
 
         androidMain.dependencies {

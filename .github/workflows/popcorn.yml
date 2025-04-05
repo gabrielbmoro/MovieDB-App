@@ -21,8 +21,7 @@ jobs:
         run: chmod +x gradlew
       - name: Run popcorn
         working-directory: ./src
-        run: ./gradlew popcorn
-        continue-on-error: true
+        run: ./gradlew popcorn -PerrorReportEnabled
       - name: Grant execute permission for group_popcorn_reports
         run: chmod +x ./.github/workflows/scripts/group_popcorn_reports.sh
       - name: Read Markdown file
@@ -37,4 +36,4 @@ jobs:
           curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                -H "Accept: application/vnd.github.v3+json" \
                https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-               -d "{\"body\": \"test\"}"
+               -d "{\"body\": \"$COMMENT_BODY\"}"

@@ -33,7 +33,6 @@ kotlin {
 }
 
 popcornGuineapigConfig {
-    hasReportEnabled = true
     configuration = PopcornConfiguration(
         project = PopcornProject(
             type = ProjectType.KMP,
