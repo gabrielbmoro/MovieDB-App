@@ -32,6 +32,20 @@ jobs:
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+      - name: Find previous comment
+      - name: Find previous comment
+        id: find_comment
+        uses: peter-evans/find-comment@v3
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '<!-- pr-md-comment -->'
+      - name: Delete previous comment (if exists)
+        if: steps.find_comment.outputs.comment-id != ''
+        uses: peter-evans/delete-comment@v3
+        with:
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Comment on PR
         uses: peter-evans/create-or-update-comment@v4
         with:
