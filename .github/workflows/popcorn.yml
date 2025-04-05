@@ -64,7 +64,4 @@ jobs:
       - name: Fail the job if module analysis has failed
         if: always()  # ensures it runs no matter what
         run: |
-          if [ "${{ steps.module_analysis.conclusion }}" = "failure" ]; then
-            echo "Step failed"
-          exit 1
-          fi
+          exit "${{ steps.module_analysis.outputs.exit_code }}"
