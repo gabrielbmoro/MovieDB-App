@@ -24,10 +24,10 @@ jobs:
       - name: Run popcorn
         id: module_analysis
         working-directory: ./src
-        run: |
-          { ./gradlew popcorn -PerrorReportEnabled 2>error.txt; echo "exit_code=$?" >> $GITHUB_OUTPUT; }
+        run: ./gradlew popcorn -PerrorReportEnabled
 
       - name: Read Markdown file
+        if: always()  # ensures it runs no matter what  
         id: read_md
         run: |
           content=$(find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +)
@@ -36,6 +36,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create or update comment via GitHub API
+        if: always()  # ensures it runs no matter what
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
@@ -64,11 +65,4 @@ jobs:
             curl -s -X POST -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
               -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
               "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments"
-          fi
-
-      - name: Fail the job if module analysis has failed
-        if: always()  # ensures it runs no matter what
-        run: |
-          if [ "${{ steps.module_analysis.outputs.content }}"  == "exit_code=1"]; then
-            exit 1
           fi
