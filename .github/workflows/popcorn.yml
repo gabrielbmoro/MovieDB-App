@@ -19,12 +19,14 @@ jobs:
       - name: Grant execute permission for gradlew
         working-directory: ./src
         run: chmod +x gradlew
+      - name: Grant execute permission for popcorngp.sh
+        working-directory: ./src
+        run: chmod +x ./scripts/popcorngp.sh
       - name: Run popcorn
         id: module_analysis
         working-directory: ./src
         run: |
-          ./gradlew popcorn -PerrorReportEnabled --stacktrace
-          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          ./scripts/popcorngp.sh >> $GITHUB_OUTPUT
         continue-on-error: true
       - name: Read Markdown file
         id: read_md
