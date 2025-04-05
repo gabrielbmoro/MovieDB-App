@@ -1,5 +1,5 @@
 #!/bin/bash
-./gradlew popcorn -PerrorReportEnabled
+./src/gradlew popcorn -PerrorReportEnabled
 EXIT_CODE=$?
 
 find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} + >> $COMMENT_BODY

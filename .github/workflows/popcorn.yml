@@ -20,9 +20,7 @@ jobs:
         working-directory: ./src
         run: chmod +x gradlew
       - name: Grant execute permission for popcorngp.sh
-        working-directory: ./src
         run: chmod +x ./github/workflows/scripts/popcorngp.sh
       - name: Run popcorn
         id: module_analysis
-        working-directory: ./src
         run: ./github/workflows/scripts/popcorngp.sh
