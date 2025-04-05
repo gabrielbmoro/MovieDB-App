@@ -25,10 +25,9 @@ jobs:
         id: module_analysis
         working-directory: ./src
         run: |
-          ./gradlew popcorn -PerrorReportEnabled --stacktrace
-          if [ "$?" -eq 1]; then
-            echo "failure" >> $GITHUB_OUTPUT  
-          fi
+          ./gradlew popcorn -PerrorReportEnabled
+          OUTPUT = "exit_code = $>";
+          echo "$OUTPUT" >> $GITHUB_OUTPUT
         continue-on-error: true
 
       - name: Read Markdown file
