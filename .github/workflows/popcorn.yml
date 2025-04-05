@@ -22,7 +22,7 @@ jobs:
       - name: Run popcorn
         id: module_analysis
         working-directory: ./src
-        run: ./gradlew popcorn -PerrorReportEnabled
+        run: ./gradlew popcorn -PerrorReportEnabled --stacktrace
         continue-on-error: true
       - name: Read Markdown file
         id: read_md
