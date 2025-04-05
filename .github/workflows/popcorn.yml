@@ -24,6 +24,7 @@ jobs:
         working-directory: ./src
         run: |
           ./gradlew popcorn -PerrorReportEnabled --stacktrace
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
         continue-on-error: true
       - name: Read Markdown file
         id: read_md
@@ -65,4 +66,8 @@ jobs:
       - name: Fail the job if module analysis has failed
         if: always()  # ensures it runs no matter what
         run: |
-          echo("${{ steps.module_analysis.outputs.content }}")
+          echo "Exit code from Gradle: ${{ steps.module_analysis.outputs.exit_code }}"
+          if [ "${{ steps.module_analysis.outputs.exit_code }}" -ne 0 ]; then
+            echo "❌ Gradle failed"
+            exit 1
+          fi
