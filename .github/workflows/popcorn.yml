@@ -55,11 +55,20 @@ jobs:
           # Extract the comment ID if it contains our marker
           comment_id=$(echo "$comments" | jq -r '.[] | select(.user.login=="github-actions[bot]") | select(.body | contains("Module analysis")) | .id')
 
-          if [ -n "$comment_id" ]; then
-            echo "Updating existing comment (ID: $comment_id)..."
-            curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
-              -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
-              "$API_URL/repos/$REPO/issues/comments/$comment_id"
+          if [ -n "$comment_id" ]; then            
+            # If comment body is empty, we have a success, let's delete the comment
+            if [ -z "$COMMENT_BODY" ]; then
+              echo "Deleting empty comment..."
+              curl -s -X DELETE \
+                -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                https://api.github.com/repos/${{ github.repository }}/issues/comments/$COMMENT_ID
+            else
+              echo "Updating existing comment (ID: $comment_id)..."
+              curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+                -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
+                "$API_URL/repos/$REPO/issues/comments/$comment_id"
+            fi
           else
             echo "Creating new comment..."
             curl -s -X POST -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
