@@ -23,31 +23,40 @@ jobs:
         working-directory: ./src
         run: ./gradlew popcorn -PerrorReportEnabled
         continue-on-error: true
-      - name: Grant execute permission for print_popcorn_error_report
-        run: chmod +x ./.github/workflows/scripts/print_popcorn_error_report.sh
       - name: Read Markdown file
         id: read_md
         run: |
-          content=$(./.github/workflows/scripts/print_popcorn_error_report.sh)
+          content=$(find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +)
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-      - name: Find previous comment
-        id: find_comment
-        uses: peter-evans/find-comment@v3
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: '<!-- pr-md-comment -->'
-      - name: Delete previous comment (if exists)
-        if: steps.find_comment.outputs.comment-id != ''
-        uses: peter-evans/delete-comment@v3
-        with:
-          comment-id: ${{ steps.find_comment.outputs.comment-id }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Comment on PR
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: ${{ steps.read_md.outputs.content }}
+      - name: Create or update comment via GitHub API
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          COMMENT_BODY: ${{ steps.read_md.outputs.content }}
+        run: |
+          API_URL="https://api.github.com"
+          AUTH_HEADER="Authorization: Bearer $GITHUB_TOKEN"
+          ACCEPT_HEADER="Accept: application/vnd.github+json"
+          USER_AGENT="User-Agent: my-bot"
+
+          # Find existing comment
+          comments=$(curl -s -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+            "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments")
+
+          # Extract the comment ID if it contains our marker
+          comment_id=$(echo "$comments" | jq -r '.[] | select(.user.login=="github-actions[bot]") | select(.body | contains("<!-- pr-md-comment -->")) | .id')
+
+          if [ -n "$comment_id" ]; then
+            echo "Updating existing comment (ID: $comment_id)..."
+            curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+              -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
+              "$API_URL/repos/$REPO/issues/comments/$comment_id"
+          else
+            echo "Creating new comment..."
+            curl -s -X POST -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+              -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
+              "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments"
+          fi
