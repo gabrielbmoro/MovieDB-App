@@ -20,6 +20,7 @@ jobs:
         working-directory: ./src
         run: chmod +x gradlew
       - name: Run popcorn
+        id: module_analysis
         working-directory: ./src
         run: ./gradlew popcorn -PerrorReportEnabled
         continue-on-error: true
@@ -59,4 +60,13 @@ jobs:
             curl -s -X POST -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
               -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
               "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments"
+          fi
+      - name: Fail the job if risky step failed
+        if: always()  # ensures it runs no matter what
+        run: |
+          if [ -f module_analysis.flag ]; then
+            echo "❌ Module analysis step failed."
+            exit 1
+          else
+            echo "✅ All good!"
           fi
