@@ -16,7 +16,6 @@ kotlin {
             implementation(compose.material3)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
-
         }
 
         androidMain.dependencies {
