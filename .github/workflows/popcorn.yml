@@ -25,9 +25,7 @@ jobs:
         id: module_analysis
         working-directory: ./src
         run: |
-          ./gradlew popcorn -PerrorReportEnabled
-          OUTPUT = "exit_code = $>";
-          echo "$OUTPUT" >> $GITHUB_OUTPUT
+          { ./gradlew popcorn -PerrorReportEnabled 2>error.txt; echo "exit_code=$?" >> $GITHUB_OUTPUT; }
         continue-on-error: true
 
       - name: Read Markdown file
@@ -72,6 +70,6 @@ jobs:
       - name: Fail the job if module analysis has failed
         if: always()  # ensures it runs no matter what
         run: |
-          if [ "${{ steps.module_analysis.outputs.content }}"  == "failure"]; then
+          if [ "${{ steps.module_analysis.outputs.content }}"  == "exit_code=1"]; then
             exit 1
           fi
