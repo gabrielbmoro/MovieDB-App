@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find . -type f -regex ".*/build/reports/popcornguineapig/.*\\.md" -exec cat {} +
+find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +

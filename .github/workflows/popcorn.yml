@@ -22,6 +22,7 @@ jobs:
       - name: Run popcorn
         working-directory: ./src
         run: ./gradlew popcorn -PerrorReportEnabled
+        continue-on-error: true
       - name: Grant execute permission for group_popcorn_reports
         run: chmod +x ./.github/workflows/scripts/group_popcorn_reports.sh
       - name: Read Markdown file
