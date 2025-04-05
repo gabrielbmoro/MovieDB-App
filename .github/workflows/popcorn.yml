@@ -61,12 +61,10 @@ jobs:
               -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
               "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments"
           fi
-      - name: Fail the job if risky step failed
+      - name: Fail the job if module analysis has failed
         if: always()  # ensures it runs no matter what
         run: |
-          if [ -f steps.read_md.outputs.content ]; then
-            echo "❌ Module analysis step failed."
-            exit 1
-          else
-            echo "✅ All good!"
+          if [ "${{ steps.module_analysis.conclusion }}" = "failure" ]; then
+            echo "Step failed"
+          exit 1
           fi
