@@ -28,7 +28,7 @@ jobs:
       - name: Read Markdown file
         id: read_md
         run: |
-          content=$(cat ./.github/workflows/scripts/print_popcorn_error_report.sh)
+          content=$(./.github/workflows/scripts/print_popcorn_error_report.sh)
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
