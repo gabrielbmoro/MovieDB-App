@@ -26,7 +26,6 @@ jobs:
         working-directory: ./src
         run: |
           { ./gradlew popcorn -PerrorReportEnabled 2>error.txt; echo "exit_code=$?" >> $GITHUB_OUTPUT; }
-        continue-on-error: true
 
       - name: Read Markdown file
         id: read_md
