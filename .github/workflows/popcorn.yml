@@ -16,11 +16,62 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup Java
         uses: ./.github/actions/java
+
       - name: Grant execute permission for gradlew
         working-directory: ./src
         run: chmod +x gradlew
-      - name: Grant execute permission for popcorngp.sh
-        run: chmod +x ./github/workflows/scripts/popcorngp.sh
+
       - name: Run popcorn
         id: module_analysis
-        run: ./github/workflows/scripts/popcorngp.sh
+        working-directory: ./src
+        run: |
+          ./gradlew popcorn -PerrorReportEnabled --stacktrace
+          echo "$?" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Read Markdown file
+        id: read_md
+        run: |
+          content=$(find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create or update comment via GitHub API
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          COMMENT_BODY: ${{ steps.read_md.outputs.content }}
+        run: |
+          API_URL="https://api.github.com"
+          AUTH_HEADER="Authorization: Bearer $GITHUB_TOKEN"
+          ACCEPT_HEADER="Accept: application/vnd.github+json"
+          USER_AGENT="User-Agent: my-bot"
+
+          # Find existing comment
+          comments=$(curl -s -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+            "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments")
+
+          # Extract the comment ID if it contains our marker
+          comment_id=$(echo "$comments" | jq -r '.[] | select(.user.login=="github-actions[bot]") | select(.body | contains("Module analysis")) | .id')
+
+          if [ -n "$comment_id" ]; then
+            echo "Updating existing comment (ID: $comment_id)..."
+            curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+              -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
+              "$API_URL/repos/$REPO/issues/comments/$comment_id"
+          else
+            echo "Creating new comment..."
+            curl -s -X POST -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
+              -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
+              "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments"
+          fi
+
+      - name: Fail the job if module analysis has failed
+        if: always()  # ensures it runs no matter what
+        run: |
+          echo("${}")
+          if [ "${{ steps.module_analysis.outputs.content }}"  -eq 1]; then
+            exit 1
+          fi
