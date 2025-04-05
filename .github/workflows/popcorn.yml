@@ -33,7 +33,6 @@ jobs:
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Find previous comment
-      - name: Find previous comment
         id: find_comment
         uses: peter-evans/find-comment@v3
         with:
