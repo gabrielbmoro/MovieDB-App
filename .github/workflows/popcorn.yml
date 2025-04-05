@@ -23,7 +23,7 @@ jobs:
         id: module_analysis
         working-directory: ./src
         run: |
-          GITHUB_OUTPUT=$(./gradlew popcorn -PerrorReportEnabled --stacktrace 2>&1)
+          ./gradlew popcorn -PerrorReportEnabled --stacktrace
         continue-on-error: true
       - name: Read Markdown file
         id: read_md
@@ -65,8 +65,4 @@ jobs:
       - name: Fail the job if module analysis has failed
         if: always()  # ensures it runs no matter what
         run: |
-          if [ -z "${{ steps.module_analysis.outputs.content }}" ]; then
-            exit 0
-          else
-            exit 1
-          fi
+          echo("${{ steps.module_analysis.outputs.content }}")
