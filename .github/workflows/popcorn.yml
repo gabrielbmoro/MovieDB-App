@@ -6,6 +6,7 @@ on:
     paths:
       - "**/build-logic/**"
       - "**.kts"
+      - "**/popcorn.yml"
 
 jobs:
   popcorn:
