@@ -35,8 +35,6 @@ jobs:
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
-            - name: Read Markdown file
         
       - name: Post comment with module analysis
         if: failure()
