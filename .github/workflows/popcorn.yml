@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew popcorn -PerrorReportEnabled
 
       - name: Read Markdown file
-        if: always() # ensures it runs no matter what
+        if: failure()
         id: read_md
         run: |
           content=$(find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +)
@@ -36,41 +36,15 @@ jobs:
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Create or update comment via GitHub API
-        if: always() # ensures it runs no matter what
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          COMMENT_BODY: ${{ steps.read_md.outputs.content }}
-        run: |
-          API_URL="https://api.github.com"
-          AUTH_HEADER="Authorization: Bearer $GITHUB_TOKEN"
-          ACCEPT_HEADER="Accept: application/vnd.github+json"
-          USER_AGENT="User-Agent: my-bot"
+      - name: Post comment with module analysis
+        if: failure()
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          comment-tag: module-analysis-report
+          message: ${{ steps.read_md.outputs.content }}
 
-          # Find existing comment
-          comments=$(curl -s -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
-            "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments")
-
-          # Extract the comment ID if it contains our marker
-          comment_id=$(echo "$comments" | jq -r '.[] | select(.user.login=="github-actions[bot]") | select(.body | contains("Module analysis")) | .id')
-
-          if [ -n "$comment_id" ]; then            
-            # If comment body is empty, we have a success, let's delete the comment
-            if [ -z "$COMMENT_BODY" ]; then
-              echo "Deleting empty comment..."
-              curl -s -X DELETE -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
-                "$API_URL/repos/$REPO/issues/comments/$comment_id"
-            else
-              echo "Updating existing comment (ID: $comment_id)..."
-              curl -s -X PATCH -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
-                -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
-                "$API_URL/repos/$REPO/issues/comments/$comment_id"
-            fi
-          else
-            echo "Creating new comment..."
-            curl -s -X POST -H "$AUTH_HEADER" -H "$ACCEPT_HEADER" -H "$USER_AGENT" \
-              -d "$(jq -nc --arg body "$COMMENT_BODY" '{body: $body}')" \
-              "$API_URL/repos/$REPO/issues/$PR_NUMBER/comments"
-          fi
+      - name: Delete comment with module analysis
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          comment-tag: module-analysis-report
+          mode: delete
