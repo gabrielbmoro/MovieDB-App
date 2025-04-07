@@ -9,8 +9,5 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)
         }
-        commonMain.dependencies {
-            implementation(projects.designsystem)
-        }
     }
 }
