@@ -35,7 +35,7 @@ jobs:
           echo "content<<EOF" >> $GITHUB_OUTPUT
           echo "$content" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-        
+
       - name: Post comment with module analysis
         if: failure()
         uses: thollander/actions-comment-pull-request@v3
