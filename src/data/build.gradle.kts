@@ -14,6 +14,8 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+            // Viola a regra popcorn
+            implementation(projects.feature.details)
         }
 
         commonTest.dependencies {
