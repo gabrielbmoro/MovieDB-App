@@ -15,20 +15,16 @@ kotlin {
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
         }
-
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)
         }
-
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
         }
-
         androidUnitTest.dependencies {
             implementation(libs.bundles.test)
         }
-
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
