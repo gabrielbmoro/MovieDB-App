@@ -14,7 +14,6 @@ import ext.configureTestOptions
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
-    id("org.jetbrains.kotlinx.kover")
     id("io.github.codandotv.popcorngp")
 }
 
