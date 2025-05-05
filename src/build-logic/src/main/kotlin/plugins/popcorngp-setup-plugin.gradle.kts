@@ -15,7 +15,9 @@ popcornGuineapigParentConfig {
         PopcornChildConfiguration(
             moduleNameRegex = ":util:[a-z]+",
             skippedRules = null,
-            rules = listOf(NoDependencyRule())
+            rules = listOf(
+                NoDependencyRule(),
+            ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":feature:[a-z]+",
@@ -24,12 +26,14 @@ popcornGuineapigParentConfig {
                 DoNotWithRule(
                     notWith = listOf("data"),
                 ),
-            )
+            ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":domain",
             skippedRules = null,
-            rules = listOf(NoDependencyRule())
+            rules = listOf(
+                NoDependencyRule(),
+            ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":data",
@@ -38,7 +42,7 @@ popcornGuineapigParentConfig {
                 JustWithRule(
                     justWith = listOf("domain"),
                 ),
-            )
+            ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":designsystem",
@@ -47,7 +51,7 @@ popcornGuineapigParentConfig {
                 JustWithRule(
                     justWith = listOf("media"),
                 ),
-            )
-        )
+            ),
+        ),
     )
 }
