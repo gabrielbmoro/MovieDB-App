@@ -11,6 +11,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.domain)
+            implementation(projects.feature.details)
             implementation(libs.bundles.ktor)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
