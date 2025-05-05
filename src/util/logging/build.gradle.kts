@@ -1,5 +1,5 @@
 plugins {
-    id("util-setup-plugin")
+    id("kmp-library-plugin")
     id("koin-plugin-setup")
 }
 
