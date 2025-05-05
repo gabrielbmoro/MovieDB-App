@@ -1,8 +1,3 @@
-import com.github.codandotv.popcorn.domain.input.PopcornConfiguration
-import com.github.codandotv.popcorn.domain.input.PopcornProject
-import com.github.codandotv.popcorn.domain.input.ProjectType
-import com.github.codandotv.popcorn.domain.rules.JustWithRule
-
 @Suppress("DSL_SCOPE_VIOLATION", "ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
@@ -24,17 +19,4 @@ kotlin {
             implementation(projects.util.media)
         }
     }
-}
-
-popcornGuineapigConfig {
-    configuration = PopcornConfiguration(
-        project = PopcornProject(
-            type = ProjectType.KMP,
-        ),
-        rules = listOf(
-            JustWithRule(
-                justWith = listOf("media"),
-            ),
-        ),
-    )
 }

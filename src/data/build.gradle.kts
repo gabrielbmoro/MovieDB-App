@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION",  "ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    id("data-setup-plugin")
+    id("kmp-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
     alias(libs.plugins.room.plugin)

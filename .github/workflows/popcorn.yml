@@ -25,7 +25,7 @@ jobs:
       - name: Run popcorn
         id: module_analysis
         working-directory: ./src
-        run: ./gradlew popcorn -PerrorReportEnabled
+        run: ./gradlew popcornParent -PerrorReportEnabled
 
       - name: Read Markdown file
         if: failure()
