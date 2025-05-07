@@ -5,6 +5,8 @@ import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
+import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesFromFilterUseCase
+import com.gabrielbmoro.moviedb.movies.domain.usecase.impl.GetMoviesFromFilterUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

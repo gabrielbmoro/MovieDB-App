@@ -1,8 +1,9 @@
-package com.gabrielbmoro.moviedb.movies.domain.usecase.getmovies
+package com.gabrielbmoro.moviedb.movies.domain.usecase.impl
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
+import com.gabrielbmoro.moviedb.movies.domain.usecase.GetMoviesFromFilterUseCase
 
 class GetMoviesFromFilterUseCaseImpl(
     private val repository: MoviesRepository,
