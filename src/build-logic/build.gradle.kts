@@ -13,7 +13,6 @@ repositories {
 dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.gradle)
-    implementation(libs.kover.gradle.plugin)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
     implementation(libs.popcorn.guineapig)
 

@@ -5,7 +5,8 @@ on:
     branches: ["main"]
     paths:
       - "**/build-logic/**"
-      - "**.gradle.kts"
+      - "**.kts"
+      - "**/popcorn.yml"
 
 jobs:
   popcorn:
@@ -16,9 +17,34 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup Java
         uses: ./.github/actions/java
+
       - name: Grant execute permission for gradlew
         working-directory: ./src
         run: chmod +x gradlew
+
       - name: Run popcorn
+        id: module_analysis
         working-directory: ./src
-        run: ./gradlew popcorn
+        run: ./gradlew popcornParent -PerrorReportEnabled
+
+      - name: Read Markdown file
+        if: failure()
+        id: read_md
+        run: |
+          content=$(find . -type f -regex ".*/build/reports/popcornguineapig/errorReport.md" -exec cat {} +)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Post comment with module analysis
+        if: failure()
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          comment-tag: module-analysis-report
+          message: ${{ steps.read_md.outputs.content }}
+
+      - name: Delete comment with module analysis
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          comment-tag: module-analysis-report
+          mode: delete
