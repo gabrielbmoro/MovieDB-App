@@ -14,14 +14,12 @@ popcornGuineapigParentConfig {
     children = listOf(
         PopcornChildConfiguration(
             moduleNameRegex = ":util:[a-z]+",
-            skippedRules = null,
             rules = listOf(
                 NoDependencyRule(),
             ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":feature:[a-z]+",
-            skippedRules = null,
             rules = listOf(
                 DoNotWithRule(
                     notWith = listOf("data"),
@@ -30,14 +28,12 @@ popcornGuineapigParentConfig {
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":domain",
-            skippedRules = null,
             rules = listOf(
                 NoDependencyRule(),
             ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":data",
-            skippedRules = null,
             rules = listOf(
                 JustWithRule(
                     justWith = listOf("domain"),
@@ -46,7 +42,6 @@ popcornGuineapigParentConfig {
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":designsystem",
-            skippedRules = null,
             rules = listOf(
                 JustWithRule(
                     justWith = listOf("media"),
