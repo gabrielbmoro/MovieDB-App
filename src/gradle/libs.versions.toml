@@ -25,7 +25,7 @@ rinku = "1.4.0"
 buildkonfig = "0.15.2"
 sqlite = "2.5.1"
 popcorn_guineapig = "3.1.2"
-coil = "3.1.0"
+coil = "3.2.0"
 detekt = "1.23.8"
 
 [libraries]
