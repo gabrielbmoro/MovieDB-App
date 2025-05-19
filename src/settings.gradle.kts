@@ -33,3 +33,27 @@ include(
 )
 
 rootProject.name = "MovieDBApp"
+
+plugins {
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.9.1"
+}
+
+/**
+ * To run kover aggregated plugin you need:
+ * ./gradlew test -Pkover koverHtmlReport
+ */
+kover {
+    enableCoverage()
+
+    reports {
+        excludedClasses.addAll(
+            listOf(
+                "*.BuildConfig",
+                "*_Factory*",
+                "*Activity",
+                "*ScreenKt*",
+                "*.generated.resources*",
+            ),
+        )
+    }
+}

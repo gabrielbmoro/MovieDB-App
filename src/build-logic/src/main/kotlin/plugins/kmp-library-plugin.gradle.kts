@@ -1,9 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.github.codandotv.popcorn.domain.input.PopcornConfiguration
-import com.github.codandotv.popcorn.domain.input.PopcornProject
-import com.github.codandotv.popcorn.domain.input.ProjectType
-import com.github.codandotv.popcorn.domain.rules.NoDependencyRule
 import config.ConfigurationKeys
 import ext.configureCompileOptions
 import ext.configureDefaultConfig
@@ -14,8 +10,6 @@ import ext.configureTestOptions
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
-    id("org.jetbrains.kotlinx.kover")
-    id("io.github.codandotv.popcorngp")
 }
 
 android {
@@ -30,15 +24,4 @@ android {
 
 kotlin {
     configurePlatformTargets()
-}
-
-popcornGuineapigConfig {
-    configuration = PopcornConfiguration(
-        project = PopcornProject(
-            type = ProjectType.KMP,
-        ),
-        rules = listOf(
-            NoDependencyRule(),
-        ),
-    )
 }
