@@ -3,6 +3,7 @@ package config
 import model.JavaConfiguration
 import model.SdkConfiguration
 import org.gradle.api.JavaVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 internal object ConfigurationKeys {
 
@@ -13,6 +14,7 @@ internal object ConfigurationKeys {
     val javaConfiguration = JavaConfiguration(
         javaVmTarget = "17",
         version = JavaVersion.VERSION_17,
+        jvmTarget = JvmTarget.JVM_17,
     )
 
     val sdkConfiguration = SdkConfiguration(
