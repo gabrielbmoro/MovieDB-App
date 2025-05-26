@@ -9,7 +9,7 @@ class FakeRepository : MoviesRepository {
     lateinit var searchResult: List<Movie>
     override suspend fun getMoviesFromFilter(
         filter: String,
-        page: Int
+        page: Int,
     ): List<Movie> {
         TODO("Not yet implemented")
     }
