@@ -2,10 +2,9 @@ package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.toImmutableList
@@ -17,9 +16,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class WishlistViewModel(
-    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+    private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
-    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
 ) : ViewModel(), ViewModelMvi<WishlistUserIntent> {
 
@@ -52,13 +50,11 @@ class WishlistViewModel(
                     ),
                 )
                 val isFavoriteAfterDeletion =
-                    isFavoriteMovieUseCase.execute(
-                        IsFavoriteMovieUseCase.Params(
+                    repository.checkIsAFavoriteMovie(
                             movieTitle = movie.title,
-                        ),
                     )
                 if (!isFavoriteAfterDeletion) {
-                    val favoriteMovies = getFavoriteMoviesUseCase.execute(Unit)
+                    val favoriteMovies = repository.getFavoriteMovies()
                         .map(::toMovieCardInfo)
                         .toImmutableList()
                     _uiState.update {
@@ -90,7 +86,7 @@ class WishlistViewModel(
 
     private fun handleLoadMovies() {
         viewModelScope.launch(ioCoroutinesDispatcher) {
-            val movies = getFavoriteMoviesUseCase.execute(Unit)
+            val movies = repository.getFavoriteMovies()
                 .map(::toMovieCardInfo)
                 .toImmutableList()
             _uiState.update {

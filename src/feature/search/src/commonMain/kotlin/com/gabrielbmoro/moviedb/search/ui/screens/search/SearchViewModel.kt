@@ -3,8 +3,8 @@ package com.gabrielbmoro.moviedb.search.ui.screens.search
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.usecases.SearchMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.search.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.persistentListOf
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @OptIn(FlowPreview::class)
 class SearchViewModel(
     private val query: String?,
-    private val searchMovieUseCase: SearchMovieUseCase,
+    private val repository: MoviesRepository,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
 ) : ViewModel(), ViewModelMvi<SearchUserIntent> {
 
@@ -40,10 +40,8 @@ class SearchViewModel(
 
         viewModelScope.launch(ioCoroutinesDispatcher) {
             searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { searchQuery ->
-                val result = searchMovieUseCase.execute(
-                    SearchMovieUseCase.Params(
-                        query = searchQuery,
-                    ),
+                val result = repository.searchMovieBy(
+                    query = searchQuery,
                 )
 
                 val movieCardsInfos = result.map(::mapToMovieCardInfo).toImmutableList()

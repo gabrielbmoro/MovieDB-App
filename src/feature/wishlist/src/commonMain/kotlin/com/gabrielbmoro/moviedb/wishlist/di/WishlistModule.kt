@@ -9,10 +9,9 @@ import org.koin.dsl.lazyModule
 val featureWishlistModule = lazyModule {
     viewModel {
         WishlistViewModel(
-            getFavoriteMoviesUseCase = get(),
-            isFavoriteMovieUseCase = get(),
-            ioCoroutinesDispatcher = Dispatchers.IO,
+            repository = get(),
             favoriteMovieUseCase = get(),
+            ioCoroutinesDispatcher = Dispatchers.IO,
         )
     }
 }

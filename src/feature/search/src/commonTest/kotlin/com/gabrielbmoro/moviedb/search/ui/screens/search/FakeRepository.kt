@@ -1,15 +1,12 @@
-package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
+package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
-import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 
 class FakeRepository : MoviesRepository {
-    lateinit var favoriteMovies: List<Movie>
-    var isFavorite: Boolean = false
-
+    lateinit var searchResult: List<Movie>
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
@@ -18,7 +15,7 @@ class FakeRepository : MoviesRepository {
     }
 
     override suspend fun getFavoriteMovies(): List<Movie> {
-        return favoriteMovies
+        TODO("Not yet implemented")
     }
 
     override suspend fun favorite(movie: Movie) {
@@ -30,7 +27,7 @@ class FakeRepository : MoviesRepository {
     }
 
     override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
-        return isFavorite
+        TODO("Not yet implemented")
     }
 
     override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
@@ -42,16 +39,6 @@ class FakeRepository : MoviesRepository {
     }
 
     override suspend fun searchMovieBy(query: String): List<Movie> {
-        TODO("Not yet implemented")
-    }
-
-}
-
-class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
-    var timesCalled: Int = 0
-        private set
-
-    override suspend fun execute(input: FavoriteMovieUseCase.Params) {
-        timesCalled++
+        return searchResult
     }
 }
