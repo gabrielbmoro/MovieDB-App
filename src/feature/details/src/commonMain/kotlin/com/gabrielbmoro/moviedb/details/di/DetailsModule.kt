@@ -11,7 +11,7 @@ val featureDetailsModule = lazyModule {
         DetailsViewModel(
             getMovieDetailsUseCase = get(),
             favoriteMovieUseCase = get(),
-            isFavoriteMovieUseCase = get(),
+            repository = get(),
             ioDispatcher = Dispatchers.IO,
         )
     }

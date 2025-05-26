@@ -1,16 +1,50 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
+import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
+import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.GetFavoriteMoviesUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 
-class FakeGetFavoriteMoviesUseCase : GetFavoriteMoviesUseCase {
-    lateinit var result: List<Movie>
+class FakeRepository : MoviesRepository {
+    lateinit var favoriteMovies: List<Movie>
+    var isFavorite: Boolean = false
 
-    override suspend fun execute(input: Unit): List<Movie> {
-        return result
+    override suspend fun getMoviesFromFilter(
+        filter: String,
+        page: Int
+    ): List<Movie> {
+        TODO("Not yet implemented")
     }
+
+    override suspend fun getFavoriteMovies(): List<Movie> {
+        return favoriteMovies
+    }
+
+    override suspend fun favorite(movie: Movie) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun unFavorite(movieTitle: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
+        return isFavorite
+    }
+
+    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun searchMovieBy(query: String): List<Movie> {
+        TODO("Not yet implemented")
+    }
+
 }
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
@@ -19,13 +53,5 @@ class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
 
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {
         timesCalled++
-    }
-}
-
-class FakeIsFavoriteMovieUseCase : IsFavoriteMovieUseCase {
-    var result: Boolean = false
-
-    override suspend fun execute(input: IsFavoriteMovieUseCase.Params): Boolean {
-        return result
     }
 }

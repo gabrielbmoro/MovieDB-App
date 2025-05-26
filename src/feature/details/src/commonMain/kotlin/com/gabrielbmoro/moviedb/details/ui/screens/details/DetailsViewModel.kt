@@ -2,10 +2,10 @@ package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
-import com.gabrielbmoro.moviedb.domain.usecases.IsFavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
+    private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
-    private val isFavoriteMovieUseCase: IsFavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel(), ViewModelMvi<DetailsUserIntent> {
@@ -61,10 +61,8 @@ class DetailsViewModel(
             favoriteMovieUseCase.execute(params)
 
             val result =
-                isFavoriteMovieUseCase.execute(
-                    IsFavoriteMovieUseCase.Params(
-                        movieTitle = movieDetails.title,
-                    ),
+                repository.checkIsAFavoriteMovie(
+                    movieTitle = movieDetails.title,
                 )
             _uiState.update {
                 it.copy(
@@ -115,10 +113,8 @@ class DetailsViewModel(
     }
 
     private suspend fun isMovieFavorite(movieTitle: String): Boolean {
-        return isFavoriteMovieUseCase.execute(
-            IsFavoriteMovieUseCase.Params(
-                movieTitle = movieTitle,
-            ),
+        return repository.checkIsAFavoriteMovie(
+            movieTitle = movieTitle,
         )
     }
 

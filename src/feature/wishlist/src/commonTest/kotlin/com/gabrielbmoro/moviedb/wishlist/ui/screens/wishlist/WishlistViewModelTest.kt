@@ -18,9 +18,8 @@ import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class WishlistViewModelTest {
-    private lateinit var getFavoriteMoviesUseCase: FakeGetFavoriteMoviesUseCase
+    private lateinit var repository: FakeRepository
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
-    private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
     private val mockChuckNorrisVsVandammeMovieCardInfo =
         Movie.mockChuckNorrisVsVandammeMovie().let {
             MovieCardInfo(
@@ -36,9 +35,8 @@ class WishlistViewModelTest {
     fun before() {
         Dispatchers.setMain(StandardTestDispatcher())
 
-        getFavoriteMoviesUseCase = FakeGetFavoriteMoviesUseCase()
+        repository = FakeRepository()
         favoriteMovieUseCase = FakeFavoriteMovieUseCase()
-        isFavoriteMovieUseCase = FakeIsFavoriteMovieUseCase()
     }
 
     @AfterTest
@@ -55,14 +53,13 @@ class WishlistViewModelTest {
                     Movie.mockChuckNorrisVsVandammeMovie(),
                 )
 
-            isFavoriteMovieUseCase.result = true
-            getFavoriteMoviesUseCase.result = expected
+            repository.isFavorite = true
+            repository.favoriteMovies = expected
 
             val viewModel =
                 WishlistViewModel(
-                    getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+                    repository = repository,
                     favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
 
@@ -86,14 +83,13 @@ class WishlistViewModelTest {
                 persistentListOf(
                     mockChuckNorrisVsVandammeMovieCardInfo,
                 )
-            isFavoriteMovieUseCase.result = true
-            getFavoriteMoviesUseCase.result = listOf(Movie.mockChuckNorrisVsVandammeMovie())
+            repository.isFavorite = true
+            repository.favoriteMovies = listOf(Movie.mockChuckNorrisVsVandammeMovie())
 
             val viewModel =
                 WishlistViewModel(
-                    getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+                    repository = repository,
                     favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
 
@@ -113,14 +109,13 @@ class WishlistViewModelTest {
                 listOf(
                     Movie.mockChuckNorrisVsVandammeMovie(),
                 )
-            isFavoriteMovieUseCase.result = true
-            getFavoriteMoviesUseCase.result = expected
+            repository.isFavorite = true
+            repository.favoriteMovies = expected
 
             val viewModel =
                 WishlistViewModel(
-                    getFavoriteMoviesUseCase = getFavoriteMoviesUseCase,
+                    repository = repository,
                     favoriteMovieUseCase = favoriteMovieUseCase,
-                    isFavoriteMovieUseCase = isFavoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
             viewModel.execute(

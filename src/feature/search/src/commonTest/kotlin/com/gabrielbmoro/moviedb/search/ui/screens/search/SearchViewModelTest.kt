@@ -14,11 +14,11 @@ import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchViewModelTest {
-    private lateinit var searchMovieUseCase: FakeSearchUseCase
+    private lateinit var repository: FakeRepository
 
     @BeforeTest
     fun before() {
-        searchMovieUseCase = FakeSearchUseCase()
+        repository = FakeRepository()
         Dispatchers.setMain(StandardTestDispatcher())
     }
 
@@ -31,9 +31,9 @@ class SearchViewModelTest {
     fun `should be able to reset the search field - empty search`() =
         runTest {
             // arrange
-            searchMovieUseCase.searchResult = emptyList()
+            repository.searchResult = emptyList()
             val viewModel = SearchViewModel(
-                searchMovieUseCase = searchMovieUseCase,
+                repository = repository,
                 ioCoroutinesDispatcher = StandardTestDispatcher(),
                 query = null,
             )

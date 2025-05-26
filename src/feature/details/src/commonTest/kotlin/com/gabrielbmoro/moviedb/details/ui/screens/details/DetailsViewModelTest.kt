@@ -16,7 +16,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetailsViewModelTest {
     private lateinit var favoriteMovieUseCase: FakeFavoriteMovieUseCase
-    private lateinit var isFavoriteMovieUseCase: FakeIsFavoriteMovieUseCase
+    private lateinit var repository: FakeRepository
     private lateinit var getMovieDetailsUseCase: FakeGetMovieDetailsUseCase
 
     @BeforeTest
@@ -24,7 +24,7 @@ class DetailsViewModelTest {
         Dispatchers.setMain(StandardTestDispatcher())
 
         favoriteMovieUseCase = FakeFavoriteMovieUseCase()
-        isFavoriteMovieUseCase = FakeIsFavoriteMovieUseCase()
+        repository = FakeRepository()
         getMovieDetailsUseCase = FakeGetMovieDetailsUseCase()
     }
 
@@ -38,7 +38,7 @@ class DetailsViewModelTest {
         runTest {
             // arrange, act
             val isFavorite = false
-            isFavoriteMovieUseCase.result = isFavorite
+            repository.isFavorite = isFavorite
             getMovieDetailsUseCase.result = fakeMovieDetail
 
             val expected =
@@ -62,7 +62,7 @@ class DetailsViewModelTest {
 
             val viewModel = DetailsViewModel(
                 favoriteMovieUseCase = favoriteMovieUseCase,
-                isFavoriteMovieUseCase = isFavoriteMovieUseCase,
+                repository = repository,
                 getMovieDetailsUseCase = getMovieDetailsUseCase,
                 ioDispatcher = StandardTestDispatcher(),
             )
