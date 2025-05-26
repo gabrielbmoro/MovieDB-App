@@ -1,6 +1,6 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 
 sealed interface MoviesIntent {
     data object RequestMoreMovies : MoviesIntent

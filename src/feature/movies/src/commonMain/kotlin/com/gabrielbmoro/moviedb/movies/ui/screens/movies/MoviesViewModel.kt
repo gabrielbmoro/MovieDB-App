@@ -1,12 +1,12 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
+import MoviesHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
-import com.gabrielbmoro.moviedb.movies.domain.interactor.MoviesInteractor
-import com.gabrielbmoro.moviedb.movies.domain.model.FilterMenuItem
-import com.gabrielbmoro.moviedb.movies.domain.model.FilterType
+import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.model.FilterType
 import com.gabrielbmoro.moviedb.platform.ViewModelMvi
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
@@ -25,10 +25,10 @@ import kotlinx.coroutines.launch
 class MoviesViewModel(
     private val ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
-    private val interactor: MoviesInteractor,
+    private val moviesHandler: MoviesHandler,
 ) : ViewModel(), ViewModelMvi<MoviesIntent>, PagingController by SimplePaging() {
 
-    private val _uiState = MutableStateFlow(interactor.getDefaultEmptyState())
+    private val _uiState = MutableStateFlow(moviesHandler.defaultEmptyState)
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
     private var _paginationJob: Job? = null
@@ -98,7 +98,7 @@ class MoviesViewModel(
 
     private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = interactor.getMoviesFromFilter(
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = moviesHandler.getMoviesFromFilter(
         filter = uiState.value.selectedFilterMenu,
         page = pageIndex,
     )
