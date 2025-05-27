@@ -1,11 +1,13 @@
 package com.gabrielbmoro.moviedb.domain
 
 import com.gabrielbmoro.moviedb.data.repository.MoviesDataRepository
-import com.gabrielbmoro.moviedb.domain.mappers.toFavoriteMovieDTO
-import com.gabrielbmoro.moviedb.domain.mappers.toMovie
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.mappers.toFavoriteMovieDTO
+import com.gabrielbmoro.moviedb.domain.mappers.toMovie
+import com.gabrielbmoro.moviedb.domain.mappers.toMovieDetail
+import com.gabrielbmoro.moviedb.domain.mappers.toVideoStreams
 
 interface MoviesRepository {
     suspend fun getMoviesFromFilter(filter: String, page: Int): List<Movie>
@@ -30,11 +32,11 @@ internal class MoviesRepositoryImpl(
 ) : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
-        page: Int
+        page: Int,
     ): List<Movie> {
         return dataRepository.getMoviesFromFilter(
             filter = filter,
-            page = page
+            page = page,
         )?.map { it.toMovie() }.orEmpty()
     }
 

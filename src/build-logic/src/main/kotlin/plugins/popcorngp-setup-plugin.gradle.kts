@@ -17,10 +17,10 @@ popcornGuineapigParentConfig {
             rules = listOf(
                 JustWithRule(
                     justWith = listOf(
-                        "feature-[a-z]+"
-                    )
-                )
-            )
+                        "feature-[a-z]+",
+                    ),
+                ),
+            ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":util:[a-z]+",
@@ -41,8 +41,8 @@ popcornGuineapigParentConfig {
             rules = listOf(
                 JustWithRule(
                     justWith = listOf(
-                        "data"
-                    )
+                        "data",
+                    ),
                 ),
             ),
         ),

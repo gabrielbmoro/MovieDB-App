@@ -1,8 +1,5 @@
 package com.gabrielbmoro.moviedb.domain.mappers
 
-import com.gabrielbmoro.moviedb.domain.toMovie
-import com.gabrielbmoro.moviedb.domain.toMovieDetail
-import com.gabrielbmoro.moviedb.domain.toVideoStreams
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

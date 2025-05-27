@@ -14,19 +14,19 @@ val domainModule = module {
 
     factory<FavoriteMovieUseCase> {
         FavoriteMovieUseCaseImpl(
-            repository = get()
+            repository = get(),
         )
     }
 
     factory<GetMovieDetailsUseCase> {
         GetMovieDetailsUseCaseImpl(
-            repository = get()
+            repository = get(),
         )
     }
 
     single<MoviesRepository> {
         MoviesRepositoryImpl(
-            dataRepository = get()
+            dataRepository = get(),
         )
     }
 }

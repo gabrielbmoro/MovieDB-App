@@ -7,8 +7,6 @@ import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.Movie
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.ProductionCompanyResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponseItem
-import com.gabrielbmoro.moviedb.domain.BIG_SIZE_IMAGE_ADDRESS
-import com.gabrielbmoro.moviedb.domain.SMALL_SIZE_IMAGE_ADDRESS
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
