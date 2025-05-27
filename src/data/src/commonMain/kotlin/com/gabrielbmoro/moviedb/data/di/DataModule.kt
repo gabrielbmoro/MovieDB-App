@@ -2,10 +2,9 @@ package com.gabrielbmoro.moviedb.data.di
 
 import com.gabrielbmoro.moviedb.data.providers.databaseInstance
 import com.gabrielbmoro.moviedb.data.providers.httpClientEngine
-import com.gabrielbmoro.moviedb.data.repository.MoviesRepositoryImpl
+import com.gabrielbmoro.moviedb.data.repository.MoviesDataRepository
 import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.FavoriteMoviesDAO
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.ApiService
-import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
@@ -64,8 +63,8 @@ val dataModule =
             databaseInstance().favoriteMoviesDAO()
         }
 
-        single<MoviesRepository> {
-            MoviesRepositoryImpl(
+        single {
+            MoviesDataRepository(
                 api = get(),
                 favoriteMoviesDAO = get(),
             )

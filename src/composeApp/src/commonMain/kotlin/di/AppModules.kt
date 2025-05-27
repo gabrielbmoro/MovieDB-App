@@ -1,9 +1,7 @@
 package di
 
 import com.gabrielbmoro.moviedb.BuildKonfig
-import com.gabrielbmoro.moviedb.data.di.dataModule
 import com.gabrielbmoro.moviedb.details.di.featureDetailsModule
-import com.gabrielbmoro.moviedb.domain.di.domainModule
 import com.gabrielbmoro.moviedb.logging.di.loggingModule
 import com.gabrielbmoro.moviedb.movies.di.featureMoviesModule
 import com.gabrielbmoro.moviedb.search.di.featureSearchMovieModule
@@ -19,9 +17,6 @@ val authModule = module {
 
 val appModules = listOf(
     authModule,
-    dataModule,
-    domainModule,
-    dataModule,
     loggingModule,
 )
 

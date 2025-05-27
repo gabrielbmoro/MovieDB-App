@@ -6,6 +6,9 @@ plugins {
 
 kotlin {
     sourceSets {
+        commonMain.dependencies {
+            implementation(projects.data)
+        }
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)
         }

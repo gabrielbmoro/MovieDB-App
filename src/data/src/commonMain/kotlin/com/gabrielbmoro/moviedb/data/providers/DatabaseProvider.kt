@@ -21,4 +21,6 @@ internal const val dbFileName = "movieDBApp.db"
 @Suppress("TopLevelPropertyNaming")
 expect fun databaseInstance(): AppDatabase
 
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase>
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}

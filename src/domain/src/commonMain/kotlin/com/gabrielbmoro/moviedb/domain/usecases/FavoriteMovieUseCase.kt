@@ -2,8 +2,6 @@ package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import org.koin.core.annotation.Factory
-import org.koin.core.annotation.Provided
 
 interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
     data class Params(
@@ -20,9 +18,8 @@ interface FavoriteMovieUseCase : UseCase<FavoriteMovieUseCase.Params, Unit> {
     )
 }
 
-@Factory
-open class FavoriteMovieUseCaseImpl(
-    @Provided private val repository: MoviesRepository,
+internal class FavoriteMovieUseCaseImpl(
+    private val repository: MoviesRepository,
 ) : FavoriteMovieUseCase {
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {
         val toFavorite = input.toFavorite
