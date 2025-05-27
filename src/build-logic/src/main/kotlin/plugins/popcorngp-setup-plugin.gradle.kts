@@ -15,9 +15,10 @@ popcornGuineapigParentConfig {
         PopcornChildConfiguration(
             moduleNameRegex = ":composeApp",
             rules = listOf(
-                JustWithRule(
-                    justWith = listOf(
-                        "feature-[a-z]+",
+                DoNotWithRule(
+                    notWith = listOf(
+                        "data",
+                        "domain",
                     ),
                 ),
             ),
