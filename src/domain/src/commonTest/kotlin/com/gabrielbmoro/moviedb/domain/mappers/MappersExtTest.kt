@@ -1,10 +1,8 @@
-package com.gabrielbmoro.moviedb.repository
+package com.gabrielbmoro.moviedb.domain.mappers
 
-import com.gabrielbmoro.moviedb.data.repository.datasources.database.toFavoriteMovieDTO
-import com.gabrielbmoro.moviedb.data.repository.datasources.database.toMovie
-import com.gabrielbmoro.moviedb.data.repository.toMovie
-import com.gabrielbmoro.moviedb.data.repository.toMovieDetail
-import com.gabrielbmoro.moviedb.data.repository.toVideoStreams
+import com.gabrielbmoro.moviedb.domain.toMovie
+import com.gabrielbmoro.moviedb.domain.toMovieDetail
+import com.gabrielbmoro.moviedb.domain.toVideoStreams
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

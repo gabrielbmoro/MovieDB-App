@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.data.repository.datasources.database
+package com.gabrielbmoro.moviedb.domain.mappers
 
 import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dto.FavoriteMovieDTO
 import com.gabrielbmoro.moviedb.domain.entities.Movie

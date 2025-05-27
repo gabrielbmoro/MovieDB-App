@@ -42,8 +42,6 @@ kotlin {
             implementation(projects.feature.search)
             implementation(projects.feature.details)
             implementation(projects.feature.movies)
-            implementation(projects.data)
-            implementation(projects.domain)
             implementation(projects.util.logging)
         }
     }

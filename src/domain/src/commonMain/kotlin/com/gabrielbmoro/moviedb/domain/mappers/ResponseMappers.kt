@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.data.repository
+package com.gabrielbmoro.moviedb.domain
 
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieResponse
