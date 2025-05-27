@@ -38,10 +38,10 @@ kotlin {
 
             implementation(projects.platform)
             implementation(projects.designsystem)
-            implementation(projects.feature.wishlist)
-            implementation(projects.feature.search)
-            implementation(projects.feature.details)
-            implementation(projects.feature.movies)
+            implementation(projects.feature.featureWishlist)
+            implementation(projects.feature.featureSearch)
+            implementation(projects.feature.featureDetails)
+            implementation(projects.feature.featureMovies)
             implementation(projects.util.logging)
         }
     }

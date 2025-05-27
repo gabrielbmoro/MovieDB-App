@@ -19,7 +19,8 @@ android {
     configureCompileOptions()
     configureTestOptions()
 
-    namespace = ConfigurationKeys.APPLICATION_ID.plus(name)
+    namespace = ConfigurationKeys.APPLICATION_ID.plus(".$name")
+        .replace("-", "_")
 }
 
 kotlin {

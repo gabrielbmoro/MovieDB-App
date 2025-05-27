@@ -13,6 +13,16 @@ popcornGuineapigParentConfig {
 
     children = listOf(
         PopcornChildConfiguration(
+            moduleNameRegex = ":composeApp",
+            rules = listOf(
+                JustWithRule(
+                    justWith = listOf(
+                        "feature-[a-z]+"
+                    )
+                )
+            )
+        ),
+        PopcornChildConfiguration(
             moduleNameRegex = ":util:[a-z]+",
             rules = listOf(
                 NoDependencyRule(),
@@ -29,15 +39,17 @@ popcornGuineapigParentConfig {
         PopcornChildConfiguration(
             moduleNameRegex = ":domain",
             rules = listOf(
-                NoDependencyRule(),
+                JustWithRule(
+                    justWith = listOf(
+                        "data"
+                    )
+                ),
             ),
         ),
         PopcornChildConfiguration(
             moduleNameRegex = ":data",
             rules = listOf(
-                JustWithRule(
-                    justWith = listOf("domain"),
-                ),
+                NoDependencyRule(),
             ),
         ),
         PopcornChildConfiguration(
