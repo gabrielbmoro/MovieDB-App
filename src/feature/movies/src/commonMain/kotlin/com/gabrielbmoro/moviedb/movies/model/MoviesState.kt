@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.movies.domain.model
+package com.gabrielbmoro.moviedb.movies.model
 
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieCardInfo
 import kotlinx.collections.immutable.ImmutableList

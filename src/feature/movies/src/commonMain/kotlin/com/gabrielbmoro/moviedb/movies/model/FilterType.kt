@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.movies.domain.model
+package com.gabrielbmoro.moviedb.movies.model
 
 enum class FilterType {
     NowPlaying,
