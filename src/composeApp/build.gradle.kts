@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.rinku.core)
             implementation(libs.rinku.compose.ext)
             implementation(libs.koin.core)
+            implementation(libs.koin.coroutines)
 
             implementation(projects.platform)
             implementation(projects.designsystem)

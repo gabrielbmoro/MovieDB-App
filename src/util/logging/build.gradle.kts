@@ -1,6 +1,5 @@
 plugins {
     id("kmp-library-plugin")
-    id("koin-plugin-setup")
 }
 
 android {
@@ -11,6 +10,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kermit)
+            implementation(libs.koin.core)
         }
     }
 }

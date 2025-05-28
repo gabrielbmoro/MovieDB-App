@@ -3,12 +3,16 @@ plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
-    id("koin-plugin-setup")
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.koin.core)
+            implementation(libs.koin.coroutines)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
             implementation(compose.ui)
             implementation(compose.runtime)
             implementation(compose.foundation)
