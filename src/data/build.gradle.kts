@@ -1,15 +1,15 @@
-@Suppress("DSL_SCOPE_VIOLATION",  "ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
+@Suppress("DSL_SCOPE_VIOLATION", "ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
     alias(libs.plugins.room.plugin)
-    id("koin-plugin-setup")
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.koin.core)
             implementation(libs.bundles.ktor)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
@@ -32,9 +32,12 @@ kotlin {
 
 dependencies {
     add("kspAndroid", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
+
+    if (hasProperty("kmp.enableIos")) {
+        add("kspIosSimulatorArm64", libs.room.compiler)
+        add("kspIosX64", libs.room.compiler)
+        add("kspIosArm64", libs.room.compiler)
+    }
 }
 
 room {

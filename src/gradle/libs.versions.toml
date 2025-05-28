@@ -80,6 +80,7 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref="coil"}
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
 test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
+koin = ["koin_core", "koin_coroutines", "koin_compose", "koin_compose_viewmodel"]
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
