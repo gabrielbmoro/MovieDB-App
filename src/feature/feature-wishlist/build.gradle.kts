@@ -1,4 +1,4 @@
-@Suppress("DSL_SCOPE_VIOLATION",  "ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
+@Suppress("ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
@@ -8,10 +8,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.koin.core)
-            implementation(libs.koin.coroutines)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.bundles.koin)
 
             implementation(compose.ui)
             implementation(compose.runtime)
@@ -37,5 +34,3 @@ kotlin {
         }
     }
 }
-
-task("testClasses")

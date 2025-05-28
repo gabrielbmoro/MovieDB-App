@@ -28,6 +28,6 @@ android {
 
 kotlin {
     configurePlatformTargets(
-        isIosEnabled = hasProperty("kmp.enableIos")
+        isIosEnabled = hasProperty("kmp.enableIos"),
     )
 }

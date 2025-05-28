@@ -4,7 +4,7 @@ import config.ConfigurationKeys
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal fun KotlinMultiplatformExtension.configurePlatformTargets(
-    isIosEnabled: Boolean
+    isIosEnabled: Boolean,
 ) {
     if (isIosEnabled) {
         listOf(
