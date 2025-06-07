@@ -20,7 +20,6 @@ kotlin {
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.kotlin.stdlib)
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.navigation.compose)
 
@@ -32,7 +31,6 @@ kotlin {
             commonTest.dependencies {
                 implementation(libs.bundles.test.multiplatform)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlin.stdlib)
             }
         }
     }

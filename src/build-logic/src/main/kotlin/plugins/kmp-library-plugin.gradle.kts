@@ -27,4 +27,10 @@ kotlin {
     configurePlatformTargets(
         isIosEnabled = hasProperty("kmp.enableIos"),
     )
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(kotlin("stdlib"))
+        }
+    }
 }

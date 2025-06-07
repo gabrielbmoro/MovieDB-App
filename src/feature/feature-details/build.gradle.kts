@@ -32,7 +32,6 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlin.stdlib)
         }
     }
 }
