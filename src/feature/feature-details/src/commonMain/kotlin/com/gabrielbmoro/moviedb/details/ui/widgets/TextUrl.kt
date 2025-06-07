@@ -1,7 +1,8 @@
 package com.gabrielbmoro.moviedb.details.ui.widgets
 
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -16,20 +17,17 @@ fun TextUrl(
 ) {
     val uriHandler = LocalUriHandler.current
 
-    ClickableText(
-        modifier = modifier,
-        style =
-        MaterialTheme.typography.bodyMedium.copy(
+    Text(
+        modifier = modifier.clickable {
+            uriHandler.openUri(url)
+        },
+        style = MaterialTheme.typography.bodyMedium.copy(
             color = MaterialTheme.colorScheme.tertiary,
             fontStyle = FontStyle.Italic,
             textDecoration = TextDecoration.Underline,
         ),
-        text =
-        buildAnnotatedString {
+        text = buildAnnotatedString {
             append(url)
-        },
-        onClick = {
-            uriHandler.openUri(url)
         },
     )
 }
