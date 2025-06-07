@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false

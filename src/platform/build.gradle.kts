@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
