@@ -30,7 +30,7 @@ popcornGuineapigParentConfig {
             ),
         ),
         PopcornChildConfiguration(
-            moduleNameRegex = ":feature:[a-z]+",
+            moduleNameRegex = ":feature:feature-[a-z]+",
             rules = listOf(
                 DoNotWithRule(
                     notWith = listOf("data"),
