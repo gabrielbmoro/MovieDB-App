@@ -39,18 +39,20 @@ actual fun VideoPlayer(
 
     LaunchedEffect(Unit) {
         val embedHTML = "<html>" +
-                "<head>" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
-                "</head>" +
-                "<body>" +
-                videoId.videoIdToEmbedHTML() +
-                "</body>" +
-                "</html>"
+            "<head>" +
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
+            "</head>" +
+            "<body>" +
+            videoId.videoIdToEmbedHTML() +
+            "</body>" +
+            "</html>"
 
-        webView.loadData(
+        webView.loadDataWithBaseURL(
+            MOVIE_DB_DOMAIN,
             embedHTML,
             "text/html",
             "UTF-8",
+            null,
         )
     }
 }
