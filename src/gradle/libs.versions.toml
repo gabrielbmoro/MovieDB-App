@@ -1,5 +1,5 @@
 [versions]
-firebase-crashlytics-gradle = "3.0.3"
+firebase-crashlytics-gradle = "3.0.6"
 google-services = "4.4.2"
 gradle-test-kit-version = "7.6"
 kermit-version = "2.0.5"
