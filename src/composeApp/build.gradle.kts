@@ -21,7 +21,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation("io.kotzilla:kotzilla-sdk-ktor3:1.0.1")
+            implementation("io.kotzilla:kotzilla-sdk-ktor3:1.3.1")
         }
         iosMain.dependencies {
             implementation(libs.koin.core)
