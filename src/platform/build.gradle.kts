@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
@@ -10,12 +9,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
 
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.bundles.compose.multiplatform)
             implementation(libs.navigation.compose)
         }
 

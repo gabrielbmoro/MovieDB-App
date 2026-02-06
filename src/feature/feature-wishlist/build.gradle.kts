@@ -9,13 +9,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.koin)
 
-            implementation(compose.ui)
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.animation)
-            implementation(compose.uiUtil)
-            implementation(compose.components.resources)
+            implementation(libs.bundles.compose.multiplatform)
+
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.collections.immutable)

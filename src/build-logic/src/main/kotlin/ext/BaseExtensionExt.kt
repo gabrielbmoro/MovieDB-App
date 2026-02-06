@@ -13,7 +13,7 @@ internal fun BaseExtension.configureCompileOptions() {
 
 internal fun BaseExtension.configureTestOptions() {
     testOptions {
-        unitTests.isReturnDefaultValues = ConfigurationKeys.HAS_UNIT_TESTS_DEFAULT_VALUES
+        unitTests.isReturnDefaultValues = true
     }
 }
 

@@ -11,9 +11,9 @@ android {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material3)
+            implementation(libs.ui)
+            implementation(libs.foundation)
+            implementation(libs.material3)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
         }
