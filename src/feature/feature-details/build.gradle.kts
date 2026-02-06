@@ -1,4 +1,3 @@
-@Suppress("ForbiddenComment") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("kmp-library-plugin")
     alias(libs.plugins.jetbrains.compose)
