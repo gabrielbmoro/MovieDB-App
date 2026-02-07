@@ -1,46 +1,59 @@
 [versions]
-firebase-crashlytics-gradle = "3.0.3"
-google-services = "4.4.2"
-gradle-test-kit-version = "7.6"
-kermit-version = "2.0.5"
-kotlin = "2.1.10"
-kotlinx-collections-immutable-version = "0.3.8"
+animation = "1.10.0"
+components-resources = "1.10.0"
+firebase-crashlytics-gradle = "3.0.6"
+foundation = "1.10.0"
+google-services = "4.4.4"
+kermit-version = "2.0.8"
+kotlin = "2.3.10"
+kotlinx-collections-immutable-version = "0.4.0"
 kotlinx-coroutines-core = "1.10.2"
-lifecycle-viewmodel-compose-version = "2.8.4"
-navigation-compose-version = "2.7.0-alpha07"
-room = "2.7.0-alpha13"
+kotzilla-sdk-ktor3 = "1.3.1"
+lifecycle-viewmodel-compose-version = "2.9.6"
+material-icons-extended = "1.7.3"
+material3 = "1.9.0"
+navigation-compose-version = "2.9.1"
+room = "2.8.4"
 junit = "4.13.2"
 arch_core = "2.2.0"
 coroutines = "1.10.2"
-gradle = "8.9.1"
-material = "1.12.0"
-ksp = "2.1.10-1.0.29"
-koin = "4.0.4"
-koin_annotations = "2.0.0"
-ktor = "3.1.2"
-compose_plugin = "1.7.3"
-compose = "1.7.8"
-androidx_activity_compose = "1.10.1"
-rinku = "1.4.0"
-buildkonfig = "0.15.2"
-sqlite = "2.5.1"
-popcorn_guineapig = "3.1.4"
-coil = "3.1.0"
+material = "1.13.0"
+gradle = "8.9.3"
+ksp = "2.3.5"
+koin = "4.1.1"
+ktor = "3.4.0"
+compose_plugin = "1.10.0"
+compose = "1.10.2"
+androidx_activity_compose = "1.12.3"
+rinku = "1.5.0"
+buildkonfig = "0.17.1"
+runtime = "1.10.0"
+sqlite = "2.6.2"
+popcorn_guineapig = "3.1.5"
+coil = "3.3.0"
 detekt = "1.23.8"
+ui = "1.10.0"
 
 [libraries]
+animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "animation" }
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "components-resources" }
 detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-gradle" }
+foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "foundation" }
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit-version" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable-version" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
+kotzilla-sdk-ktor3 = { module = "io.kotzilla:kotzilla-sdk-ktor3", version.ref = "kotzilla-sdk-ktor3" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose-version" }
+material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
+material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
 room_compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room_runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "runtime" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 arc_core_common = { group = "androidx.arch.core", name = "core-common", version.ref = "arch_core" }
@@ -55,8 +68,6 @@ koin_core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin_compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin_compose_viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
-koin_annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin_annotations" }
-koin_compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin_annotations" }
 koin_coroutines = { group = "io.insert-koin", name = "koin-core-coroutines", version.ref = "koin" }
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -75,12 +86,16 @@ rinku-core = { module = "dev.theolm:rinku", version.ref = "rinku" }
 rinku-compose-ext = { module = "dev.theolm:rinku-compose-ext", version.ref = "rinku" }
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref="coil"}
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref="coil"}
+ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "ui" }
+ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "ui" }
+ui-util = { module = "org.jetbrains.compose.ui:ui-util", version.ref = "ui" }
 
 [bundles]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
 test_multiplatform = ["kotlin_test", "kotlin_test_common", "kotlinx_coroutines_test"]
 ktor = ["ktor_client_core", "ktor_client_content_negotiation", "ktor_serialization_kotlinx_json", "ktor_auth", "ktor_logging"]
 koin = ["koin_core", "koin_coroutines", "koin_compose", "koin_compose_viewmodel"]
+compose_multiplatform = ["ui", "foundation", "material-icons-extended", "material3", "runtime", "animation", "ui-util", "components-resources", "ui-tooling-preview"]
 
 [plugins]
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

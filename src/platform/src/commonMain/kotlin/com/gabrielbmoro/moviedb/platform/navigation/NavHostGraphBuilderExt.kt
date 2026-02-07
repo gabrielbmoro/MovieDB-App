@@ -29,7 +29,7 @@ fun NavGraphBuilder.addMovieDetailsScreen(
             },
         ),
     ) {
-        val movieId = it.arguments?.getLong(DETAILS_MOVIE_ID_ARGUMENT_KEY)
+        val movieId = it.savedStateHandle.get<Long>(DETAILS_MOVIE_ID_ARGUMENT_KEY)
             ?: error("No movieId found in backstack entry")
 
         content(movieId)
@@ -56,7 +56,7 @@ fun NavGraphBuilder.addSearchScreen(
             },
         ),
     ) {
-        val query = it.arguments?.getString(SEARCH_QUERY_ARGUMENT_KEY)
+        val query = it.savedStateHandle.get<String>(SEARCH_QUERY_ARGUMENT_KEY)
         content(query)
     }
 }

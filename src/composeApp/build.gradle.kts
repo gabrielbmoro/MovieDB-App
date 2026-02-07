@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import java.util.Properties
 
@@ -21,18 +19,13 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation("io.kotzilla:kotzilla-sdk-ktor3:1.0.1")
+            implementation(libs.kotzilla.sdk.ktor3)
         }
         iosMain.dependencies {
             implementation(libs.koin.core)
         }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.bundles.compose.multiplatform)
             implementation(libs.navigation.compose)
             implementation(libs.rinku.core)
             implementation(libs.rinku.compose.ext)
