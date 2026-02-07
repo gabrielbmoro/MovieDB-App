@@ -35,7 +35,7 @@ include(
 rootProject.name = "MovieDBApp"
 
 plugins {
-    id("org.jetbrains.kotlinx.kover.aggregation") version "0.9.1"
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.9.6"
 }
 
 /**
