@@ -8,7 +8,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
-
             implementation(libs.bundles.compose.multiplatform)
             implementation(libs.navigation.compose)
         }
