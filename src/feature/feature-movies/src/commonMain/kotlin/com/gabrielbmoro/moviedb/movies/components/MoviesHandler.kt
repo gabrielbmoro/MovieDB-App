@@ -35,7 +35,7 @@ class MoviesHandler(
         isLoading = false,
     )
 
-    suspend fun getMoviesFromFilter(filter: FilterType, page: Int): List<Movie> {
+    suspend fun getMoviesFromFilter(filter: FilterType, page: Int): Result<List<Movie>> {
         return repository.getMoviesFromFilter(
             filter = filter.asString(),
             page = page,

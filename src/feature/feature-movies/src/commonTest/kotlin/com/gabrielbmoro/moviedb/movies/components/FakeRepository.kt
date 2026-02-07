@@ -2,8 +2,6 @@ package com.gabrielbmoro.moviedb.movies.components
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 
 class FakeRepository : MoviesRepository {
 
@@ -12,35 +10,35 @@ class FakeRepository : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): List<Movie> {
-        return filteredMovies
+    ): Result<List<Movie>> {
+        return Result.success(filteredMovies)
     }
 
-    override suspend fun getFavoriteMovies(): List<Movie> {
-        TODO("Not yet implemented")
+    override suspend fun getFavoriteMovies() = runCatching {
+        error("Not yet implemented")
     }
 
-    override suspend fun favorite(movie: Movie) {
-        TODO("Not yet implemented")
+    override suspend fun favorite(movie: Movie) = runCatching {
+        error("Not yet implemented")
     }
 
-    override suspend fun unFavorite(movieTitle: String) {
-        TODO("Not yet implemented")
+    override suspend fun unFavorite(movieTitle: String) = runCatching {
+        error("Not yet implemented")
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String) = runCatching {
+        error("Not yet implemented")
     }
 
-    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
-        TODO("Not yet implemented")
+    override suspend fun getVideoStreams(movieId: Long) = runCatching {
+        error("Not yet implemented")
     }
 
-    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
-        TODO("Not yet implemented")
+    override suspend fun getMovieDetail(movieId: Long) = runCatching {
+        error("Not yet implemented")
     }
 
-    override suspend fun searchMovieBy(query: String): List<Movie> {
-        TODO("Not yet implemented")
+    override suspend fun searchMovieBy(query: String) = runCatching {
+        error("Not yet implemented")
     }
 }

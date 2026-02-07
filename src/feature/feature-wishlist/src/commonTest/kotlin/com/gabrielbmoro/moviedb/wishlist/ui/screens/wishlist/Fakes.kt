@@ -13,45 +13,46 @@ class FakeRepository : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): List<Movie> {
+    ): Result<List<Movie>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFavoriteMovies(): List<Movie> {
-        return favoriteMovies
+    override suspend fun getFavoriteMovies(): Result<List<Movie>> {
+        return Result.success(favoriteMovies)
     }
 
-    override suspend fun favorite(movie: Movie) {
-        TODO("Not yet implemented")
+    override suspend fun favorite(movie: Movie): Result<Unit> {
+        return Result.success(Unit)
     }
 
-    override suspend fun unFavorite(movieTitle: String) {
-        TODO("Not yet implemented")
+    override suspend fun unFavorite(movieTitle: String): Result<Unit> {
+        return Result.success(Unit)
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
-        return isFavorite
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean> {
+        return Result.success(isFavorite)
     }
 
-    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
-        TODO("Not yet implemented")
+    override suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>> {
+        return Result.success(emptyList())
     }
 
-    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
-        TODO("Not yet implemented")
+    override suspend fun getMovieDetail(movieId: Long): Result<MovieDetail> {
+        return runCatching { error("Something went wrong") }
     }
 
-    override suspend fun searchMovieBy(query: String): List<Movie> {
-        TODO("Not yet implemented")
+    override suspend fun searchMovieBy(query: String): Result<List<Movie>> {
+        return runCatching { error("Something went wrong") }
     }
-
 }
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
     var timesCalled: Int = 0
         private set
 
-    override suspend fun execute(input: FavoriteMovieUseCase.Params) {
-        timesCalled++
+    override suspend fun execute(input: FavoriteMovieUseCase.Params): Result<Unit> {
+        return runCatching {
+            timesCalled++
+        }
     }
 }

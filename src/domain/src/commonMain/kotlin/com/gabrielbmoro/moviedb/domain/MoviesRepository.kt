@@ -10,21 +10,21 @@ import com.gabrielbmoro.moviedb.domain.mappers.toMovieDetail
 import com.gabrielbmoro.moviedb.domain.mappers.toVideoStreams
 
 interface MoviesRepository {
-    suspend fun getMoviesFromFilter(filter: String, page: Int): List<Movie>
+    suspend fun getMoviesFromFilter(filter: String, page: Int): Result<List<Movie>>
 
-    suspend fun getFavoriteMovies(): List<Movie>
+    suspend fun getFavoriteMovies(): Result<List<Movie>>
 
-    suspend fun favorite(movie: Movie)
+    suspend fun favorite(movie: Movie): Result<Unit>
 
-    suspend fun unFavorite(movieTitle: String)
+    suspend fun unFavorite(movieTitle: String): Result<Unit>
 
-    suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean
+    suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean>
 
-    suspend fun getVideoStreams(movieId: Long): List<VideoStream>
+    suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>>
 
-    suspend fun getMovieDetail(movieId: Long): MovieDetail
+    suspend fun getMovieDetail(movieId: Long): Result<MovieDetail>
 
-    suspend fun searchMovieBy(query: String): List<Movie>
+    suspend fun searchMovieBy(query: String): Result<List<Movie>>
 }
 
 internal class MoviesRepositoryImpl(
@@ -33,38 +33,54 @@ internal class MoviesRepositoryImpl(
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): List<Movie> {
-        return dataRepository.getMoviesFromFilter(
-            filter = filter,
-            page = page,
-        )?.map { it.toMovie() }.orEmpty()
+    ): Result<List<Movie>> {
+        return runCatching {
+            dataRepository.getMoviesFromFilter(
+                filter = filter,
+                page = page,
+            )?.map { it.toMovie() }.orEmpty()
+        }
     }
 
-    override suspend fun getFavoriteMovies(): List<Movie> {
-        return dataRepository.getFavoriteMovies().map { it.toMovie() }
+    override suspend fun getFavoriteMovies(): Result<List<Movie>> {
+        return runCatching {
+            dataRepository.getFavoriteMovies().map { it.toMovie() }
+        }
     }
 
-    override suspend fun favorite(movie: Movie) {
-        dataRepository.favorite(movie.toFavoriteMovieDTO())
+    override suspend fun favorite(movie: Movie): Result<Unit> {
+        return runCatching {
+            dataRepository.favorite(movie.toFavoriteMovieDTO())
+        }
     }
 
-    override suspend fun unFavorite(movieTitle: String) {
-        dataRepository.unFavorite(movieTitle)
+    override suspend fun unFavorite(movieTitle: String): Result<Unit> {
+        return runCatching {
+            dataRepository.unFavorite(movieTitle)
+        }
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
-        return dataRepository.checkIsAFavoriteMovie(movieTitle)
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean> {
+        return runCatching {
+            dataRepository.checkIsAFavoriteMovie(movieTitle)
+        }
     }
 
-    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
-        return dataRepository.getVideoStreams(movieId).toVideoStreams()
+    override suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>> {
+        return runCatching {
+            dataRepository.getVideoStreams(movieId).toVideoStreams()
+        }
     }
 
-    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
-        return dataRepository.getMovieDetail(movieId).toMovieDetail()
+    override suspend fun getMovieDetail(movieId: Long): Result<MovieDetail> {
+        return runCatching {
+            dataRepository.getMovieDetail(movieId).toMovieDetail()
+        }
     }
 
-    override suspend fun searchMovieBy(query: String): List<Movie> {
-        return dataRepository.searchMovieBy(query)?.map { it.toMovie() }.orEmpty()
+    override suspend fun searchMovieBy(query: String): Result<List<Movie>> {
+        return runCatching {
+            dataRepository.searchMovieBy(query)?.map { it.toMovie() }.orEmpty()
+        }
     }
 }
