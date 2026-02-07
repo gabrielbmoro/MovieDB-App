@@ -57,7 +57,7 @@ class MoviesViewModel(
                     currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
-                                    "Request received to fetch the page $pageIndex}",
+                                "Request received to fetch the page $pageIndex}",
                         )
 
                         runCatching {
@@ -101,7 +101,7 @@ class MoviesViewModel(
     private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = moviesHandler.getMoviesFromFilter(
         filter = uiState.value.selectedFilterMenu,
         page = pageIndex,
-    )
+    ).getOrDefault(emptyList())
 
     private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
         movieId = movie.id,

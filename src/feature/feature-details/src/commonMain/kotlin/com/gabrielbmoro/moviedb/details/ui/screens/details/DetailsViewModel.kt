@@ -26,7 +26,7 @@ class DetailsViewModel(
     private val _uiState = MutableStateFlow(this.defaultEmptyState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
 
-    private lateinit var movieDetails: MovieDetail
+    private var movieDetails: MovieDetail? = null
     private var movieId: Long? = null
 
     private fun defaultEmptyState() = DetailsUIState.empty()
@@ -53,21 +53,22 @@ class DetailsViewModel(
         val value = uiState.value.isFavorite
         val desiredValue = value.not()
 
-        val params = movieDetails.toFavoriteUseCaseParam(
+        movieDetails?.toFavoriteUseCaseParam(
             movieId = movieId!!,
             desiredValue = desiredValue,
-        )
-        viewModelScope.launch(ioDispatcher) {
-            favoriteMovieUseCase.execute(params)
+        )?.let { params ->
+            viewModelScope.launch(ioDispatcher) {
+                favoriteMovieUseCase.execute(params)
 
-            val result =
                 repository.checkIsAFavoriteMovie(
-                    movieTitle = movieDetails.title,
-                )
-            _uiState.update {
-                it.copy(
-                    isFavorite = result,
-                )
+                    movieTitle = movieDetails!!.title,
+                ).getOrNull()?.let { result ->
+                    _uiState.update {
+                        it.copy(
+                            isFavorite = result,
+                        )
+                    }
+                }
             }
         }
     }
@@ -80,34 +81,36 @@ class DetailsViewModel(
                 it.copy(isLoading = true)
             }
 
-            movieDetails = viewModelScope.async(ioDispatcher) {
+            viewModelScope.async(ioDispatcher) {
                 fetchMoviesDetails()
-            }.await()
+            }.await()?.let { details ->
+                val isMovieFavorite = viewModelScope.async(ioDispatcher) {
+                    isMovieFavorite(movieTitle = details.title)
+                }.await()
 
-            val isMovieFavorite = viewModelScope.async(ioDispatcher) {
-                isMovieFavorite(movieTitle = movieDetails.title)
-            }.await()
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        isFavorite = isMovieFavorite,
+                        videoId = details.videoId,
+                        tagLine = details.tagline,
+                        status = details.status,
+                        genres = details.genres.toImmutableList(),
+                        homepage = details.homepage,
+                        productionCompanies = details
+                            .productionCompanies.takeIf { productionCompanies ->
+                                productionCompanies.isNotEmpty()
+                            }?.reduceToText(),
+                        movieTitle = details.title,
+                        movieOverview = details.overview,
+                        movieLanguage = details.language,
+                        moviePopularity = details.popularity,
+                        movieVotesAverage = details.votesAverage,
+                        imageUrl = details.backdropImageUrl,
+                    )
+                }
 
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    isFavorite = isMovieFavorite,
-                    videoId = movieDetails.videoId,
-                    tagLine = movieDetails.tagline,
-                    status = movieDetails.status,
-                    genres = movieDetails.genres.toImmutableList(),
-                    homepage = movieDetails.homepage,
-                    productionCompanies = movieDetails
-                        .productionCompanies.takeIf { productionCompanies ->
-                            productionCompanies.isNotEmpty()
-                        }?.reduceToText(),
-                    movieTitle = movieDetails.title,
-                    movieOverview = movieDetails.overview,
-                    movieLanguage = movieDetails.language,
-                    moviePopularity = movieDetails.popularity,
-                    movieVotesAverage = movieDetails.votesAverage,
-                    imageUrl = movieDetails.backdropImageUrl,
-                )
+                movieDetails = details
             }
         }
     }
@@ -115,15 +118,15 @@ class DetailsViewModel(
     private suspend fun isMovieFavorite(movieTitle: String): Boolean {
         return repository.checkIsAFavoriteMovie(
             movieTitle = movieTitle,
-        )
+        ).getOrDefault(false)
     }
 
-    private suspend fun fetchMoviesDetails(): MovieDetail {
+    private suspend fun fetchMoviesDetails(): MovieDetail? {
         return getMovieDetailsUseCase.execute(
             GetMovieDetailsUseCase.Params(
                 movieId = movieId!!,
             ),
-        )
+        ).getOrNull()
     }
 
     private fun List<String>.reduceToText() = reduce { acc, s ->

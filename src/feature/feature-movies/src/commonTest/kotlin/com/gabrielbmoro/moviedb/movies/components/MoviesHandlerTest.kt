@@ -32,7 +32,7 @@ class MoviesHandlerTest {
         val result = handler.getMoviesFromFilter(
             filter = FilterType.NowPlaying,
             page = 1,
-        )
+        ).getOrDefault(emptyList())
 
         assertTrue {
             result.contains(Movie.mockWhyDoWeUseItFavorite())

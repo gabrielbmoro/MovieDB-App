@@ -51,12 +51,13 @@ class WishlistViewModel(
                 )
                 val isFavoriteAfterDeletion =
                     repository.checkIsAFavoriteMovie(
-                            movieTitle = movie.title,
-                    )
+                        movieTitle = movie.title,
+                    ).getOrDefault(false)
                 if (!isFavoriteAfterDeletion) {
                     val favoriteMovies = repository.getFavoriteMovies()
-                        .map(::toMovieCardInfo)
-                        .toImmutableList()
+                        .getOrNull()
+                        ?.map(::toMovieCardInfo)
+                        ?.toImmutableList()
                     _uiState.update {
                         it.copy(
                             favoriteMovies = favoriteMovies,
@@ -87,8 +88,9 @@ class WishlistViewModel(
     private fun handleLoadMovies() {
         viewModelScope.launch(ioCoroutinesDispatcher) {
             val movies = repository.getFavoriteMovies()
-                .map(::toMovieCardInfo)
-                .toImmutableList()
+                .getOrNull()
+                ?.map(::toMovieCardInfo)
+                ?.toImmutableList()
             _uiState.update {
                 it.copy(
                     favoriteMovies = movies,

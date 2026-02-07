@@ -11,8 +11,8 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
@@ -42,9 +42,9 @@ class SearchViewModel(
             searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { searchQuery ->
                 val result = repository.searchMovieBy(
                     query = searchQuery,
-                )
+                ).getOrNull()
 
-                val movieCardsInfos = result.map(::mapToMovieCardInfo).toImmutableList()
+                val movieCardsInfos = result?.map(::mapToMovieCardInfo)?.toImmutableList()
 
                 _uiState.update {
                     it.copy(
