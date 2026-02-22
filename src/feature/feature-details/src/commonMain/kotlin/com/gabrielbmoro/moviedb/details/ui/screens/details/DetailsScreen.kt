@@ -53,11 +53,9 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun DetailsScreen(
-    movieId: Long,
-    viewModel: DetailsViewModel = koinViewModel(),
-) {
+fun DetailsScreen(movieId: Long) {
     val scrollState = rememberScrollState()
+    val viewModel = koinViewModel<DetailsViewModel>()
     val uiState = viewModel.uiState.collectAsState()
     val navigator = LocalNavController.current
 

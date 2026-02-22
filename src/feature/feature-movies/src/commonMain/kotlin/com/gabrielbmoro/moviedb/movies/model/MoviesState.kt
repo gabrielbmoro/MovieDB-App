@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 data class MoviesState(
     val movieCardInfos: ImmutableList<MovieCardInfo>,
-    val menuItems: List<FilterMenuItem>,
+    val menuItems: ImmutableList<FilterMenuItem>,
     val selectedFilterMenu: FilterType,
     val isLoading: Boolean,
 )

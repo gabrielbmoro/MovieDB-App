@@ -6,6 +6,7 @@ import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.model.FilterType
 import com.gabrielbmoro.moviedb.movies.model.MoviesState
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -47,7 +48,7 @@ class MoviesHandlerTest {
         val expected = MoviesState(
             movieCardInfos = persistentListOf(),
             selectedFilterMenu = FilterType.NowPlaying,
-            menuItems = handler.menuItems,
+            menuItems = handler.menuItems.toPersistentList(),
             isLoading = false,
         )
 

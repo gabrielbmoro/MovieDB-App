@@ -4,6 +4,7 @@ import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.model.FilterType
 import com.gabrielbmoro.moviedb.movies.model.MoviesState
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.collections.List
 
 class MoviesHandler(
@@ -31,7 +32,7 @@ class MoviesHandler(
     val defaultEmptyState = MoviesState(
         movieCardInfos = persistentListOf(),
         selectedFilterMenu = FilterType.NowPlaying,
-        menuItems = menuItems,
+        menuItems = menuItems.toPersistentList(),
         isLoading = false,
     )
 

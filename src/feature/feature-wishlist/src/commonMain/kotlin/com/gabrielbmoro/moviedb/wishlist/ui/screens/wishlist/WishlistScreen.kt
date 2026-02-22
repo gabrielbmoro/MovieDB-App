@@ -37,9 +37,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun WishlistScreen(
-    viewModel: WishlistViewModel = koinViewModel(),
-) {
+fun WishlistScreen() {
+    val viewModel = koinViewModel<WishlistViewModel>()
     val uiState = viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val lazyListState = rememberLazyListState()
@@ -107,8 +106,7 @@ fun WishlistScreen(
                             onDeleteMovie = { movie ->
                                 viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(movie))
                             },
-                            modifier =
-                            Modifier
+                            modifier = Modifier
                                 .fillMaxSize()
                                 .align(Alignment.TopCenter),
                         )

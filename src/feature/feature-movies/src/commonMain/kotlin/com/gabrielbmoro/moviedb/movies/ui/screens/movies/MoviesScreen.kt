@@ -38,9 +38,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MoviesScreen(
-    viewModel: MoviesViewModel = koinViewModel(),
-) {
+fun MoviesScreen() {
+    val viewModel = koinViewModel<MoviesViewModel>()
     val uiState = viewModel.uiState.collectAsState()
     val navigator = LocalNavController.current
 
