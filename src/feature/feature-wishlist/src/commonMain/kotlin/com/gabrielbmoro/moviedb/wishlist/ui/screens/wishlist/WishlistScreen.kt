@@ -18,12 +18,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.DeleteConfirmationDialog
@@ -37,13 +37,13 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun WishlistScreen(
-    viewModel: WishlistViewModel = koinViewModel(),
-    navigator: NavHostController,
-) {
+fun WishlistScreen() {
+    val viewModel = koinViewModel<WishlistViewModel>()
     val uiState = viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val lazyListState = rememberLazyListState()
+
+    val navigator = LocalNavController.current
 
     val successDeleteMessage = stringResource(Res.string.delete_success_message)
     val errorDeleteMessage = stringResource(Res.string.delete_fail_message)
@@ -106,8 +106,7 @@ fun WishlistScreen(
                             onDeleteMovie = { movie ->
                                 viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(movie))
                             },
-                            modifier =
-                            Modifier
+                            modifier = Modifier
                                 .fillMaxSize()
                                 .align(Alignment.TopCenter),
                         )

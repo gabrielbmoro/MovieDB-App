@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.model.FilterType
+import kotlinx.collections.immutable.ImmutableList
 import moviedbapp.feature.feature_movies.generated.resources.Res
 import moviedbapp.feature.feature_movies.generated.resources.now_playing
 import moviedbapp.feature.feature_movies.generated.resources.popular
@@ -22,7 +23,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FilterMenu(
-    menuItems: List<FilterMenuItem>,
+    menuItems: ImmutableList<FilterMenuItem>,
     lazyListState: LazyListState,
     onClick: (FilterMenuItem) -> Unit,
     modifier: Modifier = Modifier,

@@ -20,13 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AnimatedAppToolbar
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
 import com.gabrielbmoro.moviedb.movies.ui.widgets.FilterMenu
 import com.gabrielbmoro.moviedb.movies.ui.widgets.MoviesList
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToSearch
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
@@ -38,11 +38,10 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MoviesScreen(
-    viewModel: MoviesViewModel = koinViewModel(),
-    navigator: NavHostController,
-) {
+fun MoviesScreen() {
+    val viewModel = koinViewModel<MoviesViewModel>()
     val uiState = viewModel.uiState.collectAsState()
+    val navigator = LocalNavController.current
 
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
     val coroutineScope = rememberCoroutineScope()

@@ -87,7 +87,7 @@ class MoviesViewModel(
                         isLoading = true,
                         menuItems = it.menuItems.updateAccordingToFilterType(
                             newFilterType = intent.menuItem.type,
-                        ),
+                        ).toPersistentList(),
                     )
                 }
 

@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
@@ -28,13 +28,11 @@ import org.koin.core.parameter.parametersOf
 private const val DELAY_IN_MILLIS = 500L
 
 @Composable
-fun SearchScreen(
-    query: String?,
-    viewModel: SearchViewModel = koinViewModel(
+fun SearchScreen(query: String?) {
+    val navigator = LocalNavController.current
+    val viewModel = koinViewModel<SearchViewModel>(
         parameters = { parametersOf(query) },
-    ),
-    navigator: NavHostController,
-) {
+    )
     val uiState = viewModel.uiState.collectAsState()
 
     val showKeyboard = remember { mutableStateOf(true) }
@@ -62,10 +60,12 @@ fun SearchScreen(
         },
     ) {
         Column(
-            modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp),
+            modifier = Modifier.fillMaxSize()
+                .padding(
+                    top = it.calculateTopPadding(),
+                    start = 16.dp,
+                    end = 16.dp,
+                ),
         ) {
             if (uiState.value.results != null) {
                 MoviesResult(
