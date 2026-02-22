@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
@@ -41,6 +40,7 @@ import com.gabrielbmoro.moviedb.details.ui.widgets.SectionBody
 import com.gabrielbmoro.moviedb.details.ui.widgets.SectionTitle
 import com.gabrielbmoro.moviedb.details.ui.widgets.TextUrl
 import com.gabrielbmoro.moviedb.media.VideoPlayer
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import moviedbapp.feature.feature_details.generated.resources.Res
 import moviedbapp.feature.feature_details.generated.resources.homepage
 import moviedbapp.feature.feature_details.generated.resources.language
@@ -56,10 +56,10 @@ import org.koin.compose.viewmodel.koinViewModel
 fun DetailsScreen(
     movieId: Long,
     viewModel: DetailsViewModel = koinViewModel(),
-    navigator: NavHostController,
 ) {
     val scrollState = rememberScrollState()
     val uiState = viewModel.uiState.collectAsState()
+    val navigator = LocalNavController.current
 
     val atTop by remember {
         derivedStateOf {

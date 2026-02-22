@@ -2,7 +2,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.NavHostController
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.SEARCH_QUERY_ARGUMENT_KEY
 import com.gabrielbmoro.moviedb.platform.navigation.Screen
 import com.gabrielbmoro.moviedb.platform.navigation.detailsRoute
@@ -13,13 +13,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
-fun DeeplinkEffect(
-    navigator: NavHostController,
-) {
+fun DeeplinkEffect() {
     val deepLinkNavigationStateFlow = remember {
         MutableSharedFlow<String>()
     }
     val coroutineContext = rememberCoroutineScope()
+    val navigator = LocalNavController.current
 
     LaunchedEffect(Unit) {
         deepLinkNavigationStateFlow.collectLatest { route ->

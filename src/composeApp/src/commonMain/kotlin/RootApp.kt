@@ -1,8 +1,10 @@
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.details.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MoviesScreen
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.Screen
 import com.gabrielbmoro.moviedb.platform.navigation.addMovieDetailsScreen
 import com.gabrielbmoro.moviedb.platform.navigation.addMoviesScreen
@@ -14,30 +16,26 @@ import com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist.WishlistScreen
 @Composable
 fun RootApp() {
     val navigator = rememberNavController()
+    CompositionLocalProvider(LocalNavController provides navigator) {
+        NavHost(
+            startDestination = Screen.Movies.route,
+            navController = navigator,
+        ) {
+            addMoviesScreen {
+                MoviesScreen()
+            }
 
-    NavHost(
-        startDestination = Screen.Movies.route,
-        navController = navigator,
-    ) {
-        addMoviesScreen {
-            MoviesScreen(navigator = navigator)
+            addMovieDetailsScreen { movieId ->
+                DetailsScreen(
+                    movieId = movieId,
+                )
+            }
+            addWishlistScreen {
+                WishlistScreen()
+            }
+            addSearchScreen { query -> SearchScreen(query = query) }
         }
 
-        addMovieDetailsScreen { movieId ->
-            DetailsScreen(
-                movieId = movieId,
-                navigator = navigator,
-            )
-        }
-        addWishlistScreen {
-            WishlistScreen(
-                navigator = navigator,
-            )
-        }
-        addSearchScreen { query -> SearchScreen(query = query, navigator = navigator) }
+        DeeplinkEffect()
     }
-
-    DeeplinkEffect(
-        navigator = navigator,
-    )
 }

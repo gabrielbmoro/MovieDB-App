@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.search.ui.widgets.MoviesResult
 import com.gabrielbmoro.moviedb.search.ui.widgets.SearchInputText
@@ -33,8 +33,8 @@ fun SearchScreen(
     viewModel: SearchViewModel = koinViewModel(
         parameters = { parametersOf(query) },
     ),
-    navigator: NavHostController,
 ) {
+    val navigator = LocalNavController.current
     val uiState = viewModel.uiState.collectAsState()
 
     val showKeyboard = remember { mutableStateOf(true) }
