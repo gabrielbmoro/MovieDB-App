@@ -27,7 +27,7 @@ buildscript {
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.google.services)
         classpath(libs.firebase.crashlytics.gradle)
-        classpath("io.kotzilla:kotzilla-plugin:1.0.1")
+        classpath("io.kotzilla:kotzilla-plugin:2.0.9")
     }
 }
 
