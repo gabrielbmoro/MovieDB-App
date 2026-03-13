@@ -1,5 +1,5 @@
 [versions]
-animation = "1.10.0"
+animation = "1.10.2"
 components-resources = "1.10.0"
 firebase-crashlytics-gradle = "3.0.6"
 foundation = "1.10.0"
