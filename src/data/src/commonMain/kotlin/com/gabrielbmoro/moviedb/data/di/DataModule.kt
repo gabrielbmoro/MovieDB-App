@@ -1,5 +1,7 @@
 package com.gabrielbmoro.moviedb.data.di
 
+import com.gabrielbmoro.moviedb.data.BuildKonfig
+import com.gabrielbmoro.moviedb.data.providers.AppDatabase
 import com.gabrielbmoro.moviedb.data.providers.databaseInstance
 import com.gabrielbmoro.moviedb.data.providers.httpClientEngine
 import com.gabrielbmoro.moviedb.data.repository.MoviesDataRepository
@@ -16,57 +18,69 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 
-val dataModule =
-    module {
-        single {
-            HttpClient(
-                engine = httpClientEngine(),
-            ) {
-                install(Logging) {
-                    logger = Logger.SIMPLE
-                    level = LogLevel.HEADERS
-                }
+private const val BASE_URL = "https://api.themoviedb.org/3"
 
-                install(ContentNegotiation) {
-                    json(
-                        json =
-                        Json {
-                            ignoreUnknownKeys = true
-                        },
-                    )
-                }
+@Module
+class DataModule {
 
-                install(Auth) {
-                    bearer {
-                        loadTokens {
-                            BearerTokens(
-                                get(named("api_token")),
-                                "",
-                            )
-                        }
+    @Factory
+    fun moviesDataRepository(
+        favoriteMoviesDAO: FavoriteMoviesDAO,
+        apiService: ApiService,
+    ) = MoviesDataRepository(
+        favoriteMoviesDAO = favoriteMoviesDAO,
+        api = apiService,
+    )
+
+    @Single
+    fun providesDatabase() = databaseInstance()
+
+    @Single
+    fun providesFavoriteDAO(appDatabase: AppDatabase): FavoriteMoviesDAO {
+        return appDatabase.favoriteMoviesDAO()
+    }
+
+    @Single
+    fun providesHttpClient(): HttpClient {
+        val apiToken = BuildKonfig.API_TOKEN
+        return HttpClient(
+            engine = httpClientEngine(),
+        ) {
+            install(Logging) {
+                logger = Logger.SIMPLE
+                level = LogLevel.HEADERS
+            }
+
+            install(ContentNegotiation) {
+                json(
+                    json = Json {
+                        ignoreUnknownKeys = true
+                    },
+                )
+            }
+
+            install(Auth) {
+                bearer {
+                    loadTokens {
+                        BearerTokens(
+                            apiToken,
+                            "",
+                        )
                     }
                 }
             }
         }
-
-        single {
-            ApiService(
-                baseUrl = "https://api.themoviedb.org/3",
-                httpClient = get(),
-            )
-        }
-
-        single<FavoriteMoviesDAO> {
-            databaseInstance().favoriteMoviesDAO()
-        }
-
-        single {
-            MoviesDataRepository(
-                api = get(),
-                favoriteMoviesDAO = get(),
-            )
-        }
     }
+
+    @Single
+    fun providesApiService(
+        httpClient: HttpClient,
+    ) = ApiService(
+        baseUrl = BASE_URL,
+        httpClient = httpClient,
+    )
+}
