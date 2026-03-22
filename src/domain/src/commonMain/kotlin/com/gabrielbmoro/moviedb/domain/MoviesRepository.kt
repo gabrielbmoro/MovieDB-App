@@ -8,6 +8,7 @@ import com.gabrielbmoro.moviedb.domain.mappers.toFavoriteMovieDTO
 import com.gabrielbmoro.moviedb.domain.mappers.toMovie
 import com.gabrielbmoro.moviedb.domain.mappers.toMovieDetail
 import com.gabrielbmoro.moviedb.domain.mappers.toVideoStreams
+import org.koin.core.annotation.Factory
 
 interface MoviesRepository {
     suspend fun getMoviesFromFilter(filter: String, page: Int): Result<List<Movie>>
@@ -27,6 +28,7 @@ interface MoviesRepository {
     suspend fun searchMovieBy(query: String): Result<List<Movie>>
 }
 
+@Factory(binds = [MoviesRepository::class])
 internal class MoviesRepositoryImpl(
     private val dataRepository: MoviesDataRepository,
 ) : MoviesRepository {
