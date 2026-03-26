@@ -14,9 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use API token
-      env:
-        MOVIE_DB_API_TOKEN: ${{ secrets.MOVIE_DB_API_TOKEN }}
+    - name: Export token for next steps
+      run: echo "MOVIE_DB_API_TOKEN=${{ secrets.MOVIE_DB_API_TOKEN }}" >> $GITHUB_ENV
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
