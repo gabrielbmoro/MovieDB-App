@@ -1,32 +1,31 @@
 name: Android CI
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Export token for next steps
-      run: echo "MOVIE_DB_API_TOKEN=${{ secrets.MOVIE_DB_API_TOKEN }}" >> $GITHUB_ENV
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '21'
-        cache: gradle
+      - uses: actions/checkout@v4
+      - name: Export token for next steps
+        run: echo "MOVIE_DB_API_TOKEN=${{ secrets.MOVIE_DB_API_TOKEN }}" >> $GITHUB_ENV
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      working-directory: src
-      run: chmod +x gradlew
-      
-    - name: Unit tests
-      working-directory: src
-      run: ./gradlew testDebugUnitTest
+      - name: Grant execute permission for gradlew
+        working-directory: src
+        run: chmod +x gradlew
+
+      - name: Unit tests
+        working-directory: src
+        run: ./gradlew testDebugUnitTest
