@@ -1,7 +1,7 @@
 [versions]
 compose-animation = "1.10.3"
 compose-components-resources = "1.10.3"
-firebase-crashlytics-gradle = "3.0.6"
+firebase-crashlytics-gradle = "3.0.7"
 compose-foundation = "1.10.3"
 google-services = "4.4.4"
 kermit-version = "2.1.0"
