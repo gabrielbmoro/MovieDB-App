@@ -8,7 +8,7 @@ kermit-version = "2.1.0"
 kotlin = "2.3.20"
 kotlinx-collections-immutable-version = "0.4.0"
 kotlinx-coroutines-core = "1.10.2"
-kotzilla-sdk-ktor3 = "1.3.1"
+kotzilla = "2.0.8"
 lifecycle-viewmodel-compose-version = "2.10.0"
 material-icons-extended = "1.7.3"
 material3 = "1.9.0"
@@ -46,7 +46,7 @@ google-services = { module = "com.google.gms:google-services", version.ref = "go
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit-version" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable-version" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
-kotzilla-sdk-ktor3 = { module = "io.kotzilla:kotzilla-sdk-ktor3", version.ref = "kotzilla-sdk-ktor3" }
+kotzilla-sdk-compose = { group = "io.kotzilla", name = "kotzilla-sdk-compose", version.ref = "kotzilla" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose-version" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
 material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "material3" }
@@ -107,3 +107,4 @@ jetbrains_compose = { id = "org.jetbrains.compose", version.ref = "compose_plugi
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 buildkonfig_plugin = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
 room_plugin = { id = "androidx.room", version.ref = "room" }
+kotzilla = { id = "io.kotzilla.kotzilla-plugin", version.ref = "kotzilla" }

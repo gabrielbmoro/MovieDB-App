@@ -16,12 +16,12 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation(libs.kotzilla.sdk.ktor3)
         }
         iosMain.dependencies {
             implementation(libs.koin.core)
         }
         commonMain.dependencies {
+            implementation(libs.kotzilla.sdk.compose)
             implementation(libs.bundles.compose.multiplatform)
             implementation(libs.navigation.compose)
             implementation(libs.rinku.core)
