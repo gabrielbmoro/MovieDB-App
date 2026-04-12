@@ -4,10 +4,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-android {
-    namespace = "images"
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {
