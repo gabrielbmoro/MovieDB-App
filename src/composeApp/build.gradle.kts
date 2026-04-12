@@ -1,22 +1,13 @@
 
 plugins {
-    id("kmp-app-plugin")
-    id("kotlin-parcelize")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    id("kmp-library-plugin")
     alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
-    id("io.kotzilla.kotzilla-plugin")
 }
 
 kotlin {
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.android)
-        }
         iosMain.dependencies {
             implementation(libs.koin.core)
         }

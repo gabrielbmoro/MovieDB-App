@@ -33,6 +33,7 @@ popcorn_guineapig = "3.1.5"
 coil = "3.4.0"
 detekt = "1.23.8"
 compose-ui = "1.10.3"
+core-ktx = "1.18.0"
 
 [libraries]
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose-animation" }
@@ -73,7 +74,7 @@ koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
 
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
-kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version = "2.2.20" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor_client_okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
@@ -91,6 +92,7 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref="coil"}
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-ui" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
 compose-ui-util = { module = "org.jetbrains.compose.ui:ui-util", version.ref = "compose-ui" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 
 [bundles]
 test = ["junit", "arc_core_common", "arc_core_runtime", "arc_core_testing", "kotlin_test", "kotlinx_coroutines_test"]
