@@ -75,5 +75,4 @@ dependencies {
     implementation(libs.bundles.compose.multiplatform)
 
     implementation(projects.composeApp)
-    implementation(projects.designsystem)
 }

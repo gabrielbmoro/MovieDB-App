@@ -20,8 +20,8 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.coroutines)
 
+            api(projects.designsystem)
             implementation(projects.platform)
-            implementation(projects.designsystem)
             implementation(projects.feature.featureWishlist)
             implementation(projects.feature.featureSearch)
             implementation(projects.feature.featureDetails)
