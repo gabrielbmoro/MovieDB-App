@@ -12,7 +12,6 @@ kotlin {
             implementation(libs.koin.core)
         }
         commonMain.dependencies {
-            implementation(libs.kotzilla.sdk.compose)
             implementation(libs.bundles.compose.multiplatform)
             implementation(libs.navigation.compose)
             implementation(libs.rinku.core)
