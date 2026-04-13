@@ -10,7 +10,6 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("io.kotzilla.kotzilla-plugin")
     id("kotlin-parcelize")
-    kotlin("android")
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
 }
