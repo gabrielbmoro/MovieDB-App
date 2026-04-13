@@ -74,7 +74,7 @@ koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
 
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
-kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version = "2.2.20" }
+kotlin_gradle_plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version = "2.3.20" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 ktor_client_core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor_client_okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
