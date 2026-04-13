@@ -5,7 +5,7 @@ import model.SdkConfiguration
 import org.gradle.api.JavaVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-internal object ConfigurationKeys {
+object ConfigurationKeys {
 
     const val APPLICATION_ID = "com.gabrielbmoro.moviedb"
     const val APP_NAME = "ComposeApp"

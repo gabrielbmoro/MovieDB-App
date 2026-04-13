@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.buildkonfig.plugin) apply false
+    alias(libs.plugins.kotzilla) apply false
     id("popcorngp-setup-plugin")
 }
 
@@ -27,7 +28,6 @@ buildscript {
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.google.services)
         classpath(libs.firebase.crashlytics.gradle)
-        classpath("io.kotzilla:kotzilla-plugin:2.1.3")
     }
 }
 
