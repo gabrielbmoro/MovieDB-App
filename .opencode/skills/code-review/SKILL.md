@@ -10,7 +10,7 @@ metadata:
 
 ## What I do
 
-When asked to review code, I check that changes follow MovieDB-App's established conventions:
+When asked to review code, I first compare the current branch to `main` using `git diff main...HEAD` to see all changes, then check that changes follow MovieDB-App's established conventions:
 
 ### Architecture (Clean Architecture)
 - Domain layer (no project dependencies) — entities, repository interfaces, use cases
