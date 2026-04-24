@@ -25,6 +25,8 @@ kotlin {
             implementation(projects.feature.featureSearch)
             implementation(projects.feature.featureDetails)
             implementation(projects.feature.featureMovies)
+            implementation(projects.data)
+            implementation(projects.domain)
             implementation(projects.util.logging)
         }
     }

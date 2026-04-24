@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
     alias(libs.plugins.room.plugin)
-    id("koin-annotations-setup-plugin")
     alias(libs.plugins.buildkonfig.plugin)
 }
 
@@ -17,6 +16,7 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
+            implementation(projects.domain)
         }
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)

@@ -10,49 +10,31 @@ class FakeRepository : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): Result<List<Movie>> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
+    ): List<Movie> {
+        error("Nothing implemented yet")
     }
 
-    override suspend fun getFavoriteMovies(): Result<List<Movie>> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
+    override suspend fun getFavoriteMovies(): List<Movie> {
+        error("Nothing implemented yet")
     }
 
-    override suspend fun favorite(movie: Movie): Result<Unit> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
+    override suspend fun favorite(movie: Movie) = Unit
+
+    override suspend fun unFavorite(movieTitle: String) = Unit
+
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
+        error("Nothing implemented yet")
     }
 
-    override suspend fun unFavorite(movieTitle: String): Result<Unit> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
+    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
+        error("Nothing implemented yet")
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
+    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
+        error("Nothing implemented yet")
     }
 
-    override suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
-    }
-
-    override suspend fun getMovieDetail(movieId: Long): Result<MovieDetail> {
-        return runCatching {
-            error("Nothing implemented yet")
-        }
-    }
-
-    override suspend fun searchMovieBy(query: String): Result<List<Movie>> {
-        return Result.success(searchResult)
+    override suspend fun searchMovieBy(query: String): List<Movie> {
+        return searchResult
     }
 }

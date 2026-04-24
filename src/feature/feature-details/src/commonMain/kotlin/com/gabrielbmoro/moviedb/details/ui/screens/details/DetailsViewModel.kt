@@ -15,9 +15,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Provided
 
 class DetailsViewModel(
-    private val repository: MoviesRepository,
+    @Provided private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val ioDispatcher: CoroutineDispatcher,
@@ -62,7 +63,7 @@ class DetailsViewModel(
 
                 repository.checkIsAFavoriteMovie(
                     movieTitle = movieDetails!!.title,
-                ).getOrNull()?.let { result ->
+                ).let { result ->
                     _uiState.update {
                         it.copy(
                             isFavorite = result,
@@ -118,7 +119,7 @@ class DetailsViewModel(
     private suspend fun isMovieFavorite(movieTitle: String): Boolean {
         return repository.checkIsAFavoriteMovie(
             movieTitle = movieTitle,
-        ).getOrDefault(false)
+        )
     }
 
     private suspend fun fetchMoviesDetails(): MovieDetail? {

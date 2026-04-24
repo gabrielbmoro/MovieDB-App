@@ -38,50 +38,32 @@ class FakeRepository : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): Result<List<Movie>> {
-        return runCatching {
-            error("Not yet implemented")
-        }
+    ): List<Movie> {
+        error("Not yet implemented")
     }
 
-    override suspend fun getFavoriteMovies(): Result<List<Movie>> {
-        return runCatching {
-            error("Not yet implemented")
-        }
+    override suspend fun getFavoriteMovies(): List<Movie> {
+        error("Not yet implemented")
     }
 
-    override suspend fun favorite(movie: Movie): Result<Unit> {
-        return runCatching {
-            error("Not yet implemented")
-        }
+    override suspend fun favorite(movie: Movie) = Unit
+
+    override suspend fun unFavorite(movieTitle: String) = Unit
+
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
+        return isFavorite
     }
 
-    override suspend fun unFavorite(movieTitle: String): Result<Unit> {
-        return runCatching {
-            error("Not yet implemented")
-        }
+    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
+        error("Not yet implemented")
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean> {
-        return Result.success(isFavorite)
+    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
+        error("Not yet implemented")
     }
 
-    override suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>> {
-        return runCatching {
-            error("Not yet implemented")
-        }
-    }
-
-    override suspend fun getMovieDetail(movieId: Long): Result<MovieDetail> {
-        return runCatching {
-            error("Not yet implemented")
-        }
-    }
-
-    override suspend fun searchMovieBy(query: String): Result<List<Movie>> {
-        return runCatching {
-            error("Not yet implemented")
-        }
+    override suspend fun searchMovieBy(query: String): List<Movie> {
+        error("Not yet implemented")
     }
 }
 

@@ -13,36 +13,32 @@ class FakeRepository : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): Result<List<Movie>> {
+    ): List<Movie> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFavoriteMovies(): Result<List<Movie>> {
-        return Result.success(favoriteMovies)
+    override suspend fun getFavoriteMovies(): List<Movie> {
+        return favoriteMovies
     }
 
-    override suspend fun favorite(movie: Movie): Result<Unit> {
-        return Result.success(Unit)
+    override suspend fun favorite(movie: Movie) = Unit
+
+    override suspend fun unFavorite(movieTitle: String) = Unit
+
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
+        return isFavorite
     }
 
-    override suspend fun unFavorite(movieTitle: String): Result<Unit> {
-        return Result.success(Unit)
+    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
+        return emptyList()
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean> {
-        return Result.success(isFavorite)
+    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
+        error("Something went wrong")
     }
 
-    override suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>> {
-        return Result.success(emptyList())
-    }
-
-    override suspend fun getMovieDetail(movieId: Long): Result<MovieDetail> {
-        return runCatching { error("Something went wrong") }
-    }
-
-    override suspend fun searchMovieBy(query: String): Result<List<Movie>> {
-        return runCatching { error("Something went wrong") }
+    override suspend fun searchMovieBy(query: String): List<Movie> {
+        error("Something went wrong")
     }
 }
 

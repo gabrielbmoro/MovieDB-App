@@ -101,7 +101,7 @@ class MoviesViewModel(
     private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = moviesHandler.getMoviesFromFilter(
         filter = uiState.value.selectedFilterMenu,
         page = pageIndex,
-    ).getOrDefault(emptyList())
+    )
 
     private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
         movieId = movie.id,

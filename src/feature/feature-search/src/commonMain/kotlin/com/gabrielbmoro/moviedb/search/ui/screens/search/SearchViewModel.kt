@@ -42,9 +42,9 @@ class SearchViewModel(
             searchFlow.debounce(SEARCH_DEBOUNCE_DELAY_IN_MS).collect { searchQuery ->
                 val result = repository.searchMovieBy(
                     query = searchQuery,
-                ).getOrNull()
+                )
 
-                val movieCardsInfos = result?.map(::mapToMovieCardInfo)?.toImmutableList()
+                val movieCardsInfos = result.map(::mapToMovieCardInfo)?.toImmutableList()
 
                 _uiState.update {
                     it.copy(

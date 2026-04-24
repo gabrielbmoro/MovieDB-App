@@ -27,38 +27,32 @@ class FakeRepository : MoviesRepository {
     override suspend fun getMoviesFromFilter(
         filter: String,
         page: Int,
-    ): Result<List<Movie>> = Result.success(moviesFromFilter)
+    ): List<Movie> = moviesFromFilter
 
-    override suspend fun getFavoriteMovies(): Result<List<Movie>> {
-        return Result.success(favoriteMovies)
+    override suspend fun getFavoriteMovies(): List<Movie> {
+        return favoriteMovies
     }
 
-    override suspend fun favorite(movie: Movie): Result<Unit> {
-        return Result.success(Unit)
+    override suspend fun favorite(movie: Movie) = Unit
+
+    override suspend fun unFavorite(movieTitle: String) {
+        timesCallUnfavorite++
     }
 
-    override suspend fun unFavorite(movieTitle: String): Result<Unit> {
-        return runCatching {
-            timesCallUnfavorite++
-        }
+    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Boolean {
+        timesCallCheckFavorite++
+        return isFavoriteMovie
     }
 
-    override suspend fun checkIsAFavoriteMovie(movieTitle: String): Result<Boolean> {
-        return runCatching {
-            timesCallCheckFavorite++
-            isFavoriteMovie
-        }
+    override suspend fun getVideoStreams(movieId: Long): List<VideoStream> {
+        return videoStreams
     }
 
-    override suspend fun getVideoStreams(movieId: Long): Result<List<VideoStream>> {
-        return Result.success(videoStreams)
+    override suspend fun getMovieDetail(movieId: Long): MovieDetail {
+        return movieDetails
     }
 
-    override suspend fun getMovieDetail(movieId: Long): Result<MovieDetail> {
-        return Result.success(movieDetails)
-    }
-
-    override suspend fun searchMovieBy(query: String): Result<List<Movie>> {
-        return Result.success(searchMovies)
+    override suspend fun searchMovieBy(query: String): List<Movie> {
+        return searchMovies
     }
 }

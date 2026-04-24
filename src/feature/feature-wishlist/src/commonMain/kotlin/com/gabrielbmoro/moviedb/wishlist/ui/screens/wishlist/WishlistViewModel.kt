@@ -14,9 +14,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Provided
 
 class WishlistViewModel(
-    private val repository: MoviesRepository,
+    @Provided private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val ioCoroutinesDispatcher: CoroutineDispatcher,
 ) : ViewModel(), ViewModelMvi<WishlistUserIntent> {
@@ -52,12 +53,11 @@ class WishlistViewModel(
                 val isFavoriteAfterDeletion =
                     repository.checkIsAFavoriteMovie(
                         movieTitle = movie.title,
-                    ).getOrDefault(false)
+                    )
                 if (!isFavoriteAfterDeletion) {
                     val favoriteMovies = repository.getFavoriteMovies()
-                        .getOrNull()
-                        ?.map(::toMovieCardInfo)
-                        ?.toImmutableList()
+                        .map(::toMovieCardInfo)
+                        .toImmutableList()
                     _uiState.update {
                         it.copy(
                             favoriteMovies = favoriteMovies,
@@ -88,9 +88,8 @@ class WishlistViewModel(
     private fun handleLoadMovies() {
         viewModelScope.launch(ioCoroutinesDispatcher) {
             val movies = repository.getFavoriteMovies()
-                .getOrNull()
-                ?.map(::toMovieCardInfo)
-                ?.toImmutableList()
+                .map(::toMovieCardInfo)
+                .toImmutableList()
             _uiState.update {
                 it.copy(
                     favoriteMovies = movies,
