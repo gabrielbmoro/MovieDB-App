@@ -64,7 +64,7 @@ class WishlistViewModelTest {
                 )
 
             // act
-            viewModel.execute(
+            viewModel.executeIntent(
                 WishlistUserIntent.PrepareToDeleteMovie(
                     mockChuckNorrisVsVandammeMovieCardInfo,
                 ),
@@ -94,7 +94,7 @@ class WishlistViewModelTest {
                 )
 
             // act
-            viewModel.execute(WishlistUserIntent.LoadMovies)
+            viewModel.executeIntent(WishlistUserIntent.LoadMovies)
             advanceUntilIdle()
 
             // assert
@@ -118,7 +118,7 @@ class WishlistViewModelTest {
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
-            viewModel.execute(
+            viewModel.executeIntent(
                 WishlistUserIntent.PrepareToDeleteMovie(
                     mockChuckNorrisVsVandammeMovieCardInfo,
                 ),
@@ -126,7 +126,7 @@ class WishlistViewModelTest {
             advanceUntilIdle()
 
             // act
-            viewModel.execute(WishlistUserIntent.DeleteMovie)
+            viewModel.executeIntent(WishlistUserIntent.DeleteMovie)
             advanceUntilIdle()
 
             // assert
