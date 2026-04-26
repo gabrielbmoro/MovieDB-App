@@ -10,7 +10,8 @@ metadata:
 
 ## What I do
 
-When asked to review code, I first compare the current branch to `main` using `git diff main...HEAD` to see all changes, then check that changes follow MovieDB-App's established conventions:
+### Before Reviewing
+Always compare the current branch against `main` using `git diff main...HEAD` to see all changes, then check that changes follow MovieDB-App's established conventions:
 
 ### Architecture (Clean Architecture)
 - Domain layer (no project dependencies) — entities, repository interfaces, use cases
@@ -59,6 +60,7 @@ Each feature should have these files:
 - Every `viewModelScope.launch` block must be protected — an unhandled exception silently kills the coroutine and all future collection
 
 ### Review Checklist
+- [ ] Compared current branch against `main` using `git diff main...HEAD`
 - [ ] Architecture dependency rules respected (no data leaks into feature)
 - [ ] MVI pattern followed (Model.kt, ViewModel, Screen separation)
 - [ ] Detekt rules satisfied (line length, complexity, naming, trailing commas)
