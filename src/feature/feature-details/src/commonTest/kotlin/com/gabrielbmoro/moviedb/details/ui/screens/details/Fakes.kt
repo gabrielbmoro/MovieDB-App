@@ -27,9 +27,7 @@ val fakeMovieDetail = MovieDetail(
 )
 
 class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
-    override suspend fun execute(input: FavoriteMovieUseCase.Params): Result<Unit> {
-        return Result.success(Unit)
-    }
+    override suspend fun execute(input: FavoriteMovieUseCase.Params) = Unit
 }
 
 class FakeRepository : MoviesRepository {
@@ -70,7 +68,7 @@ class FakeRepository : MoviesRepository {
 class FakeGetMovieDetailsUseCase : GetMovieDetailsUseCase {
     lateinit var result: MovieDetail
 
-    override suspend fun execute(input: GetMovieDetailsUseCase.Params): Result<MovieDetail> {
-        return Result.success(result)
+    override suspend fun execute(input: GetMovieDetailsUseCase.Params): MovieDetail {
+        return result
     }
 }

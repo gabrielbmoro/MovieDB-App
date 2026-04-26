@@ -123,11 +123,13 @@ class DetailsViewModel(
     }
 
     private suspend fun fetchMoviesDetails(): MovieDetail? {
-        return getMovieDetailsUseCase.execute(
-            GetMovieDetailsUseCase.Params(
-                movieId = movieId!!,
-            ),
-        ).getOrNull()
+        return runCatching {
+            getMovieDetailsUseCase.execute(
+                GetMovieDetailsUseCase.Params(
+                    movieId = movieId!!,
+                ),
+            )
+        }.getOrNull()
     }
 
     private fun List<String>.reduceToText() = reduce { acc, s ->

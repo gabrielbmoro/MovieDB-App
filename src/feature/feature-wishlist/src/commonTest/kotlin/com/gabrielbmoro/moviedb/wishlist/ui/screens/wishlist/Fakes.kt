@@ -46,9 +46,7 @@ class FakeFavoriteMovieUseCase : FavoriteMovieUseCase {
     var timesCalled: Int = 0
         private set
 
-    override suspend fun execute(input: FavoriteMovieUseCase.Params): Result<Unit> {
-        return runCatching {
-            timesCalled++
-        }
+    override suspend fun execute(input: FavoriteMovieUseCase.Params) {
+        timesCalled++
     }
 }
