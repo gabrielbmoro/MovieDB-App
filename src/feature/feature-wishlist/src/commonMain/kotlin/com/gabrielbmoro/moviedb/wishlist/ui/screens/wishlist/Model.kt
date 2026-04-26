@@ -1,9 +1,11 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
+import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
+import com.gabrielbmoro.moviedb.platform.viewmodel.UserIntent
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.ImmutableList
 
-sealed interface WishlistUserIntent {
+sealed interface WishlistUserIntent : UserIntent {
     data class PrepareToDeleteMovie(val movie: MovieCardInfo) : WishlistUserIntent
 
     data object DeleteMovie : WishlistUserIntent
@@ -21,4 +23,4 @@ data class WishlistUIState(
     val areBarsVisible: Boolean = true,
     val isSuccessResult: Boolean? = null,
     val isDeleteAlertDialogVisible: Boolean = false,
-)
+) : UiState

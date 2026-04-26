@@ -104,7 +104,7 @@ fun WishlistScreen() {
                             },
                             lazyListState = lazyListState,
                             onDeleteMovie = { movie ->
-                                viewModel.execute(WishlistUserIntent.PrepareToDeleteMovie(movie))
+                                viewModel.executeIntent(WishlistUserIntent.PrepareToDeleteMovie(movie))
                             },
                             modifier = Modifier
                                 .fillMaxSize()
@@ -127,24 +127,24 @@ fun WishlistScreen() {
                         errorDeleteMessage
                     }
                 snackbarHostState.showSnackbar(resultMessage)
-                viewModel.execute(WishlistUserIntent.ResultMessageReset)
-                viewModel.execute(WishlistUserIntent.LoadMovies)
+                viewModel.executeIntent(WishlistUserIntent.ResultMessageReset)
+                viewModel.executeIntent(WishlistUserIntent.LoadMovies)
             }
         },
     )
 
     LaunchedEffect(Unit) {
-        viewModel.execute(WishlistUserIntent.LoadMovies)
+        viewModel.executeIntent(WishlistUserIntent.LoadMovies)
     }
 
     DeleteConfirmationDialog(
         onDismissRequest = {
-            viewModel.execute(
+            viewModel.executeIntent(
                 WishlistUserIntent.HideConfirmDeleteDialog,
             )
         },
         onPositiveAction = {
-            viewModel.execute(
+            viewModel.executeIntent(
                 WishlistUserIntent.DeleteMovie,
             )
         },

@@ -1,41 +1,11 @@
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.model.FilterType
-import com.gabrielbmoro.moviedb.movies.model.MoviesState
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
 import kotlin.collections.List
 
 class MoviesHandler(
     private val repository: MoviesRepository,
 ) {
-    val menuItems = listOf(
-        FilterMenuItem(
-            selected = true,
-            type = FilterType.NowPlaying,
-        ),
-        FilterMenuItem(
-            selected = false,
-            type = FilterType.UpComing,
-        ),
-        FilterMenuItem(
-            selected = false,
-            type = FilterType.TopRated,
-        ),
-        FilterMenuItem(
-            selected = false,
-            type = FilterType.Popular,
-        ),
-    )
-
-    val defaultEmptyState = MoviesState(
-        movieCardInfos = persistentListOf(),
-        selectedFilterMenu = FilterType.NowPlaying,
-        menuItems = menuItems.toPersistentList(),
-        isLoading = false,
-    )
-
     suspend fun getMoviesFromFilter(filter: FilterType, page: Int): List<Movie> {
         return repository.getMoviesFromFilter(
             filter = filter.asString(),

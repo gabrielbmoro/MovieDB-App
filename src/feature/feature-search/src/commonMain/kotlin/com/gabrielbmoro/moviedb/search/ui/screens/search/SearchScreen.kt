@@ -46,10 +46,10 @@ fun SearchScreen(query: String?) {
                     SearchInputText(
                         currentValue = uiState.value.searchQuery,
                         onQueryChanged = {
-                            viewModel.execute(SearchUserIntent.SearchBy(it))
+                            viewModel.executeIntent(SearchUserIntent.SearchBy(it))
                         },
                         onClearText = {
-                            viewModel.execute(SearchUserIntent.ClearSearchField)
+                            viewModel.executeIntent(SearchUserIntent.ClearSearchField)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         focusRequester = focusRequester,
