@@ -66,7 +66,7 @@ class DetailsViewModelTest {
                 getMovieDetailsUseCase = getMovieDetailsUseCase,
                 ioDispatcher = StandardTestDispatcher(),
             )
-            viewModel.execute(DetailsUserIntent.LoadMovieDetails(movieId = 12))
+            viewModel.executeIntent(DetailsUserIntent.LoadMovieDetails(movieId = 12))
             advanceUntilIdle()
 
             // assert
