@@ -27,28 +27,24 @@ internal class FavoriteMovieUseCaseImpl(
     override suspend fun execute(input: FavoriteMovieUseCase.Params) {
         val toFavorite = input.toFavorite
         val movieTitle = input.movieTitle
-        val isFavorite = repository.checkIsAFavoriteMovie(movieTitle)
-        when {
-            (toFavorite && isFavorite.not()) -> {
-                val movie =
-                    Movie(
-                        id = input.movieId!!,
-                        votesAverage = input.movieVotesAverage!!,
-                        title = input.movieTitle,
-                        posterImageUrl = input.moviePosterImageUrl!!,
-                        backdropImageUrl = input.movieBackdropImageUrl!!,
-                        overview = input.movieOverview!!,
-                        releaseDate = input.movieReleaseDate!!,
-                        isFavorite = true,
-                        language = input.movieLanguage!!,
-                        popularity = input.moviePopularity!!,
-                    )
-                repository.favorite(movie = movie)
-            }
 
-            (!toFavorite && isFavorite) -> {
-                repository.unFavorite(movieTitle)
-            }
+        if (toFavorite) {
+            repository.favorite(
+                Movie(
+                    id = input.movieId ?: 0L,
+                    votesAverage = input.movieVotesAverage ?: 0f,
+                    title = input.movieTitle,
+                    posterImageUrl = input.moviePosterImageUrl.orEmpty(),
+                    backdropImageUrl = input.movieBackdropImageUrl.orEmpty(),
+                    overview = input.movieOverview.orEmpty(),
+                    releaseDate = input.movieReleaseDate.orEmpty(),
+                    isFavorite = true,
+                    language = input.movieLanguage.orEmpty(),
+                    popularity = input.moviePopularity ?: 0f,
+                ),
+            )
+        } else {
+            repository.unFavorite(movieTitle)
         }
     }
 }

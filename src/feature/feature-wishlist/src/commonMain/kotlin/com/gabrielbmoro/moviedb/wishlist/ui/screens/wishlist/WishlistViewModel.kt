@@ -4,7 +4,6 @@ import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
-import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,7 +13,7 @@ class WishlistViewModel(
     @Provided private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     ioCoroutinesDispatcher: CoroutineDispatcher,
-) : BaseViewModel<WishlistUIState, WishlistUserIntent, UiEvent>(ioCoroutinesDispatcher) {
+) : BaseViewModel<WishlistUIState, WishlistUserIntent, WishlistUiEvent>(ioCoroutinesDispatcher) {
 
     private var _movieToBeDeleted: MovieCardInfo? = null
 
@@ -30,10 +29,6 @@ class WishlistViewModel(
                 launchIo {
                     handleLoadMovies()
                 }
-            }
-
-            is WishlistUserIntent.ResultMessageReset -> launchIo {
-                handleResultMessageReset()
             }
 
             is WishlistUserIntent.HideConfirmDeleteDialog -> launchIo {
@@ -58,21 +53,10 @@ class WishlistViewModel(
                     toFavorite = false,
                 ),
             )
-            val isFavoriteAfterDeletion =
-                repository.checkIsAFavoriteMovie(
-                    movieTitle = movie.title,
-                )
-            if (!isFavoriteAfterDeletion) {
-                val favoriteMovies = repository.getFavoriteMovies()
-                    .map(::toMovieCardInfo)
-                    .toImmutableList()
-                updateState {
-                    it.copy(
-                        favoriteMovies = favoriteMovies,
-                        isSuccessResult = true,
-                    )
-                }
-            }
+
+            handleLoadMovies()
+
+            fireEvent(WishlistUiEvent.ShowSuccessfulDeleteMessage)
 
             _movieToBeDeleted = null
 
@@ -84,14 +68,6 @@ class WishlistViewModel(
         updateState {
             it.copy(
                 isDeleteAlertDialogVisible = false,
-            )
-        }
-    }
-
-    private suspend fun handleResultMessageReset() {
-        updateState {
-            it.copy(
-                isSuccessResult = null,
             )
         }
     }

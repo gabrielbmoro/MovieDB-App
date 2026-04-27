@@ -28,9 +28,9 @@ import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.DeleteConfirmationDialog
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieList
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import moviedbapp.feature.feature_wishlist.generated.resources.Res
-import moviedbapp.feature.feature_wishlist.generated.resources.delete_fail_message
 import moviedbapp.feature.feature_wishlist.generated.resources.delete_success_message
 import moviedbapp.feature.feature_wishlist.generated.resources.wishlist
 import org.jetbrains.compose.resources.stringResource
@@ -46,7 +46,6 @@ fun WishlistScreen() {
     val navigator = LocalNavController.current
 
     val successDeleteMessage = stringResource(Res.string.delete_success_message)
-    val errorDeleteMessage = stringResource(Res.string.delete_fail_message)
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -116,25 +115,18 @@ fun WishlistScreen() {
         }
     }
 
-    LaunchedEffect(
-        key1 = uiState.value,
-        block = {
-            if (uiState.value.isSuccessResult != null) {
-                val resultMessage =
-                    if (uiState.value.isSuccessResult == true) {
-                        successDeleteMessage
-                    } else {
-                        errorDeleteMessage
-                    }
-                snackbarHostState.showSnackbar(resultMessage)
-                viewModel.executeIntent(WishlistUserIntent.ResultMessageReset)
-                viewModel.executeIntent(WishlistUserIntent.LoadMovies)
-            }
-        },
-    )
-
     LaunchedEffect(Unit) {
         viewModel.executeIntent(WishlistUserIntent.LoadMovies)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collectLatest {
+            when (it) {
+                WishlistUiEvent.ShowSuccessfulDeleteMessage -> {
+                    snackbarHostState.showSnackbar(successDeleteMessage)
+                }
+            }
+        }
     }
 
     DeleteConfirmationDialog(
