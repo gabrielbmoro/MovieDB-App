@@ -39,7 +39,7 @@ class SearchViewModelTest {
             )
 
             // act
-            viewModel.execute(SearchUserIntent.ClearSearchField)
+            viewModel.executeIntent(SearchUserIntent.ClearSearchField)
 
             // assert
             advanceUntilIdle()

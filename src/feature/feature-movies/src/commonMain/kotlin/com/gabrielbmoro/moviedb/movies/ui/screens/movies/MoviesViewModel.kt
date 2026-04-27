@@ -1,45 +1,37 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import MoviesHandler
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.movies.model.FilterType
-import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import com.gabrielbmoro.moviedb.movies.model.MoviesState
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
 import com.gabrielbmoro.moviedb.platform.paging.SimplePaging
+import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
+import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val ioDispatcher: CoroutineDispatcher,
+    ioDispatcher: CoroutineDispatcher,
     private val loggerHelper: LoggerHelper,
     private val moviesHandler: MoviesHandler,
-) : ViewModel(), ViewModelMvi<MoviesIntent>, PagingController by SimplePaging() {
-
-    private val _uiState = MutableStateFlow(moviesHandler.defaultEmptyState)
-    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
-
+) : BaseViewModel<MoviesState, MoviesIntent, UiEvent>(ioDispatcher),
+    PagingController by SimplePaging() {
     private var _paginationJob: Job? = null
 
     init {
         loggerHelper.plant(this::class)
 
-        execute(MoviesIntent.Setup)
+        executeIntent(MoviesIntent.Setup)
     }
 
-    override fun execute(intent: MoviesIntent) {
+    override fun executeIntent(intent: MoviesIntent) {
         when (intent) {
             is MoviesIntent.RequestMoreMovies -> {
                 loggerHelper.logDebug(
@@ -53,7 +45,7 @@ class MoviesViewModel(
 
                 resetPaging()
 
-                _paginationJob = viewModelScope.launch(ioDispatcher) {
+                _paginationJob = launchIo {
                     currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
@@ -66,9 +58,9 @@ class MoviesViewModel(
                             val requestedMoviesCardInfo = requestedMoreMovies.map(
                                 ::toMovieCardInfo,
                             )
-                            _uiState.update {
+                            updateState {
                                 it.copy(
-                                    movieCardInfos = it.movieCardInfos.addAllDistinctly(
+                                    movieCardInfos = uiState.value.movieCardInfos.addAllDistinctly(
                                         requestedMoviesCardInfo,
                                     ).toPersistentList(),
                                     isLoading = false,
@@ -80,28 +72,61 @@ class MoviesViewModel(
             }
 
             is MoviesIntent.SelectFilterMenuItem -> {
-                _uiState.update {
-                    it.copy(
-                        selectedFilterMenu = intent.menuItem.type,
-                        movieCardInfos = persistentListOf(),
-                        isLoading = true,
-                        menuItems = it.menuItems.updateAccordingToFilterType(
-                            newFilterType = intent.menuItem.type,
-                        ).toPersistentList(),
-                    )
+                launchIo {
+                    updateState {
+                        it.copy(
+                            selectedFilterMenu = intent.menuItem.type,
+                            movieCardInfos = persistentListOf(),
+                            isLoading = true,
+                            menuItems = uiState.value.menuItems.updateAccordingToFilterType(
+                                newFilterType = intent.menuItem.type,
+                            ).toPersistentList(),
+                        )
+                    }
                 }
 
-                execute(MoviesIntent.Setup)
+                executeIntent(MoviesIntent.Setup)
             }
         }
     }
 
-    private fun getSelectedFilterName() = _uiState.value.selectedFilterMenu.name
+    override fun defaultEmptyState(): MoviesState {
+        return MoviesState(
+            movieCardInfos = persistentListOf(),
+            selectedFilterMenu = FilterType.NowPlaying,
+            menuItems = persistentListOf(
+                FilterMenuItem(
+                    selected = true,
+                    type = FilterType.NowPlaying,
+                ),
+                FilterMenuItem(
+                    selected = false,
+                    type = FilterType.UpComing,
+                ),
+                FilterMenuItem(
+                    selected = false,
+                    type = FilterType.TopRated,
+                ),
+                FilterMenuItem(
+                    selected = false,
+                    type = FilterType.Popular,
+                ),
+            ),
+            isLoading = false,
+        )
+    }
 
-    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> = moviesHandler.getMoviesFromFilter(
-        filter = uiState.value.selectedFilterMenu,
-        page = pageIndex,
-    )
+    override fun onFailure(throwable: Throwable) {
+        // ...
+    }
+
+    private fun getSelectedFilterName() = uiState.value.selectedFilterMenu.name
+
+    private suspend fun onRequestMoreMovies(pageIndex: Int): List<Movie> =
+        moviesHandler.getMoviesFromFilter(
+            filter = uiState.value.selectedFilterMenu,
+            page = pageIndex,
+        )
 
     private fun toMovieCardInfo(movie: Movie) = MovieCardInfo(
         movieId = movie.id,

@@ -1,41 +1,35 @@
 package com.gabrielbmoro.moviedb.search.ui.screens.search
 
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.platform.ViewModelMvi
+import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
+import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
 import com.gabrielbmoro.moviedb.search.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class SearchViewModel(
     private val query: String?,
     private val repository: MoviesRepository,
-    private val ioCoroutinesDispatcher: CoroutineDispatcher,
-) : ViewModel(), ViewModelMvi<SearchUserIntent> {
-
-    private val _uiState = MutableStateFlow(this.defaultEmptyState())
-    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly, _uiState.value)
-
+    ioCoroutinesDispatcher: CoroutineDispatcher,
+) : BaseViewModel<SearchUIState, SearchUserIntent, UiEvent>(
+    ioCoroutinesDispatcher,
+) {
     private val searchFlow = MutableSharedFlow<String>()
 
-    private fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
+    override fun defaultEmptyState() = SearchUIState(TextFieldValue(""))
 
     init {
         query?.let {
-            execute(SearchUserIntent.SearchBy(TextFieldValue(query)))
+            executeIntent(SearchUserIntent.SearchBy(TextFieldValue(query)))
         }
 
         viewModelScope.launch(ioCoroutinesDispatcher) {
@@ -46,7 +40,7 @@ class SearchViewModel(
 
                 val movieCardsInfos = result.map(::mapToMovieCardInfo)?.toImmutableList()
 
-                _uiState.update {
+                updateState {
                     it.copy(
                         results = movieCardsInfos,
                     )
@@ -55,31 +49,35 @@ class SearchViewModel(
         }
     }
 
-    override fun execute(intent: SearchUserIntent) {
+    override fun executeIntent(intent: SearchUserIntent) {
         when (intent) {
             is SearchUserIntent.SearchBy -> {
-                val searchQuery = intent.query
-                _uiState.update {
-                    it.copy(
-                        searchQuery = searchQuery,
-                    )
-                }
+                launchIo {
+                    val searchQuery = intent.query
+                    updateState {
+                        it.copy(
+                            searchQuery = searchQuery,
+                        )
+                    }
 
-                viewModelScope.launch(ioCoroutinesDispatcher) {
                     searchFlow.emit(searchQuery.text)
                 }
             }
 
             is SearchUserIntent.ClearSearchField -> {
-                _uiState.update {
-                    it.copy(
-                        searchQuery = TextFieldValue(""),
-                        results = persistentListOf(),
-                    )
+                launchIo {
+                    updateState {
+                        it.copy(
+                            searchQuery = TextFieldValue(""),
+                            results = persistentListOf(),
+                        )
+                    }
                 }
             }
         }
     }
+
+    override fun onFailure(throwable: Throwable) = Unit
 
     private fun mapToMovieCardInfo(movie: Movie): MovieCardInfo {
         return MovieCardInfo(

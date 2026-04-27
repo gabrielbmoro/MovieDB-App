@@ -5,6 +5,7 @@ import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -14,6 +15,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -64,7 +66,7 @@ class WishlistViewModelTest {
                 )
 
             // act
-            viewModel.execute(
+            viewModel.executeIntent(
                 WishlistUserIntent.PrepareToDeleteMovie(
                     mockChuckNorrisVsVandammeMovieCardInfo,
                 ),
@@ -94,7 +96,7 @@ class WishlistViewModelTest {
                 )
 
             // act
-            viewModel.execute(WishlistUserIntent.LoadMovies)
+            viewModel.executeIntent(WishlistUserIntent.LoadMovies)
             advanceUntilIdle()
 
             // assert
@@ -118,7 +120,14 @@ class WishlistViewModelTest {
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
-            viewModel.execute(
+            var event: WishlistUiEvent? = null
+            val job = launch {
+                viewModel.uiEvent.collect {
+                    event = it
+                }
+            }
+
+            viewModel.executeIntent(
                 WishlistUserIntent.PrepareToDeleteMovie(
                     mockChuckNorrisVsVandammeMovieCardInfo,
                 ),
@@ -126,10 +135,12 @@ class WishlistViewModelTest {
             advanceUntilIdle()
 
             // act
-            viewModel.execute(WishlistUserIntent.DeleteMovie)
+            viewModel.executeIntent(WishlistUserIntent.DeleteMovie)
             advanceUntilIdle()
 
             // assert
             assertEquals(1, favoriteMovieUseCase.timesCalled)
+            assertIs<WishlistUiEvent.ShowSuccessfulDeleteMessage>(event)
+            job.cancel()
         }
 }

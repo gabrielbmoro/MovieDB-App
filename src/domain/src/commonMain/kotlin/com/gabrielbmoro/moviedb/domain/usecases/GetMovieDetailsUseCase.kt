@@ -5,7 +5,7 @@ import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Provided
 
-interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, Result<MovieDetail>> {
+interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, MovieDetail> {
     data class Params(
         val movieId: Long,
     )
@@ -15,18 +15,16 @@ interface GetMovieDetailsUseCase : UseCase<GetMovieDetailsUseCase.Params, Result
 internal class GetMovieDetailsUseCaseImpl(
     @Provided private val repository: MoviesRepository,
 ) : GetMovieDetailsUseCase {
-    override suspend fun execute(input: GetMovieDetailsUseCase.Params): Result<MovieDetail> {
-        return runCatching {
-            val movieDetail = repository.getMovieDetail(input.movieId)
-            val videoStream = repository.getVideoStreams(input.movieId)
-                .firstOrNull { videoStream ->
-                    videoStream.site == SITE_KEY && videoStream.official && videoStream.type == TYPE_KEY
-                }
+    override suspend fun execute(input: GetMovieDetailsUseCase.Params): MovieDetail {
+        val movieDetail = repository.getMovieDetail(input.movieId)
+        val videoStream = repository.getVideoStreams(input.movieId)
+            .firstOrNull { videoStream ->
+                videoStream.site == SITE_KEY && videoStream.official && videoStream.type == TYPE_KEY
+            }
 
-            movieDetail.copy(
-                videoId = videoStream?.key,
-            )
-        }
+        return movieDetail.copy(
+            videoId = videoStream?.key,
+        )
     }
 
     companion object {

@@ -70,13 +70,13 @@ fun DetailsScreen(movieId: Long) {
         uiState = uiState.value,
         scrollState = scrollState,
         onFavoriteMovie = {
-            viewModel.execute(DetailsUserIntent.FavoriteMovie)
+            viewModel.executeIntent(DetailsUserIntent.FavoriteMovie)
         },
         onBackEvent = navigator::popBackStack,
     )
 
     LaunchedEffect(movieId) {
-        viewModel.execute(
+        viewModel.executeIntent(
             DetailsUserIntent.LoadMovieDetails(
                 movieId = movieId,
             ),

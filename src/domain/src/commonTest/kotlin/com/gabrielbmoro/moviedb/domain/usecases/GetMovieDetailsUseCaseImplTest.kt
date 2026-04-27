@@ -91,6 +91,6 @@ class GetMovieDetailsUseCaseImplTest {
             val result = useCase.execute(GetMovieDetailsUseCase.Params(1))
 
             // assert
-            assertEquals(expected, result.getOrNull())
+            assertEquals(expected, result)
         }
 }
