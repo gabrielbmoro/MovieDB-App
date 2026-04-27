@@ -1,8 +1,10 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
+import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
+import com.gabrielbmoro.moviedb.platform.viewmodel.UserIntent
 import kotlinx.collections.immutable.ImmutableList
 
-sealed interface DetailsUserIntent {
+sealed interface DetailsUserIntent: UserIntent {
     data object HideVideo : DetailsUserIntent
 
     data object FavoriteMovie : DetailsUserIntent
@@ -29,7 +31,7 @@ data class DetailsUIState(
     val videoId: String? = null,
     val showVideo: Boolean = true,
     val errorMessage: String? = null,
-) {
+) : UiState {
     companion object {
         fun empty() =
             DetailsUIState(
