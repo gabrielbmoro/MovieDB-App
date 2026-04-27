@@ -5,6 +5,7 @@ import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -14,6 +15,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -118,6 +120,13 @@ class WishlistViewModelTest {
                     favoriteMovieUseCase = favoriteMovieUseCase,
                     ioCoroutinesDispatcher = StandardTestDispatcher(),
                 )
+            var event: WishlistUiEvent? = null
+            val job = launch {
+                viewModel.uiEvent.collect {
+                    event = it
+                }
+            }
+
             viewModel.executeIntent(
                 WishlistUserIntent.PrepareToDeleteMovie(
                     mockChuckNorrisVsVandammeMovieCardInfo,
@@ -131,5 +140,7 @@ class WishlistViewModelTest {
 
             // assert
             assertEquals(1, favoriteMovieUseCase.timesCalled)
+            assertIs<WishlistUiEvent.ShowSuccessfulDeleteMessage>(event)
+            job.cancel()
         }
 }
