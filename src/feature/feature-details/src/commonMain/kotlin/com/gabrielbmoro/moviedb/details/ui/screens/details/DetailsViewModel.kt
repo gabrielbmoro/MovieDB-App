@@ -18,7 +18,7 @@ class DetailsViewModel(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BaseViewModel<DetailsUIState, DetailsUserIntent, UiEvent>(
-    ioDispatcher
+    ioDispatcher,
 ) {
 
     private var movieDetails: MovieDetail? = null
