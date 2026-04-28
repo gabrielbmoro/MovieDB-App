@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.data.di
 
 import com.gabrielbmoro.moviedb.data.BuildKonfig
+import com.gabrielbmoro.moviedb.data.providers.buildHttpClient
 import com.gabrielbmoro.moviedb.data.providers.databaseInstance
 import com.gabrielbmoro.moviedb.data.providers.httpClientEngine
 import com.gabrielbmoro.moviedb.data.repository.MoviesDataRepository
@@ -32,34 +33,9 @@ val dataModule = module {
     single { databaseInstance().favoriteMoviesDAO() }
 
     single {
-        val apiToken = BuildKonfig.API_TOKEN
-        HttpClient(
-            engine = httpClientEngine(),
-        ) {
-            install(Logging) {
-                logger = Logger.SIMPLE
-                level = LogLevel.HEADERS
-            }
-
-            install(ContentNegotiation) {
-                json(
-                    json = Json {
-                        ignoreUnknownKeys = true
-                    },
-                )
-            }
-
-            install(Auth) {
-                bearer {
-                    loadTokens {
-                        BearerTokens(
-                            apiToken,
-                            "",
-                        )
-                    }
-                }
-            }
-        }
+        buildHttpClient(
+            apiToken = BuildKonfig.API_TOKEN
+        )
     }
 
     single {

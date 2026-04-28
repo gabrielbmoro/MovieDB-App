@@ -9,4 +9,5 @@ data class MoviesState(
     val menuItems: ImmutableList<FilterMenuItem>,
     val selectedFilterMenu: FilterType,
     val isLoading: Boolean,
+    val showError: Boolean,
 ) : UiState

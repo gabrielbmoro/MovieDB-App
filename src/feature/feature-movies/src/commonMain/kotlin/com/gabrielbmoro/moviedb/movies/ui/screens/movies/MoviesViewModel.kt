@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import MoviesHandler
+import com.gabrielbmoro.moviedb.domain.HttpException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
@@ -49,23 +50,20 @@ class MoviesViewModel(
                     currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
-                                "Request received to fetch the page $pageIndex}",
+                                    "Request received to fetch the page $pageIndex}",
                         )
 
-                        runCatching {
-                            onRequestMoreMovies(pageIndex)
-                        }.getOrNull()?.let { requestedMoreMovies ->
-                            val requestedMoviesCardInfo = requestedMoreMovies.map(
-                                ::toMovieCardInfo,
+                        val requestedMoreMovies = onRequestMoreMovies(pageIndex)
+                        val requestedMoviesCardInfo = requestedMoreMovies.map(
+                            ::toMovieCardInfo,
+                        )
+                        updateState {
+                            it.copy(
+                                movieCardInfos = uiState.value.movieCardInfos.addAllDistinctly(
+                                    requestedMoviesCardInfo,
+                                ).toPersistentList(),
+                                isLoading = false,
                             )
-                            updateState {
-                                it.copy(
-                                    movieCardInfos = uiState.value.movieCardInfos.addAllDistinctly(
-                                        requestedMoviesCardInfo,
-                                    ).toPersistentList(),
-                                    isLoading = false,
-                                )
-                            }
                         }
                     }
                 }
@@ -113,11 +111,19 @@ class MoviesViewModel(
                 ),
             ),
             isLoading = false,
+            showError = false,
         )
     }
 
     override fun onFailure(throwable: Throwable) {
-        // ...
+        launchIo {
+            updateState {
+                it.copy(
+                    isLoading = false,
+                    showError = true
+                )
+            }
+        }
     }
 
     private fun getSelectedFilterName() = uiState.value.selectedFilterMenu.name
