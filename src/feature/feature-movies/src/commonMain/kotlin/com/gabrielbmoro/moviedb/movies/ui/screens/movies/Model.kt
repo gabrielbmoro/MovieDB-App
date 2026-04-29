@@ -1,6 +1,5 @@
-package com.gabrielbmoro.moviedb.movies.model
+package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import com.gabrielbmoro.moviedb.movies.ui.screens.movies.MovieCardInfo
 import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
 import kotlinx.collections.immutable.ImmutableList
 
@@ -11,3 +10,21 @@ data class MoviesState(
     val isLoading: Boolean,
     val showError: Boolean,
 ) : UiState
+
+data class FilterMenuItem(
+    val selected: Boolean,
+    val type: FilterType,
+)
+
+enum class FilterType {
+    NowPlaying,
+    TopRated,
+    Popular,
+    UpComing,
+}
+
+data class MovieCardInfo(
+    val movieId: Long,
+    val movieTitle: String,
+    val moviePosterUrl: String,
+)

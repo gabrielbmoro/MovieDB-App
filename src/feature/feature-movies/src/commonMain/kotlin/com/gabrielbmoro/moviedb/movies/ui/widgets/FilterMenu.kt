@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
-import com.gabrielbmoro.moviedb.movies.model.FilterType
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.FilterMenuItem
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.FilterType
 import kotlinx.collections.immutable.ImmutableList
 import moviedbapp.feature.feature_movies.generated.resources.Res
 import moviedbapp.feature.feature_movies.generated.resources.now_playing

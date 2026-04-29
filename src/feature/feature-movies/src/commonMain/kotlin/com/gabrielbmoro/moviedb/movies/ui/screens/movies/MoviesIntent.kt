@@ -1,6 +1,5 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
-import com.gabrielbmoro.moviedb.movies.model.FilterMenuItem
 import com.gabrielbmoro.moviedb.platform.viewmodel.UserIntent
 
 sealed interface MoviesIntent : UserIntent {

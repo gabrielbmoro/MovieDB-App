@@ -9,4 +9,5 @@
     <string name="delete">Delete</string>
     <string name="movies">Movies</string>
     <string name="favorite">Favorite</string>
+    <string name="retry">Retry</string>
 </resources>
