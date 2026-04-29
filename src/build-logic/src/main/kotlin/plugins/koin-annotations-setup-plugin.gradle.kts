@@ -1,16 +1,17 @@
+import org.gradle.accessors.dm.LibrariesForLibs
+
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.google.devtools.ksp")
 }
 
-val libs = project.extensions.getByType<VersionCatalogsExtension>()
-    .named("libs")
+val libs = the<LibrariesForLibs>()
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.findLibrary("koin_core").get())
-            api(libs.findLibrary("koin-annotations").get())
+            implementation(libs.koin.core)
+            api(libs.koin.annotations)
         }
     }
 
@@ -29,7 +30,7 @@ kotlin {
  * This ensures KSP runs on the common code to generate Koin modules.
  */
 dependencies {
-    add("kspCommonMainMetadata", libs.findLibrary("koin-ksp-compiler").get())
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
 }
 
 /**

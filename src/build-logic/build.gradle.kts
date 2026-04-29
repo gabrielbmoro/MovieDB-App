@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.gradle)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
