@@ -38,7 +38,7 @@ fun MoviesList(
     LazyVerticalStaggeredGrid(
         state = lazyStaggeredGridState,
         modifier = modifier,
-        columns = StaggeredGridCells.Adaptive(120.dp),
+        columns = StaggeredGridCells.Fixed(2),
         verticalItemSpacing = 8.dp,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         content = {
