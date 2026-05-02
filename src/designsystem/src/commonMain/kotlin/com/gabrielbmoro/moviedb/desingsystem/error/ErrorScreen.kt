@@ -19,18 +19,21 @@ import androidx.compose.ui.unit.dp
 import moviedbapp.designsystem.generated.resources.Res
 import moviedbapp.designsystem.generated.resources.alt_sad_emoji
 import moviedbapp.designsystem.generated.resources.ic_sad_emoji
+import moviedbapp.designsystem.generated.resources.network_failure
+import moviedbapp.designsystem.generated.resources.please_try_again
 import moviedbapp.designsystem.generated.resources.retry
+import moviedbapp.designsystem.generated.resources.something_wrong_happened
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ErrorScreen(
-    message: String,
+    errorInfo: ErrorInfo,
     onRetry: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -39,6 +42,12 @@ fun ErrorScreen(
             contentDescription = stringResource(Res.string.alt_sad_emoji),
             modifier = Modifier.size(72.dp),
         )
+
+        val message = when (errorInfo) {
+            ErrorInfo.SOMETHING_WRONG_HAPPENED -> stringResource(Res.string.something_wrong_happened)
+            ErrorInfo.NETWORK_ERROR -> stringResource(Res.string.network_failure)
+            ErrorInfo.PLEASE_TRY_AGAIN -> stringResource(Res.string.please_try_again)
+        }
 
         Text(
             text = message,
@@ -50,7 +59,10 @@ fun ErrorScreen(
         )
 
         onRetry?.let {
-            Button(onClick = onRetry) {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onRetry,
+            ) {
                 Text(stringResource(Res.string.retry))
             }
         }

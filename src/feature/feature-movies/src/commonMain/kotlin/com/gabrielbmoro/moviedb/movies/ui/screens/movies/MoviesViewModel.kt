@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import MoviesHandler
+import com.gabrielbmoro.moviedb.desingsystem.error.ErrorInfo
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
@@ -46,7 +47,7 @@ class MoviesViewModel(
                     currentPage.collectLatest { pageIndex ->
                         loggerHelper.logDebug(
                             message = "${getSelectedFilterName()} - " +
-                                    "Request received to fetch the page $pageIndex}",
+                                "Request received to fetch the page $pageIndex}",
                         )
 
                         val requestedMoreMovies = onRequestMoreMovies(pageIndex)
@@ -107,7 +108,7 @@ class MoviesViewModel(
                 ),
             ),
             isLoading = false,
-            showError = false,
+            errorInfo = null,
         )
     }
 
@@ -116,7 +117,7 @@ class MoviesViewModel(
             updateState {
                 it.copy(
                     isLoading = false,
-                    showError = true
+                    errorInfo = ErrorInfo.NETWORK_ERROR,
                 )
             }
         }

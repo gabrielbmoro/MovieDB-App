@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
+import com.gabrielbmoro.moviedb.desingsystem.error.ErrorInfo
 import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
 import kotlinx.collections.immutable.ImmutableList
 
@@ -8,7 +9,7 @@ data class MoviesState(
     val menuItems: ImmutableList<FilterMenuItem>,
     val selectedFilterMenu: FilterType,
     val isLoading: Boolean,
-    val showError: Boolean,
+    val errorInfo: ErrorInfo?,
 ) : UiState
 
 data class FilterMenuItem(
