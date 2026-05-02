@@ -1,11 +1,13 @@
-package com.gabrielbmoro.moviedb.movies.components
+package com.gabrielbmoro.moviedb.movies.fakes
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
 import com.gabrielbmoro.moviedb.domain.entities.VideoStream
 
-class FakeRepository : MoviesRepository {
+class FakeRepository(
+    private val getMoviesFromFilterError: Throwable? = null,
+) : MoviesRepository {
 
     lateinit var filteredMovies: List<Movie>
 
@@ -13,6 +15,9 @@ class FakeRepository : MoviesRepository {
         filter: String,
         page: Int,
     ): List<Movie> {
+        getMoviesFromFilterError?.let {
+            throw it
+        }
         return filteredMovies
     }
 

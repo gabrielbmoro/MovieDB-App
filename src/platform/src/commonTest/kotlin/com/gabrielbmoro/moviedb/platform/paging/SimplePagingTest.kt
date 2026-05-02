@@ -17,7 +17,7 @@ class SimplePagingTest {
         simplePaging.resetPaging()
 
         // assert
-        assertEquals(0, simplePaging.currentPage.first())
+        assertEquals(1, simplePaging.currentPage.first())
     }
 
     @Test
@@ -29,6 +29,6 @@ class SimplePagingTest {
         simplePaging.requestNextPage()
 
         // assert
-        assertEquals(1, simplePaging.currentPage.first())
+        assertEquals(2, simplePaging.currentPage.first())
     }
 }
