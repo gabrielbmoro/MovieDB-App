@@ -82,6 +82,7 @@ class MoviesViewModel(
                             requestedMoviesCardInfo,
                         ).toPersistentList(),
                         isLoading = false,
+                        errorInfo = null,
                     )
                 }
             }
