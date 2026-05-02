@@ -13,7 +13,7 @@ interface PagingController {
 }
 
 class SimplePaging : PagingController {
-    private var _currentPageFlow = MutableStateFlow(0)
+    private var _currentPageFlow = MutableStateFlow(1)
     override val currentPage: StateFlow<Int> get() = _currentPageFlow
 
     override fun requestNextPage() {
@@ -23,6 +23,6 @@ class SimplePaging : PagingController {
     }
 
     override fun resetPaging() {
-        _currentPageFlow.update { 0 }
+        _currentPageFlow.update { 1 }
     }
 }

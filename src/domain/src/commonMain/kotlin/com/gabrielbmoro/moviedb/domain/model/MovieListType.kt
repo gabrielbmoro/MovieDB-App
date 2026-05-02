@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.domain.entities
+package com.gabrielbmoro.moviedb.domain.model
 
 enum class MovieListType(val value: Int) {
     TOP_RATED(TOP_RATED_MOVIES_VALUE),

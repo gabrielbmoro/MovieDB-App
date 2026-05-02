@@ -1,9 +1,9 @@
 package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 

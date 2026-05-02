@@ -1,8 +1,8 @@
 package com.gabrielbmoro.moviedb.domain
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 
 interface MoviesRepository {
     suspend fun getMoviesFromFilter(filter: String, page: Int): List<Movie>

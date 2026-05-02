@@ -9,9 +9,9 @@ import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.Video
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponseItem
 import com.gabrielbmoro.moviedb.data.repository.mappers.BIG_SIZE_IMAGE_ADDRESS
 import com.gabrielbmoro.moviedb.data.repository.mappers.SMALL_SIZE_IMAGE_ADDRESS
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 
 val movieAndFavoriteMovieDTO =
     Pair(

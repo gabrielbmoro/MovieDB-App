@@ -1,8 +1,9 @@
 package com.gabrielbmoro.moviedb.movies.components
 
 import MoviesHandler
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.movies.model.FilterType
+import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.movies.fakes.FakeRepository
+import com.gabrielbmoro.moviedb.movies.ui.screens.movies.FilterType
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

@@ -3,9 +3,9 @@ package com.gabrielbmoro.moviedb.data.repository.mappers
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 
 private const val BASE_URL = "https://image.tmdb.org/t/p/w"
 const val BIG_SIZE_IMAGE_ADDRESS = "${BASE_URL}780"

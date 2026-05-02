@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Provided
 

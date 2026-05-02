@@ -9,4 +9,8 @@
     <string name="delete">Delete</string>
     <string name="movies">Movies</string>
     <string name="favorite">Favorite</string>
+    <string name="retry">Retry</string>
+    <string name="something_wrong_happened">Something wrong happened</string>
+    <string name="network_failure">Network failure</string>
+    <string name="please_try_again">Please try again!</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.data.repository.mappers
 
 import com.gabrielbmoro.moviedb.data.repository.datasources.database.room.dto.FavoriteMovieDTO
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.model.Movie
 
 fun Movie.toFavoriteMovieDTO(customId: Int? = null): FavoriteMovieDTO {
     return FavoriteMovieDTO(

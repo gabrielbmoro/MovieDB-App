@@ -2,7 +2,7 @@ package com.gabrielbmoro.moviedb.details.ui.screens.details
 
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 import com.gabrielbmoro.moviedb.domain.usecases.GetMovieDetailsUseCase
 import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel

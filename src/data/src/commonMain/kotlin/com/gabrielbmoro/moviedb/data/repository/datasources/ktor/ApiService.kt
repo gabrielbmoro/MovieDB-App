@@ -3,9 +3,11 @@ package com.gabrielbmoro.moviedb.data.repository.datasources.ktor
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.PageResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
+import com.gabrielbmoro.moviedb.domain.model.HttpException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.http.isSuccess
 
 class ApiService(
     private val baseUrl: String,
@@ -29,6 +31,17 @@ class ApiService(
     private suspend inline fun <reified T> fetchMovie(suffix: String): T =
         fetchData("movie/$suffix")
 
-    private suspend inline fun <reified T> fetchData(endpoint: String): T =
-        httpClient.get("$baseUrl/$endpoint").body()
+    private suspend inline fun <reified T> fetchData(endpoint: String): T {
+        val response = httpClient.get("$baseUrl/$endpoint")
+        if (response.status.isSuccess()) {
+            return response.body<T>()
+        } else {
+            throw HttpException(
+                statusCode = response.status.value,
+                statusDescription = response.status.description,
+                requestUrl = response.call.request.url.toString(),
+                requestMethod = response.call.request.method.value,
+            )
+        }
+    }
 }

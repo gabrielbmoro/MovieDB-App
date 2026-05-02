@@ -2,6 +2,7 @@
 
 package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,8 +19,10 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.desingsystem.error.ErrorScreen
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AnimatedAppToolbar
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
@@ -40,7 +43,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun MoviesScreen() {
     val viewModel = koinViewModel<MoviesViewModel>()
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val navigator = LocalNavController.current
 
     val lazyStaggeredGridState = rememberLazyStaggeredGridState()
@@ -54,69 +57,87 @@ fun MoviesScreen() {
 
     Scaffold(
         topBar = {
-            AnimatedAppToolbar(
-                appBar = {
-                    AppToolbarTitle(
-                        title = stringResource(Res.string.movies),
-                        backEvent = null,
-                        searchEvent = {
-                            navigator.navigateToSearch("")
-                        },
-                    )
-                },
-                showTopBar = showTopBar,
-            )
+            if (uiState.errorInfo == null) {
+                AnimatedAppToolbar(
+                    appBar = {
+                        AppToolbarTitle(
+                            title = stringResource(Res.string.movies),
+                            backEvent = null,
+                            searchEvent = {
+                                navigator.navigateToSearch("")
+                            },
+                        )
+                    },
+                    showTopBar = showTopBar,
+                )
+            }
         },
         bottomBar = {
-            NavigationBottomBar(
-                currentTabIndex = MoviesTabIndex,
-                onSelectMoviesTab = {
-                    lazyStaggeredGridState.scrollToInit(coroutineScope)
-                },
-                onSelectFavoriteTab = navigator::navigateToWishlist,
-            )
+            if (uiState.errorInfo == null) {
+                NavigationBottomBar(
+                    currentTabIndex = MoviesTabIndex,
+                    onSelectMoviesTab = {
+                        lazyStaggeredGridState.scrollToInit(coroutineScope)
+                    },
+                    onSelectFavoriteTab = navigator::navigateToWishlist,
+                )
+            }
         },
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .padding(
                     top = it.calculateTopPadding(),
                     bottom = it.calculateBottomPadding(),
+                    start = 16.dp,
+                    end = 16.dp,
                 )
                 .fillMaxSize(),
         ) {
-            val lazyListState = rememberLazyListState()
-            val isAtStart by rememberIsAtStartState(lazyListState)
+            if (uiState.errorInfo != null) {
+                ErrorScreen(
+                    errorInfo = uiState.errorInfo!!,
+                    modifier = Modifier.align(Alignment.Center),
+                    onRetry = {
+                        lazyStaggeredGridState.scrollToInit(coroutineScope)
+                        viewModel.executeIntent(MoviesIntent.Setup)
+                    },
+                )
+            } else {
+                Column {
+                    val lazyListState = rememberLazyListState()
+                    val isAtStart by rememberIsAtStartState(lazyListState)
 
-            FilterMenu(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = if (isAtStart) 16.dp else 0.dp),
-                menuItems = uiState.value.menuItems,
-                lazyListState = lazyListState,
-                onClick = { filterMenuItem ->
-                    viewModel.executeIntent(
-                        MoviesIntent.SelectFilterMenuItem(
-                            menuItem = filterMenuItem,
-                        ),
+                    FilterMenu(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = if (isAtStart) 16.dp else 0.dp),
+                        menuItems = uiState.menuItems,
+                        lazyListState = lazyListState,
+                        onClick = { filterMenuItem ->
+                            viewModel.executeIntent(
+                                MoviesIntent.SelectFilterMenuItem(
+                                    menuItem = filterMenuItem,
+                                ),
+                            )
+                            lazyStaggeredGridState.scrollToInit(coroutineScope)
+                        },
                     )
-                    lazyStaggeredGridState.scrollToInit(coroutineScope)
-                },
-            )
 
-            MoviesList(
-                movies = uiState.value.movieCardInfos,
-                onSelectMovie = { selectedMovieId ->
-                    navigator.navigateToDetails(selectedMovieId)
-                },
-                onRequestMore = {
-                    viewModel.executeIntent(MoviesIntent.RequestMoreMovies)
-                },
-                lazyStaggeredGridState = lazyStaggeredGridState,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxSize(),
-            )
+                    MoviesList(
+                        movies = uiState.movieCardInfos,
+                        onSelectMovie = { selectedMovieId ->
+                            navigator.navigateToDetails(selectedMovieId)
+                        },
+                        onRequestMore = {
+                            viewModel.executeIntent(MoviesIntent.RequestMoreMovies)
+                        },
+                        lazyStaggeredGridState = lazyStaggeredGridState,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                    )
+                }
+            }
         }
     }
 }
