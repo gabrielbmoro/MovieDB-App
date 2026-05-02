@@ -1,6 +1,6 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers

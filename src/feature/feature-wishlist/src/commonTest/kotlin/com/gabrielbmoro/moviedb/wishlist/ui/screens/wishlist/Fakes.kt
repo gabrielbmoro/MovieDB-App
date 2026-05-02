@@ -1,9 +1,9 @@
 package com.gabrielbmoro.moviedb.wishlist.ui.screens.wishlist
 
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.Movie
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.model.Movie
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
 
 class FakeRepository : MoviesRepository {

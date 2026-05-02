@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.domain.entities
+package com.gabrielbmoro.moviedb.domain.model
 
 data class MovieDetail(
     val adult: Boolean,

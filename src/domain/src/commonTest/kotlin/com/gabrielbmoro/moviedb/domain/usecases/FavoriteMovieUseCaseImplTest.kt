@@ -1,6 +1,6 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.model.Movie
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

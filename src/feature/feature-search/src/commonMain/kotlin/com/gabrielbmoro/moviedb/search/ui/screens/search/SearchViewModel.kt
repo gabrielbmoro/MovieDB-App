@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.search.ui.screens.search
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
 import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
 import com.gabrielbmoro.moviedb.search.ui.widgets.MovieCardInfo

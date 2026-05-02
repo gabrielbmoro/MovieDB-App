@@ -2,8 +2,8 @@ package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import MoviesHandler
 import com.gabrielbmoro.moviedb.desingsystem.error.ErrorInfo
-import com.gabrielbmoro.moviedb.domain.HttpException
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.model.HttpException
+import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.movies.fakes.FakeLogger
 import com.gabrielbmoro.moviedb.movies.fakes.FakeRepository

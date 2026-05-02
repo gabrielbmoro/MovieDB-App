@@ -1,7 +1,7 @@
 package com.gabrielbmoro.moviedb.domain.usecases
 
-import com.gabrielbmoro.moviedb.domain.entities.MovieDetail
-import com.gabrielbmoro.moviedb.domain.entities.VideoStream
+import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.VideoStream
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

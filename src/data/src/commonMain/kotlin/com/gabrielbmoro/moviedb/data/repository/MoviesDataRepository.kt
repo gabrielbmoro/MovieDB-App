@@ -7,7 +7,7 @@ import com.gabrielbmoro.moviedb.data.repository.mappers.toMovie
 import com.gabrielbmoro.moviedb.data.repository.mappers.toMovieDetail
 import com.gabrielbmoro.moviedb.data.repository.mappers.toVideoStreams
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
-import com.gabrielbmoro.moviedb.domain.entities.Movie
+import com.gabrielbmoro.moviedb.domain.model.Movie
 
 internal class MoviesDataRepository(
     private val api: ApiService,

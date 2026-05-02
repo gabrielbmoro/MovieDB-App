@@ -3,7 +3,7 @@ package com.gabrielbmoro.moviedb.data.repository.datasources.ktor
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.PageResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
-import com.gabrielbmoro.moviedb.domain.HttpException
+import com.gabrielbmoro.moviedb.domain.model.HttpException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
