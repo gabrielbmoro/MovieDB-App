@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.movies.ui.screens.movies
 
 import MoviesHandler
 import com.gabrielbmoro.moviedb.desingsystem.error.ErrorInfo
+import com.gabrielbmoro.moviedb.domain.HttpException
 import com.gabrielbmoro.moviedb.domain.entities.Movie
 import com.gabrielbmoro.moviedb.logging.LoggerHelper
 import com.gabrielbmoro.moviedb.platform.paging.PagingController
@@ -38,33 +39,7 @@ class MoviesViewModel(
                 requestNextPage()
             }
 
-            MoviesIntent.Setup -> {
-                _paginationJob?.cancel()
-
-                resetPaging()
-
-                _paginationJob = launchIo {
-                    currentPage.collectLatest { pageIndex ->
-                        loggerHelper.logDebug(
-                            message = "${getSelectedFilterName()} - " +
-                                "Request received to fetch the page $pageIndex}",
-                        )
-
-                        val requestedMoreMovies = onRequestMoreMovies(pageIndex)
-                        val requestedMoviesCardInfo = requestedMoreMovies.map(
-                            ::toMovieCardInfo,
-                        )
-                        updateState {
-                            it.copy(
-                                movieCardInfos = uiState.value.movieCardInfos.addAllDistinctly(
-                                    requestedMoviesCardInfo,
-                                ).toPersistentList(),
-                                isLoading = false,
-                            )
-                        }
-                    }
-                }
-            }
+            MoviesIntent.Setup -> handleSetup()
 
             is MoviesIntent.SelectFilterMenuItem -> {
                 launchIo {
@@ -80,7 +55,35 @@ class MoviesViewModel(
                     }
                 }
 
-                executeIntent(MoviesIntent.Setup)
+                handleSetup()
+            }
+        }
+    }
+
+    private fun handleSetup() {
+        _paginationJob?.cancel()
+
+        resetPaging()
+
+        _paginationJob = launchIo {
+            currentPage.collectLatest { pageIndex ->
+                loggerHelper.logDebug(
+                    message = "${getSelectedFilterName()} - " +
+                        "Request received to fetch the page $pageIndex}",
+                )
+
+                val requestedMoreMovies = onRequestMoreMovies(pageIndex)
+                val requestedMoviesCardInfo = requestedMoreMovies.map(
+                    ::toMovieCardInfo,
+                )
+                updateState {
+                    it.copy(
+                        movieCardInfos = uiState.value.movieCardInfos.addAllDistinctly(
+                            requestedMoviesCardInfo,
+                        ).toPersistentList(),
+                        isLoading = false,
+                    )
+                }
             }
         }
     }
@@ -113,11 +116,16 @@ class MoviesViewModel(
     }
 
     override fun onFailure(throwable: Throwable) {
+        val errorInfo = if (throwable is HttpException) {
+            ErrorInfo.SOMETHING_WRONG_HAPPENED
+        } else {
+            ErrorInfo.NETWORK_ERROR
+        }
         launchIo {
             updateState {
                 it.copy(
                     isLoading = false,
-                    errorInfo = ErrorInfo.NETWORK_ERROR,
+                    errorInfo = errorInfo,
                 )
             }
         }

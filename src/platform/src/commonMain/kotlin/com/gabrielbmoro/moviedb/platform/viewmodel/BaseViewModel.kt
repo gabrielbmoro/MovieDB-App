@@ -2,6 +2,7 @@ package com.gabrielbmoro.moviedb.platform.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -44,7 +45,12 @@ abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEve
             runCatching {
                 block()
             }.onFailure {
-                onFailure(it)
+                if (it is CancellationException) {
+                    throw it
+                } else {
+                    // Just handle real exceptions
+                    onFailure(it)
+                }
             }
         }
     }

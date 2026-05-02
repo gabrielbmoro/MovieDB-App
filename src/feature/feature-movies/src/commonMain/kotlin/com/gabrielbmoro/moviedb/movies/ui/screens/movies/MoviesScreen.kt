@@ -98,6 +98,9 @@ fun MoviesScreen() {
                 ErrorScreen(
                     errorInfo = uiState.errorInfo!!,
                     modifier = Modifier.align(Alignment.Center),
+                    onRetry = {
+                        viewModel.executeIntent(MoviesIntent.Setup)
+                    },
                 )
             } else {
                 Column {
