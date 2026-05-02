@@ -99,6 +99,7 @@ fun MoviesScreen() {
                     errorInfo = uiState.errorInfo!!,
                     modifier = Modifier.align(Alignment.Center),
                     onRetry = {
+                        lazyStaggeredGridState.scrollToInit(coroutineScope)
                         viewModel.executeIntent(MoviesIntent.Setup)
                     },
                 )
