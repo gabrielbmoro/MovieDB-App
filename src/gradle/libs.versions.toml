@@ -34,10 +34,12 @@ coil = "3.4.0"
 detekt = "1.23.8"
 compose-ui = "1.10.3"
 core-ktx = "1.18.0"
+koin-compiler-plugin = "1.0.0-RC2"
 
 [libraries]
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose-animation" }
 com-google-devtools-ksp-gradle-plugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+koin-compiler-plugin = { group = "io.insert-koin", name = "koin-compiler-gradle-plugin", version.ref = "koin-compiler-plugin" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-components-resources" }
 detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }

@@ -1,6 +1,6 @@
 plugins {
     id("kmp-library-plugin")
-    id("koin-annotations-setup-plugin")
+    id("koin-compiler-setup")
 }
 
 kotlin {

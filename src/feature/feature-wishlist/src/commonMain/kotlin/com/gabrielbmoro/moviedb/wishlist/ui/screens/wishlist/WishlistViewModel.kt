@@ -7,10 +7,9 @@ import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
 import com.gabrielbmoro.moviedb.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
-import org.koin.core.annotation.Provided
 
 class WishlistViewModel(
-    @Provided private val repository: MoviesRepository,
+    private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     ioCoroutinesDispatcher: CoroutineDispatcher,
 ) : BaseViewModel<WishlistUIState, WishlistUserIntent, WishlistUiEvent>(ioCoroutinesDispatcher) {

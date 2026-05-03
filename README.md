@@ -34,13 +34,13 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 <details open>
 <summary>Android</summary>
 
-🎥 [View Android teaser video](img/android-teaser.webm)
+![Android teaser](img/android-teaser.mp4)
 </details>
 
 <details open>
 <summary>iOS</summary>
 
-![iOS teaser](img/ios-teaser.gif)
+![iOS teaser](img/ios-teaser.mp4)
 </details>
 
 ---
@@ -53,7 +53,7 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 | **Networking** | Ktor 3.4.2 (OkHttp / Darwin engines), kotlinx-serialization |
 | **Image Loading** | Coil 3 (ktor3 network engine) |
 | **Database** | Room 2.8.4 with sqlite-bundled |
-| **Dependency Injection** | Koin 4.2.1 (annotations + KSP) |
+| **Dependency Injection** | Koin 4.2.1 (annotations + Koin compiler) |
 | **State Management** | Coroutines, StateFlow, MVI pattern |
 | **Architecture** | Clean Architecture (data/domain/feature layers) |
 | **Logging** | Kermit 2.1.0 |

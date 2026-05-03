@@ -1,6 +1,7 @@
 
 plugins {
     id("kmp-library-plugin")
+    id("koin-compiler-setup")
     alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
