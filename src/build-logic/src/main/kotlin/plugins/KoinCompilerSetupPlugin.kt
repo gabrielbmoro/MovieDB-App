@@ -19,6 +19,7 @@ class KoinCompilerSetupPlugin : Plugin<Project> {
             // Configure logging
             extensions.configure<KoinGradleExtension> {
                 userLogs.set(true)
+                compileSafety.set(true)
             }
 
             val libs = the<LibrariesForLibs>()
