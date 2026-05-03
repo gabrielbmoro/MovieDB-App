@@ -34,13 +34,13 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 <details open>
 <summary>Android</summary>
 
-🎥 [View Android teaser video](img/android-teaser.webm)
+![Android teaser](img/android-teaser.mp4)
 </details>
 
 <details open>
 <summary>iOS</summary>
 
-![iOS teaser](img/ios-teaser.gif)
+![iOS teaser](img/ios-teaser.mp4)
 </details>
 
 ---
