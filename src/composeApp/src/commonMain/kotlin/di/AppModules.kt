@@ -7,17 +7,23 @@ import com.gabrielbmoro.moviedb.logging.di.loggingModule
 import com.gabrielbmoro.moviedb.movies.di.featureMoviesModule
 import com.gabrielbmoro.moviedb.search.di.featureSearchMovieModule
 import com.gabrielbmoro.moviedb.wishlist.di.featureWishlistModule
-import org.koin.ksp.generated.module
+import org.koin.core.KoinApplication
+import org.koin.core.context.startKoin
+import org.koin.core.lazyModules
+import org.koin.plugin.module.dsl.module
 
-val appModules = listOf(
-    loggingModule,
-    dataModule,
-    DomainModule().module,
-)
+fun movieDbApplication(platformBlock: KoinApplication.() -> Unit): KoinApplication {
+    return startKoin {
+        platformBlock()
+        modules(dataModule, loggingModule)
 
-val featureModules = listOf(
-    featureDetailsModule,
-    featureMoviesModule,
-    featureSearchMovieModule,
-    featureWishlistModule,
-)
+        module<DomainModule>()
+
+        lazyModules(
+            featureDetailsModule,
+            featureMoviesModule,
+            featureSearchMovieModule,
+            featureWishlistModule,
+        )
+    }
+}

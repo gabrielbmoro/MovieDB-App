@@ -16,7 +16,17 @@ dependencies {
     implementation(libs.gradle)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
     implementation(libs.popcorn.guineapig)
+    implementation(libs.koin.compiler.plugin)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
+}
+
+gradlePlugin {
+    plugins {
+        create("koinConvention") {
+            id = "koin-compiler-setup"
+            implementationClass = "plugins.KoinCompilerSetupPlugin"
+        }
+    }
 }

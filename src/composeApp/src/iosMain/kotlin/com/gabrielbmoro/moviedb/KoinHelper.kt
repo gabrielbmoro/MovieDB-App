@@ -1,11 +1,7 @@
 package com.gabrielbmoro.moviedb
 
-import org.koin.core.context.startKoin
-import org.koin.core.lazyModules
+import di.movieDbApplication
 
 fun initKoin() {
-    startKoin {
-        modules(di.appModules)
-        lazyModules(di.featureModules)
-    }
+    movieDbApplication { }
 }

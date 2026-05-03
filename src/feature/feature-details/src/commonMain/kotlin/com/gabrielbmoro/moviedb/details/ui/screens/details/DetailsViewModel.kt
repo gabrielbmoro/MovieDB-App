@@ -10,10 +10,9 @@ import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
-import org.koin.core.annotation.Provided
 
 class DetailsViewModel(
-    @Provided private val repository: MoviesRepository,
+    private val repository: MoviesRepository,
     private val favoriteMovieUseCase: FavoriteMovieUseCase,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val ioDispatcher: CoroutineDispatcher,
