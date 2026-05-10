@@ -21,8 +21,8 @@ jobs:
       - name: Grant execute permission for gradlew
         working-directory: ./src
         run: chmod +x gradlew
-        
-      popcorn:
-      - uses: CodandoTV/popcorn-guineapig/.github/workflows/popcorn.yml@feature/error-report-fix
+
+      - name: Run Popcorn
+        uses: CodandoTV/popcorn-guineapig/.github/actions/popcorn@feature/error-report-fix
         with:
-          working-directory: ./src
+          working-directory: .
