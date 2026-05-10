@@ -25,4 +25,4 @@ jobs:
       - name: Run Popcorn
         uses: CodandoTV/popcorn-guineapig/.github/actions/popcorn@feature/error-report-fix
         with:
-          working-directory: .
+          working-directory: ./src
