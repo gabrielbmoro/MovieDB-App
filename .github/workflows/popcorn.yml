@@ -23,6 +23,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Popcorn
-        uses: CodandoTV/popcorn-guineapig/.github/actions/popcorn@feature/error-report-fix
+        uses: CodandoTV/popcorn-guineapig/.github/actions/popcorn@main
         with:
           working-directory: ./src
