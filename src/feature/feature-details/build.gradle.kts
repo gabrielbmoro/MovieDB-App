@@ -7,6 +7,9 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            // region VIOLATION
+            implementation(projects.data)
+            // endregion
             implementation(libs.bundles.koin)
 
             implementation(libs.bundles.compose.multiplatform)
