@@ -34,7 +34,8 @@ jobs:
 
       # Gradle permissions
       - name: Set Gradle permissions
-        run: chmod +x ./src/gradlew
+        working-directory: ./src
+        run: chmod +x ./gradlew
 
       # MegaLinter
       - name: MegaLinter
