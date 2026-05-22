@@ -7,6 +7,11 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.compose.ui)
+            implementation(libs.compose.foundation)
+            implementation(libs.material3)
+            implementation(libs.bundles.koin)
+            implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.bundles.compose.multiplatform)
             implementation(libs.navigation.compose)

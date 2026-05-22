@@ -24,13 +24,11 @@ include(
     ":data",
     ":domain",
     ":designsystem",
-    ":feature:feature-wishlist",
-    ":feature:feature-search",
-    ":feature:feature-details",
-    ":feature:feature-movies",
-    ":platform",
-    ":util:media",
-    ":util:logging",
+    ":feature-wishlist",
+    ":feature-search",
+    ":feature-details",
+    ":feature-movies",
+    ":platform"
 )
 
 rootProject.name = "MovieDBApp"

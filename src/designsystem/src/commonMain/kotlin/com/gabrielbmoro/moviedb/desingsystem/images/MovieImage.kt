@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import com.gabrielbmoro.moviedb.media.AsyncImage
 import moviedbapp.designsystem.generated.resources.Res
 import moviedbapp.designsystem.generated.resources.ic_movie_media_player
 import org.jetbrains.compose.resources.painterResource

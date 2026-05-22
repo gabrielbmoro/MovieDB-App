@@ -1,0 +1,28 @@
+package com.gabrielbmoro.moviedb.feature.wishlist.ui.screens.wishlist
+
+import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieCardInfo
+import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
+import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
+import com.gabrielbmoro.moviedb.platform.viewmodel.UserIntent
+import kotlinx.collections.immutable.ImmutableList
+
+sealed interface WishlistUserIntent : UserIntent {
+    data class PrepareToDeleteMovie(val movie: MovieCardInfo) : WishlistUserIntent
+
+    data object DeleteMovie : WishlistUserIntent
+
+    data object LoadMovies : WishlistUserIntent
+
+    data object HideConfirmDeleteDialog : WishlistUserIntent
+}
+
+data class WishlistUIState(
+    val favoriteMovies: ImmutableList<MovieCardInfo>? = null,
+    val isLoading: Boolean = false,
+    val areBarsVisible: Boolean = true,
+    val isDeleteAlertDialogVisible: Boolean = false,
+) : UiState
+
+sealed class WishlistUiEvent : UiEvent {
+    data object ShowSuccessfulDeleteMessage : WishlistUiEvent()
+}

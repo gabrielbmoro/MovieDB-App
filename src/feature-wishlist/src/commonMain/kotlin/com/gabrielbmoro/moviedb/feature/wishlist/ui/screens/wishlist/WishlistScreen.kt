@@ -1,0 +1,145 @@
+@file:Suppress("LongMethod")
+
+package com.gabrielbmoro.moviedb.feature.wishlist.ui.screens.wishlist
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.gabrielbmoro.moviedb.desingsystem.images.EmptyState
+import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
+import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
+import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
+import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
+import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.DeleteConfirmationDialog
+import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieList
+import com.gabrielbmoro.moviedb.platform.LocalNavController
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import moviedbapp.feature_wishlist.generated.resources.Res
+import moviedbapp.feature_wishlist.generated.resources.delete_success_message
+import moviedbapp.feature_wishlist.generated.resources.wishlist
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+
+@Composable
+fun WishlistScreen() {
+    val viewModel = koinViewModel<WishlistViewModel>()
+    val uiState = viewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val lazyListState = rememberLazyListState()
+
+    val navigator = LocalNavController.current
+
+    val successDeleteMessage = stringResource(Res.string.delete_success_message)
+
+    val coroutineScope = rememberCoroutineScope()
+
+    Scaffold(
+        topBar = {
+            AppToolbarTitle(
+                title = stringResource(Res.string.wishlist),
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        },
+        bottomBar = {
+            NavigationBottomBar(
+                currentTabIndex = FavoriteTabIndex,
+                onSelectFavoriteTab = {
+                    coroutineScope.launch {
+                        lazyListState.scrollToItem(0)
+                    }
+                },
+                onSelectMoviesTab = navigator::navigateToMovies,
+            )
+        },
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(
+                    top = it.calculateTopPadding(),
+                    bottom = it.calculateBottomPadding(),
+                    start = 16.dp,
+                    end = 16.dp,
+                )
+                .fillMaxSize(),
+        ) {
+            when {
+                uiState.value.isLoading -> {
+                    BubbleLoader(
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.align(Alignment.Center),
+                    )
+                }
+
+                uiState.value.favoriteMovies?.isEmpty() == true -> {
+                    EmptyState(
+                        modifier = Modifier.align(Alignment.Center),
+                    )
+                }
+
+                else -> {
+                    if (uiState.value.favoriteMovies != null) {
+                        MovieList(
+                            moviesList = uiState.value.favoriteMovies!!,
+                            onSelectMovie = { selectedMovie ->
+                                navigator.navigateToDetails(selectedMovie.id)
+                            },
+                            lazyListState = lazyListState,
+                            onDeleteMovie = { movie ->
+                                viewModel.executeIntent(WishlistUserIntent.PrepareToDeleteMovie(movie))
+                            },
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .align(Alignment.TopCenter),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.executeIntent(WishlistUserIntent.LoadMovies)
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collectLatest {
+            when (it) {
+                WishlistUiEvent.ShowSuccessfulDeleteMessage -> {
+                    snackbarHostState.showSnackbar(successDeleteMessage)
+                }
+            }
+        }
+    }
+
+    DeleteConfirmationDialog(
+        onDismissRequest = {
+            viewModel.executeIntent(
+                WishlistUserIntent.HideConfirmDeleteDialog,
+            )
+        },
+        onPositiveAction = {
+            viewModel.executeIntent(
+                WishlistUserIntent.DeleteMovie,
+            )
+        },
+        visible = uiState.value.isDeleteAlertDialogVisible,
+    )
+}

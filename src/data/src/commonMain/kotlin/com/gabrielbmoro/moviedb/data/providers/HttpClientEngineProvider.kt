@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
 
 internal fun buildHttpClient(
     apiToken: String,
-) : HttpClient {
+): HttpClient {
     return HttpClient(
         engine = httpClientEngine(),
     ) {

@@ -1,6 +1,5 @@
 package plugins
 
-import gradle.kotlin.dsl.accessors._26d5729dce578095ef5c0b991980e1d9.commonMainImplementation
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -25,8 +24,8 @@ class KoinCompilerSetupPlugin : Plugin<Project> {
             val libs = the<LibrariesForLibs>()
 
             dependencies {
-                commonMainImplementation(libs.koin.core)
-                commonMainImplementation(libs.koin.annotations)
+                add("commonMainImplementation",libs.koin.core)
+                add("commonMainImplementation",libs.koin.annotations)
             }
         }
     }

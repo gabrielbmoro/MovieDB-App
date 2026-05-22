@@ -7,6 +7,7 @@ Kotlin Multiplatform (KMP) app using **Compose Multiplatform** targeting Android
 - **Kotlin:** 2.3.20
 - **Compose Multiplatform:** 1.10.3
 - **AGP:** 9.1.0
+- **Gradle:** 9.4.1
 - **Min SDK:** 28 | **Target/Compile SDK:** 36
 - **Java / JVM Target:** 21
 - **Package:** `com.gabrielbmoro.moviedb`
@@ -25,14 +26,15 @@ Kotlin Multiplatform (KMP) app using **Compose Multiplatform** targeting Android
 | Serialization | kotlinx-serialization | — |
 | Image Loading | Coil 3 (ktor3 network) | 3.4.0 |
 | Database | Room + sqlite-bundled | 2.8.4 / 2.6.2 |
-| DI | Koin (annotations + KSP) | 4.2.1 |
+| DI | Koin (annotations + KSP + Koin Compiler) | 4.2.1 |
 | Koin Annotations | KSP compiler for `@Module`/`@Factory`/`@Single` | 2.3.1 |
+| Koin Compiler Plugin | Custom convention plugin for Koin compiler | 1.0.0-RC2 |
 | State | Coroutines + StateFlow | 1.10.2 |
 | Collections | kotlinx-collections-immutable | 0.4.0 |
 | Logging | Kermit | 2.1.0 |
 | Deep Links | Rinku | 1.6.0 |
 | Build Config | BuildKonfig | 0.18.0 |
-| Dependency Audit | Popcorn Guineapig | 3.1.6 |
+| Dependency Audit | Popcorn Guineapig | 3.1.7 |
 | Linting | Detekt | 1.23.8 |
 | Coverage | Kover | 0.9.8 |
 | Crash Reporting | Firebase Crashlytics | — |
@@ -51,9 +53,8 @@ composeApp (UI orchestrator)
     ├── feature:*      → depends on domain, designsystem, platform
     ├── domain         → LEAF — no project module dependencies
     ├── data           → depends ONLY on domain (implements repository interfaces)
-    ├── designsystem   → depends only on util:media
-    ├── platform       → navigation, paging, MVI base
-    └── util:*         → LEAF — no project module dependencies
+    ├── designsystem   → LEAF — no project module dependencies
+    ├── platform       → LEAF — no project module dependencies
 ```
 
 ### Data Flow
@@ -75,21 +76,17 @@ UI (Screen composable)
 ```
 src/
 ├── composeApp/          # NavHost, DI aggregator, RootApp.kt
-├── data/                # ApiService, DTOs, DAOs, DatabaseProvider
-├── domain/              # Entities, Repository interface, UseCases, Mappers
-├── designsystem/        # Theme, Colors, shared UI (cards, toolbars, icons)
-├── platform/            # Navigation (Screen enum, extensions), PagingController, MVI base
-├── feature/
-│   ├── feature-movies/  # Movie grid with filter tabs + pagination
-│   ├── feature-details/ # Movie detail (backdrop, rating, favorite, info)
-│   ├── feature-search/  # Debounced search with results
-│   └── feature-wishlist/# Favorites list with swipe-to-delete
-├── util/
-│   ├── media/           # AsyncImage (Coil), VideoPlayer (expect/actual)
-│   └── logging/         # Kermit wrapper
+├── data/                # ApiService, DTOs, DAOs, DatabaseProvider, Mappers
+├── domain/              # Domain models, Repository interfaces, UseCases
+├── designsystem/        # Theme, Colors, shared UI (cards, toolbars, icons, AsyncImage)
+├── platform/            # Navigation, PagingController, BaseViewModel, Logging, VideoPlayer
+├── feature-movies/      # Movie grid with filter tabs + pagination
+├── feature-details/     # Movie detail (backdrop, rating, favorite, info)
+├── feature-search/      # Debounced search with results
+├── feature-wishlist/    # Favorites list with swipe-to-delete
 ├── androidApp/          # Android entry (Application, MainActivity)
 ├── iosApp/              # Xcode project
-└── build-logic/         # Convention plugins (kmp-library, koin-ksp, popcorngp)
+└── build-logic/         # Convention plugins (kmp-library, koin-compiler, popcorngp)
 ```
 
 ---
@@ -106,27 +103,25 @@ src/
 
 ## State Management (MVI)
 
-Each feature screen follows the **Model-View-Intent** pattern:
+Each feature screen follows the **Model-View-Intent** pattern via `BaseViewModel`:
 
-- **Model:** sealed interface for intents (e.g., `MoviesIntent`, `DetailsUserIntent`)
-- **View:** data class for UI state (e.g., `MoviesState`, `DetailsUIState`)
-- **Intent:** ViewModel extends `ViewModelMvi<UserIntent>` with `execute(intent: UserIntent)`
-
-Base interface (`ViewModelMvi`):
 ```kotlin
-interface ViewModelMvi<in UserIntent> {
-    fun execute(intent: UserIntent)
-}
+abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEvent>
 ```
 
-ViewModels expose state via `MutableStateFlow` + `stateIn(viewModelScope, ...)`.
-Screens consume state with `collectAsState()` and dispatch intents.
+- **State:** data class implementing `UiState` interface
+- **Intent:** sealed class/interface implementing `UserIntent`
+- **Event:** sealed class/interface implementing `UiEvent`
+- ViewModel exposes `uiState: StateFlow<State>` and `uiEvent: SharedFlow<Event>`
+- Screens consume state with `collectAsState()` and dispatch intents via `executeIntent()`
+- Background work launched with `launchIo()` which catches errors and routes to `onFailure()`
 
 ---
 
 ## Dependency Injection (Koin)
 
-- **Koin Annotations** (`@Module`, `@Factory`, `@Single`) with KSP
+- **Koin Annotations** (`@Module`, `@Factory`, `@Single`) with KSP + Koin Compiler plugin
+- Custom `KoinCompilerSetupPlugin` convention plugin applies the Koin compiler and configures it
 - Each layer declares its own module: `DataModule`, `DomainModule`, feature modules
 - Feature modules include `DomainModule` (which includes `DataModule`)
 - Android: Koin started in `MovieDBApp.onCreate()` with `lazyModules()`
@@ -157,15 +152,18 @@ Screens consume state with `collectAsState()` and dispatch intents.
 
 ## Coding Conventions
 
-- **Package naming:** `com.gabrielbmoro.moviedb.<module>`
-- **Screen pattern:** `*Screen.kt` (composable) + `*ViewModel.kt` + `*Intent` + `*State`
+- **Package naming:** `com.gabrielbmoro.moviedb.<module>` for non-feature modules; `com.gabrielbmoro.moviedb.feature.<name>` for features
+- **Screen pattern:** `*Screen.kt` (composable) + `*ViewModel.kt` + intent/state/event models
 - **Widgets:** feature-level reusable composables in `ui/widgets/`
 - **DI:** Koin `@Module` per module, `@Factory` for ViewModels, `@Single` for singletons
 - **State:** `StateFlow` in ViewModels, `collectAsState()` in composables
 - **Pagination:** `SimplePaging` via `PagingController` (`requestNextPage()` / `resetPaging()`)
-- **Image loading:** `AsyncImage` from `util:media` (Coil wrapper)
-- **Logging:** `LoggerHelper` from `util:logging` (Kermit wrapper)
+- **Image loading:** `AsyncImage` from `designsystem` (Coil wrapper)
+- **Logging:** `LoggerHelper` from `platform` (Kermit wrapper)
+- **Error handling:** `HttpException` model in domain; `ErrorScreen`/`ErrorInfo` components in designsystem
 - **Testing:** JUnit + kotlin-test + kotlinx-coroutines-test
+- **Domain models:** in `domain/model/` (renamed from `entities/`)
+- **Mappers:** in `data/repository/mappers/` (moved from `domain`)
 
 ---
 
@@ -197,10 +195,12 @@ Screens consume state with `collectAsState()` and dispatch intents.
 | `src/settings.gradle.kts` | Module includes, Kover coverage config |
 | `src/build.gradle.kts` | Root build — aggregates Kover, Detekt report |
 | `src/gradle/libs.versions.toml` | Version catalog (all deps) |
-| `src/build-logic/` | Convention plugins (KMP, Koin KSP, Popcorn GP) |
+| `src/build-logic/` | Convention plugins (KMP, Koin Compiler, Popcorn GP) |
+| `src/build-logic/src/main/kotlin/plugins/KoinCompilerSetupPlugin.kt` | Custom Koin compiler convention plugin |
 | `src/config/detekt/detekt.yml` | Linting rules |
 | `src/gradle.properties` | KMP / Android SDK settings |
 | `renovate.json` | Automated dependency updates |
+| `opencode.json` | OpenCode MCP configuration |
 
 ---
 
@@ -210,10 +210,10 @@ Enforced by `build-logic/src/main/kotlin/plugins/popcorngp-setup-plugin.gradle.k
 
 | Module Pattern | Rule | Detail |
 |---|---|---|
-| `:util:*` | `NoDependencyRule` | Must have NO project module dependencies |
-| `:feature:*` | `DoNotWithRule(notWith=["data"])` | Must NOT depend on `:data` |
+| `:platform` | `NoDependencyRule` | Must have NO project module dependencies |
+| `:feature-[a-z]+` | `DoNotWithRule(notWith=["data"])` | Must NOT depend on `:data` |
 | `:domain` | `NoDependencyRule` | Must have NO project module dependencies |
 | `:data` | `JustWithRule(justWith=["domain"])` | Can ONLY depend on `:domain` |
-| `:designsystem` | `JustWithRule(justWith=["media"])` | Can ONLY depend on `:util:media` |
+| `:designsystem` | `NoDependencyRule` | Must have NO project module dependencies |
 
 The runtime dependency direction is: **data → domain** (data implements domain's repository interfaces). Domain is a pure business-logic leaf with no knowledge of data sources.

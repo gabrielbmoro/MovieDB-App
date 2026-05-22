@@ -1,4 +1,4 @@
-# MovieDB 🎬
+# MovieDB
 
 [![Build Status](https://app.bitrise.io/app/4aa44eea-43cf-4a4d-8996-5ed6f48d9512/status.svg?token=C6RzgrGuhGeDARNPMAqxuw&branch=main)](https://app.bitrise.io/app/4aa44eea-43cf-4a4d-8996-5ed6f48d9512)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.3.20-blue.svg?logo=kotlin)](http://kotlinlang.org)
@@ -15,7 +15,7 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 
 ---
 
-## Features ✨
+## Features
 
 | Feature | Description |
 |---|---|
@@ -29,7 +29,7 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 
 ---
 
-## Teaser 🎬
+## Teaser
 
 <details open>
 <summary>Android</summary>
@@ -45,7 +45,7 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 
 ---
 
-## Tech Stack 🛠️
+## Tech Stack
 
 | Category | Libraries |
 |---|---|
@@ -53,8 +53,8 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 | **Networking** | Ktor 3.4.2 (OkHttp / Darwin engines), kotlinx-serialization |
 | **Image Loading** | Coil 3 (ktor3 network engine) |
 | **Database** | Room 2.8.4 with sqlite-bundled |
-| **Dependency Injection** | Koin 4.2.1 (annotations + Koin compiler) |
-| **State Management** | Coroutines, StateFlow, MVI pattern |
+| **Dependency Injection** | Koin 4.2.1 (annotations + KSP + Koin Compiler) |
+| **State Management** | Coroutines, StateFlow, MVI pattern (BaseViewModel) |
 | **Architecture** | Clean Architecture (data/domain/feature layers) |
 | **Logging** | Kermit 2.1.0 |
 | **Deep Links** | Rinku 1.6.0 |
@@ -64,11 +64,11 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 | **Analytics / Performance** | Kotzilla 2.0.8 |
 | **Linting** | Detekt 1.23.8 |
 | **Coverage** | Kover 0.9.8 |
-| **Dependency Audit** | Popcorn Guineapig 3.1.6 |
+| **Dependency Audit** | Popcorn Guineapig 3.1.7 |
 
 ---
 
-## Architecture 🏗️
+## Architecture
 
 ### Clean Architecture + MVI
 
@@ -80,9 +80,8 @@ composeApp (UI orchestrator)
   ├── feature:*      → depends on domain, designsystem, platform
   ├── domain         → LEAF — pure business logic, no project dependencies
   ├── data           → depends ONLY on domain (implements repository interfaces)
-  ├── designsystem   → depends only on util:media
-  ├── platform       → navigation, paging, MVI base
-  └── util:*         → LEAF — no project dependencies
+  ├── designsystem   → LEAF — no project dependencies
+  └── platform       → LEAF — no project dependencies
 ```
 
 **Data flow:**
@@ -110,31 +109,27 @@ Deep links via Rinku: `movie/{id}`, `search?query=`, `favorite`
 
 ---
 
-## Project Structure 📁
+## Project Structure
 
 ```
 src/
 ├── composeApp/              # NavHost, DI aggregator, RootApp
-├── data/                    # ApiService, DTOs, DAOs, DatabaseProvider
-├── domain/                  # Entities, Repository interfaces, UseCases, Mappers
-├── designsystem/            # Theme, Colors, shared UI components
-├── platform/                # Navigation (Screen enum), PagingController, MVI base
-├── feature/
-│   ├── feature-movies/      # Movie grid with filter tabs + pagination
-│   ├── feature-details/     # Movie detail (backdrop, rating, favorite, info)
-│   ├── feature-search/      # Debounced search with results
-│   └── feature-wishlist/    # Favorites list with swipe-to-delete
-├── util/
-│   ├── media/               # AsyncImage (Coil), VideoPlayer (expect/actual)
-│   └── logging/             # Kermit wrapper
+├── data/                    # ApiService, DTOs, DAOs, DatabaseProvider, Mappers
+├── domain/                  # Domain models, Repository interfaces, UseCases
+├── designsystem/            # Theme, Colors, shared UI (cards, toolbars, icons, AsyncImage)
+├── platform/                # Navigation, PagingController, BaseViewModel, Logging, VideoPlayer
+├── feature-movies/          # Movie grid with filter tabs + pagination
+├── feature-details/         # Movie detail (backdrop, rating, favorite, info)
+├── feature-search/          # Debounced search with results
+├── feature-wishlist/        # Favorites list with swipe-to-delete
 ├── androidApp/              # Android entry point (Application, MainActivity)
 ├── iosApp/                  # Xcode project
-└── build-logic/             # Convention plugins (KMP, Koin KSP, Popcorn GP)
+└── build-logic/             # Convention plugins (KMP, Koin Compiler, Popcorn GP)
 ```
 
 ---
 
-## Getting Started 🚀
+## Getting Started
 
 ### Prerequisites
 
@@ -170,7 +165,7 @@ src/
 
 ---
 
-## Contributing 🤝
+## Contributing
 
 Contributions are welcome! Please check the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md) and our [contribution guidelines](.github/pull_request_template.md).
 
@@ -180,6 +175,6 @@ Contributions are welcome! Please check the [Contributor Covenant Code of Conduc
 
 ---
 
-## License 📄
+## License
 
 This project is licensed under the MIT License — see the [license](license) file for details.
