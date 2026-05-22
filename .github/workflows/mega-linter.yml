@@ -32,10 +32,11 @@ jobs:
 
           fetch-depth: 0
 
-      # Gradle permissions
-      - name: Set Gradle permissions
-        working-directory: ./src
-        run: chmod +x ./gradlew
+      # Expose Gradle build at repository root so MegaLinter can detect it
+      - name: Expose Gradle build to MegaLinter
+        run: |
+          cp -a src/gradlew src/gradlew.bat src/gradle.properties src/settings.gradle.kts src/build.gradle.kts . || true
+          chmod +x ./gradlew || true
 
       # MegaLinter
       - name: MegaLinter
