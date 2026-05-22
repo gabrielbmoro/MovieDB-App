@@ -4,6 +4,7 @@ import ext.configurePlatformTargets
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
+    id("detekt-setup-plugin")
 }
 
 kotlin {

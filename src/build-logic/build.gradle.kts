@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
     implementation(libs.popcorn.guineapig)
     implementation(libs.koin.compiler.plugin)
+    implementation(libs.detekt.gradle.plugin)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)

@@ -23,11 +23,11 @@ import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.FavoriteTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
+import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.DeleteConfirmationDialog
+import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieList
 import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
-import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.DeleteConfirmationDialog
-import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieList
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import moviedbapp.feature_wishlist.generated.resources.Res

@@ -3,8 +3,8 @@ package com.gabrielbmoro.moviedb.feature.wishlist.ui.screens.wishlist
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
 import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.domain.usecases.FavoriteMovieUseCase
-import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
 import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieCardInfo
+import com.gabrielbmoro.moviedb.platform.viewmodel.BaseViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 

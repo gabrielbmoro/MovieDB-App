@@ -1,9 +1,9 @@
 package com.gabrielbmoro.moviedb.feature.wishlist.ui.screens.wishlist
 
+import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieCardInfo
 import com.gabrielbmoro.moviedb.platform.viewmodel.UiEvent
 import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
 import com.gabrielbmoro.moviedb.platform.viewmodel.UserIntent
-import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieCardInfo
 import kotlinx.collections.immutable.ImmutableList
 
 sealed interface WishlistUserIntent : UserIntent {

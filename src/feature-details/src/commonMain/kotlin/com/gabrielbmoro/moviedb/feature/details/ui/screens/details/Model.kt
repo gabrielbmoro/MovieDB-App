@@ -4,14 +4,14 @@ import com.gabrielbmoro.moviedb.platform.viewmodel.UiState
 import com.gabrielbmoro.moviedb.platform.viewmodel.UserIntent
 import kotlinx.collections.immutable.ImmutableList
 
-sealed interface DetailsUserIntent: UserIntent {
+sealed interface DetailsUserIntent : UserIntent {
     data object HideVideo : DetailsUserIntent
 
     data object FavoriteMovie : DetailsUserIntent
 
     data class LoadMovieDetails(
         val movieId: Long,
-    ): DetailsUserIntent
+    ) : DetailsUserIntent
 }
 
 data class DetailsUIState(

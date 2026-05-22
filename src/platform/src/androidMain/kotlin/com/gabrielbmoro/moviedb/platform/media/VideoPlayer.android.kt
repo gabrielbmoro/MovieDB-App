@@ -33,14 +33,15 @@ actual fun VideoPlayer(videoId: String, modifier: Modifier) {
     )
 
     LaunchedEffect(Unit) {
-        val embedHTML = "<html>" +
-                "<head>" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" +
-                "</head>" +
-                "<body>" +
-                videoId.videoIdToEmbedHTML() +
-                "</body>" +
-                "</html>"
+        val embedHTML = """<html>
+                <head>
+                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    ${videoId.videoIdToEmbedHTML()}
+                </body>
+            </html>
+            """
 
         webView.loadDataWithBaseURL(
             MOVIE_DB_DOMAIN,
