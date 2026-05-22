@@ -7,25 +7,24 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.compose.ui)
-            implementation(libs.compose.foundation)
-            implementation(libs.material3)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor3)
-
             implementation(libs.bundles.koin)
-            implementation(libs.kermit)
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.bundles.compose.multiplatform)
-            implementation(libs.navigation.compose)
-        }
 
-        androidMain.dependencies {
-            implementation(libs.material)
+            implementation(libs.bundles.compose.multiplatform)
+
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.navigation.compose)
+
+            implementation(projects.domain)
+            implementation(projects.designsystem)
+            implementation(projects.platform)
         }
 
         commonTest.dependencies {
             implementation(libs.bundles.test.multiplatform)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlin.stdlib)
         }
     }
 }
