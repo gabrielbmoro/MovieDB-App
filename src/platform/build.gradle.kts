@@ -10,9 +10,6 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.foundation)
             implementation(libs.material3)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor3)
-
             implementation(libs.bundles.koin)
             implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)

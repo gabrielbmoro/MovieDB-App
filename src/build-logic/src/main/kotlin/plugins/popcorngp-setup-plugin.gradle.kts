@@ -45,9 +45,7 @@ popcornGuineapigParentConfig {
         PopcornChildConfiguration(
             moduleNameRegex = ":designsystem",
             rules = listOf(
-                JustWithRule(
-                    justWith = listOf("media"),
-                ),
+                NoDependencyRule(),
             ),
         ),
     )

@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.platform.media
+package com.gabrielbmoro.moviedb.desingsystem.images
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.heightIn
@@ -18,7 +18,7 @@ import coil3.request.ImageRequest
 
 @Suppress("LongParameterList")
 @Composable
-fun AsyncImage(
+internal fun AsyncImage(
     imageUrl: String,
     contentDescription: String?,
     contentScale: ContentScale,

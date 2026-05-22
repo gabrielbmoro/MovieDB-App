@@ -8,7 +8,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.compose.multiplatform)
-            implementation(projects.platform)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
         }
     }
 }
