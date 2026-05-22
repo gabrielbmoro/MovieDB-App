@@ -15,6 +15,7 @@ jobs:
       MOVIE_DB_API_TOKEN: ${{ secrets.MOVIE_DB_API_TOKEN }}
     steps:
       - uses: actions/checkout@v6
+
       - name: Setup Java
         uses: ./.github/actions/java
 

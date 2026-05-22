@@ -18,11 +18,11 @@ jobs:
 
       - name: Setup Java
         uses: ./.github/actions/java
-
+        
       - name: Grant execute permission for gradlew
         working-directory: src
         run: chmod +x gradlew
 
-      - name: Build
+      - name: Unit tests
         working-directory: src
-        run: ./gradlew androidApp:assembleDebug
+        run: ./gradlew testDebugUnitTest

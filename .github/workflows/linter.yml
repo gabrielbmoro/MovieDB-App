@@ -23,6 +23,6 @@ jobs:
         working-directory: src
         run: chmod +x gradlew
 
-      - name: Build
+      - name: Linter
         working-directory: src
-        run: ./gradlew androidApp:assembleDebug
+        run: ./gradlew detekt
