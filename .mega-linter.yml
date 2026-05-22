@@ -24,5 +24,4 @@ SHOW_ELAPSED_TIME: true
 
 FILEIO_REPORTER: false
 
-# Uncomment if you want MegaLinter to detect errors but not block CI to pass
-KOTLIN_DETEKT_ARGUMENTS: -c src/config/detekt/detekt.yml -ex "**/build/**" -p "lib/detekt-formatting-1.23.7.jar"
+KOTLIN_DETEKT_CLI_EXECUTABLE: ./src/gradlew detekt

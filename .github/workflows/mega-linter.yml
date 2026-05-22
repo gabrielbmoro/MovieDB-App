@@ -32,6 +32,10 @@ jobs:
 
           fetch-depth: 0
 
+      # Gradle permissions
+      - name: Set Gradle permissions
+        run: chmod +x ./src/gradlew
+
       # MegaLinter
       - name: MegaLinter
         uses: oxsecurity/megalinter/flavors/java@v8
