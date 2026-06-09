@@ -34,7 +34,7 @@ coil = "3.4.0"
 detekt = "1.23.8"
 compose-ui = "1.10.3"
 core-ktx = "1.18.0"
-koin-compiler-plugin = "1.0.0-RC2"
+koin-compiler-plugin = "1.0.0"
 
 [libraries]
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose-animation" }
