@@ -65,13 +65,13 @@ UI (Screen composable)
 | Database | Room + sqlite-bundled | 2.8.4 / 2.6.2 |
 | DI | Koin (annotations + KSP + Koin Compiler) | 4.2.1 |
 | Koin Annotations | KSP compiler for `@Module`/`@Factory`/`@Single` | 2.3.1 |
-| Koin Compiler Plugin | Custom convention plugin for Koin compiler | 1.0.0-RC2 |
+| Koin Compiler Plugin | Custom convention plugin for Koin compiler | 1.0.0 |
 | State | Coroutines + StateFlow | 1.10.2 |
 | Collections | kotlinx-collections-immutable | 0.4.0 |
 | Logging | Kermit | 2.1.0 |
 | Deep Links | Rinku | 1.6.0 |
 | Build Config | BuildKonfig | 0.18.0 |
-| Dependency Audit | Popcorn Guineapig | 3.1.7 |
+| Dependency Audit | Popcorn Guineapig | 3.2.0 |
 | Linting | Detekt | 1.23.8 |
 | Coverage | Kover | 0.9.8 |
 | Crash Reporting | Firebase Crashlytics | — |
