@@ -1,6 +1,6 @@
 ---
 name: update-tech-stack-readme
-description: Sync the Tech Stack table in README.md and AGENTS.md from src/gradle/libs.versions.toml version catalog
+description: Sync the Tech Stack table and Kotlin badge in README.md, and AGENTS.md from src/gradle/libs.versions.toml version catalog
 license: MIT
 compatibility: opencode
 metadata:
@@ -20,9 +20,11 @@ Updates the **Tech Stack** section in both `README.md` and `AGENTS.md` to reflec
 
 2. **Read target files**
    - Open `README.md` and locate the Tech Stack table (under `## Tech Stack`)
+   - Open `README.md` and locate the Kotlin badge URL (line ~4, containing `kotlin-X.Y.Z-blue`)
    - Open `AGENTS.md` and locate the Tech Stack table (under `## Tech Stack`)
 
-3. **Update the tables**
+3. **Update the tables and Kotlin badge**
+   - Update the Kotlin Shield badge URL in README.md (`kotlin-X.Y.Z-blue` → `kotlin-A.B.C-blue`) if the version in the catalog differs
    - For each row in the table:
      - Verify the library version matches what's in `libs.versions.toml`
      - If the version changed, update it in both `README.md` and `AGENTS.md`
@@ -54,6 +56,7 @@ Updates the **Tech Stack** section in both `README.md` and `AGENTS.md` to reflec
    - `kover` (if present) or inferred from the build config → Kover version
 
 5. **Verification**
+   - Confirm the Kotlin badge version matches the catalog
    - After updating, re-read both files to confirm changes are correct
    - No verification build needed — this is a documentation-only change
 
