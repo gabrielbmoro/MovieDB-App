@@ -64,7 +64,7 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 | **Analytics / Performance** | Kotzilla 2.0.8 |
 | **Linting** | Detekt 1.23.8 |
 | **Coverage** | Kover 0.9.8 |
-| **Dependency Audit** | Popcorn Guineapig 3.1.7 |
+| **Dependency Audit** | Popcorn Guineapig 3.2.0 |
 
 ---
 
