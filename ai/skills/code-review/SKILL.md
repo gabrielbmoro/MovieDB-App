@@ -1,31 +1,33 @@
 ---
 name: code-review
-description: Review Kotlin Multiplatform + Compose code following Clean Architecture, MVI pattern, Detekt rules, and project conventions
-license: MIT
-compatibility: opencode
-metadata:
-  audience: developers
-  workflow: pr-review
+description: Review Kotlin Multiplatform + Compose code following Clean Architecture, MVI pattern, Detekt rules, and project conventions.
+trigger: when the user asks for code review, PR review, or to check code quality
 ---
 
-## What I do
+# Code Review
 
-### Before Reviewing
+When invoked:
+
+## Before Reviewing
+
 Always compare the current branch against `main` using `git diff main...HEAD` to see all changes, then check that changes follow MovieDB-App's established conventions:
 
-### Architecture (Clean Architecture)
+## Architecture (Clean Architecture)
+
 - Domain layer (no project dependencies) — entities, repository interfaces, use cases
 - Data layer — depends only on domain; implements repository interfaces
 - Feature modules — depends on domain but NOT on data (enforced by Popcorn Guineapig)
 - No feature module should import anything from `data` layer
 
-### MVI Pattern
+## MVI Pattern
+
 Each feature should have these files:
 - **`Model.kt`** — sealed interface for user intents, data class for UI state
 - **`*ViewModel.kt`** — extends `ViewModel` + `ViewModelMvi<UserIntent>`; exposes state via `StateFlow` using `stateIn(viewModelScope, SharingStarted.Eagerly, ...)`
 - **`*Screen.kt`** — Composable that collects state via `collectAsState()` and dispatches intents via `viewModel.execute(intent)`
 
-### Detekt Conventions
+## Detekt Conventions
+
 - Max line length: 120
 - Cyclomatic complexity: ≤ 15
 - Method length: ≤ 60 lines
@@ -33,23 +35,27 @@ Each feature should have these files:
 - Naming: camelCase for functions/variables, PascalCase for classes
 - Trailing commas required at call and declaration sites
 
-### Testing Standards
+## Testing Standards
+
 - Framework: `kotlin.test` (`@Test`, `@BeforeTest`, `@AfterTest`)
 - Coroutines: `kotlinx-coroutines-test` (`StandardTestDispatcher`, `runTest`, `advanceUntilIdle`)
 - No mocking frameworks — use hand-written fakes (`FakeRepository`, `FakeUseCase`)
 - Tests located in `src/commonTest/` per module
 
-### Dependency Injection (Koin Annotations)
+## Dependency Injection (Koin Annotations)
+
 - `@Module`, `@Factory`, `@Single`, `@Provided` annotations
 - All dependency versions from `src/gradle/libs.versions.toml` (version catalog)
 - Feature modules loaded lazily via `lazyModules()`
 
-### State Management
+## State Management
+
 - `StateFlow` in ViewModels
 - UI collects via `collectAsState()`
 - Immutable collections (`kotlinx-collections-immutable`) for UI state data
 
-### Error Handling (Presentation Layer)
+## Error Handling (Presentation Layer)
+
 - Every suspend function call to a repository or use case inside a ViewModel or Handler **must** be wrapped in `runCatching { }`
 - The `runCatching` block must handle both success and failure:
   - **Success**: update UI state with the result
@@ -59,7 +65,8 @@ Each feature should have these files:
 - `!!` null-forced expressions on ViewModel fields are not acceptable — use safe calls or `?: return`
 - Every `viewModelScope.launch` block must be protected — an unhandled exception silently kills the coroutine and all future collection
 
-### Review Checklist
+## Review Checklist
+
 - [ ] Compared current branch against `main` using `git diff main...HEAD`
 - [ ] Architecture dependency rules respected (no data leaks into feature)
 - [ ] MVI pattern followed (Model.kt, ViewModel, Screen separation)
