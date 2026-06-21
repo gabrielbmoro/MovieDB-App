@@ -12,6 +12,14 @@ Kotlin Multiplatform (KMP) app using **Compose Multiplatform** targeting Android
 - **Java / JVM Target:** 21
 - **Package:** `com.gabrielbmoro.moviedb`
 
+## AI Context — Read This First
+
+This file is the single source of truth for all AI coding assistants. Before starting any task:
+
+1. **Skills** — List files in `ai/skills/`. Identify which skill covers the task at hand, read that skill file in full before proceeding.
+2. **Platform context** — For Android-specific tasks, read `ai/instructions/android.md`. For iOS-specific tasks, read `ai/instructions/ios.md`.
+3. **Module graph** — `ai/module-graph.md` defines all module dependency constraints. Any code change must respect these rules.
+
 ## Build Commands
 
 All projects live under `src/`. Run commands from the `src/` directory.
@@ -230,3 +238,23 @@ Each feature should have:
 - Exceptions must never be silently swallowed via `.getOrNull()` without a fallback state update
 - `!!` null-forced expressions on ViewModel fields are not acceptable — use safe calls or `?: return`
 - Every `viewModelScope.launch` block must be protected — an unhandled exception silently kills the coroutine and all future collection
+
+## Build Validation
+
+Before submitting any code change:
+
+1. Run `./gradlew composeApp:compileKotlinDesktop` from `src/` — must pass with zero errors
+2. Run `./gradlew detektAll` from `src/` — must pass with zero violations
+3. Run `./gradlew :build-logic:checkPopcornGuineapig` from `src/` — module dependency rules must pass
+4. If tests were added or changed, run the relevant test suite
+
+## PR Review Checklist
+
+- [ ] Architecture dependency rules respected (no data leaks into feature modules)
+- [ ] MVI pattern followed (Model.kt, ViewModel, Screen separation)
+- [ ] Detekt rules satisfied (line length, complexity, naming, trailing commas)
+- [ ] Tests use kotlin.test with hand-written fakes, no mocking frameworks
+- [ ] Error handling: all repository/useCase calls wrapped in `runCatching` with `loggerHelper.logError()` fallback
+- [ ] No `!!` on nullable fields, no silent `.getOrNull()` exception swallowing
+- [ ] DI uses Koin Annotations, versions from `libs.versions.toml`
+- [ ] Build commands pass: `compileKotlinDesktop`, `detektAll`, `checkPopcornGuineapig`
