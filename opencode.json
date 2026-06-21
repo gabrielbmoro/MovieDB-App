@@ -10,10 +10,5 @@
       "url": "https://mcp.kotzilla.io/mcp",
       "enabled": true
     }
-  },
-  "permission": {
-    "skill": {
-      "*": "allow"
-    }
   }
 }

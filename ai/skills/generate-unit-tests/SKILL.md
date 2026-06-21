@@ -1,6 +1,12 @@
-# generate-unit-tests
+---
+name: generate-unit-tests
+description: Generate unit tests for changed code following kotlin.test and hand-written fakes conventions.
+trigger: when the user asks to write tests, review test files, or generate new test cases
+---
 
-Generate unit tests for code changed in the current branch vs main, following kotlin.test and hand-written fakes conventions.
+# Generate Unit Tests
+
+When invoked:
 
 ## Steps
 
