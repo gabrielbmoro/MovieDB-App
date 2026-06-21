@@ -18,8 +18,8 @@ fun MainViewController() = ComposeUIViewController {
 - No Rinku deep link handler on iOS (Android-only)
 
 ### Koin Initialization (iOS)
-- Koin is started via `KoinHelper.initKoin()` before the ComposeUIViewController is created
-- Uses `startKoin {}` directly (not the Android-specific `movieDbApplication {}` DSL)
+- Koin is started via `initKoin()` before the ComposeUIViewController is created
+- Uses the same `movieDbApplication {}` DSL as Android, without `androidContext()` and `analytics()`
 
 ## Key iOS-Specific Patterns
 
