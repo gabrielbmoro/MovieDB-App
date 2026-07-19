@@ -4,6 +4,11 @@
   "skills": {
     "paths": ["ai/skills"]
   },
+  "permission": {
+    "read": { "**/local.properties": "deny" },
+    "grep": { "**/local.properties": "deny" },
+    "glob": { "**/local.properties": "deny" }
+  },
   "mcp": {
     "kotzilla": {
       "type": "remote",
