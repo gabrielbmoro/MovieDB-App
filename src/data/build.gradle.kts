@@ -39,7 +39,6 @@ dependencies {
 
     if (hasProperty("kmp.enableIos")) {
         add("kspIosSimulatorArm64", libs.room.compiler)
-        add("kspIosX64", libs.room.compiler)
         add("kspIosArm64", libs.room.compiler)
     }
 }

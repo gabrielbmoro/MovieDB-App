@@ -8,7 +8,6 @@ internal fun KotlinMultiplatformExtension.configurePlatformTargets(
 ) {
     if (isIosEnabled) {
         listOf(
-            iosX64(),
             iosArm64(),
             iosSimulatorArm64(),
         ).forEach { iosTarget ->
