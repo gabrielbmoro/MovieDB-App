@@ -9,6 +9,12 @@
     "grep": { "**/local.properties": "deny" },
     "glob": { "**/local.properties": "deny" }
   },
+  "command": {
+    "setup-hooks": {
+      "template": "Run 'git config core.hooksPath .githooks' from the project root so git uses the .githooks/pre-commit script which runs detektAll on every commit.",
+      "description": "Configure git to use .githooks/ for pre-commit hooks"
+    }
+  },
   "mcp": {
     "kotzilla": {
       "type": "remote",
