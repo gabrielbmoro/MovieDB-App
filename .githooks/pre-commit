@@ -1,10 +1,15 @@
 #!/bin/sh
-echo "Running Detekt linting..."
-cd "$(git rev-parse --show-toplevel)/src"
-./gradlew detekt
-status=$?
-if [ $status -ne 0 ]; then
-  echo "❌ Detekt linting failed. Fix the issues above before committing."
-  exit 1
+CHANGED_FILES=$(git diff --cached --name-only)
+if echo "$CHANGED_FILES" | grep -qE '\.(kt|kts)$'; then
+  echo "Running Detekt linting..."
+  cd "$(git rev-parse --show-toplevel)/src"
+  ./gradlew detekt
+  status=$?
+  if [ $status -ne 0 ]; then
+    echo "❌ Detekt linting failed. Fix the issues above before committing."
+    exit 1
+  fi
+  echo "✅ Detekt passed."
+else
+  echo "No Kotlin files changed. Skipping Detekt."
 fi
-echo "✅ Detekt passed."
