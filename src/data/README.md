@@ -20,6 +20,79 @@ Data layer module — implements repository interfaces defined in `domain`, prov
 - **BuildKonfig** — reads `MOVIE_DB_API_TOKEN` from `local.properties` / environment, generates `BuildKonfig.API_TOKEN`
 - **Platform providers** — `expect`/`actual` for `httpClientEngine()` (OkHttp on Android, Darwin on iOS) and `databaseInstance()` (Room with platform-specific setup)
 
+## Entry Points
+
+| Entry Point | File | Signature | Role |
+|---|---|---|---|
+| DI module | `src/commonMain/kotlin/.../data/di/DataModule.kt` | `val dataModule = module { }` | Koin module providing `MoviesRepository`, `HttpClient`, `ApiService`, DAO |
+| API service | `src/commonMain/kotlin/.../datasources/ktor/ApiService.kt` | `class ApiService(baseUrl, httpClient)` | Ktor HTTP client for TMDB API endpoints |
+| Repository impl | `src/commonMain/kotlin/.../repository/MoviesDataRepository.kt` | `internal class MoviesDataRepository(...) : MoviesRepository` | Implements domain repository interface, delegates to API + DAO |
+| DB provider | `src/commonMain/kotlin/.../providers/DatabaseProvider.kt` | `expect fun databaseInstance(): AppDatabase` | Platform-specific Room database instantiation |
+| HTTP engine | `src/commonMain/kotlin/.../providers/HttpClientEngineProvider.kt` | `expect fun httpClientEngine(): HttpClientEngine` | Platform-specific HTTP engine (OkHttp/Darwin) |
+
+## Important Workflows
+
+### Data Fetch Flow (API → Domain Model)
+```
+Feature ViewModel calls MoviesRepository.getMoviesFromFilter(filter, page)
+  → MoviesDataRepository (internal class in :data)
+    → ApiService.getMovies(category, pageNumber)
+      → httpClient.get("$baseUrl/movie/$category?page=$pageNumber")
+        → Ktor: Bearer auth header, JSON content negotiation
+        → Response → check isSuccess()
+          → Success: deserialize to PageResponse, extract .results
+          → Failure: throw HttpException(statusCode, statusDescription, url, method)
+    → ResponseMappers: MovieResponse.toMovie() extension
+      → Constructs IMAGE_BASE_URL/w300 for poster, IMAGE_BASE_URL/w780 for backdrop
+      → Maps fields: id, title, overview, vote_average, release_date, etc.
+    → Returns List<Movie> to feature module
+```
+
+### Local Persistence Flow (Favorites)
+```
+Feature ViewModel calls MoviesRepository.favorite(movie)
+  → MoviesDataRepository
+    → DataTransferObjMappers: Movie.toFavoriteMovieDTO()
+      → Maps Movie.id → FavoriteMovieDTO.movieId (Room auto-generates its own id)
+    → FavoriteMoviesDAO.saveFavorite(favoriteMovieDTO)
+      → INSERT with OnConflictStrategy.REPLACE
+
+Feature ViewModel calls MoviesRepository.getFavoriteMovies()
+  → MoviesDataRepository
+    → FavoriteMoviesDAO.allFavoriteMovies() → List<FavoriteMovieDTO>
+    → DataTransferObjMappers: FavoriteMovieDTO.toMovie()
+      → Maps FavoriteMovieDTO.movieId → Movie.id
+      → Sets isFavorite = true (hardcoded — DTO existence = favorited)
+```
+
+### Platform Resolution (expect/actual)
+```
+DataModule requests databaseInstance() at DI time
+  → Common: expect fun databaseInstance(): AppDatabase
+  → Android actual: Room.databaseBuilder(context, AppDatabase::class.java, dbFileName).build()
+  → iOS actual: Room.databaseBuilder with BundledSQLiteDriver, NSFileManager documents dir
+
+DataModule requests httpClientEngine() for Ktor client
+  → Common: expect fun httpClientEngine(): HttpClientEngine
+  → Android actual: OkHttpEngine(OkHttpConfig())
+  → iOS actual: Darwin.create()
+```
+
+## Critical Files
+
+| File | Role |
+|---|---|
+| `.../di/DataModule.kt` | Koin DI wiring — binds `MoviesRepository`, `HttpClient`, `ApiService`, DAO |
+| `.../datasources/ktor/ApiService.kt` | Ktor HTTP client with all 4 TMDB endpoint methods |
+| `.../repository/MoviesDataRepository.kt` | Repository implementation (internal class) — orchestrates API + Room |
+| `.../datasources/ktor/responses/*.kt` (6 files) | `@Serializable` DTOs matching TMDB JSON schema |
+| `.../datasources/database/room/FavoriteMoviesDAO.kt` | Room DAO — CRUD operations on favorite_movies table |
+| `.../datasources/database/room/dto/FavoriteMovieDTO.kt` | Room `@Entity` — persisted favorite movie record |
+| `.../mappers/ResponseMappers.kt` | API JSON responses → domain models (Movie, MovieDetail, VideoStream) |
+| `.../mappers/DataTransferObjMappers.kt` | Domain models ↔ Room DTOs (for favorites) |
+| `.../providers/DatabaseProvider.kt` | `expect fun databaseInstance()` — platform Room init |
+| `.../providers/HttpClientEngineProvider.kt` | `expect fun httpClientEngine()` — platform HTTP engine |
+
 ## Internal Dependencies
 
 | Dependency | Relationship |
@@ -50,3 +123,6 @@ Data layer module — implements repository interfaces defined in `domain`, prov
 - No repository-level caching strategy — every call hits the network or database directly
 - Mapper tests exist but repository implementation tests are missing
 - `FavoriteMovieDTO` stores redundant fields (`backdropImageUrl`, `releaseDate`, `language`, `popularity`) that mirror the API response instead of normalizing to domain-only needs
+- **`MoviesDataRepository` has no tests** — only the mapper extension functions (`MappersExtTest`) have test coverage. No integration or unit tests verify repository behavior against fake API/DAO.
+- **`FavoriteMovieDTO` dual-ID design**: Room auto-generates `id: Int?` while TMDB's ID is stored as `movieId: Long`. This subtle distinction is easy to misuse in mappers.
+- **API token scope**: `BuildKonfig.API_TOKEN` is available only within `:data` via `BuildKonfig` generated class, but the token string originates from `local.properties` — an external configuration dependency with no fallback validation.

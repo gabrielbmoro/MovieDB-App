@@ -19,6 +19,51 @@ Android application shell module — the thin platform-specific entry point that
 - **network_security_config.xml** — blocks cleartext traffic in production; debug trusts user-installed certificates
 - **Resources** — launcher icons (5 densities), `colors.xml` (light + dark), `styles.xml` (AppCompat DayNight NoActionBar), `strings.xml`
 
+## Entry Points
+
+| Entry Point | File | Signature | Role |
+|---|---|---|---|
+| Application | `src/main/kotlin/.../MovieDBApp.kt` | `class MovieDBApp : Application()` | Koin initialization, analytics setup |
+| Activity | `src/main/kotlin/.../MainActivity.kt` | `class MainActivity : ComponentActivity()` | Hosts Compose UI with Rinku, dynamic colors, edge-to-edge |
+| Manifest | `src/main/AndroidManifest.xml` | — | Permissions, deep link intent filters, launcher declaration |
+| Theme wrapper | `src/main/kotlin/.../MainActivity.kt` | `@Composable private fun DynamicColorApp(...)` | Applies dynamic colors (API 31+) or custom theme fallback |
+
+## Important Workflows
+
+### App Launch on Android
+```
+Android system starts MainActivity (launchMode="singleTask")
+  → MovieDBApp.onCreate(): movieDbApplication { androidContext(this); analytics() }
+    → Koin started with Android context, dataModule, platformModule, DomainModule, lazy feature modules
+    → Kotzilla analytics SDK initialized
+  → MainActivity.setContent { Rinku { DynamicColorApp { enableEdgeToEdge(); RootApp() } } }
+    → Rinku wraps composable tree for deep link interception
+    → DynamicColorApp: checks Build.VERSION.SDK_INT >= 31
+      → API 31+: generates dynamicDarkColorScheme() or dynamicLightColorScheme()
+      → Below API 31: uses movieDBDarkColorScheme / movieDBLightColorScheme from :designsystem
+    → enableEdgeToEdge(): immersive display (status bar + nav bar transparent)
+    → RootApp() from :composeApp renders the full navigation graph
+```
+
+### Deep Link Handling (Android)
+```
+User taps https://themoviedb.org/movie/123
+  → AndroidManifest intent-filter matches the URI pattern
+  → MainActivity receives the intent (singleTask reuses existing instance)
+  → Rinku intercepts the deep link → forwards to DeeplinkEffect in :composeApp
+  → DeeplinkEffect maps path segments to navigation routes
+```
+
+## Critical Files
+
+| File | Role |
+|---|---|
+| `src/main/kotlin/.../MovieDBApp.kt` | Application subclass — Koin + analytics bootstrap |
+| `src/main/kotlin/.../MainActivity.kt` | ComponentActivity — Compose host, Rinku, dynamic colors, edge-to-edge |
+| `src/main/AndroidManifest.xml` | Permissions, deep link intent-filters, launchMode |
+| `src/main/res/values/strings.xml` | App name and (legacy) hardcoded TMDB token |
+| `src/main/res/xml/network_security_config.xml` | Cleartext blocking in release; user cert trust in debug |
+
 ## Internal Dependencies
 
 | Dependency | Relationship |
