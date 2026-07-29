@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import moviedbapp.designsystem.generated.resources.Res
 import moviedbapp.designsystem.generated.resources.favorite
 import moviedbapp.designsystem.generated.resources.ic_movies
+import moviedbapp.designsystem.generated.resources.ic_tv_shows
 import moviedbapp.designsystem.generated.resources.ic_wishlist
 import moviedbapp.designsystem.generated.resources.movies
 import moviedbapp.designsystem.generated.resources.tv_shows
@@ -49,7 +50,7 @@ fun NavigationBottomBar(
             onClick = onSelectTvShowsTab,
             icon = {
                 Icon(
-                    painter = painterResource(Res.drawable.ic_movies),
+                    painter = painterResource(Res.drawable.ic_tv_shows),
                     contentDescription = null,
                 )
             },
