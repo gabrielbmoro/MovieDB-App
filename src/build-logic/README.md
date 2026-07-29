@@ -51,7 +51,7 @@ Module build.gradle.kts applies kmp-library-plugin
 
 ### Architecture Rule Enforcement (Popcorn Guineapig)
 ```
-./gradlew :build-logic:checkPopcornGuineapig
+./gradlew popcornParent
   → Popcorn Guineapig scans all project modules
   → For each module matching a pattern, applies the associated rule
   → Failures are reported as build errors with the violating dependency
@@ -117,7 +117,7 @@ All declared in `build-logic/build.gradle.kts`:
 - **Programmatic plugin registration** — `KoinCompilerSetupPlugin` is registered in `build-logic/build.gradle.kts` via `gradlePlugin.plugins.create("koin-compiler-setup")`, mapping the plugin ID to the implementation class
 - **Included build access** — modules access the `libs` version catalog from `build-logic` via the `val Project.libs` extension property
 - **iOS conditional compilation** — iOS targets are gated by the Gradle property `kmp.enableIos`. When unset, iOS source sets are not compiled, allowing developers on non-macOS machines to build without errors. CI environments set this property.
-- **Popcorn Guineapig task** — `checkPopcornGuineapig` runs as `./gradlew :build-logic:checkPopcornGuineapig` and reports violations as build failures
+- **Popcorn Guineapig task** — `popcornParent` runs as `./gradlew popcornParent` and reports violations as build failures
 
 ## Technical Debts
 
