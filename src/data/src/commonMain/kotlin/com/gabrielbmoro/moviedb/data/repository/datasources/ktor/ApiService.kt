@@ -1,7 +1,9 @@
 package com.gabrielbmoro.moviedb.data.repository.datasources.ktor
 
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
+import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.PageResponse
+import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.TvShowResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.domain.model.HttpException
 import io.ktor.client.HttpClient
@@ -14,7 +16,7 @@ class ApiService(
     private val httpClient: HttpClient,
 ) {
 
-    suspend fun getMovies(category: String, pageNumber: Int): PageResponse =
+    suspend fun getMovies(category: String, pageNumber: Int): PageResponse<MovieResponse> =
         fetchMovie("$category?page=$pageNumber")
 
     suspend fun getVideoStreams(movieId: Long): VideoStreamsResponse = fetchMovie("$movieId/videos")
@@ -25,8 +27,11 @@ class ApiService(
         query: String,
         includeAdult: Boolean = false,
         language: String = "en-US",
-    ): PageResponse =
+    ): PageResponse<MovieResponse> =
         fetchData("search/movie?query=$query&include_adult=$includeAdult&language=$language")
+
+    suspend fun getTvShows(category: String, pageNumber: Int): PageResponse<TvShowResponse> =
+        fetchData("tv/$category?page=$pageNumber")
 
     private suspend inline fun <reified T> fetchMovie(suffix: String): T =
         fetchData("movie/$suffix")

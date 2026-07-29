@@ -13,16 +13,19 @@ import moviedbapp.designsystem.generated.resources.favorite
 import moviedbapp.designsystem.generated.resources.ic_movies
 import moviedbapp.designsystem.generated.resources.ic_wishlist
 import moviedbapp.designsystem.generated.resources.movies
+import moviedbapp.designsystem.generated.resources.tv_shows
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 const val MoviesTabIndex = 0
-const val FavoriteTabIndex = 1
+const val TvShowsTabIndex = 1
+const val FavoriteTabIndex = 2
 
 @Composable
 fun NavigationBottomBar(
     currentTabIndex: Int,
     onSelectMoviesTab: () -> Unit,
+    onSelectTvShowsTab: () -> Unit,
     onSelectFavoriteTab: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -38,6 +41,20 @@ fun NavigationBottomBar(
             },
             label = {
                 Text(stringResource(Res.string.movies))
+            },
+        )
+
+        NavigationBarItem(
+            selected = currentTabIndex == TvShowsTabIndex,
+            onClick = onSelectTvShowsTab,
+            icon = {
+                Icon(
+                    painter = painterResource(Res.drawable.ic_movies),
+                    contentDescription = null,
+                )
+            },
+            label = {
+                Text(stringResource(Res.string.tv_shows))
             },
         )
 

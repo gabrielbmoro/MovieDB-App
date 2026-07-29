@@ -8,6 +8,7 @@
     <string name="poster">Poster</string>
     <string name="delete">Delete</string>
     <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
     <string name="favorite">Favorite</string>
     <string name="retry">Retry</string>
     <string name="something_wrong_happened">Something wrong happened</string>

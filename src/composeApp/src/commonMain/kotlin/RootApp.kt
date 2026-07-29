@@ -4,12 +4,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.gabrielbmoro.moviedb.feature.details.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.moviedb.feature.movies.ui.screens.movies.MoviesScreen
+import com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.tvshows.TvShowsScreen
 import com.gabrielbmoro.moviedb.feature.wishlist.ui.screens.wishlist.WishlistScreen
 import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.Screen
 import com.gabrielbmoro.moviedb.platform.navigation.addMovieDetailsScreen
 import com.gabrielbmoro.moviedb.platform.navigation.addMoviesScreen
 import com.gabrielbmoro.moviedb.platform.navigation.addSearchScreen
+import com.gabrielbmoro.moviedb.platform.navigation.addTvShowsScreen
 import com.gabrielbmoro.moviedb.platform.navigation.addWishlistScreen
 import com.gabrielbmoro.moviedb.search.ui.screens.search.SearchScreen
 
@@ -23,6 +25,10 @@ fun RootApp() {
         ) {
             addMoviesScreen {
                 MoviesScreen()
+            }
+
+            addTvShowsScreen {
+                TvShowsScreen()
             }
 
             addMovieDetailsScreen { movieId ->

@@ -60,3 +60,14 @@ fun NavGraphBuilder.addSearchScreen(
         content(query)
     }
 }
+
+fun NavGraphBuilder.addTvShowsScreen(
+    content: @Composable AnimatedContentScope.() -> Unit,
+) {
+    composable(
+        route = Screen.TvShows.route,
+        content = {
+            content()
+        },
+    )
+}

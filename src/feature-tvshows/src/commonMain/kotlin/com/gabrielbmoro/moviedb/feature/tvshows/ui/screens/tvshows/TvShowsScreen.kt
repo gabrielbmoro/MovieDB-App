@@ -1,6 +1,6 @@
 @file:Suppress("LongMethod")
 
-package com.gabrielbmoro.moviedb.feature.movies.ui.screens.movies
+package com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.tvshows
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,25 +25,23 @@ import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.error.ErrorScreen
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AnimatedAppToolbar
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
-import com.gabrielbmoro.moviedb.desingsystem.toolbars.MoviesTabIndex
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.NavigationBottomBar
-import com.gabrielbmoro.moviedb.feature.movies.ui.widgets.FilterMenu
-import com.gabrielbmoro.moviedb.feature.movies.ui.widgets.MoviesList
+import com.gabrielbmoro.moviedb.desingsystem.toolbars.TvShowsTabIndex
+import com.gabrielbmoro.moviedb.feature.tvshows.ui.widgets.FilterMenu
+import com.gabrielbmoro.moviedb.feature.tvshows.ui.widgets.ShowsList
 import com.gabrielbmoro.moviedb.platform.LocalNavController
-import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
-import com.gabrielbmoro.moviedb.platform.navigation.navigateToSearch
-import com.gabrielbmoro.moviedb.platform.navigation.navigateToTvShows
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import moviedbapp.feature_movies.generated.resources.Res
-import moviedbapp.feature_movies.generated.resources.movies
+import moviedbapp.feature_tvshows.generated.resources.Res
+import moviedbapp.feature_tvshows.generated.resources.tv_shows
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun MoviesScreen() {
-    val viewModel = koinViewModel<MoviesViewModel>()
+fun TvShowsScreen() {
+    val viewModel = koinViewModel<TvShowsViewModel>()
     val uiState by viewModel.uiState.collectAsState()
     val navigator = LocalNavController.current
 
@@ -62,11 +60,9 @@ fun MoviesScreen() {
                 AnimatedAppToolbar(
                     appBar = {
                         AppToolbarTitle(
-                            title = stringResource(Res.string.movies),
+                            title = stringResource(Res.string.tv_shows),
                             backEvent = null,
-                            searchEvent = {
-                                navigator.navigateToSearch("")
-                            },
+                            searchEvent = null,
                         )
                     },
                     showTopBar = showTopBar,
@@ -76,11 +72,11 @@ fun MoviesScreen() {
         bottomBar = {
             if (uiState.errorInfo == null) {
                 NavigationBottomBar(
-                    currentTabIndex = MoviesTabIndex,
-                    onSelectMoviesTab = {
+                    currentTabIndex = TvShowsTabIndex,
+                    onSelectMoviesTab = navigator::navigateToMovies,
+                    onSelectTvShowsTab = {
                         lazyStaggeredGridState.scrollToInit(coroutineScope)
                     },
-                    onSelectTvShowsTab = navigator::navigateToTvShows,
                     onSelectFavoriteTab = navigator::navigateToWishlist,
                 )
             }
@@ -102,7 +98,7 @@ fun MoviesScreen() {
                     modifier = Modifier.align(Alignment.Center),
                     onRetry = {
                         lazyStaggeredGridState.scrollToInit(coroutineScope)
-                        viewModel.executeIntent(MoviesIntent.Setup)
+                        viewModel.executeIntent(TvShowsIntent.Setup)
                     },
                 )
             } else {
@@ -118,7 +114,7 @@ fun MoviesScreen() {
                         lazyListState = lazyListState,
                         onClick = { filterMenuItem ->
                             viewModel.executeIntent(
-                                MoviesIntent.SelectFilterMenuItem(
+                                TvShowsIntent.SelectFilterMenuItem(
                                     menuItem = filterMenuItem,
                                 ),
                             )
@@ -126,13 +122,10 @@ fun MoviesScreen() {
                         },
                     )
 
-                    MoviesList(
-                        movies = uiState.movieCardInfos,
-                        onSelectMovie = { selectedMovieId ->
-                            navigator.navigateToDetails(selectedMovieId)
-                        },
+                    ShowsList(
+                        shows = uiState.tvShowCardInfos,
                         onRequestMore = {
-                            viewModel.executeIntent(MoviesIntent.RequestMoreMovies)
+                            viewModel.executeIntent(TvShowsIntent.RequestMoreTvShows)
                         },
                         lazyStaggeredGridState = lazyStaggeredGridState,
                         modifier = Modifier

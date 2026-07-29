@@ -4,6 +4,7 @@ import com.gabrielbmoro.moviedb.data.di.dataModule
 import com.gabrielbmoro.moviedb.domain.di.DomainModule
 import com.gabrielbmoro.moviedb.feature.details.di.featureDetailsModule
 import com.gabrielbmoro.moviedb.feature.movies.di.featureMoviesModule
+import com.gabrielbmoro.moviedb.feature.tvshows.di.featureTvShowsModule
 import com.gabrielbmoro.moviedb.feature.wishlist.di.featureWishlistModule
 import com.gabrielbmoro.moviedb.platform.di.platformModule
 import com.gabrielbmoro.moviedb.search.di.featureSearchMovieModule
@@ -22,6 +23,7 @@ fun movieDbApplication(platformBlock: KoinApplication.() -> Unit): KoinApplicati
         lazyModules(
             featureDetailsModule,
             featureMoviesModule,
+            featureTvShowsModule,
             featureSearchMovieModule,
             featureWishlistModule,
         )

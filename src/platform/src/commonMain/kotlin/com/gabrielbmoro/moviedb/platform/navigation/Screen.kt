@@ -20,6 +20,10 @@ enum class Screen(
         route = "wishlist",
         firstSegment = "favorite",
     ),
+    TvShows(
+        route = "tvshows",
+        firstSegment = null,
+    ),
 }
 
 internal const val DETAILS_MOVIE_ID_ARGUMENT_KEY = "movieId"

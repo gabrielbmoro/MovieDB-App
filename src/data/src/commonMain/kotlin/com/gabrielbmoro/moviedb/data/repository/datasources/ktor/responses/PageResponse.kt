@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Suppress("PropertyName", "ConstructorParameterNaming")
 @Serializable
-data class PageResponse(
+data class PageResponse<T>(
     val page: Int,
     var total_results: Int,
     var total_pages: Int,
-    var results: List<MovieResponse>? = null,
+    var results: List<T>? = null,
 )

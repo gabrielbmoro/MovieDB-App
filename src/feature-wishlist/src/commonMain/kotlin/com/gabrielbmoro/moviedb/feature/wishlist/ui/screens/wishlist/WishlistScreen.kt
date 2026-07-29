@@ -28,6 +28,7 @@ import com.gabrielbmoro.moviedb.feature.wishlist.ui.widgets.MovieList
 import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToTvShows
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import moviedbapp.feature_wishlist.generated.resources.Res
@@ -66,6 +67,7 @@ fun WishlistScreen() {
                         lazyListState.scrollToItem(0)
                     }
                 },
+                onSelectTvShowsTab = navigator::navigateToTvShows,
                 onSelectMoviesTab = navigator::navigateToMovies,
             )
         },
