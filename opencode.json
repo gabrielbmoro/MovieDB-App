@@ -13,7 +13,7 @@
     "kotzilla": {
       "type": "remote",
       "url": "https://mcp.kotzilla.io/mcp",
-      "enabled": true
+      "enabled": false
     }
   }
 }

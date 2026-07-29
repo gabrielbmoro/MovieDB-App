@@ -106,6 +106,23 @@ src/
 └── build-logic/         # Convention plugins (kmp-library, koin-compiler, popcorngp)
 ```
 
+## Module READMEs
+
+Each Gradle module contains a `README.md` at its root (`src/<module>/README.md`). Before modifying or working within a module, read its README first to understand:
+
+- **Purpose** — why the module exists
+- **Primary Responsibility** — its single core job
+- **Existing Functionalities** — what it already does
+- **Entry Points** — key classes, signatures, and their roles
+- **Important Workflows** — step-by-step data/control flows
+- **Internal & External Dependencies** — what it depends on and what depends on it
+- **Related Modules** — modules it directly collaborates with
+- **Critical Files** — files that must not be broken
+- **Technical Notes** — architectural constraints, patterns, caveats
+- **Technical Debts** — known issues and future improvements needed
+
+Use `read_file` on the module's README.md as the first step when beginning work in any module.
+
 ## Navigation
 
 - **Type:** Jetpack Navigation Compose Multiplatform
