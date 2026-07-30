@@ -2,9 +2,11 @@ package com.gabrielbmoro.moviedb.data.repository.mappers
 
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieResponse
+import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.TvShowResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.domain.model.MovieDetail
+import com.gabrielbmoro.moviedb.domain.model.TvShow
 import com.gabrielbmoro.moviedb.domain.model.VideoStream
 
 private const val BASE_URL = "https://image.tmdb.org/t/p/w"
@@ -59,6 +61,20 @@ fun VideoStreamsResponse.toVideoStreams(): List<VideoStream> {
             id = it.id,
         )
     }
+}
+
+fun TvShowResponse.toTvShow(): TvShow {
+    return TvShow(
+        id = id,
+        name = name.orEmpty(),
+        votesAverage = vote_average ?: 0f,
+        posterImageUrl = poster_path?.toSmallImageUrl(),
+        backdropImageUrl = backdrop_path?.toBigImageUrl(),
+        overview = overview.orEmpty(),
+        firstAirDate = first_air_date.orEmpty(),
+        language = original_language.orEmpty(),
+        popularity = popularity ?: 0f,
+    )
 }
 
 private fun String.toSmallImageUrl(): String = SMALL_SIZE_IMAGE_ADDRESS.plus(this)

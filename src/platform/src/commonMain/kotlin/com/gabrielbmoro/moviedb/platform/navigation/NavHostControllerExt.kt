@@ -24,3 +24,7 @@ fun NavHostController.navigateToSearch(query: String) {
 fun NavHostController.navigateToWishlist() {
     navigate(Screen.Wishlist.route)
 }
+
+fun NavHostController.navigateToTvShows() {
+    navigate(Screen.TvShows.route)
+}

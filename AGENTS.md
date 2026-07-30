@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Kotlin Multiplatform (KMP) app using **Compose Multiplatform** targeting Android and iOS. Displays movie data from The Movie Database (TMDB) API.
+Kotlin Multiplatform (KMP) app using **Compose Multiplatform** targeting Android and iOS. Displays movie and TV show data from The Movie Database (TMDB) API.
 
 - **Kotlin:** 2.3.20
 - **Compose Multiplatform:** 1.10.3
@@ -26,11 +26,11 @@ All projects live under `src/`. Run commands from the `src/` directory.
 
 | Command | Description |
 |---|---|
-| `./gradlew composeApp:compileKotlinDesktop` | Quick Kotlin compilation check |
+| `./gradlew build` | Quick Kotlin compilation check |
 | `./gradlew :composeApp:connectedCheck` | Run instrumentation tests |
-| `./gradlew detektAll` | Run Detekt linting |
+| `./gradlew detekt` | Run Detekt linting |
 | `./gradlew koverHtmlReportAll` | Generate Kover coverage report |
-| `./gradlew :build-logic:checkPopcornGuineapig` | Verify module dependency rules |
+| `./gradlew popcornParent` | Verify module dependency rules |
 | `./gradlew build` | Full build |
 
 ## Architecture: Clean Architecture + MVI
@@ -100,6 +100,7 @@ src/
 ├── feature-movies/      # Movie grid with filter tabs + pagination
 ├── feature-details/     # Movie detail (backdrop, rating, favorite, info)
 ├── feature-search/      # Debounced search with results
+├── feature-tvshows/     # TV show grid with filter tabs + pagination
 ├── feature-wishlist/    # Favorites list with swipe-to-delete
 ├── androidApp/          # Android entry (Application, MainActivity)
 ├── iosApp/              # Xcode project
@@ -126,7 +127,7 @@ Use `read_file` on the module's README.md as the first step when beginning work 
 ## Navigation
 
 - **Type:** Jetpack Navigation Compose Multiplatform
-- **Routes** (`Screen` enum in `platform` module): `Movies`, `Details/{movieId}`, `Search`, `Wishlist`
+- **Routes** (`Screen` enum in `platform` module): `Movies`, `TvShows`, `Details/{movieId}`, `Search`, `Wishlist`
 - **NavHostController** exposed via `CompositionLocal` (`LocalNavController`)
 - **Deep links:** Rinku library handles `movie/{id}`, `search?query=`, `favorite` URIs
 - Navigation graph built in `RootApp.kt` using extension functions from `NavHostGraphBuilderExt.kt`
@@ -162,6 +163,7 @@ abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEve
 - **HTTP Client:** Ktor with content negotiation + logging
 - **Endpoints:**
   - `GET /movie/{category}?page={n}` — listings (popular, top_rated, upcoming, now_playing)
+  - `GET /tv/{category}?page={n}` — TV listings (popular, top_rated, on_the_air, airing_today)
   - `GET /movie/{id}` — details
   - `GET /movie/{id}/videos` — video streams
   - `GET /search/movie?query={q}` — search
@@ -260,9 +262,9 @@ Each feature should have:
 
 Before submitting any code change:
 
-1. Run `./gradlew composeApp:compileKotlinDesktop` from `src/` — must pass with zero errors
-2. Run `./gradlew detektAll` from `src/` — must pass with zero violations
-3. Run `./gradlew :build-logic:checkPopcornGuineapig` from `src/` — module dependency rules must pass
+1. Run `./gradlew build` from `src/` — must pass with zero errors
+2. Run `./gradlew detekt` from `src/` — must pass with zero violations
+3. Run `./gradlew popcornParent` from `src/` — module dependency rules must pass
 4. If tests were added or changed, run the relevant test suite
 
 ## PR Review Checklist
@@ -274,4 +276,4 @@ Before submitting any code change:
 - [ ] Error handling: all repository/useCase calls wrapped in `runCatching` with `loggerHelper.logError()` fallback
 - [ ] No `!!` on nullable fields, no silent `.getOrNull()` exception swallowing
 - [ ] DI uses Koin Annotations, versions from `libs.versions.toml`
-- [ ] Build commands pass: `compileKotlinDesktop`, `detektAll`, `checkPopcornGuineapig`
+- [ ] Build commands pass: `build`, `detekt`, `popcornParent`

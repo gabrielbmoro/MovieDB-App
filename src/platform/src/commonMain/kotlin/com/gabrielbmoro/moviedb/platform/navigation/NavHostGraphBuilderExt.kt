@@ -1,6 +1,8 @@
 package com.gabrielbmoro.moviedb.platform.navigation
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -12,6 +14,12 @@ fun NavGraphBuilder.addMoviesScreen(
 ) {
     composable(
         route = Screen.Movies.route,
+        enterTransition = {
+            fadeIn()
+        },
+        exitTransition = {
+            fadeOut()
+        },
         content = {
             content()
         },
@@ -39,9 +47,18 @@ fun NavGraphBuilder.addMovieDetailsScreen(
 fun NavGraphBuilder.addWishlistScreen(
     content: @Composable AnimatedContentScope.() -> Unit,
 ) {
-    composable(Screen.Wishlist.route) {
-        content()
-    }
+    composable(
+        route = Screen.Wishlist.route,
+        enterTransition = {
+            fadeIn()
+        },
+        exitTransition = {
+            fadeOut()
+        },
+        content = {
+            content()
+        },
+    )
 }
 
 fun NavGraphBuilder.addSearchScreen(
@@ -59,4 +76,21 @@ fun NavGraphBuilder.addSearchScreen(
         val query = it.savedStateHandle.get<String>(SEARCH_QUERY_ARGUMENT_KEY)
         content(query)
     }
+}
+
+fun NavGraphBuilder.addTvShowsScreen(
+    content: @Composable AnimatedContentScope.() -> Unit,
+) {
+    composable(
+        route = Screen.TvShows.route,
+        enterTransition = {
+            fadeIn()
+        },
+        exitTransition = {
+            fadeOut()
+        },
+        content = {
+            content()
+        },
+    )
 }

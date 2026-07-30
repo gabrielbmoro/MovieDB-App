@@ -4,8 +4,10 @@ import com.gabrielbmoro.moviedb.data.BuildKonfig
 import com.gabrielbmoro.moviedb.data.providers.buildHttpClient
 import com.gabrielbmoro.moviedb.data.providers.databaseInstance
 import com.gabrielbmoro.moviedb.data.repository.MoviesDataRepository
+import com.gabrielbmoro.moviedb.data.repository.TvShowsDataRepository
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.ApiService
 import com.gabrielbmoro.moviedb.domain.MoviesRepository
+import com.gabrielbmoro.moviedb.domain.TvShowsRepository
 import org.koin.dsl.module
 
 private const val BASE_URL = "https://api.themoviedb.org/3"
@@ -14,6 +16,12 @@ val dataModule = module {
     factory<MoviesRepository> {
         MoviesDataRepository(
             favoriteMoviesDAO = get(),
+            api = get(),
+        )
+    }
+
+    factory<TvShowsRepository> {
+        TvShowsDataRepository(
             api = get(),
         )
     }

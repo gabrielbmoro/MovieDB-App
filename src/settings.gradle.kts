@@ -28,6 +28,7 @@ include(
     ":feature-search",
     ":feature-details",
     ":feature-movies",
+    ":feature-tvshows",
     ":platform"
 )
 
