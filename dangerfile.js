@@ -1,4 +1,5 @@
 const { danger, warn } = require('danger');
+const fs = require('fs');
 
 const EXCLUDED_PATTERNS = [
   /\.md$/,
@@ -39,12 +40,6 @@ const MAPPING_RULES = [
   },
 ];
 
-const KNOWN_MODULES = [
-  'composeApp', 'data', 'domain', 'designsystem', 'platform',
-  'feature-movies', 'feature-search', 'feature-tvshows', 'feature-wishlist',
-  'androidApp', 'iosApp', 'build-logic',
-];
-
 function isExcluded(file) {
   return EXCLUDED_PATTERNS.some(pattern => pattern.test(file));
 }
@@ -78,7 +73,7 @@ for (const file of changedFiles) {
   if (isExcluded(file)) continue;
 
   const module = getModule(file);
-  if (module && KNOWN_MODULES.includes(module)) {
+  if (module && fs.existsSync(`src/${module}/build.gradle.kts`)) {
     const readme = `src/${module}/README.md`;
     if (!deletedFiles.includes(readme)) {
       staleFiles.add(readme);
