@@ -37,7 +37,6 @@ opencode.json (instructions) ──┤
 | File | Target | Purpose |
 |---|---|---|
 | `AGENTS.md` | All assistants | Master context: project overview, architecture, conventions, build commands, PR checklist |
-| `ai/module-graph.md` | All assistants | Explicit module dependency graph (enforced by Popcorn Guineapig) |
 | `ai/instructions/android.md` | All assistants | Android-specific patterns, entry points, theming, deep links |
 | `ai/instructions/ios.md` | All assistants | iOS-specific patterns, entry points, Xcode integration |
 | `ai/skills/` | All assistants | Task-type workflows (code-review, generate-unit-tests, update-architecture, update-tech-stack-readme) |
