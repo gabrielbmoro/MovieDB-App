@@ -24,7 +24,12 @@ enum class Screen(
         route = "tvshows",
         firstSegment = null,
     ),
+    TvShowDetails(
+        route = "tvshowdetails",
+        firstSegment = "tvshow",
+    ),
 }
 
 internal const val DETAILS_MOVIE_ID_ARGUMENT_KEY = "movieId"
+const val TVSHOW_DETAILS_ID_ARGUMENT_KEY = "tvShowId"
 const val SEARCH_QUERY_ARGUMENT_KEY = "query"

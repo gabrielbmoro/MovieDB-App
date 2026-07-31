@@ -1,5 +1,6 @@
 package com.gabrielbmoro.moviedb.feature.tvshows.ui.widgets
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.tvshows.TvShowCardInfo
@@ -25,6 +28,7 @@ fun ShowsList(
     shows: ImmutableList<TvShowCardInfo>,
     lazyStaggeredGridState: LazyStaggeredGridState,
     onRequestMore: () -> Unit,
+    onSelectShow: ((Long) -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     val canScrollForward by remember {
@@ -55,7 +59,18 @@ fun ShowsList(
                     Modifier
                         .fillMaxWidth()
                         .height(300.dp)
-                        .clip(RoundedCornerShape(12.dp)),
+                        .clip(RoundedCornerShape(12.dp))
+                        .let { modifier ->
+                            if (onSelectShow != null) {
+                                modifier
+                                    .clickable { onSelectShow(tvShowCardInfo.tvShowId) }
+                                    .semantics {
+                                        contentDescription = tvShowCardInfo.tvShowTitle
+                                    }
+                            } else {
+                                modifier
+                            }
+                        },
                 )
             }
         },

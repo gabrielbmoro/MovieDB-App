@@ -10,6 +10,7 @@ kotlin {
             implementation(libs.bundles.compose.multiplatform)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
+            implementation(libs.kotlinx.collections.immutable)
         }
     }
 }

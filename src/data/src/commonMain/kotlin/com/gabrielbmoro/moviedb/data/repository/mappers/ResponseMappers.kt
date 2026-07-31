@@ -2,11 +2,13 @@ package com.gabrielbmoro.moviedb.data.repository.mappers
 
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieResponse
+import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.TvShowDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.TvShowResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.domain.model.Movie
 import com.gabrielbmoro.moviedb.domain.model.MovieDetail
 import com.gabrielbmoro.moviedb.domain.model.TvShow
+import com.gabrielbmoro.moviedb.domain.model.TvShowDetail
 import com.gabrielbmoro.moviedb.domain.model.VideoStream
 
 private const val BASE_URL = "https://image.tmdb.org/t/p/w"
@@ -74,6 +76,30 @@ fun TvShowResponse.toTvShow(): TvShow {
         firstAirDate = first_air_date.orEmpty(),
         language = original_language.orEmpty(),
         popularity = popularity ?: 0f,
+    )
+}
+
+fun TvShowDetailResponse.toTvShowDetail(): TvShowDetail {
+    return TvShowDetail(
+        id = id,
+        name = name.orEmpty(),
+        votesAverage = vote_average ?: 0f,
+        posterImageUrl = poster_path?.toSmallImageUrl(),
+        backdropImageUrl = backdrop_path?.toBigImageUrl(),
+        overview = overview.orEmpty(),
+        firstAirDate = first_air_date.orEmpty(),
+        lastAirDate = last_air_date.orEmpty(),
+        originalLanguage = original_language.orEmpty(),
+        popularity = popularity ?: 0f,
+        status = status.orEmpty(),
+        tagline = tagline,
+        homepage = homepage,
+        genres = genres?.map { it.name }.orEmpty(),
+        networks = networks?.map { it.name }.orEmpty(),
+        createdBy = created_by?.map { it.name }.orEmpty(),
+        productionCompanies = production_companies?.map { it.name }.orEmpty(),
+        numberOfSeasons = number_of_seasons ?: 0,
+        numberOfEpisodes = number_of_episodes ?: 0,
     )
 }
 

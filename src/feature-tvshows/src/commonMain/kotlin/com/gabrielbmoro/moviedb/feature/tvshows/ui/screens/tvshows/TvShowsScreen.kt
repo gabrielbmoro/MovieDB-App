@@ -31,6 +31,7 @@ import com.gabrielbmoro.moviedb.feature.tvshows.ui.widgets.FilterMenu
 import com.gabrielbmoro.moviedb.feature.tvshows.ui.widgets.ShowsList
 import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToMovies
+import com.gabrielbmoro.moviedb.platform.navigation.navigateToTvShowDetails
 import com.gabrielbmoro.moviedb.platform.navigation.navigateToWishlist
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -126,6 +127,9 @@ fun TvShowsScreen() {
                         shows = uiState.tvShowCardInfos,
                         onRequestMore = {
                             viewModel.executeIntent(TvShowsIntent.RequestMoreTvShows)
+                        },
+                        onSelectShow = { tvShowId ->
+                            navigator.navigateToTvShowDetails(tvShowId)
                         },
                         lazyStaggeredGridState = lazyStaggeredGridState,
                         modifier = Modifier

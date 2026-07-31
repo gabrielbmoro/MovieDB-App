@@ -14,4 +14,6 @@
     <string name="something_wrong_happened">Something wrong happened</string>
     <string name="network_failure">Network failure</string>
     <string name="please_try_again">Please try again!</string>
+    <string name="error_title">Sorry for that!</string>
+    <string name="error_message">Something went wrong. Please try again!</string>
 </resources>

@@ -97,10 +97,9 @@ src/
 ├── domain/              # Domain models, Repository interfaces, UseCases
 ├── designsystem/        # Theme, Colors, shared UI (cards, toolbars, icons, AsyncImage)
 ├── platform/            # Navigation, PagingController, BaseViewModel, Logging, VideoPlayer
-├── feature-movies/      # Movie grid with filter tabs + pagination
-├── feature-details/     # Movie detail (backdrop, rating, favorite, info)
+├── feature-movies/      # Movie grid + details (filter tabs, pagination, detail screen)
 ├── feature-search/      # Debounced search with results
-├── feature-tvshows/     # TV show grid with filter tabs + pagination
+├── feature-tvshows/     # TV show grid + details (filter tabs, pagination, detail screen)
 ├── feature-wishlist/    # Favorites list with swipe-to-delete
 ├── androidApp/          # Android entry (Application, MainActivity)
 ├── iosApp/              # Xcode project

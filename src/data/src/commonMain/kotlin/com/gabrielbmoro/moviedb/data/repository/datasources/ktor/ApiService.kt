@@ -3,6 +3,7 @@ package com.gabrielbmoro.moviedb.data.repository.datasources.ktor
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.MovieResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.PageResponse
+import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.TvShowDetailResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.TvShowResponse
 import com.gabrielbmoro.moviedb.data.repository.datasources.ktor.responses.VideoStreamsResponse
 import com.gabrielbmoro.moviedb.domain.model.HttpException
@@ -32,6 +33,11 @@ class ApiService(
 
     suspend fun getTvShows(category: String, pageNumber: Int): PageResponse<TvShowResponse> =
         fetchData("tv/$category?page=$pageNumber")
+
+    suspend fun getTvShowDetails(tvShowId: Long): TvShowDetailResponse = fetchData("tv/$tvShowId")
+
+    suspend fun getTvShowVideoStreams(tvShowId: Long): VideoStreamsResponse =
+        fetchData("tv/$tvShowId/videos")
 
     private suspend inline fun <reified T> fetchMovie(suffix: String): T =
         fetchData("movie/$suffix")

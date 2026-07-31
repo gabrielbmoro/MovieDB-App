@@ -92,7 +92,7 @@ Feature ViewModel calls FavoriteMovieUseCase
 
 ## External Dependencies (Consumers)
 - `:data` — implements `MoviesRepository` interface
-- `:feature-movies`, `:feature-details`, `:feature-search`, `:feature-wishlist` — all depend on domain models and use cases
+- `:feature-movies`, `:feature-search`, `:feature-wishlist` — all depend on domain models and use cases
 - `:composeApp` — aggregates `DomainModule` via Koin
 
 ## Technical Notes

@@ -1,6 +1,7 @@
 package com.gabrielbmoro.moviedb.feature.tvshows.di
 
 import com.gabrielbmoro.moviedb.feature.tvshows.components.TvShowsHandler
+import com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.details.TvShowDetailsViewModel
 import com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.tvshows.TvShowsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -18,6 +19,13 @@ val featureTvShowsModule = lazyModule {
             ioDispatcher = Dispatchers.IO,
             loggerHelper = get(),
             tvShowsHandler = get(),
+        )
+    }
+    viewModel<TvShowDetailsViewModel> {
+        TvShowDetailsViewModel(
+            getTvShowDetailsUseCase = get(),
+            ioDispatcher = Dispatchers.IO,
+            loggerHelper = get(),
         )
     }
 }

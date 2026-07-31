@@ -24,7 +24,6 @@ kotlin {
             implementation(projects.platform)
             implementation(projects.featureWishlist)
             implementation(projects.featureSearch)
-            implementation(projects.featureDetails)
             implementation(projects.featureMovies)
             implementation(projects.featureTvshows)
             implementation(projects.data)
