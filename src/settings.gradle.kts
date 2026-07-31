@@ -26,10 +26,8 @@ include(
     ":designsystem",
     ":feature-wishlist",
     ":feature-search",
-    ":feature-details",
     ":feature-movies",
     ":feature-tvshows",
-    ":feature-tvshowdetails",
     ":platform"
 )
 

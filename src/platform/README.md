@@ -128,7 +128,7 @@ Rinku deep link: movie://favorite
 
 ## External Dependencies (Consumers)
 - `:composeApp` — depends on `platform` for `Screen` enum and `NavHostGraphBuilderExt`
-- `:feature-movies`, `:feature-details`, `:feature-search`, `:feature-wishlist` — all extend `BaseViewModel` and use `PagingController`, `LoggerHelper`, navigation helpers
+- `:feature-movies`, `:feature-search`, `:feature-wishlist` — all extend `BaseViewModel` and use `PagingController`, `LoggerHelper`, navigation helpers
 
 ## Technical Notes
 - **Popcorn Guineapig rule**: `NoDependencyRule` — must have NO project module dependencies

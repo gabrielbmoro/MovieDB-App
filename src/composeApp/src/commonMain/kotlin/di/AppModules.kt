@@ -2,9 +2,7 @@ package di
 
 import com.gabrielbmoro.moviedb.data.di.dataModule
 import com.gabrielbmoro.moviedb.domain.di.DomainModule
-import com.gabrielbmoro.moviedb.feature.details.di.featureDetailsModule
 import com.gabrielbmoro.moviedb.feature.movies.di.featureMoviesModule
-import com.gabrielbmoro.moviedb.feature.tvshowdetails.di.featureTvShowDetailsModule
 import com.gabrielbmoro.moviedb.feature.tvshows.di.featureTvShowsModule
 import com.gabrielbmoro.moviedb.feature.wishlist.di.featureWishlistModule
 import com.gabrielbmoro.moviedb.platform.di.platformModule
@@ -22,10 +20,8 @@ fun movieDbApplication(platformBlock: KoinApplication.() -> Unit): KoinApplicati
         module<DomainModule>()
 
         lazyModules(
-            featureDetailsModule,
             featureMoviesModule,
             featureTvShowsModule,
-            featureTvShowDetailsModule,
             featureSearchMovieModule,
             featureWishlistModule,
         )

@@ -2,9 +2,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.gabrielbmoro.moviedb.feature.details.ui.screens.details.DetailsScreen
+import com.gabrielbmoro.moviedb.feature.movies.ui.screens.details.DetailsScreen
 import com.gabrielbmoro.moviedb.feature.movies.ui.screens.movies.MoviesScreen
-import com.gabrielbmoro.moviedb.feature.tvshowdetails.ui.screens.details.TvShowDetailsScreen
+import com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.details.TvShowDetailsScreen
 import com.gabrielbmoro.moviedb.feature.tvshows.ui.screens.tvshows.TvShowsScreen
 import com.gabrielbmoro.moviedb.feature.wishlist.ui.screens.wishlist.WishlistScreen
 import com.gabrielbmoro.moviedb.platform.LocalNavController

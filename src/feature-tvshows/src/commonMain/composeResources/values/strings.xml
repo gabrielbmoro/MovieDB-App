@@ -5,4 +5,21 @@
     <string name="on_the_air">On The Air</string>
     <string name="airing_today">Airing Today</string>
     <string name="tv_shows">TV Shows</string>
+
+    <!-- Details -->
+    <string name="details_tv_overview">Overview</string>
+    <string name="details_tv_popularity">Popularity</string>
+    <string name="details_tv_language">Language</string>
+    <string name="details_tv_tagline">Tagline</string>
+    <string name="details_tv_first_air_date">First Air Date</string>
+    <string name="details_tv_last_air_date">Last Air Date</string>
+    <string name="details_tv_status">Status</string>
+    <string name="details_tv_seasons">Seasons</string>
+    <string name="details_tv_episodes">Episodes</string>
+    <string name="details_tv_networks">Networks</string>
+    <string name="details_tv_created_by">Created By</string>
+    <string name="details_tv_production_companies">Production companies</string>
+    <string name="details_tv_homepage">Homepage</string>
+    <string name="details_tv_poster">Poster</string>
+    <string name="details_tv_retry">Retry</string>
 </resources>

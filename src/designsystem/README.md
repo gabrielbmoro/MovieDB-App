@@ -96,7 +96,7 @@ MovieCard(imageUrl, title, description, votes, onClick, enableDelete, onDeleteCl
 
 ## External Dependencies (Consumers)
 - `:composeApp` — declared as `api` dependency, so all consumers transitively inherit theme/components
-- `:feature-movies`, `:feature-details`, `:feature-search`, `:feature-wishlist` — use cards, toolbars, images, loaders, error components
+- `:feature-movies`, `:feature-search`, `:feature-wishlist` — use cards, toolbars, images, loaders, error components
 
 ## Technical Notes
 - **Popcorn Guineapig rule**: `NoDependencyRule` — must have NO project module dependencies

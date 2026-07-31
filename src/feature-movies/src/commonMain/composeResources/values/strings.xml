@@ -6,4 +6,15 @@
     <string name="popular">Popular</string>
     <string name="upcoming">Up coming</string>
     <string name="movies">Movies</string>
+
+    <!-- Details -->
+    <string name="alt_is_favorite">It is Favorite</string>
+    <string name="alt_is_not_favorite">It is not favorite</string>
+    <string name="details_overview">Overview</string>
+    <string name="details_popularity">Popularity</string>
+    <string name="details_language">Language</string>
+    <string name="details_tagline">Tagline</string>
+    <string name="details_production_companies">Production companies</string>
+    <string name="details_homepage">Homepage</string>
+    <string name="details_poster">Poster</string>
 </resources>

@@ -81,7 +81,6 @@ Rinku receives URI (e.g., movie://movie/123?query=batman)
 | `:domain` | `implementation` (repository interfaces, use cases) |
 | `:data` | `implementation` (DI module, repository impl) |
 | `:feature-movies` | `implementation` (MoviesScreen) |
-| `:feature-details` | `implementation` (DetailsScreen) |
 | `:feature-search` | `implementation` (SearchScreen) |
 | `:feature-wishlist` | `implementation` (WishlistScreen) |
 
