@@ -49,22 +49,22 @@ A **Kotlin Multiplatform** app built with **Compose Multiplatform** that lets yo
 
 | Category | Libraries |
 |---|---|
-| **UI** | Compose Multiplatform 1.10.3, Material 3, Navigation Compose |
-| **Networking** | Ktor 3.4.2 (OkHttp / Darwin engines), kotlinx-serialization |
-| **Image Loading** | Coil 3 (ktor3 network engine) |
-| **Database** | Room 2.8.4 with sqlite-bundled |
-| **Dependency Injection** | Koin 4.2.1 (annotations + KSP + Koin Compiler) |
+| **UI** | Compose Multiplatform, Material 3, Navigation Compose |
+| **Networking** | Ktor (OkHttp / Darwin engines), kotlinx-serialization |
+| **Image Loading** | Coil (ktor3 network engine) |
+| **Database** | Room with sqlite-bundled |
+| **Dependency Injection** | Koin (annotations + KSP + Koin Compiler) |
 | **State Management** | Coroutines, StateFlow, MVI pattern (BaseViewModel) |
 | **Architecture** | Clean Architecture (data/domain/feature layers) |
-| **Logging** | Kermit 2.1.0 |
-| **Deep Links** | Rinku 1.6.0 |
-| **Build Config** | BuildKonfig 0.18.0 |
+| **Logging** | Kermit |
+| **Deep Links** | Rinku |
+| **Build Config** | BuildKonfig |
 | **CI** | Bitrise + GitHub Actions |
 | **Crash Reporting** | Firebase Crashlytics |
-| **Analytics / Performance** | Kotzilla 2.0.8 |
-| **Linting** | Detekt 1.23.8 |
-| **Coverage** | Kover 0.9.8 |
-| **Dependency Audit** | Popcorn Guineapig 3.2.0 |
+| **Analytics / Performance** | Kotzilla |
+| **Linting** | Detekt |
+| **Coverage** | Kover |
+| **Dependency Audit** | Popcorn Guineapig |
 
 ---
 
@@ -94,37 +94,6 @@ UI (Screen composable)
         → MoviesDataRepository (data layer)
           → ApiService (Ktor → TMDB API)
           → FavoriteMoviesDAO (Room → SQLite)
-```
-
-### Navigation
-
-| Route | Screen |
-|---|---|
-| `/movies` | Main movie grid with category filter tabs |
-| `/details/{movieId}` | Movie detail page |
-| `/search` | Search screen |
-| `/wishlist` | Favorites list |
-
-Deep links via Rinku: `movie/{id}`, `search?query=`, `favorite`
-
----
-
-## Project Structure
-
-```
-src/
-├── composeApp/              # NavHost, DI aggregator, RootApp
-├── data/                    # ApiService, DTOs, DAOs, DatabaseProvider, Mappers
-├── domain/                  # Domain models, Repository interfaces, UseCases
-├── designsystem/            # Theme, Colors, shared UI (cards, toolbars, icons, AsyncImage)
-├── platform/                # Navigation, PagingController, BaseViewModel, Logging, VideoPlayer
-├── feature-movies/          # Movie grid with filter tabs + pagination
-├── feature-details/         # Movie detail (backdrop, rating, favorite, info)
-├── feature-search/          # Debounced search with results
-├── feature-wishlist/        # Favorites list with swipe-to-delete
-├── androidApp/              # Android entry point (Application, MainActivity)
-├── iosApp/                  # Xcode project
-└── build-logic/             # Convention plugins (KMP, Koin Compiler, Popcorn GP)
 ```
 
 ---

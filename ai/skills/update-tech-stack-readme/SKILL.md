@@ -15,18 +15,21 @@ When invoked:
 - Also parse `[libraries]` to map library module references to version refs
 
 ### 2. Read target files
-- Open `README.md` and locate the Tech Stack table (under `## Tech Stack`)
+- Open `README.md` and locate the Tech Stack table (under `## Tech Stack`) — note: this table has **no version numbers**, only library names
 - Open `README.md` and locate the Kotlin badge URL (line ~4, containing `kotlin-X.Y.Z-blue`)
-- Open `AGENTS.md` and locate the Tech Stack table (under `## Tech Stack`)
+- Open `AGENTS.md` and locate the Tech Stack table (under `## Tech Stack`) — this table has a `Version` column
 
 ### 3. Update the tables and Kotlin badge
 - Update the Kotlin Shield badge URL in README.md (`kotlin-X.Y.Z-blue` → `kotlin-A.B.C-blue`) if the version in the catalog differs
-- For each row in the table:
-  - Verify the library version matches what's in `libs.versions.toml`
-  - If the version changed, update it in both `README.md` and `AGENTS.md`
-- If a new library was added to the catalog that should appear in the table:
-  - Add a new row with its Category, Library name, and Version
-- If a library row references a version by its alias (e.g., `1.10.3 / 1.9.0` for Compose + Material3), match against the relevant version keys in the catalog
+- For the AGENTS.md table:
+  - For each row, verify the library version matches what's in `libs.versions.toml`
+  - If the version changed, update it
+  - If a new library was added to the catalog that should appear in the table, add a new row
+  - If a library row references a version by its alias (e.g., `1.10.3 / 1.9.0` for Compose + Material3), match against the relevant version keys in the catalog
+- For the README.md table:
+  - **Do not add version numbers** — the table is intentionally version-free
+  - If a new library was added to the catalog that should appear in the table, add a new row with its Category and Library name (no version)
+  - If a library was removed from the catalog, remove its row from the table
 
 ### 4. Key version mappings (catalog key → table entry)
 - `kotlin` → Kotlin version
