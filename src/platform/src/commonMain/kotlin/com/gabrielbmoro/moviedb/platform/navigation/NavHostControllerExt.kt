@@ -25,6 +25,12 @@ fun NavHostController.navigateToWishlist() {
     navigate(Screen.Wishlist.route)
 }
 
+fun NavHostController.navigateToTvShowDetails(tvShowId: Long) {
+    navigate(Screen.TvShowDetails.route.tvShowDetailsRoute(tvShowId))
+}
+
+fun String.tvShowDetailsRoute(tvShowId: Long) = plus("?$TVSHOW_DETAILS_ID_ARGUMENT_KEY=$tvShowId")
+
 fun NavHostController.navigateToTvShows() {
     navigate(Screen.TvShows.route)
 }

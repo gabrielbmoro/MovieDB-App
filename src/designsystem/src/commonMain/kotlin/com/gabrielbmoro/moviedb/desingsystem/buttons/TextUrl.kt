@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.feature.details.ui.widgets
+package com.gabrielbmoro.moviedb.desingsystem.buttons
 
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme

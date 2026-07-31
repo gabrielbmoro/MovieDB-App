@@ -27,6 +27,7 @@ kotlin {
             implementation(projects.featureDetails)
             implementation(projects.featureMovies)
             implementation(projects.featureTvshows)
+            implementation(projects.featureTvshowdetails)
             implementation(projects.data)
             implementation(projects.domain)
         }

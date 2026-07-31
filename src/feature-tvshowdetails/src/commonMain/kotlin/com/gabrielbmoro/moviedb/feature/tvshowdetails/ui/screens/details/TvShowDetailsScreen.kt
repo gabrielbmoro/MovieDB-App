@@ -1,6 +1,6 @@
 @file:Suppress("LongMethod")
 
-package com.gabrielbmoro.moviedb.feature.details.ui.screens.details
+package com.gabrielbmoro.moviedb.feature.tvshowdetails.ui.screens.details
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -16,12 +16,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -33,29 +34,37 @@ import androidx.compose.ui.unit.dp
 import com.gabrielbmoro.moviedb.desingsystem.buttons.TextUrl
 import com.gabrielbmoro.moviedb.desingsystem.cards.GenresCard
 import com.gabrielbmoro.moviedb.desingsystem.error.ErrorMessage
+import com.gabrielbmoro.moviedb.desingsystem.images.FiveStars
 import com.gabrielbmoro.moviedb.desingsystem.images.MovieImage
 import com.gabrielbmoro.moviedb.desingsystem.loaders.BubbleLoader
 import com.gabrielbmoro.moviedb.desingsystem.toolbars.AppToolbarTitle
 import com.gabrielbmoro.moviedb.desingsystem.typography.SectionBody
 import com.gabrielbmoro.moviedb.desingsystem.typography.SectionTitle
-import com.gabrielbmoro.moviedb.feature.details.ui.widgets.MovieDetailIndicator
 import com.gabrielbmoro.moviedb.platform.LocalNavController
 import com.gabrielbmoro.moviedb.platform.media.VideoPlayer
-import moviedbapp.feature_details.generated.resources.Res
-import moviedbapp.feature_details.generated.resources.homepage
-import moviedbapp.feature_details.generated.resources.language
-import moviedbapp.feature_details.generated.resources.overview
-import moviedbapp.feature_details.generated.resources.popularity
-import moviedbapp.feature_details.generated.resources.poster
-import moviedbapp.feature_details.generated.resources.production_companies
-import moviedbapp.feature_details.generated.resources.tagline
+import moviedbapp.feature_tvshowdetails.generated.resources.Res
+import moviedbapp.feature_tvshowdetails.generated.resources.created_by
+import moviedbapp.feature_tvshowdetails.generated.resources.episodes
+import moviedbapp.feature_tvshowdetails.generated.resources.first_air_date
+import moviedbapp.feature_tvshowdetails.generated.resources.homepage
+import moviedbapp.feature_tvshowdetails.generated.resources.language
+import moviedbapp.feature_tvshowdetails.generated.resources.last_air_date
+import moviedbapp.feature_tvshowdetails.generated.resources.networks
+import moviedbapp.feature_tvshowdetails.generated.resources.overview
+import moviedbapp.feature_tvshowdetails.generated.resources.popularity
+import moviedbapp.feature_tvshowdetails.generated.resources.poster
+import moviedbapp.feature_tvshowdetails.generated.resources.production_companies
+import moviedbapp.feature_tvshowdetails.generated.resources.retry
+import moviedbapp.feature_tvshowdetails.generated.resources.seasons
+import moviedbapp.feature_tvshowdetails.generated.resources.status
+import moviedbapp.feature_tvshowdetails.generated.resources.tagline
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun DetailsScreen(movieId: Long) {
+fun TvShowDetailsScreen(tvShowId: Long) {
     val scrollState = rememberScrollState()
-    val viewModel = koinViewModel<DetailsViewModel>()
+    val viewModel = koinViewModel<TvShowDetailsViewModel>()
     val uiState = viewModel.uiState.collectAsState()
     val navigator = LocalNavController.current
 
@@ -65,35 +74,27 @@ fun DetailsScreen(movieId: Long) {
         }
     }
 
-    DetailsScreenMain(
+    TvShowDetailsScreenMain(
         atTop = atTop,
         uiState = uiState.value,
         scrollState = scrollState,
-        onFavoriteMovie = {
-            viewModel.executeIntent(DetailsUserIntent.FavoriteMovie)
-        },
         onBackEvent = navigator::popBackStack,
     )
 
-    LaunchedEffect(movieId) {
+    LaunchedEffect(tvShowId) {
         viewModel.executeIntent(
-            DetailsUserIntent.LoadMovieDetails(
-                movieId = movieId,
+            TvShowDetailsUserIntent.LoadTvShowDetails(
+                tvShowId = tvShowId,
             ),
         )
-    }
-
-    SideEffect {
-        println("UiState ${uiState.value}")
     }
 }
 
 @Composable
-private fun DetailsScreenMain(
+private fun TvShowDetailsScreenMain(
     atTop: Boolean,
-    uiState: DetailsUIState,
+    uiState: TvShowDetailsUIState,
     scrollState: ScrollState,
-    onFavoriteMovie: () -> Unit,
     onBackEvent: (() -> Unit),
 ) {
     Scaffold(
@@ -104,7 +105,7 @@ private fun DetailsScreenMain(
                 exit = fadeOut(),
             ) {
                 AppToolbarTitle(
-                    title = uiState.movieTitle,
+                    title = uiState.tvShowName,
                     backEvent = onBackEvent,
                 )
             }
@@ -116,18 +117,21 @@ private fun DetailsScreenMain(
                 .fillMaxSize()
 
         when {
-            uiState.isLoading -> DetailsScreenLoading(modifier)
+            uiState.isLoading -> TvShowDetailsScreenLoading(modifier)
 
-            uiState.errorMessage != null -> DetailsScreenError(modifier)
+            uiState.errorMessage != null -> TvShowDetailsScreenError(
+                modifier = modifier,
+                errorMessage = uiState.errorMessage,
+                onRetry = {},
+            )
 
             else -> {
-                DetailsScreenContent(
+                TvShowDetailsScreenContent(
                     uiState = uiState,
                     modifier =
                     Modifier
                         .then(modifier)
                         .verticalScroll(scrollState),
-                    onFavoriteMovie = onFavoriteMovie,
                 )
             }
         }
@@ -135,16 +139,37 @@ private fun DetailsScreenMain(
 }
 
 @Composable
-private fun DetailsScreenError(modifier: Modifier) {
+private fun TvShowDetailsScreenError(
+    modifier: Modifier,
+    errorMessage: String?,
+    onRetry: (() -> Unit)?,
+) {
     Box(modifier = modifier) {
-        ErrorMessage(
-            modifier = Modifier.align(Alignment.Center),
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            ErrorMessage(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
+            onRetry?.let {
+                Button(onClick = it) {
+                    Text(stringResource(Res.string.retry))
+                }
+            }
+        }
     }
 }
 
 @Composable
-private fun DetailsScreenLoading(modifier: Modifier) {
+private fun TvShowDetailsScreenLoading(modifier: Modifier) {
     Box(modifier = modifier) {
         BubbleLoader(
             color = MaterialTheme.colorScheme.primary,
@@ -156,10 +181,9 @@ private fun DetailsScreenLoading(modifier: Modifier) {
 }
 
 @Composable
-private fun DetailsScreenContent(
-    uiState: DetailsUIState,
+private fun TvShowDetailsScreenContent(
+    uiState: TvShowDetailsUIState,
     modifier: Modifier = Modifier,
-    onFavoriteMovie: () -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -195,10 +219,8 @@ private fun DetailsScreenContent(
             }
         }
 
-        MovieDetailIndicator(
-            isFavorite = uiState.isFavorite,
-            votesAverage = uiState.movieVotesAverage,
-            onFavoriteMovie = onFavoriteMovie,
+        FiveStars(
+            votes = uiState.votesAverage,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
 
@@ -206,7 +228,7 @@ private fun DetailsScreenContent(
             modifier = Modifier.padding(horizontal = 16.dp),
         )
 
-        if (uiState.genres != null) {
+        if (uiState.genres.isNotEmpty()) {
             GenresCard(
                 genres = uiState.genres,
                 modifier = Modifier.padding(horizontal = 16.dp),
@@ -218,7 +240,56 @@ private fun DetailsScreenContent(
             modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
-            body = uiState.movieOverview,
+            body = uiState.overview,
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+
+        SectionTitle(
+            title = stringResource(Res.string.first_air_date),
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+        SectionBody(
+            body = uiState.firstAirDate ?: "",
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+
+        if (uiState.lastAirDate != null) {
+            SectionTitle(
+                title = stringResource(Res.string.last_air_date),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            SectionBody(
+                body = uiState.lastAirDate,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
+
+        if (uiState.status != null) {
+            SectionTitle(
+                title = stringResource(Res.string.status),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            SectionBody(
+                body = uiState.status,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
+
+        SectionTitle(
+            title = stringResource(Res.string.seasons),
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+        SectionBody(
+            body = uiState.numberOfSeasons.toString(),
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+
+        SectionTitle(
+            title = stringResource(Res.string.episodes),
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+        SectionBody(
+            body = uiState.numberOfEpisodes.toString(),
             modifier = Modifier.padding(horizontal = 16.dp),
         )
 
@@ -227,7 +298,7 @@ private fun DetailsScreenContent(
             modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
-            body = uiState.moviePopularity.toString(),
+            body = uiState.popularity.toString(),
             modifier = Modifier.padding(horizontal = 16.dp),
         )
 
@@ -236,28 +307,50 @@ private fun DetailsScreenContent(
             modifier = Modifier.padding(horizontal = 16.dp),
         )
         SectionBody(
-            body = uiState.movieLanguage,
+            body = uiState.language,
             modifier = Modifier.padding(horizontal = 16.dp),
         )
 
-        if (uiState.tagLine != null) {
+        if (uiState.tagline != null) {
             SectionTitle(
                 title = stringResource(Res.string.tagline),
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             SectionBody(
-                body = uiState.tagLine,
+                body = uiState.tagline,
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
 
-        if (uiState.productionCompanies != null) {
+        if (uiState.networks.isNotEmpty()) {
+            SectionTitle(
+                title = stringResource(Res.string.networks),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            SectionBody(
+                body = uiState.networks.joinToString(", "),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
+
+        if (uiState.createdBy.isNotEmpty()) {
+            SectionTitle(
+                title = stringResource(Res.string.created_by),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            SectionBody(
+                body = uiState.createdBy.joinToString(", "),
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
+
+        if (uiState.productionCompanies.isNotEmpty()) {
             SectionTitle(
                 title = stringResource(Res.string.production_companies),
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             SectionBody(
-                body = uiState.productionCompanies,
+                body = uiState.productionCompanies.joinToString(", "),
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
         }

@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.feature.details.ui.widgets
+package com.gabrielbmoro.moviedb.desingsystem.error
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import moviedbapp.feature_details.generated.resources.Res
-import moviedbapp.feature_details.generated.resources.error_message
-import moviedbapp.feature_details.generated.resources.error_title
-import moviedbapp.feature_details.generated.resources.ic_dino_error
+import moviedbapp.designsystem.generated.resources.Res
+import moviedbapp.designsystem.generated.resources.error_message
+import moviedbapp.designsystem.generated.resources.error_title
+import moviedbapp.designsystem.generated.resources.ic_dino_error
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

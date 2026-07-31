@@ -94,3 +94,21 @@ fun NavGraphBuilder.addTvShowsScreen(
         },
     )
 }
+
+fun NavGraphBuilder.addTvShowDetailsScreen(
+    content: @Composable AnimatedContentScope.(tvShowId: Long) -> Unit,
+) {
+    composable(
+        route = Screen.TvShowDetails.route.plus("?$TVSHOW_DETAILS_ID_ARGUMENT_KEY={tvShowId}"),
+        arguments = listOf(
+            navArgument(TVSHOW_DETAILS_ID_ARGUMENT_KEY) {
+                type = NavType.LongType
+            },
+        ),
+    ) {
+        val tvShowId = it.savedStateHandle.get<Long>(TVSHOW_DETAILS_ID_ARGUMENT_KEY)
+            ?: error("No tvShowId found in backstack entry")
+
+        content(tvShowId)
+    }
+}

@@ -1,4 +1,4 @@
-package com.gabrielbmoro.moviedb.feature.details.ui.widgets
+package com.gabrielbmoro.moviedb.desingsystem.cards
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
