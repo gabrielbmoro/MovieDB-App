@@ -23,6 +23,7 @@ src/.DS_Store
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+**/node_modules/
 
 .DS_Store
 .idea/
