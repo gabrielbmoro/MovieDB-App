@@ -20,6 +20,17 @@ This file is the single source of truth for all AI coding assistants. Before sta
 2. **Platform context** — For Android-specific tasks, read `ai/instructions/android.md`. For iOS-specific tasks, read `ai/instructions/ios.md`.
 3. **Module graph** — `ai/module-graph.md` defines all module dependency constraints. Any code change must respect these rules.
 
+## Knowledge Files
+
+Terminology for the agent memory bank — files that document facts about the codebase and must stay in sync with code changes:
+
+- **Knowledge File** — A file whose contents document facts about the codebase and must stay synchronized with code changes. Examples: `AGENTS.md`, module `README.md` files, AI instructions in `ai/instructions/`.
+- **Memory Bank** — The collection of all knowledge files in the repository.
+- **Knowledge Check** — CI workflow (`.github/workflows/knowledge-check.yml`) that detects stale knowledge files on every PR using Danger JS. Posts a `warn`-level comment — never blocks merging.
+- **Mapping Rule** — Links source file change patterns to the knowledge files that should be reviewed. Defined in `dangerfile.js`.
+
+When a PR changes source code, the Knowledge Check flags any knowledge files mapped to the changed paths. Review the flagged files to keep the memory bank current. The check excludes `*.md`, `*.gitignore`, `**/test/**`, image assets, lock files, and build artifacts.
+
 ## Build Commands
 
 All projects live under `src/`. Run commands from the `src/` directory.
@@ -218,6 +229,8 @@ abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEve
 | `src/gradle.properties` | KMP / Android SDK settings |
 | `renovate.json` | Automated dependency updates |
 | `opencode.json` | OpenCode MCP configuration |
+| `dangerfile.js` | Knowledge Check — mapping rules for stale knowledge files |
+| `.github/workflows/knowledge-check.yml` | CI workflow that runs Danger on every PR |
 
 ## Dependency Rules (Popcorn Guineapig)
 
@@ -275,4 +288,5 @@ Before submitting any code change:
 - [ ] Error handling: all repository/useCase calls wrapped in `runCatching` with `loggerHelper.logError()` fallback
 - [ ] No `!!` on nullable fields, no silent `.getOrNull()` exception swallowing
 - [ ] DI uses Koin Annotations, versions from `libs.versions.toml`
+- [ ] Knowledge files reviewed and updated if necessary (see Knowledge Check in PR comments)
 - [ ] Build commands pass: `build`, `detekt`, `popcornParent`

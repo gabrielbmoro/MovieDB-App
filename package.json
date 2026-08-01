@@ -1,0 +1,7 @@
+{
+  "name": "moviedb-app",
+  "private": true,
+  "devDependencies": {
+    "danger": "^12.3.3"
+  }
+}
