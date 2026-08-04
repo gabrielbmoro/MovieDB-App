@@ -1,3 +1,9 @@
+---
+module: platform
+summary: "Provides navigation routes, MVI base classes, pagination controller, logging, and video player abstractions."
+keywords: [navigation, mvi, base-viewmodel, stateflow, pagination, logging, kermit, video-player, deep-links]
+---
+
 # platform
 
 ## Purpose

@@ -1,3 +1,9 @@
+---
+module: iosApp
+summary: "iOS entry point — SwiftUI app wrapper, Compose UI bridge via UIViewControllerRepresentable, Koin init."
+keywords: [ios, swiftui, xcode, uiviewcontroller, framework, koin-init, static-framework, app-icon]
+---
+
 # iosApp
 
 ## Purpose

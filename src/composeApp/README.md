@@ -1,3 +1,9 @@
+---
+module: composeApp
+summary: "UI orchestrator that assembles the NavHost, aggregates all Koin DI modules, and handles deep links."
+keywords: [navhost, navigation-graph, koin, di-aggregation, deep-links, rinku, ios-bridge, root-app]
+---
+
 # composeApp
 
 ## Purpose

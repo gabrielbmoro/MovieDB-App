@@ -1,3 +1,9 @@
+---
+module: domain
+summary: "Defines domain models, repository interfaces, and use cases — the Clean Architecture inner layer."
+keywords: [repository, usecases, domain-models, movies, tvshows, favorites, contract, interfaces, clean-architecture, di]
+---
+
 # domain
 
 ## Purpose

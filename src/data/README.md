@@ -1,3 +1,9 @@
+---
+module: data
+summary: "Implements repository interfaces with Ktor API client for TMDB and Room persistence for favorites."
+keywords: [api, http, ktor, room, sqlite, persistence, tmdb, favorites, dto, mappers, buildkonfig]
+---
+
 # data
 
 ## Purpose
