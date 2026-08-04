@@ -1,3 +1,9 @@
+---
+module: feature-movies
+summary: "Paginated movie browsing screen with category filter tabs and infinite scroll."
+keywords: [movies, browse, filter-tabs, pagination, infinite-scroll, staggered-grid, popular, top-rated, upcoming, now-playing]
+---
+
 # feature-movies
 
 ## Purpose

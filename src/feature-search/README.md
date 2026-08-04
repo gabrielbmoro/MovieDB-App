@@ -1,3 +1,9 @@
+---
+module: feature-search
+summary: "Debounced movie search with text input, auto-focus, and results list."
+keywords: [search, debounce, text-input, autofocus, movies, shared-flow, results]
+---
+
 # feature-search
 
 ## Purpose

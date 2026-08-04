@@ -1,3 +1,9 @@
+---
+module: build-logic
+summary: "Gradle included build with convention plugins for KMP, Detekt, Koin compiler, and architecture rule enforcement."
+keywords: [gradle, convention-plugins, kmp, detekt, koin-compiler, popcorn-guineapig, architecture-rules, sdk-config, versioning]
+---
+
 # build-logic
 
 ## Purpose

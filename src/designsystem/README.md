@@ -1,3 +1,9 @@
+---
+module: designsystem
+summary: "Shared design tokens, Material 3 theme, and reusable UI composables (cards, toolbars, image loaders, error screens)."
+keywords: [theme, colors, material3, cards, toolbars, images, coil, error-screen, loaders, icons, dynamic-colors]
+---
+
 # designsystem
 
 ## Purpose

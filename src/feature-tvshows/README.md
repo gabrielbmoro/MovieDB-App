@@ -1,3 +1,9 @@
+---
+module: feature-tvshows
+summary: "Paginated TV show browsing screen with category filter tabs and infinite scroll."
+keywords: [tv-shows, browse, filter-tabs, pagination, infinite-scroll, staggered-grid, popular, top-rated, on-the-air, airing-today]
+---
+
 # feature-tvshows
 
 ## Purpose

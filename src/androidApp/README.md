@@ -1,3 +1,9 @@
+---
+module: androidApp
+summary: "Android entry point — Application subclass, ComponentActivity, deep link intent filters, dynamic colors, edge-to-edge."
+keywords: [android, activity, application, manifest, deep-links, dynamic-colors, edge-to-edge, firebase, kotzilla]
+---
+
 # androidApp
 
 ## Purpose

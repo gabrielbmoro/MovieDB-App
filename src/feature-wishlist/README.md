@@ -1,3 +1,9 @@
+---
+module: feature-wishlist
+summary: "Favorited movies list with two-step swipe-to-delete and confirmation dialog."
+keywords: [wishlist, favorites, delete, confirmation-dialog, snackbar, movie-card, lazy-column]
+---
+
 # feature-wishlist
 
 ## Purpose
