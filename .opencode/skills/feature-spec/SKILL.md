@@ -1,7 +1,6 @@
 ---
 name: feature-spec
-description: Interactive interview to produce a feature specification for a feature described by the user.
-disable-model-invocation: true
+description: Interactive interview to produce a feature specification for a feature described by the user. Use when the user wants to spec out a new feature before implementation.
 ---
 
 # Feature Spec

@@ -1,7 +1,6 @@
 ---
 name: generate-unit-tests
-description: Generate unit tests for changed code following kotlin.test and hand-written fakes conventions.
-trigger: when the user asks to write tests, review test files, or generate new test cases
+description: Generate unit tests for changed code following kotlin.test and hand-written fakes conventions. Use when the user asks to write tests, review test files, or generate new test cases.
 ---
 
 # Generate Unit Tests
@@ -33,7 +32,7 @@ When invoked:
 - Test class name: `<Target>Test` (e.g., `PopularMoviesUseCaseTest`)
 - Fake class name: `Fake<Target>` (e.g., `FakeMoviesRepository`)
 - Import test dependencies from the project bundles: `test` or `test_multiplatform` from `src/gradle/libs.versions.toml`
-- Verify each test compiles by running `./gradlew composeApp:compileKotlinDesktop` from `src/`
+- Verify the tests by running `./gradlew :<module>:testDebugUnitTest` from `src/`
 
 ## When NOT to use
 

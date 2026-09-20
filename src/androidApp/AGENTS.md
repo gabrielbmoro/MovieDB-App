@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
 ```bash
 cd src
-./gradlew :androidApp:assembleDebug      # Build Android debug APK
-./gradlew :composeApp:connectedCheck     # Run instrumentation tests
-./gradlew detektAll                      # Run Detekt linting
+./gradlew :androidApp:assembleDebug   # Build Android debug APK
+./gradlew testDebugUnitTest           # Run unit tests (what CI runs)
+./gradlew detekt                      # Run Detekt linting
 ```

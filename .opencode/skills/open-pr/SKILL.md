@@ -1,7 +1,6 @@
 ---
 name: open-pr
-description: Inspect current branch diff, generate a PR title and description from commits and changed files, then open the PR via gh pr create.
-trigger: when the user asks to open a PR, create a PR, or submit a pull request
+description: Inspect current branch diff, generate a PR title and description from commits and changed files, then open the PR via gh pr create. Use when the user asks to open a PR, create a PR, or submit a pull request.
 ---
 
 # Open PR

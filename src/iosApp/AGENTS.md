@@ -55,8 +55,10 @@ fun MainViewController() = ComposeUIViewController {
 
 ```bash
 cd src
-./gradlew :composeApp:compileKotlinDesktop    # Quick compilation check for shared code
 ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64  # Build iOS framework
+./gradlew build                                            # Compile all modules
 ```
+
+iOS targets are only registered when the `kmp.enableIos` Gradle property is present (`src/gradle.properties`); don't remove it, or iOS source sets stop compiling.
 
 To run on iOS: open `iosApp/iosApp.xcodeproj` in Xcode, select a simulator, and hit Run.

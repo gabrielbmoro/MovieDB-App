@@ -1,7 +1,6 @@
 ---
 name: update-tech-stack-readme
-description: Sync the Tech Stack table and Kotlin badge in README.md and AGENTS.md from the version catalog.
-trigger: when asked to update tech stack documentation, after updating dependency versions, or when version catalog changes
+description: Sync the Tech Stack table and Kotlin badge in README.md and AGENTS.md from the version catalog. Use when asked to update tech stack documentation, after updating dependency versions, or when the version catalog changes.
 ---
 
 # Update Tech Stack Readme

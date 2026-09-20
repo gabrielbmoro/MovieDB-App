@@ -14,17 +14,19 @@ Kotlin Multiplatform (KMP) app using **Compose Multiplatform** targeting Android
 
 ## AI Context — Read This First
 
-This file is the single source of truth for all AI coding assistants. Before starting any task:
+This project supports **OpenCode only**. There is one master file (`AGENTS.md`), task workflows under `.opencode/skills/`, and location-scoped platform rules as nested `AGENTS.md` files. Before starting any task:
 
-1. **Skills** — List files in `ai/skills/`. Identify which skill covers the task at hand, read that skill file in full before proceeding.
-2. **Platform context** — For Android-specific tasks, read `ai/instructions/android.md`. For iOS-specific tasks, read `ai/instructions/ios.md`.
-3. **Module graph** — `ai/module-graph.md` defines all module dependency constraints. Any code change must respect these rules.
+1. **Skills** — List files in `.opencode/skills/`. Identify which skill covers the task, then read that `SKILL.md` in full before proceeding.
+2. **Platform rules** — For Android-specific tasks read `src/androidApp/AGENTS.md`. For iOS-specific tasks read `src/iosApp/AGENTS.md`.
+3. **Dependency rules** — Enforced by `src/build-logic/src/main/kotlin/plugins/popcorngp-setup-plugin.gradle.kts`; summarized under "Dependency Rules (Popcorn Guineapig)" below.
+
+`opencode.json` wires this up: `instructions: ["AGENTS.md"]` plus canonical skill discovery from `.opencode/skills/`.
 
 ## Knowledge Files
 
 Terminology for the agent memory bank — files that document facts about the codebase and must stay in sync with code changes:
 
-- **Knowledge File** — A file whose contents document facts about the codebase and must stay synchronized with code changes. Examples: `AGENTS.md`, module `README.md` files, AI instructions in `ai/instructions/`.
+- **Knowledge File** — A file whose contents document facts about the codebase and must stay synchronized with code changes. Examples: `AGENTS.md`, nested platform `AGENTS.md` files, and module `README.md` files.
 - **Memory Bank** — The collection of all knowledge files in the repository.
 - **Knowledge Check** — CI workflow (`.github/workflows/knowledge-check.yml`) that detects stale knowledge files on every PR using Danger JS. Posts a `warn`-level comment — never blocks merging.
 - **Mapping Rule** — Links source file change patterns to the knowledge files that should be reviewed. Defined in `dangerfile.js`.
@@ -37,12 +39,14 @@ All projects live under `src/`. Run commands from the `src/` directory.
 
 | Command | Description |
 |---|---|
-| `./gradlew build` | Quick Kotlin compilation check |
-| `./gradlew :composeApp:connectedCheck` | Run instrumentation tests |
+| `./gradlew build` | Compile all modules |
+| `./gradlew testDebugUnitTest` | Run unit tests (what CI runs) |
 | `./gradlew detekt` | Run Detekt linting |
-| `./gradlew koverHtmlReportAll` | Generate Kover coverage report |
-| `./gradlew popcornParent` | Verify module dependency rules |
-| `./gradlew build` | Full build |
+| `./gradlew popcornParent` | Verify module dependency rules (Popcorn Guineapig) |
+| `./gradlew androidApp:assembleDebug` | Assemble the Android debug APK (CI build) |
+| `./gradlew test -Pkover koverHtmlReport` | Generate the aggregated Kover coverage report |
+
+iOS targets are only registered when the `kmp.enableIos` Gradle property is present (`src/gradle.properties`); don't remove it, or iOS source sets stop compiling.
 
 ## Architecture: Clean Architecture + MVI
 
@@ -82,8 +86,8 @@ UI (Screen composable)
 | Serialization | kotlinx-serialization | — |
 | Image Loading | Coil 3 (ktor3 network) | 3.4.0 |
 | Database | Room + sqlite-bundled | 2.8.4 / 2.6.2 |
-| DI | Koin (annotations + KSP + Koin Compiler) | 4.2.1 |
-| Koin Annotations | KSP compiler for `@Module`/`@Factory`/`@Single` | 2.3.1 |
+| DI | Koin (annotations + Koin Compiler plugin) | 4.2.1 |
+| Koin Annotations | `@Module`/`@Factory`/`@Single` (processed by the Koin compiler) | 2.3.1 |
 | Koin Compiler Plugin | Custom convention plugin for Koin compiler | 1.0.0 |
 | State | Coroutines + StateFlow | 1.10.2 |
 | Collections | kotlinx-collections-immutable | 0.4.0 |
@@ -132,7 +136,7 @@ Each Gradle module contains a `README.md` at its root (`src/<module>/README.md`)
 - **Technical Notes** — architectural constraints, patterns, caveats
 - **Technical Debts** — known issues and future improvements needed
 
-Use `read_file` on the module's README.md as the first step when beginning work in any module.
+Read the module's `README.md` (via the `read` tool) as the first step when beginning work in any module.
 
 ## Navigation
 
@@ -159,7 +163,7 @@ abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEve
 
 ## Dependency Injection (Koin)
 
-- **Koin Annotations** (`@Module`, `@Factory`, `@Single`) with KSP + Koin Compiler plugin
+- **Koin Annotations** (`@Module`, `@Factory`, `@Single`) processed by the Koin Compiler plugin (`KoinCompilerSetupPlugin`) — it replaces KSP for DI; KSP remains only for Room
 - Custom `KoinCompilerSetupPlugin` convention plugin applies the Koin compiler and configures it
 - Each layer declares its own module: `DataModule`, `DomainModule`, feature modules
 - Feature modules include `DomainModule` (which includes `DataModule`)
@@ -186,7 +190,7 @@ abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEve
 
 ## Coding Conventions
 
-- **Package naming:** `com.gabrielbmoro.moviedb.<module>` for non-feature modules; `com.gabrielbmoro.moviedb.feature.<name>` for features
+- **Package naming:** `com.gabrielbmoro.moviedb.<module>` for non-feature modules; `com.gabrielbmoro.moviedb.feature.<name>` for features (exception: `feature-search` uses `com.gabrielbmoro.moviedb.search`)
 - **Screen pattern:** `*Screen.kt` (composable) + `*ViewModel.kt` + intent/state/event models
 - **Widgets:** feature-level reusable composables in `ui/widgets/`
 - **DI:** Koin `@Module` per module, `@Factory` for ViewModels, `@Single` for singletons
@@ -223,6 +227,9 @@ abstract class BaseViewModel<State : UiState, Intent : UserIntent, Event : UiEve
 | `src/settings.gradle.kts` | Module includes, Kover coverage config |
 | `src/build.gradle.kts` | Root build — aggregates Kover, Detekt report |
 | `src/gradle/libs.versions.toml` | Version catalog (all deps) |
+| `docs/specs/` | Feature specifications produced by the `feature-spec` skill |
+| `docs/adr/` | Architecture decision records |
+| `.opencode/skills/` | OpenCode skill workflows |
 | `src/build-logic/` | Convention plugins (KMP, Koin Compiler, Popcorn GP) |
 | `src/build-logic/src/main/kotlin/plugins/KoinCompilerSetupPlugin.kt` | Custom Koin compiler convention plugin |
 | `src/config/detekt/detekt.yml` | Linting rules |
@@ -249,15 +256,15 @@ Enforced by `build-logic/src/main/kotlin/plugins/popcorngp-setup-plugin.gradle.k
 - Framework: `kotlin.test` (`@Test`, `@BeforeTest`, `@AfterTest`)
 - Coroutines: `kotlinx-coroutines-test` (`StandardTestDispatcher`, `runTest`, `advanceUntilIdle`)
 - No mocking frameworks — use hand-written fakes (`FakeRepository`, `FakeUseCase`)
-- Tests located in `src/commonTest/` per module
+- Tests live in `src/<module>/src/commonTest/...`, mirroring the source package
 - Test dependencies: `kotlin_test`, `kotlin_test_common`, `kotlinx_coroutines_test` from version catalog
 
 ## MVI Pattern Per Feature
 
-Each feature should have:
-- **`Model.kt`** — sealed interface for user intents, data class for UI state
-- **`*ViewModel.kt`** — extends `ViewModel` + `ViewModelMvi<UserIntent>`; exposes state via `StateFlow` using `stateIn(viewModelScope, SharingStarted.Eagerly, ...)`
-- **`*Screen.kt`** — Composable that collects state via `collectAsState()` and dispatches intents via `viewModel.execute(intent)`
+Each feature builds on `BaseViewModel` from `platform`:
+- **`*Model.kt`** — a `data class` implementing `UiState`, a sealed interface implementing `UserIntent`, and (optionally) a sealed interface of one-off `UiEvent`s
+- **`*ViewModel.kt`** — extends `BaseViewModel<State, Intent, Event>`; overrides `executeIntent(intent)` to route intents, `updateState { }` to mutate state, `launchIo { }` for background work, and `fireEvent { }` for one-off events; exposes `uiState: StateFlow<State>` and `uiEvent: SharedFlow<Event>`
+- **`*Screen.kt`** — collects state via `collectAsState()` and dispatches intents via `viewModel.executeIntent(...)`; collects `uiEvent` in a `LaunchedEffect`
 
 ## Error Handling (Presentation Layer)
 
@@ -274,10 +281,10 @@ Each feature should have:
 
 Before submitting any code change:
 
-1. Run `./gradlew build` from `src/` — must pass with zero errors
-2. Run `./gradlew detekt` from `src/` — must pass with zero violations
-3. Run `./gradlew popcornParent` from `src/` — module dependency rules must pass
-4. If tests were added or changed, run the relevant test suite
+1. `./gradlew build` from `src/` — zero errors
+2. `./gradlew detekt` from `src/` — zero violations
+3. `./gradlew popcornParent` from `src/` — module dependency rules pass
+4. If tests were added or changed, `./gradlew testDebugUnitTest` from `src/`
 
 ## PR Review Checklist
 
@@ -289,4 +296,4 @@ Before submitting any code change:
 - [ ] No `!!` on nullable fields, no silent `.getOrNull()` exception swallowing
 - [ ] DI uses Koin Annotations, versions from `libs.versions.toml`
 - [ ] Knowledge files reviewed and updated if necessary (see Knowledge Check in PR comments)
-- [ ] Build commands pass: `build`, `detekt`, `popcornParent`
+- [ ] Build commands pass: `build`, `detekt`, `popcornParent` (and `testDebugUnitTest` if tests changed)

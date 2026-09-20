@@ -27,16 +27,12 @@ const MAPPING_RULES = [
     knowledgeFiles: ['AGENTS.md'],
   },
   {
-    path: 'src/ai/instructions/android.md',
+    path: 'src/androidApp/AGENTS.md',
     knowledgeFiles: ['AGENTS.md', 'src/androidApp/README.md'],
   },
   {
-    path: 'src/ai/instructions/ios.md',
+    path: 'src/iosApp/AGENTS.md',
     knowledgeFiles: ['AGENTS.md', 'src/iosApp/README.md'],
-  },
-  {
-    path: 'AGENTS.md',
-    knowledgeFiles: ['README-AI-CONTEXT.md'],
   },
 ];
 

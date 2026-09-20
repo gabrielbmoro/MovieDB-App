@@ -1,7 +1,6 @@
 ---
 name: code-review
-description: Review Kotlin Multiplatform + Compose code following Clean Architecture, MVI pattern, Detekt rules, and project conventions.
-trigger: when the user asks for code review, PR review, or to check code quality
+description: Review Kotlin Multiplatform + Compose code following Clean Architecture, MVI pattern, Detekt rules, and project conventions. Use when the user asks for code review, PR review, or to check code quality.
 ---
 
 # Code Review
