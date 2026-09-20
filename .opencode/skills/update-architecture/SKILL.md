@@ -1,7 +1,6 @@
 ---
 name: update-architecture
-description: Analyze and report on Clean Architecture module dependency compliance, and update AGENTS.md if the module structure changed.
-trigger: when asked about architecture, after adding/removing modules, or when reviewing a PR that changes module dependencies
+description: Analyze and report on Clean Architecture module dependency compliance, and update AGENTS.md if the module structure changed. Use when asked about architecture, after adding/removing modules, or when reviewing a PR that changes module dependencies.
 ---
 
 # Update Architecture
