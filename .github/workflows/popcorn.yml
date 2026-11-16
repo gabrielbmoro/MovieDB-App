@@ -7,6 +7,7 @@ on:
       - "**/build-logic/**"
       - "**.kts"
       - "**/popcorn.yml"
+      - "src/gradle/libs.versions.toml"
 
 jobs:
   popcorn:
